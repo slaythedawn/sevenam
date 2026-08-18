@@ -25,6 +25,18 @@ const OWNERSHIP = {
 const PAGES = [
   {
     slug: 'ad-creative',
+    gallery: {
+      label: 'Recent output from the line',
+      images: [
+        { src: '/img/ad-sneaker.webp',    alt: 'Footwear concept produced on the line' },
+        { src: '/img/ad-skincare.webp',   alt: 'Skincare concept produced on the line' },
+        { src: '/img/ad-hoodie.webp',     alt: 'Apparel concept produced on the line' },
+        { src: '/img/ad-can.webp',        alt: 'Beverage concept produced on the line' },
+        { src: '/img/ad-activewear.webp', alt: 'Activewear concept produced on the line' },
+        { src: '/img/ad-jewellery.webp',  alt: 'Jewellery concept produced on the line' },
+      ],
+      note: 'Statics from six different accounts, each produced end to end without a shoot. Motion and cuts are made the same way; these are the frames that reproduce well on a page.',
+    },
     title: 'AI Ad Creative for Ecommerce Brands | Sevenam',
     description: 'Ad creative produced end to end on an AI line: concepts, hooks, cuts and statics, ordered on demand and delivered in days. $750 a concept, no minimum.',
     eyebrow: 'AD CREATIVE', h1: 'Ad Creative, Without the Shoot',
@@ -590,6 +602,7 @@ function build() {
     h1: p.h1,
     lead: p.lead,
     support: SUPPORT,
+    gallery: p.gallery,
     sections: [
       { tone: 'paper', h2: p.s1.h2, paras: p.s1.paras, items: p.s1.items },
       { tone: 'ink', h2: p.s2.h2, paras: p.s2.paras, items: p.s2.items },

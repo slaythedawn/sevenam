@@ -11,7 +11,7 @@ A dependency-free static site. No build step, no framework, no package install â
 Vercel serves these files directly. Every page ships its content in the HTML;
 `site.js` only adds behaviour on top.
 
-51 pages, all committed as static HTML.
+56 pages, all committed as static HTML.
 
 ```
 index.html      homepage              apply.html      the qualifying quiz
