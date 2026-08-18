@@ -44,7 +44,7 @@ const INDUSTRIES = [
       ],
       items: [
         'Your ad account, your pixel, your creative library. Always.',
-        'A fixed setup fee and a fixed monthly, never a share of spend.',
+        'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
         'Month to month, with no notice period.',
       ],
     },
@@ -103,7 +103,7 @@ const INDUSTRIES = [
       ],
       items: [
         'Your ad account, your pixel, your creative library. Always.',
-        'A fixed setup fee and a fixed monthly, never a share of spend.',
+        'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
         'Month to month, with no notice period.',
       ],
     },
@@ -162,7 +162,7 @@ const INDUSTRIES = [
       ],
       items: [
         'Your ad account, your pixel, your creative library. Always.',
-        'A fixed setup fee and a fixed monthly, never a share of spend.',
+        'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
         'Month to month, with no notice period.',
       ],
     },
@@ -171,7 +171,7 @@ const INDUSTRIES = [
       { q: 'What does an appraisal lead actually cost?', a: "It varies enormously by area and by how competitive the agent landscape is, and anyone quoting you a national number is guessing. The account check will tell you what yours currently costs and what is inflating it." },
       { q: 'Can you run this for individual agents as well as the agency?', a: "Yes, and agent-led creative usually performs better for appraisals. The account structure needs to be deliberate about it so agents are not bidding against each other in the same suburb." },
       { q: 'Our suburb audience is very small. Is that workable?', a: "It works, but frequency becomes the binding constraint quickly, so creative has to be replaced more often than a national advertiser would need. That is a production question more than a targeting one." },
-      { q: 'Do you take a percentage of our advertising budget?', a: "No, and we never will. A fixed setup fee and a fixed monthly, regardless of what you spend on media." },
+      { q: 'Do you take a percentage of our advertising budget?', a: "A fixed setup fee and a fixed monthly, priced to the work rather than your media budget." },
     ],
     closing: { h2: 'Have your agency account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave knowing what your appraisal pipeline actually costs and where the spend is going to waste." },
     related: [
@@ -221,7 +221,7 @@ const INDUSTRIES = [
       ],
       items: [
         'Your ad account, your pixel, your creative library. Always.',
-        'A fixed setup fee and a fixed monthly, never a share of spend.',
+        'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
         'Month to month, with no notice period.',
       ],
     },
@@ -245,7 +245,7 @@ const INDUSTRIES = [
     h1: 'NDIS Facebook Ads',
     lead: 'Participant enquiry, generated within the rules, measured on who you can actually support.',
     title: 'NDIS Facebook Ads — Participant Enquiry, Within the Rules | Sevenam',
-    description: 'Meta advertising for Australian NDIS providers. Compliant participant enquiry on your own ad account, decisions at 7am, fixed fee, no percentage of spend.',
+    description: 'Meta advertising for Australian NDIS providers. Compliant participant enquiry on your own ad account, decisions at 7am, a fixed fee priced to the work rather than your budget.',
     s1: {
       h2: 'Volume is not the problem. Fit is.',
       paras: [
@@ -280,7 +280,7 @@ const INDUSTRIES = [
       ],
       items: [
         'Your ad account, your pixel, your creative library. Always.',
-        'A fixed setup fee and a fixed monthly, never a share of spend.',
+        'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
         'Month to month, with no notice period.',
       ],
     },

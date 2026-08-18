@@ -35,7 +35,7 @@ const CITIES = [
     ],
     localItems: [
       'Your ad account, your pixel, your creative library. Always.',
-      'A fixed setup fee and a fixed monthly, never a share of spend.',
+      'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
       'Month to month, with no notice period.',
     ],
     faqs: [
@@ -80,7 +80,7 @@ const CITIES = [
     ],
     localItems: [
       'Your ad account, your pixel, your creative library. Always.',
-      'A fixed setup fee and a fixed monthly, never a share of spend.',
+      'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
       'Month to month, with no notice period.',
     ],
     faqs: [
@@ -125,7 +125,7 @@ const CITIES = [
     ],
     localItems: [
       'Your ad account, your pixel, your creative library. Always.',
-      'A fixed setup fee and a fixed monthly, never a share of spend.',
+      'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
       'Month to month, with no notice period.',
     ],
     faqs: [
@@ -170,7 +170,7 @@ const CITIES = [
     ],
     localItems: [
       'Your ad account, your pixel, your creative library. Always.',
-      'A fixed setup fee and a fixed monthly, never a share of spend.',
+      'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
       'Month to month, with no notice period.',
     ],
     faqs: [
@@ -215,7 +215,7 @@ const CITIES = [
     ],
     localItems: [
       'Your ad account, your pixel, your creative library. Always.',
-      'A fixed setup fee and a fixed monthly, never a share of spend.',
+      'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
       'Month to month, with no notice period.',
     ],
     faqs: [
@@ -260,7 +260,7 @@ const CITIES = [
     ],
     localItems: [
       'Your ad account, your pixel, your creative library. Always.',
-      'A fixed setup fee and a fixed monthly, never a share of spend.',
+      'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
       'Month to month, with no notice period.',
     ],
     faqs: [
@@ -305,7 +305,7 @@ const CITIES = [
     ],
     localItems: [
       'Your ad account, your pixel, your creative library. Always.',
-      'A fixed setup fee and a fixed monthly, never a share of spend.',
+      'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
       'Month to month, with no notice period.',
     ],
     faqs: [
@@ -329,7 +329,7 @@ function build() {
     return {
       path: '/' + c.slug,
       title: `Facebook Ads ${c.city} — A System You Own, Not a Retainer | Sevenam`,
-      description: `Meta advertising for ${c.city} businesses, run on your own ad account. Written decisions at 7am, a fixed fee, and never a percentage of your media spend.`,
+      description: `Meta advertising for ${c.city} businesses, run on your own ad account. Written decisions at 7am, a fixed fee priced to the work rather than your media budget.`,
       eyebrow: c.eyebrow,
       h1: `Facebook Ads ${c.city}`,
       lead: c.lead,

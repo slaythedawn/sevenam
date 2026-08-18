@@ -16,7 +16,7 @@ const OWNERSHIP = {
   ],
   items: [
     'Your ad account, your pixel, your creative library. Always.',
-    'A fixed setup fee and a fixed monthly, never a share of spend.',
+    'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
     'Month to month, with no notice period.',
     'Every decision written down, with the numbers behind it.',
   ],
@@ -375,7 +375,7 @@ const PAGES = [
         'A setup bought once, owned permanently.',
         'Creative sized to the account, by batch or by month.',
         'An end-to-end option quoted after the account is read.',
-        'Fixed fees, quoted in writing, never a share of spend.',
+        'Fixed fees, quoted in writing, priced to the work rather than your budget.',
       ],
     },
     faqs: [
@@ -383,7 +383,7 @@ const PAGES = [
       { q: 'Is there a minimum commitment?', a: "The setup is a four-week project with a fixed start and finish. Everything monthly is month to month with no notice period." },
       { q: 'Can we buy the setup and stop there?', a: "Yes, and some do. You own it — the account, the tracking, the structure and the documentation stay with you whether or not you buy anything else." },
       { q: 'What is in the creative batch?', a: "A month's supply of testing: new concepts, hooks and cuts shipped weekly rather than in one drop, each with its performance numbers attached." },
-      { q: 'Do you charge a percentage of ad spend?', a: "No, and we never will. What you spend on Meta has no effect on what you pay us." },
+      { q: 'Do you charge a percentage of ad spend?', a: "Our fees are priced to the work \u2014 installing the system, running the decisions, producing the creative. None of that gets harder because you spent more, so none of it costs more." },
     ],
     closing: { h2: 'Get the figures in writing.', p: "Fifteen minutes with Josh, no pitch deck. You will leave with every number written down, whether or not you buy anything." },
     related: [
@@ -429,7 +429,7 @@ const PAGES = [
     faqs: [
       { q: 'Is ten to twenty per cent of spend reasonable?', a: "It depends entirely on your spend. At five thousand a month it is a modest fee for real work, and the minimum monthly fee most agencies apply probably matters more than the percentage. At a hundred thousand a month the same percentage is a very large number for work that has not changed much — put both into the fee calculator and the difference is stark." },
       { q: 'What about performance or hybrid pricing?', a: "A lower base fee plus a share of results above an agreed baseline — commonly ten to thirty per cent of verified revenue, profit or qualified leads. It can align incentives well, and the whole thing rests on how the baseline is set and who verifies the numbers. Agree both in writing before you start." },
-      { q: 'What do you charge?', a: "A fixed setup fee and a fixed monthly, quoted in writing after we have read your account, and never a percentage of your media budget. The figure depends on how much creative the account consumes and how much execution you want us doing." },
+      { q: 'What do you charge?', a: "A fixed setup fee and a fixed monthly, quoted in writing after we have read your account, priced to the work rather than your media budget. The figure depends on how much creative the account consumes and how much execution you want us doing." },
       { q: 'Should creative be included in the management fee?', a: "It rarely is, and you should confirm it explicitly. Creative volume is the single biggest driver of performance, so a management fee that excludes it is only paying for half the job." },
       { q: 'Is there a standard setup or onboarding fee?', a: "Many agencies charge one, often equivalent to a month or two of retainer. What matters more is what you own at the end of it — an onboarding that builds the account in the agency's Business Manager is worth considerably less to you." },
       { q: 'How do we work out what we are really paying?', a: "Add the management fee, the creative cost and any platform or reporting fees, then divide by media spend. That effective percentage is the number to compare, and it is usually higher than the headline." },
