@@ -5,6 +5,138 @@ const SUPPORT = "Sevenam installs a Meta advertising system on your own ad accou
 
 const PAGES = [
   {
+    slug: 'nano-banana-2',
+    title: 'Nano Banana 2 for Ad Creative: What It Is Good At | Sevenam',
+    description: 'Nano Banana 2 is Google\u2019s image model, and it has become a practical tool for ecommerce ad creative. What it does well, where it fails, and how to brief it.',
+    eyebrow: 'GUIDE', h1: 'Nano Banana 2 for Ad Creative',
+    lead: 'A genuinely useful image tool, and a fast way to make bad ads if you point it at the wrong job.',
+    s1: {
+      h2: 'What it is actually good at.',
+      paras: [
+        "Nano Banana is the informal name for Google's image generation and editing model, and the second generation is the first version most advertisers found worth using on real work. Its strength is editing rather than invention: give it a product photograph you already own and it will change the background, the lighting, the framing or the context without losing the product itself.",
+        "For ecommerce that matters more than it sounds. The expensive part of ad creative is rarely the first image; it is the twentieth variation of it, in the format each placement wants, against a background that suits a different audience. That is the job this does well and cheaply.",
+      ],
+      items: [
+        'Editing an existing product shot rather than inventing one.',
+        'Background, lighting and context changes that keep the product intact.',
+        'Format and framing variations for different placements.',
+        'Volume: the twentieth variation costs what the first one did.',
+      ],
+    },
+    s2: {
+      h2: 'Where it falls over.',
+      paras: [
+        "It is unreliable with text, so anything with a price, a claim or a logo needs the type laid over afterwards rather than generated. It drifts on fine product detail across many generations, which matters if your product has a label, a pattern or a texture a customer would recognise. And it cannot invent a product it has never seen.",
+        "The deeper failure mode is generic output. Left undirected it converges on the same glossy, weightless look everyone else is generating, and that reads as synthetic within three frames. The tool is only as good as the brief and the rejection rate behind it.",
+      ],
+      items: [
+        'Text is unreliable: overlay type afterwards, do not generate it.',
+        'Fine product detail drifts across generations \u2014 check labels and textures.',
+        'It cannot invent a product it has not been shown.',
+        'Undirected output looks generic, and generic does not convert.',
+      ],
+    },
+    faqs: [
+      { q: 'Is Nano Banana 2 good enough for real ads?', a: "For product stills, variations and background work, yes \u2014 it is already in production use. For anything depending on a person's face across many frames, or on text rendered inside the image, it still needs a human step afterwards." },
+      { q: 'Do we still need a photographer?', a: "For the source product photography, usually yes, and that is the point: one good shoot becomes the input to hundreds of variations rather than four finished ads. What disappears is the second and third shoot, not the first." },
+      { q: 'Will Meta penalise AI-generated creative?', a: "Meta does not penalise it for being generated. What gets punished is the same thing that always did \u2014 low engagement. Generated creative that looks generic performs badly because people scroll past it, not because a policy caught it." },
+    ],
+    related: [
+      { href: '/ad-creative', title: 'Ad creative on an AI line', note: 'What we produce, and what it costs.' },
+      { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
+      { href: '/learn', title: 'All guides', note: 'The rest of what we publish.' },
+    ],
+    closing: { h2: 'Would rather not run the line yourself?', p: "Answer five questions about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
+  },
+  {
+    slug: 'seedance-2',
+    title: 'Seedance 2.0 for Ad Creative: A Practical Guide | Sevenam',
+    description: 'Seedance 2.0 generates short video from a prompt or a still. Where it is genuinely useful for Meta ad creative, where it is not, and how to brief it properly.',
+    eyebrow: 'GUIDE', h1: 'Seedance 2.0 for Ad Creative',
+    lead: 'Short-form video without a shoot, which is either the unlock or the trap depending on the brief.',
+    s1: {
+      h2: 'Why video generation matters for Meta.',
+      paras: [
+        "Meta's placements have been steadily biased toward video for years, and the accounts that struggle most are the ones shipping statics because video production was too slow to keep up. Seedance generates short clips from a prompt or from a still image you already own, which removes the scheduling problem that caps most brands' output.",
+        "The useful framing is not \u2018video without a camera\u2019. It is more concepts reaching the auction: the hook variations, the alternate openings and the format cuts that would otherwise never be made because the edit suite was booked.",
+      ],
+      items: [
+        'Short clips from a prompt, or animated from a still you own.',
+        'Hook and opening variations, which is where most video performance sits.',
+        'Vertical and square cuts without a re-edit.',
+        'No scheduling: the constraint becomes the brief, not the calendar.',
+      ],
+    },
+    s2: {
+      h2: 'The limits worth knowing before you brief it.',
+      paras: [
+        "Clips are short, so anything needing a sustained narrative has to be assembled from pieces rather than generated whole. Human faces and hands remain the least reliable part of any generated video, and a customer testimonial that looks almost-real is worse than no testimonial at all.",
+        "Physical accuracy is the other trap. If your product pours, folds, stretches or clips together, generated motion frequently gets that wrong in ways your customer will notice immediately even if the frame looks beautiful.",
+      ],
+      items: [
+        'Short clips: longer stories need assembly, not one generation.',
+        'Faces and hands are the least reliable element.',
+        'Product physics \u2014 pouring, folding, fastening \u2014 often reads wrong.',
+        'Almost-real is worse than obviously-made for anything testimonial.',
+      ],
+    },
+    faqs: [
+      { q: 'Can Seedance replace UGC?', a: "No, and treating it as a UGC replacement is the most common way brands waste money on it. Genuine user content works because a viewer believes a real person used the product. Generated footage of a person who does not exist fails that test the moment it is noticed. Use it for product motion, hooks and cuts, not for pretending to be a customer." },
+      { q: 'What does it cost to run?', a: "Per clip the compute is inexpensive relative to a shoot. The real cost is direction and rejection \u2014 the useful output rate is well under half of what you generate, and pretending otherwise is how brands end up shipping bad video quickly." },
+      { q: 'Which placements suit it best?', a: "Reels and Stories, where the first second decides everything and variation on the hook is the highest-leverage thing you can test. It is far less useful for long-form or anything carrying detailed product explanation." },
+    ],
+    related: [
+      { href: '/ad-creative', title: 'Ad creative on an AI line', note: 'What we produce, and what it costs.' },
+      { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
+      { href: '/learn', title: 'All guides', note: 'The rest of what we publish.' },
+    ],
+    closing: { h2: 'Would rather not run the line yourself?', p: "Answer five questions about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
+  },
+  {
+    slug: 'higgsfield-ads',
+    title: 'Higgsfield for Ad Creative: What It Does Well | Sevenam',
+    description: 'Higgsfield is built around motion and camera control rather than prompt-and-hope. Where that helps Meta ad creative, what it cannot do, and how to brief it.',
+    eyebrow: 'GUIDE', h1: 'Higgsfield for Ad Creative',
+    lead: 'Motion control is the part most generation tools get wrong, which is the whole reason to use this one.',
+    s1: {
+      h2: 'Why camera control changes the output.',
+      paras: [
+        "Most video generation is prompt-and-hope: you describe a scene and accept whatever motion arrives. Higgsfield's design centres on directing the movement itself \u2014 the push in, the orbit, the whip pan, the crash zoom \u2014 which is the difference between footage that looks generated and footage that looks shot.",
+        "That matters for advertising more than it does for film, because a Reel is decided in its first second and the motion is what buys that second. Being able to specify the camera move rather than describe it and hope is the practical unlock.",
+      ],
+      items: [
+        'Specify the camera move rather than describe it and hope.',
+        'Motion is what earns the first second of a Reel.',
+        'Consistent moves across a set, so variations feel like one campaign.',
+        'Animating a still you already own, rather than generating from nothing.',
+      ],
+    },
+    s2: {
+      h2: 'What it will not fix.',
+      paras: [
+        "Camera control does not make a weak concept work. If the hook is wrong, a beautifully executed crash zoom onto it just makes the wrong idea arrive faster, and that is the most common way this tool gets wasted.",
+        "It also inherits the limits of every generation model underneath it: sustained human performance is unreliable, text inside the frame should be laid over afterwards, and any product with fine detail needs checking frame by frame before it goes anywhere near an ad account.",
+      ],
+      items: [
+        'A better camera move does not rescue a weak hook.',
+        'Sustained human performance is still unreliable.',
+        'Overlay text afterwards rather than generating it.',
+        'Check fine product detail frame by frame before shipping.',
+      ],
+    },
+    faqs: [
+      { q: 'Is Higgsfield better than the other video tools?', a: "For directed motion, it is the one we reach for. For other jobs \u2014 product stills and edits, or straightforward image-to-video \u2014 different tools do better work. Treating any of them as the single answer is the mistake; a production line uses whichever one suits the shot." },
+      { q: 'Do you need to be a video editor to use it?', a: "To get one clip, no. To get a set of clips that feel like the same campaign and test cleanly against each other, the skill required is closer to art direction than to editing \u2014 knowing what to ask for, and rejecting most of what comes back." },
+      { q: 'How does this fit with a Meta account?', a: "Motion variations are hook tests. The account tells you which opening earns attention, the line produces more of that shape, and the next brief is better than the last. Without that loop it is just an expensive way to make videos nobody measures." },
+    ],
+    related: [
+      { href: '/ad-creative', title: 'Ad creative on an AI line', note: 'What we produce, and what it costs.' },
+      { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
+      { href: '/learn', title: 'All guides', note: 'The rest of what we publish.' },
+    ],
+    closing: { h2: 'Would rather not run the line yourself?', p: "Answer five questions about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
+  },
+  {
     slug: 'are-facebook-ads-worth-it',
     title: 'Are Facebook Ads Worth It in 2026? An Honest Answer | Sevenam',
     description: 'Whether Facebook and Instagram ads are worth it depends on margin, volume and creative capacity. Here is how to work out the answer for your business.',
