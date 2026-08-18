@@ -151,8 +151,16 @@ module.exports = async (req, res) => {
       await sendWebhook(lead);
     } else {
       /* Nothing configured. Say so honestly so the page can fall back to the
-         mailto rather than telling the applicant their answers were sent. */
-      return res.status(503).json({ ok: false, error: 'no_delivery_configured' });
+         mailto rather than telling the applicant their answers were sent.
+
+         `seen` lists which of the names this function looks for are actually
+         present — names only, never values. Setting a variable in Vercel but
+         leaving the Production environment unticked, or misspelling the name,
+         both look identical from outside otherwise. This disappears the moment
+         a delivery route is configured. */
+      const seen = ['RESEND_API_KEY', 'LEAD_WEBHOOK', 'LEAD_TO', 'LEAD_FROM']
+        .filter((k) => process.env[k]);
+      return res.status(503).json({ ok: false, error: 'no_delivery_configured', seen });
     }
   } catch (err) {
     console.error('lead delivery failed:', err && err.message);
