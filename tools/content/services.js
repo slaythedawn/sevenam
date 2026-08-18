@@ -24,6 +24,52 @@ const OWNERSHIP = {
 
 const PAGES = [
   {
+    slug: 'ad-creative',
+    title: 'AI Ad Creative for Ecommerce Brands | Sevenam',
+    description: 'Ad creative produced end to end on an AI line: concepts, hooks, cuts and statics, ordered on demand and delivered in days. $750 a concept, no minimum.',
+    eyebrow: 'AD CREATIVE', h1: 'Ad Creative, Produced on an AI Line',
+    lead: 'Ordered when you need it, delivered in days, priced per concept.',
+    s1: {
+      h2: 'Creative volume is the constraint now.',
+      paras: [
+        "Targeting, bidding and placement are the platform's models now. What is left for a human to influence is how much distinct creative goes into the auction, and how quickly the losers are replaced. That is the lever, and almost every account we read is short of it.",
+        "The reason is production, not intent. A shoot takes weeks to organise and prices volume by the hour, so most brands ship three or four concepts a quarter and then watch frequency climb and performance decay while they wait for the next batch.",
+      ],
+      items: [
+        'Targeting and bidding are automated; creative volume is not.',
+        'Fatigue arrives faster than a shoot can be organised.',
+        'Pricing volume by the hour caps how much you can test.',
+        'Three concepts a quarter is not enough for the models to learn from.',
+      ],
+    },
+    s2: {
+      h2: 'What the line actually is.',
+      paras: [
+        "Concepts, hooks, cuts and statics produced end to end on our own line, built on Higgsfield for motion, Nano Banana for stills and edits, and Seedance for video. Nothing waits on a booking, a location or a turnaround from an editor, which is why an order comes back in days rather than weeks.",
+        "Every concept is briefed against what the account's own numbers already say is working, and ships with its performance numbers attached so the next brief is better than the last one.",
+      ],
+      items: [
+        'Higgsfield, Nano Banana and Seedance, run as one production line.',
+        "Briefed against the account's own data, not a mood board.",
+        'Concepts, hooks, cuts and statics, each with its numbers attached.',
+        '$750 a concept, no minimum, five working days.',
+      ],
+    },
+    faqs: [
+      { q: 'What can AI creative not do?', a: "It cannot replace a founder talking to camera, a genuine customer testimonial, or a demonstration that depends on someone actually handling the product. Those still need a person and a camera, and we will tell you when a concept needs one rather than approximating it badly. What the line is genuinely good at is volume: variations, hooks, cuts, statics and motion that would otherwise never get made." },
+      { q: 'Will it look like AI?', a: "That is the failure mode worth worrying about, and it is mostly a question of how much direction goes in. Generated output left to its own devices looks generic within three frames. Ours is briefed, art-directed and rejected the same way any other creative is, and anything that reads as synthetic does not ship." },
+      { q: 'How much does it cost?', a: "$750 a concept, delivered in five working days, with its hooks, cuts and statics included. There is no minimum order and no subscription: order one concept or twenty, whenever the account needs them." },
+      { q: 'Can we buy creative without the rest of it?', a: "Yes, and some do. If the account is structurally sound and the real problem is that you cannot ship enough new ads, creative on its own is often the right purchase and we will say so." },
+      { q: 'Who owns the files?', a: "You do, from the moment they are delivered. They sit in your own creative library alongside everything else, and they stay there whether or not you buy anything again." },
+    ],
+    related: [
+      { href: '/nano-banana-2', title: 'Nano Banana 2 for ad creative', note: 'Where it helps, and where it fails.' },
+      { href: '/seedance-2', title: 'Seedance 2.0 for ad creative', note: 'Short-form video without a shoot.' },
+      { href: '/higgsfield-ads', title: 'Higgsfield for ad creative', note: 'Directed motion, not prompt-and-hope.' },
+    ],
+    closing: { h2: 'Order what the account needs.', p: "Answer five questions about the account and Josh comes back with what it would cost and whether creative alone is the right buy." },
+  },
+  {
     slug: 'meta-ads-agency',
     title: 'Meta Ads Agency (Australia) — Or a System You Own | Sevenam',
     description: 'Looking for a Meta ads agency in Australia? There is a structural alternative: a system installed on your own ad account, decisions at 7am, and a fixed fee.',
