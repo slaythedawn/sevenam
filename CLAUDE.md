@@ -19,7 +19,9 @@ asset resolves, `sitemap.xml` matches the pages that exist, no redirect shadows 
 real page, JSON-LD parses, titles and descriptions are unique, each page has exactly
 one `<h1>` and a correct canonical, and — importantly — that every FAQ answer claimed
 in `FAQPage` schema is actually visible on the page. It also fails if
-`vercel.json`'s `framework` is anything other than `null`. CI runs the same script.
+`vercel.json`'s `framework` is anything other than `null`, that every file in `api/`
+loads and exports a handler, and that none of them contains what looks like a
+hard-coded API key. CI runs the same script.
 
 ## Two kinds of page — do not confuse them
 

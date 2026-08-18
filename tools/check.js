@@ -132,10 +132,34 @@ try {
   fail('sitemap.xml', 'unreadable: ' + e.message);
 }
 
+/* Serverless functions. There is no build step and no staging, so a syntax error
+   in api/ reaches production and only shows up when someone submits the form —
+   by which point the lead is the thing being lost. Loading each file catches
+   that here instead. */
+const apiDir = path.join(ROOT, 'api');
+if (fs.existsSync(apiDir)) {
+  for (const f of fs.readdirSync(apiDir).filter(f => f.endsWith('.js')).sort()) {
+    const rel = 'api/' + f;
+    try {
+      const fn = require(path.join(apiDir, f));
+      if (typeof fn !== 'function') {
+        fail(rel, 'must export a handler function — Vercel has nothing to call otherwise');
+      }
+    } catch (e) {
+      fail(rel, 'does not load: ' + e.message);
+    }
+    /* A secret committed here would be public the moment it is pushed. */
+    const src = fs.readFileSync(path.join(apiDir, f), 'utf8');
+    const secret = src.match(/['"](re_[A-Za-z0-9_]{16,}|sk-[A-Za-z0-9_-]{16,}|xox[baprs]-[A-Za-z0-9-]{16,})['"]/);
+    if (secret) fail(rel, 'looks like a hard-coded secret: ' + secret[1].slice(0, 8) + '… — it belongs in a Vercel environment variable');
+  }
+}
+
 if (problems.length) {
   console.error(`\n${problems.length} problem(s):\n`);
   for (const p of problems) console.error('  ' + p);
   console.error('');
   process.exit(1);
 }
-console.log(`OK — ${htmlFiles.length} pages, all links and assets resolve, schema matches page text.`);
+const fnCount = fs.existsSync(apiDir) ? fs.readdirSync(apiDir).filter(f => f.endsWith('.js')).length : 0;
+console.log(`OK — ${htmlFiles.length} pages, ${fnCount} function(s), all links and assets resolve, schema matches page text.`);
