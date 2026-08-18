@@ -25,17 +25,16 @@ const OWNERSHIP = {
 const PAGES = [
   {
     slug: 'ad-creative',
+    skipOwnership: true,
     gallery: {
       label: 'Recent output from the line',
       images: [
-        { src: '/img/ad-sneaker.webp',    alt: 'Footwear concept produced on the line' },
-        { src: '/img/ad-skincare.webp',   alt: 'Skincare concept produced on the line' },
-        { src: '/img/ad-hoodie.webp',     alt: 'Apparel concept produced on the line' },
-        { src: '/img/ad-can.webp',        alt: 'Beverage concept produced on the line' },
-        { src: '/img/ad-activewear.webp', alt: 'Activewear concept produced on the line' },
-        { src: '/img/ad-jewellery.webp',  alt: 'Jewellery concept produced on the line' },
+        { src: '/img/line-coffee.webp',     alt: 'Coffee concept produced on the line' },
+        { src: '/img/line-eyewear.webp',    alt: 'Eyewear concept produced on the line' },
+        { src: '/img/line-supplement.webp', alt: 'Supplement concept produced on the line' },
+        { src: '/img/line-audio.webp',      alt: 'Consumer electronics concept produced on the line' },
       ],
-      note: 'Statics from six different accounts, each produced end to end without a shoot. Motion and cuts are made the same way; these are the frames that reproduce well on a page.',
+      note: 'Statics from four categories, each produced end to end without a shoot. Motion and cuts are made the same way; these are the frames that reproduce well on a page.',
     },
     title: 'AI Ad Creative for Ecommerce Brands | Sevenam',
     description: 'Ad creative produced end to end on an AI line: concepts, hooks, cuts and statics, ordered on demand and delivered in days rather than weeks.',
@@ -44,41 +43,85 @@ const PAGES = [
     s1: {
       h2: 'Creative volume is the constraint now.',
       paras: [
-        "Targeting, bidding and placement are the platform's models now. What is left for a human to influence is how much distinct creative goes into the auction, and how quickly the losers are replaced. That is the lever, and almost every account we read is short of it.",
-        "The reason is production, not intent. A shoot takes weeks to organise and prices volume by the hour, so most brands ship three or four concepts a quarter and then watch frequency climb and performance decay while they wait for the next batch.",
+        "Targeting, bidding and placement are the platform's models. What is left for a human to influence is how much distinct creative goes into the auction and how quickly the losers are replaced — and almost every account we read is short of it.",
+        "The reason is production, not intent. A shoot takes weeks to organise and prices volume by the hour, so most brands ship three or four concepts a quarter and watch frequency climb while they wait for the next batch.",
       ],
       items: [
         'Targeting and bidding are automated; creative volume is not.',
         'Fatigue arrives faster than a shoot can be organised.',
-        'Pricing volume by the hour caps how much you can test.',
         'Three concepts a quarter is not enough for the models to learn from.',
       ],
+    },
+    gantt: {
+      label: 'Brief to live',
+      h2: 'Same brief, two production routes.',
+      rows: [
+        {
+          label: 'Booked shoot',
+          duration: 'Six weeks, typically',
+          segments: [
+            { label: 'Book and schedule', w: 2 },
+            { label: 'Shoot', w: 1 },
+            { label: 'Edit', w: 2 },
+            { label: 'Traffic and ship', w: 1 },
+          ],
+        },
+        {
+          label: 'The line',
+          duration: 'Five working days',
+          accent: true,
+          segments: [
+            { label: '', w: 1 },
+          ],
+          pad: 5,
+          caption: 'Brief, produce, direct, ship.',
+        },
+      ],
+      note: 'Both tracks are on the same scale. Nothing on the lower one waits on a booking, a location or an editor.',
     },
     s2: {
       h2: 'What the line actually is.',
       paras: [
-        "Concepts, hooks, cuts and statics produced end to end on our own line, built on Higgsfield for motion, Nano Banana for stills and edits, and Seedance for video. Nothing waits on a booking, a location or a turnaround from an editor, which is why an order comes back in days rather than weeks.",
-        "Every concept is briefed against what the account's own numbers already say is working, and ships with its performance numbers attached so the next brief is better than the last one.",
+        "Concepts, hooks, cuts and statics produced end to end on our own line. Each one is briefed against what the account's numbers already say is working, and ships with its own numbers attached so the next brief is better than the last.",
       ],
       items: [
-        'Higgsfield, Nano Banana and Seedance, run as one production line.',
         "Briefed against the account's own data, not a mood board.",
         'Concepts, hooks, cuts and statics, each with its numbers attached.',
         'Ordered when you need it, no minimum, five working days.',
       ],
     },
+    steps: {
+      label: 'How an order runs',
+      h2: 'What actually happens when you order.',
+      items: [
+        { t: 'You say what it is for', p: 'A product, an angle, or just the gap the account has. No brief template to fill in.' },
+        { t: 'We read the account first', p: "What is already winning, what has fatigued, and which hooks the numbers say to build on." },
+        { t: 'The line produces it', p: 'Stills, motion, cuts and variations, art-directed the same way any other creative would be.' },
+        { t: 'It lands in your library', p: 'Delivered into your own Business Manager with the numbers attached, yours whether or not you order again.' },
+      ],
+    },
     faqs: [
-      { q: 'What can AI creative not do?', a: "It cannot replace a founder talking to camera, a genuine customer testimonial, or a demonstration that depends on someone actually handling the product. Those still need a person and a camera, and we will tell you when a concept needs one rather than approximating it badly. What the line is genuinely good at is volume: variations, hooks, cuts, statics and motion that would otherwise never get made." },
-      { q: 'Will it look like AI?', a: "That is the failure mode worth worrying about, and it is mostly a question of how much direction goes in. Generated output left to its own devices looks generic within three frames. Ours is briefed, art-directed and rejected the same way any other creative is, and anything that reads as synthetic does not ship." },
-      { q: 'How much does it cost?', a: "It is priced per concept and quoted in writing once we know what the account needs, with hooks, cuts and statics included. There is no minimum order and no subscription: order one concept or twenty, whenever the account needs them." },
-      { q: 'Can we buy creative without the rest of it?', a: "Yes, and some do. If the account is structurally sound and the real problem is that you cannot ship enough new ads, creative on its own is often the right purchase and we will say so." },
-      { q: 'Who owns the files?', a: "You do, from the moment they are delivered. They sit in your own creative library alongside everything else, and they stay there whether or not you buy anything again." },
+      { q: 'What can AI creative not do?', a: "It cannot replace a founder talking to camera, a real customer testimonial, or a demonstration that needs hands on the product. Those still need a person and a camera, and we will say so rather than approximate one badly. What it is good at is volume: the variations, hooks, cuts and motion that would otherwise never get made." },
+      { q: 'Will it look like AI?', a: "That is the failure mode worth worrying about, and it comes down to how much direction goes in. Left to itself, generated output looks generic within three frames. Ours is briefed, art-directed and rejected like any other creative, and anything that reads as synthetic does not ship." },
+      { q: 'How much does it cost?', a: "Priced per concept and quoted in writing once we know what the account needs, with hooks, cuts and statics included. No minimum and no subscription: order one concept or twenty, whenever the account needs them." },
+      { q: 'Can we buy creative without the rest of it?', a: "Yes, and some do. If the account is structurally sound and the real problem is that you cannot ship enough new ads, creative alone is often the right buy." },
+      { q: 'Who owns the files?', a: "You do, from delivery. The files sit in your own creative library and stay there whether or not you buy anything again." },
     ],
     related: [
       { href: '/nano-banana-2', title: 'Nano Banana 2 for ad creative', note: 'Where it helps, and where it fails.' },
-      { href: '/seedance-2', title: 'Seedance 2.0 for ad creative', note: 'Short-form video without a shoot.' },
-      { href: '/higgsfield-ads', title: 'Higgsfield for ad creative', note: 'Directed motion, not prompt-and-hope.' },
+      { href: '/seedance-2-5', title: 'Seedance 2.5 for ad creative', note: 'What the new model changed.' },
+      { href: '/higgsfield-ads', title: 'Higgsfield AI for ad creative', note: 'Directed motion, not prompt-and-hope.' },
     ],
+    toolstrip: {
+      label: 'What the line runs on',
+      tools: [
+        { name: 'Higgsfield', role: 'Directed motion and camera control.' },
+        { name: 'Nano Banana 2', role: 'Stills, edits and product-accurate variations.' },
+        { name: 'Seedance 2.5', role: 'Short-form video and cuts.' },
+        { name: 'Claude', role: 'Briefs, hooks and the copy on the frame.' },
+      ],
+      note: 'The models change every few months and the line changes with them. What does not is that a person briefs it, directs it and rejects it before anything reaches your account.',
+    },
     closing: { h2: 'Order what the account needs.', p: "Answer five questions about the account and Josh comes back with what it would cost and whether creative alone is the right buy." },
   },
   {
@@ -606,8 +649,14 @@ function build() {
     sections: [
       { tone: 'paper', h2: p.s1.h2, paras: p.s1.paras, items: p.s1.items },
       { tone: 'ink', h2: p.s2.h2, paras: p.s2.paras, items: p.s2.items },
-      { tone: 'paper', h2: OWNERSHIP.h2, paras: OWNERSHIP.paras, items: OWNERSHIP.items },
+      /* /ad-creative carries the ownership argument in its FAQ instead — the page
+         is long enough already, and repeating the section there pushes the
+         creative case below the fold on a page that has to sell creative. */
+      ...(p.skipOwnership ? [] : [{ tone: 'paper', h2: OWNERSHIP.h2, paras: OWNERSHIP.paras, items: OWNERSHIP.items }]),
     ],
+    gantt: p.gantt,
+    steps: p.steps,
+    toolstrip: p.toolstrip,
     faqs: p.faqs,
     related: p.related,
     closing: p.closing,

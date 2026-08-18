@@ -214,10 +214,95 @@ function gallery(g) {
   return `<section style="background: rgb(247, 247, 245); padding: 72px 32px 8px;">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">${esc(g.label)}</span>
-      <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
+      <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px;">
           ${tiles}
       </div>
       <p style="margin: 18px 0px 0px; max-width: 76ch; font-size: 14px; line-height: 1.65; color: rgb(85, 85, 79);">${esc(g.note)}</p>
+    </div>
+  </section>`;
+}
+
+
+/* A brief-to-live comparison, drawn rather than described. Two tracks on the
+   same scale: the weeks a booked shoot takes, and the days the line takes. The
+   segment widths are percentages of the longer track, so the shape carries the
+   argument without asserting a number the page has not already published. */
+function gantt(g) {
+  if (!g) return '';
+  function track(row, i) {
+    const segs = row.segments.map(sg =>
+      `<div style="flex: ${sg.w} 0 0%; min-width: 0px; padding: 11px 10px; font-size: 13px; font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: ${row.accent ? VOLT : 'rgb(255, 255, 255)'}; color: ${INK}; border-right: 1px solid ${row.accent ? 'rgba(10, 10, 10, 0.18)' : HAIRLINE_LIGHT};">${esc(sg.label)}</div>`
+    ).join('');
+    const pad = row.pad ? `<div style="flex: ${row.pad} 0 0%;"></div>` : '';
+    /* A track this short cannot hold its own stage labels, so they run underneath
+       it instead. Shrinking the bar to fit the words would undo the comparison. */
+    const caption = row.caption
+      ? `<div style="margin-top: 7px; font-size: 13px; line-height: 1.5; color: ${PAPER_TEXT};">${esc(row.caption)}</div>`
+      : '';
+    return `<div data-reveal="" style="display: grid; grid-template-columns: 168px 1fr; gap: 0px 18px; align-items: center;${i ? ' margin-top: 20px;' : ''}">
+          <div>
+            <div style="font-size: 15px; font-weight: 600; letter-spacing: -0.015em;">${esc(row.label)}</div>
+            <div style="font-size: 13px; color: ${PAPER_TEXT}; margin-top: 2px;">${esc(row.duration)}</div>
+          </div>
+          <div>
+            <div style="display: flex; border: 1px solid ${HAIRLINE_LIGHT}; border-radius: 4px; overflow: hidden; background: rgb(250, 250, 248);">${segs}${pad}</div>
+            ${caption}
+          </div>
+        </div>`;
+  }
+  const rows = g.rows.map(track).join('\n        ');
+  return `<section style="padding: 96px 32px; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(g.label)}</span>
+      <h2 style="margin: 16px 0px 34px; max-width: 22ch; font-size: clamp(26px, 3vw, 38px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(g.h2)}</h2>
+      <div style="max-width: 960px;">
+        ${rows}
+      </div>
+      <p style="margin: 22px 0px 0px; max-width: 68ch; font-size: 14px; line-height: 1.65; color: ${PAPER_TEXT};">${esc(g.note)}</p>
+    </div>
+  </section>`;
+}
+
+/* Numbered steps on a hairline, so the ordering process is scannable without
+   another block of prose. */
+function steps(st) {
+  if (!st) return '';
+  const cards = st.items.map((it, i) =>
+    `<div data-reveal="" style="border-top: 2px solid ${INK}; padding: 18px 0px 0px;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: ${PAPER_TEXT}; font-variant-numeric: tabular-nums;">0${i + 1}</span>
+          <h3 style="margin: 10px 0px 6px; font-size: 18px; font-weight: 600; letter-spacing: -0.02em;">${esc(it.t)}</h3>
+          <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: ${PAPER_TEXT};">${esc(it.p)}</p>
+        </div>`).join('\n        ');
+  return `<section style="background: rgb(255, 255, 255); padding: 96px 32px; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(st.label)}</span>
+      <h2 style="margin: 16px 0px 40px; max-width: 22ch; font-size: clamp(26px, 3vw, 38px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(st.h2)}</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px;">
+        ${cards}
+      </div>
+    </div>
+  </section>`;
+}
+
+/* The models the line is built on, named in type rather than borrowed marks.
+   Sits with the closing links so the page ends on what it runs on. */
+function toolstrip(t) {
+  if (!t || !t.tools || !t.tools.length) return '';
+  const tiles = t.tools.map(tool =>
+    `<div style="flex: 1 1 190px; min-width: 0px; background: rgb(255, 255, 255); border: 1px solid ${HAIRLINE_LIGHT}; border-radius: 6px; padding: 20px 22px;">
+          <div style="display: flex; align-items: center; gap: 9px;">
+            <span aria-hidden="true" style="width: 7px; height: 7px; border-radius: 100px; background: ${VOLT}; box-shadow: 0px 0px 0px 3px rgba(216, 255, 0, 0.22);"></span>
+            <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em;">${esc(tool.name)}</span>
+          </div>
+          <p style="margin: 9px 0px 0px; font-size: 14px; line-height: 1.55; color: ${PAPER_TEXT};">${esc(tool.role)}</p>
+        </div>`).join('\n        ');
+  return `<section style="padding: 88px 32px; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(t.label)}</span>
+      <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 12px;">
+        ${tiles}
+      </div>
+      <p style="margin: 20px 0px 0px; max-width: 72ch; font-size: 14px; line-height: 1.65; color: ${PAPER_TEXT};">${esc(t.note)}</p>
     </div>
   </section>`;
 }
@@ -228,9 +313,12 @@ function page(p) {
     hero(p),
     gallery(p.gallery),
     ...(p.sections || []).map(prose),
+    gantt(p.gantt),
+    steps(p.steps),
     p.faqs && p.faqs.length ? faqSection(p.faqs, p.faqHeading) : '',
     p.pills ? pills(p.pills.label, p.pills.links) : '',
     related(p.related),
+    toolstrip(p.toolstrip),
     closing(p.closing),
   ].filter(Boolean).join('\n\n  ');
 
