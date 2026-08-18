@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scaling Meta Ads — What Actually Breaks | Sevenam</title>
+<meta name="description" content="Why more budget stops producing more sales, what breaks first when you scale Meta ads, and how to lift the ceiling without wrecking performance.">
+<link rel="canonical" href="https://sevenam.com.au/scaling-meta-ads">
+<meta property="og:title" content="Scaling Meta Ads — What Actually Breaks | Sevenam">
+<meta property="og:description" content="Why more budget stops producing more sales, what breaks first when you scale Meta ads, and how to lift the ceiling without wrecking performance.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sevenam.com.au/scaling-meta-ads">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.","email":"hello@sevenam.com.au","areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/scaling-meta-ads","name":"Scaling Meta Ads — What Actually Breaks | Sevenam","description":"Why more budget stops producing more sales, what breaks first when you scale Meta ads, and how to lift the ceiling without wrecking performance.","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"Article","headline":"Scaling Meta Ads","description":"Why more budget stops producing more sales, what breaks first when you scale Meta ads, and how to lift the ceiling without wrecking performance.","author":{"@id":"https://sevenam.com.au/#org"},"publisher":{"@id":"https://sevenam.com.au/#org"},"mainEntityOfPage":"https://sevenam.com.au/scaling-meta-ads","url":"https://sevenam.com.au/scaling-meta-ads"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How fast can we increase budget?","acceptedAnswer":{"@type":"Answer","text":"Increments the account can absorb without resetting learning, with time between them to see the effect. The exact size depends on how much conversion volume you already have — thinner accounts need gentler steps."}},{"@type":"Question","name":"Why does cost per purchase rise as we scale?","acceptedAnswer":{"@type":"Answer","text":"Partly because you exhaust the cheapest attention first, partly because frequency rises on a fixed audience. Creative volume slows both; nothing stops them entirely."}},{"@type":"Question","name":"Should we duplicate winning ad sets to scale?","acceptedAnswer":{"@type":"Answer","text":"Usually not. It tends to fragment learning and put you in competition with yourself in the same auction. Raising budget on what works, gradually, is the less exciting and more reliable route."}},{"@type":"Question","name":"How much creative does scaling need?","acceptedAnswer":{"@type":"Answer","text":"More than most businesses are producing. If your ceiling keeps reappearing at the same spend level, creative supply is the constraint, not the media buying."}},{"@type":"Question","name":"Is there a level where Meta simply stops working?","acceptedAnswer":{"@type":"Answer","text":"There is a level where your audience is saturated and incremental spend buys reach you already had. That is when the answer is a new offer, a new market or a new channel rather than more budget."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sevenam.com.au/"},{"@type":"ListItem","position":2,"name":"Learn","item":"https://sevenam.com.au/learn"},{"@type":"ListItem","position":3,"name":"Scaling Meta Ads","item":"https://sevenam.com.au/scaling-meta-ads"}]}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<style>x-dc{display:none!important}</style>
+<style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style>
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @media (max-width: 720px) {
+    section { padding-left:20px !important; padding-right:20px !important; }
+    h1 { letter-spacing:-0.03em !important; }
+    img { max-width:100%; }
+  }
+  @media (max-width: 420px) { body { -webkit-text-size-adjust:100%; } }
+</style>
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @keyframes pulseDot { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
+  @keyframes chipIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
+  @media (max-width: 780px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
+</style>
+</head>
+<body>
+<div class="sc-host"><div class="sc-host"><header style="position: sticky; top: 0px; z-index: 50; background: rgb(10, 10, 10); border-bottom: 1px solid rgb(35, 35, 32);">
+  <div data-nav-bar="" style="max-width: 1240px; margin: 0px auto; padding: 14px 32px; min-height: 80px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px;">
+    <a href="/" style="display: flex; align-items: flex-end; gap: 7px; flex-shrink: 0;">
+      <span style="font-size: 23px; font-weight: 600; letter-spacing: -0.035em; white-space: nowrap; color: rgb(255, 255, 255);">sevenam</span>
+      <span style="width: 7px; height: 7px; border-radius: 50%; background: rgb(216, 255, 0); margin-bottom: 5px; flex-shrink: 0; animation: 3.4s ease-in-out 0s infinite normal none running pulseDot;"></span>
+    </a>
+    <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; flex: 1 1 auto; min-width: 0px;">
+      <span data-nav-links="" style="display: flex; align-items: center; gap: 2px; min-width: 0px;">
+        <a href="/system" class="scp5" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">How it works</a>
+        <a href="/pricing" class="scp5" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Pricing</a>
+        <a href="/agency-fee" class="scp5" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Free tools</a>
+        <a href="/learn" class="scp5" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Learn</a>
+        <a href="/about" class="scp5" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">About</a>
+      </span>
+      <a href="/apply" class="scp0" style="display: inline-flex; align-items: center; gap: 9px; margin-left: 8px; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 15px; font-weight: 600; padding: 13px 20px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;">
+        <span>Get started</span>
+        <span aria-hidden="true" style="opacity: 0.55;">→</span>
+      </a>
+    </nav>
+  </div>
+  </header></div><main style="background: rgb(247, 247, 245); color: rgb(10, 10, 10);">
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 110px 32px 120px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: rgb(216, 255, 0);">GUIDE</span>
+      <h1 style="margin: 26px 0px 0px; max-width: 22ch; font-size: clamp(40px, 6vw, 84px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; color: rgb(255, 255, 255);">Scaling Meta Ads</h1>
+      <p style="margin: 32px 0px 0px; max-width: 60ch; font-size: 21px; font-weight: 500; line-height: 1.5; letter-spacing: -0.01em; color: rgb(247, 247, 245);">Adding budget is easy. Adding budget without wrecking the numbers is the job.</p>
+      <p style="margin: 24px 0px 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Sevenam installs a Meta advertising system on your own ad account and runs the technology that operates it — written decisions at 7am every morning telling you exactly what to do that day. One fixed setup fee, a fixed monthly, and never a share of your media budget.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 44px;">
+        <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Get started</a>
+        <a href="/learn" class="scp1" style="border: 1px solid rgb(85, 85, 79); color: rgb(247, 247, 245); font-size: 16px; font-weight: 600; padding: 15px 26px; border-radius: 4px;">More guides</a>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 32px; font-size: 14px; font-weight: 500; color: rgb(181, 181, 173);"><span>No retainer</span><span>·</span><span>No lock-in</span><span>·</span><span>No percentage of spend</span></div>
+    </div>
+  </section>
+
+  <section style="border-bottom: 1px solid rgb(227, 227, 221); padding: 112px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">What breaks first.</h2>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Creative fatigue, almost always. More budget on the same ads means the same people see them more often, frequency climbs, response falls and cost per result rises — and it looks exactly like the account degrading for no reason.</p>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">The second failure is impatience. Large budget jumps push campaigns back into learning, performance wobbles, and the account gets changed again before the previous change had a chance to settle. Two or three rounds of that and nobody can tell what is working.</p>
+      <div style="margin-top: 36px; display: flex; flex-direction: column; max-width: 840px;">
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;">Frequency climbs and response falls: the fatigue ceiling.</div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;">Big budget jumps reset learning and hide the signal.</div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;">Reacting to daily noise compounds the confusion.</div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); border-bottom: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;">The cheapest attention gets exhausted first, so costs drift up.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 112px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">How the ceiling actually lifts.</h2>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">More distinct creative, more often. Not variations — genuinely different angles, formats and hooks, so the system has real choices and the same person is not shown the same thing repeatedly.</p>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Then move budget in steps the account can absorb, and give each step long enough to leave learning before judging it. Scaling is mostly a supply problem wearing a media buying costume.</p>
+      <div style="margin-top: 36px; display: flex; flex-direction: column; max-width: 840px;">
+        <div style="border-top: 1px solid rgb(35, 35, 32); padding: 20px 0px; font-size: 17px; line-height: 1.6;">Increase creative volume before increasing budget.</div>
+        <div style="border-top: 1px solid rgb(35, 35, 32); padding: 20px 0px; font-size: 17px; line-height: 1.6;">Move budget in increments the account can absorb.</div>
+        <div style="border-top: 1px solid rgb(35, 35, 32); padding: 20px 0px; font-size: 17px; line-height: 1.6;">Let each change settle past the learning phase before judging.</div>
+        <div style="border-top: 1px solid rgb(35, 35, 32); padding: 20px 0px; font-size: 17px; line-height: 1.6;">Watch frequency and blended cost per acquisition, not daily ROAS.</div>
+        <div style="border-top: 1px solid rgb(35, 35, 32); border-bottom: 1px solid rgb(35, 35, 32); padding: 20px 0px; font-size: 17px; line-height: 1.6;">Expect efficiency to soften as volume grows — plan margin for it.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 112px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px 0px 40px; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Questions people actually ask.</h2>
+      <div style="display: flex; flex-direction: column; max-width: 840px;">
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+          <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">How fast can we increase budget?</h3>
+          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Increments the account can absorb without resetting learning, with time between them to see the effect. The exact size depends on how much conversion volume you already have — thinner accounts need gentler steps.</p>
+        </div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+          <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Why does cost per purchase rise as we scale?</h3>
+          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Partly because you exhaust the cheapest attention first, partly because frequency rises on a fixed audience. Creative volume slows both; nothing stops them entirely.</p>
+        </div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+          <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Should we duplicate winning ad sets to scale?</h3>
+          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Usually not. It tends to fragment learning and put you in competition with yourself in the same auction. Raising budget on what works, gradually, is the less exciting and more reliable route.</p>
+        </div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+          <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">How much creative does scaling need?</h3>
+          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">More than most businesses are producing. If your ceiling keeps reappearing at the same spend level, creative supply is the constraint, not the media buying.</p>
+        </div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+          <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Is there a level where Meta simply stops working?</h3>
+          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">There is a level where your audience is saturated and incremental spend buys reach you already had. That is when the answer is a new offer, a new market or a new channel rather than more budget.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 96px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">Keep reading</span>
+      <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+        <a href="/facebook-ad-creative-testing" class="scp3" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em;">Creative testing</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">How to lift the ceiling.</span></a>
+        <a href="/meta-advantage-plus" class="scp3" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em;">Advantage+</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">What automation changes.</span></a>
+        <a href="/facebook-ads-cost-australia" class="scp3" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em;">What ads cost</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Why costs drift up.</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 130px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto; display: flex; flex-direction: column; align-items: flex-start; gap: 30px;">
+      <span style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; padding: 5px 9px; border-radius: 3px;">07:00</span>
+      <h2 style="margin: 0px; max-width: 18ch; font-size: clamp(38px, 5.4vw, 74px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05;">Find out where your ceiling actually is.</h2>
+      <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173);">Fifteen minutes with Josh, no pitch deck. Most ceilings turn out to be creative supply wearing a media buying costume.</p>
+      <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a>
+        <a href="/apply" class="scp4" style="color: rgb(216, 255, 0); font-size: 16px; font-weight: 600; border-bottom: 1px solid rgb(85, 85, 79);">Five questions, two minutes →</a>
+    </div>
+  </section>
+  </main>
+<div class="sc-host"><footer style="background: rgb(10, 10, 10); color: rgb(181, 181, 173); padding: 96px 32px 48px;">
+  <div style="max-width: 1240px; margin: 0px auto;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 48px; padding-bottom: 64px; border-bottom: 1px solid rgb(35, 35, 32);">
+      <div style="display: flex; flex-direction: column; gap: 18px; max-width: 340px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
+          <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: rgb(255, 255, 255);">sevenam</span>
+        </div>
+        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.</p>
+        <span style="font-size: 15px; color: rgb(85, 85, 79);">Sydney, Australia</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Products</span>
+        <a href="/install" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">One-time setup</a>
+        <a href="/system" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">The daily decisions</a>
+        <a href="/pricing" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Creative testing</a>
+        <a href="/ai-marketing-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Where we use AI</a>
+        <a href="/facebook-marketing-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook marketing</a>
+        <a href="/digital-marketing-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Digital marketing</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Start here</span>
+        <a href="/check" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Account check</a>
+        <a href="/apply" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Get started</a>
+        <a href="/agency-fee" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Fee calculator · free</a>
+        <a href="/learn" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Guides and glossary</a>
+        <a href="/growth" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">The growth thesis</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Services</span>
+        <a href="/facebook-ads-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads</a>
+        <a href="/meta-ads-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads</a>
+        <a href="/instagram-ads-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Instagram ads</a>
+        <a href="/social-media-advertising-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Social media advertising</a>
+        <a href="/facebook-ads-consultant" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Where</span>
+        <a href="/facebook-ads-perth" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Perth</a>
+        <a href="/facebook-ads-melbourne" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Melbourne</a>
+        <a href="/facebook-ads-sydney" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Sydney</a>
+        <a href="/facebook-ads-brisbane" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Brisbane</a>
+        <a href="/learn" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">All locations →</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Contact</span>
+        <a href="mailto:hello@sevenam.com.au" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">hello@sevenam.com.au</a>
+        <a href="/about" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">About</a>
+      </div>
+    </div>
+    <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: rgb(85, 85, 79);">
+      <span>© 2026 Sevenam. Australia.</span>
+      <span>Your growth system for Meta. It runs at seven.</span>
+    </div>
+  </div></footer></div></div>
+<script src="/site.js" defer></script>
+</body>
+</html>

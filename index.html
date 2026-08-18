@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<style>x-dc{display:none!important}</style>
+<style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style>
+<title>Meta Ads for Ecommerce Brands — Media Buying + Creative | Sevenam</title>
+<meta name="description" content="We buy your Meta ads and produce the creative that feeds them, for Australian ecommerce brands spending $30k–$500k a month. AI reads the account first thing each morning, a written call lands at 7am. Fixed fee, on your own ad account, never a percentage of spend.">
+<link rel="canonical" href="https://sevenam.com.au/">
+<meta property="og:title" content="Meta Ads for Ecommerce Brands — Media Buying + Creative | Sevenam">
+<meta property="og:description" content="Media buying, creative production and a written call at 7am — on your own ad account, for a fixed fee. Built for Australian ecommerce brands.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sevenam.com.au/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.","email":"hello@sevenam.com.au","areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/","name":"Sevenam — Meta Ads Systems You Own","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"WebSite","@id":"https://sevenam.com.au/#site","url":"https://sevenam.com.au","name":"Sevenam","publisher":{"@id":"https://sevenam.com.au/#org"}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @keyframes rise { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+  @keyframes floatY { 0%, 100% { transform:translateY(0); } 50% { transform:translateY(-9px); } }
+  @keyframes pulseDot { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+  @keyframes ringOut { from { opacity:0.9; transform:scale(0.55); } to { opacity:0; transform:scale(1.5); } }
+  @keyframes voltPulse { 0%, 100% { box-shadow:0 0 0 0 rgba(216,255,0,0); } 50% { box-shadow:0 0 0 7px rgba(216,255,0,0.16); } }
+  @media (max-width: 1080px) { [data-float] { display:none !important; } [data-float-stack] { display:grid !important; } }
+  @media (max-width: 980px) { [data-hero-grid] { grid-template-columns:1fr !important; gap:48px !important; } }
+  @media (max-width: 1000px) {
+    [data-hub] { grid-template-columns:1fr !important; grid-template-rows:none !important; gap:14px !important; }
+    [data-hub-wire] { display:none !important; }
+    [data-hub-core] { grid-column:1 !important; grid-row:auto !important; order:-1; text-align:left !important; }
+  }
+  @media (max-width: 720px) {
+    section { padding-left:20px !important; padding-right:20px !important; }
+    [data-hero] { padding-top:56px !important; padding-bottom:64px !important; }
+
+    [data-approve-card] { box-shadow:none !important; }
+    [data-approve-card] [data-act] { grid-template-columns:22px 1fr !important; row-gap:6px !important; padding:16px 18px !important; }
+    [data-approve-card] [data-state] { grid-column:2 !important; justify-self:start !important; }
+    [data-panel] { padding:32px 24px !important; }
+    [data-clock] { font-size:64px !important; }
+  }
+  @media (max-width: 420px) { [data-clock] { font-size:52px !important; } [data-eyebrow] { white-space:normal !important; } }
+</style>
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @keyframes pulseDot { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
+  @keyframes chipIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
+  @media (max-width: 780px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
+</style>
+</head>
+<body>
+<div class="sc-host"><div class="sc-host"><header style="position: sticky; top: 0px; z-index: 50; background: rgb(10, 10, 10); border-bottom: 1px solid rgb(35, 35, 32);">
+  <div data-nav-bar="" style="max-width: 1240px; margin: 0px auto; padding: 14px 32px; min-height: 80px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px;">
+    <a href="/" style="display: flex; align-items: flex-end; gap: 7px; flex-shrink: 0;">
+      <span style="font-size: 23px; font-weight: 600; letter-spacing: -0.035em; white-space: nowrap; color: rgb(255, 255, 255);">sevenam</span>
+      <span style="width: 7px; height: 7px; border-radius: 50%; background: rgb(216, 255, 0); margin-bottom: 5px; flex-shrink: 0; animation: 3.4s ease-in-out 0s infinite normal none running pulseDot;"></span>
+    </a>
+    <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; flex: 1 1 auto; min-width: 0px;">
+      <span data-nav-links="" style="display: flex; align-items: center; gap: 2px; min-width: 0px;">
+        <a href="/system" class="scp6" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">How it works</a>
+        <a href="/pricing" class="scp6" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Pricing</a>
+        <a href="/agency-fee" class="scp6" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Free tools</a>
+        <a href="/learn" class="scp6" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Learn</a>
+        <a href="/about" class="scp6" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">About</a>
+      </span>
+      <a href="/apply" class="scp0" style="display: inline-flex; align-items: center; gap: 9px; margin-left: 8px; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 15px; font-weight: 600; padding: 13px 20px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;">
+        <span>Get started</span>
+        <span aria-hidden="true" style="opacity: 0.55;">→</span>
+      </a>
+    </nav>
+  </div>
+  </header></div><main style="background: rgb(247, 247, 245); color: rgb(10, 10, 10);">
+
+  <section data-hero="" style="position: relative; overflow: hidden; background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 104px 32px 96px; --scan-travel: 1230px;">
+    <img data-parallax="" src="/img/ai-surface.webp" alt="" aria-hidden="true" style="position: absolute; inset: -8% 0px; width: 100%; height: 116%; object-fit: cover; opacity: 0.32; translate: 0px 2.8px;">
+    <div style="position: absolute; inset: 0px; background: linear-gradient(rgba(10, 10, 10, 0.72) 0%, rgba(10, 10, 10, 0.86) 46%, rgb(10, 10, 10) 100%);"></div>
+    <div data-flash="" aria-hidden="true" style="position: absolute; inset: 0px; opacity: 0; background: radial-gradient(120% 70% at 72% 30%, rgba(216, 255, 0, 0.42) 0%, rgba(216, 255, 0, 0.08) 42%, rgba(216, 255, 0, 0) 70%); pointer-events: none;"></div>
+
+    <div data-hero-grid="" style="position: relative; max-width: 1240px; margin: 0px auto; display: grid; grid-template-columns: minmax(0px, 1.05fr) minmax(0px, 0.95fr); gap: 72px; align-items: center;">
+
+      <div>
+        <span data-eyebrow="" style="display: inline-flex; align-items: center; gap: 9px; background: rgb(22, 22, 19); border: 1px solid rgb(35, 35, 32); border-radius: 4px; padding: 9px 16px; font-size: 13px; font-weight: 500; color: rgb(247, 247, 245); white-space: nowrap; animation: 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0s 1 normal both running rise;"><span style="width: 7px; height: 7px; border-radius: 50%; background: rgb(216, 255, 0); animation: 2.6s ease-in-out 0s infinite normal none running pulseDot;"></span>Meta ads for Australian ecommerce brands</span>
+        <h1 style="margin: 28px 0px 0px; max-width: 22ch; font-weight: 600; font-size: clamp(40px, 5.4vw, 84px); line-height: 1.03; letter-spacing: -0.035em; color: rgb(255, 255, 255); animation: 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.08s 1 normal both running rise;">We buy your Meta ads and make the creative that feeds them.</h1>
+        <p style="margin: 30px 0px 0px; max-width: 52ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173); animation: 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.18s 1 normal both running rise;">Our AI reads your account first thing every morning and writes the day's decisions. At <span style="color: rgb(247, 247, 245); font-weight: 600;">7am</span> you approve them in one tap — then we action them in Ads Manager for you. Your account, fixed fee, never a percentage of spend.</p>
+        <div style="margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; animation: 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.26s 1 normal both running rise;">
+          <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Get started</a>
+          <a href="/system" class="scp1" style="border: 1px solid rgb(85, 85, 79); color: rgb(247, 247, 245); font-size: 16px; font-weight: 600; padding: 15px 26px; border-radius: 4px;">See how it works</a>
+        </div>
+        <p style="margin: 26px 0px 0px; font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Fifteen minutes, no pitch deck. Or <a href="/apply" class="scp2" style="color: rgb(181, 181, 173); border-bottom: 1px solid rgb(35, 35, 32);">answer five questions first</a>.</p>
+      </div>
+
+      <div style="position: relative; z-index: 2; animation: 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.34s 1 normal both running rise;">
+        <div style="display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;">
+          <div style="position: relative; display: inline-flex;">
+            <span data-ring="" aria-hidden="true" style="position: absolute; inset: -24px; border: 1px solid rgb(216, 255, 0); border-radius: 50%; opacity: 0; pointer-events: none;"></span>
+            <span data-clock="" style="font-size: clamp(56px, 7vw, 108px); font-weight: 600; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245); transition: color 0.4s, text-shadow 0.6s;"><span class="sc-interp">06:57</span></span>
+          </div>
+          <span data-clock-label="" style="max-width: 158px; font-size: 14px; font-weight: 600; letter-spacing: 0.1em; line-height: 1.35; text-transform: uppercase; color: rgb(85, 85, 79); transition: color 0.4s;">Reading your account</span>
+        </div>
+
+        <div data-approve-card="" style="position: relative; z-index: 3; margin-top: 28px; background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 8px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.45) 0px 40px 90px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 22px; border-bottom: 1px solid rgb(35, 35, 32);">
+            <span style="font-size: 14px; font-weight: 600; color: rgb(255, 255, 255);">Today's decisions</span>
+            <span data-badge="" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">Pending</span>
+          </div>
+          <div style="display: flex; flex-direction: column;">
+            <div data-act="0" style="display: grid; grid-template-columns: 26px 1fr auto; gap: 14px; align-items: center; padding: 18px 22px; border-bottom: 1px solid rgb(27, 27, 24);">
+              <span data-tick="" style="width: 22px; height: 22px; border: 1px solid rgb(85, 85, 79); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: rgb(10, 10, 10);"></span>
+              <span style="font-size: 15px; line-height: 1.5; color: rgb(247, 247, 245);">Turn off <strong style="font-weight: 600;">Winter Range — Static 04</strong><br><span style="font-size: 13px; color: rgb(85, 85, 79);">$1,340 spent, two purchases</span></span>
+              <span data-state="" style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(85, 85, 79); white-space: nowrap;">Approve</span>
+            </div>
+            <div data-act="1" style="display: grid; grid-template-columns: 26px 1fr auto; gap: 14px; align-items: center; padding: 18px 22px; border-bottom: 1px solid rgb(27, 27, 24);">
+              <span data-tick="" style="width: 22px; height: 22px; border: 1px solid rgb(85, 85, 79); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: rgb(10, 10, 10);"></span>
+              <span style="font-size: 15px; line-height: 1.5; color: rgb(247, 247, 245);">Raise <strong style="font-weight: 600;">Prospecting — Broad</strong> to $520/day<br><span style="font-size: 13px; color: rgb(85, 85, 79);">CPA holding at $38.10 for nine days</span></span>
+              <span data-state="" style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(85, 85, 79); white-space: nowrap;">Approve</span>
+            </div>
+            <div data-act="2" style="display: grid; grid-template-columns: 26px 1fr auto; gap: 14px; align-items: center; padding: 18px 22px;">
+              <span data-tick="" style="width: 22px; height: 22px; border: 1px solid rgb(85, 85, 79); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: rgb(10, 10, 10);"></span>
+              <span style="font-size: 15px; line-height: 1.5; color: rgb(247, 247, 245);">Push three new hooks live<br><span style="font-size: 13px; color: rgb(85, 85, 79);">Shipped Wednesday, tagged and ready</span></span>
+              <span data-state="" style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(85, 85, 79); white-space: nowrap;">Approve</span>
+            </div>
+          </div>
+          <div style="padding: 18px 22px; border-top: 1px solid rgb(35, 35, 32); display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;">
+            <button data-approve="" type="button" style="background: rgb(35, 35, 32); color: rgb(85, 85, 79); border: none; font-family: inherit; font-size: 15px; font-weight: 600; padding: 13px 22px; border-radius: 4px; cursor: default;">Approve all</button>
+            <span data-foot="" style="font-size: 13px; line-height: 1.5; color: rgb(85, 85, 79); max-width: 26ch;">We action approved changes in Ads Manager. You never open it.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position: relative; max-width: 1240px; margin: 72px auto 0px; padding-top: 32px; border-top: 1px solid rgb(35, 35, 32); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px;">
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">01 · Media buying</span>
+        <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">We buy the ads</span>
+        <span style="font-size: 16px; line-height: 1.65; color: rgb(201, 201, 194);">Structure, budgets and scaling, on your own ad account.</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">02 · Creative</span>
+        <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">We make the creative</span>
+        <span style="font-size: 16px; line-height: 1.65; color: rgb(201, 201, 194);">New concepts, hooks and cuts shipped every week.</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">03 · Approve and done</span>
+        <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">We action it for you</span>
+        <span style="font-size: 16px; line-height: 1.65; color: rgb(201, 201, 194);">Tap approve at 7am and we make the changes.</span>
+      </div>
+    </div>
+
+    <p style="position: relative; max-width: 1240px; margin: 36px auto 0px; font-size: 15px; line-height: 1.6; color: rgb(154, 154, 146);">For ecommerce brands spending $30k–$500k a month on Meta. Sydney-based, working nationally.</p>
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 0px 32px 112px;">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: rgb(35, 35, 32); border: 1px solid rgb(35, 35, 32); border-radius: 6px; overflow: hidden;">
+        <div style="background: rgb(10, 10, 10); padding: 40px 36px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(216, 255, 0);">You own it</span>
+          <span style="font-size: 24px; font-weight: 600; letter-spacing: -0.025em; color: rgb(255, 255, 255);">Your own Business Manager</span>
+          <span style="font-size: 15px; line-height: 1.65; color: rgb(201, 201, 194);">Account, pixel and creative files stay yours.</span>
+        </div>
+        <div style="background: rgb(10, 10, 10); padding: 40px 36px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(216, 255, 0);">Fixed fee</span>
+          <span style="font-size: 24px; font-weight: 600; letter-spacing: -0.025em; color: rgb(255, 255, 255);">Never a share of your spend</span>
+          <span style="font-size: 15px; line-height: 1.65; color: rgb(201, 201, 194);">Triple your budget and our invoice doesn't move.</span>
+        </div>
+        <div style="background: rgb(10, 10, 10); padding: 40px 36px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(216, 255, 0);">No lock-in</span>
+          <span style="font-size: 24px; font-weight: 600; letter-spacing: -0.025em; color: rgb(255, 255, 255);">Stop at the end of any month</span>
+          <span style="font-size: 15px; line-height: 1.65; color: rgb(201, 201, 194);">No notice period, no exit call.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 112px 32px;">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 22ch; font-weight: 600; font-size: clamp(34px, 4.6vw, 64px); line-height: 1.02; letter-spacing: -0.02em;">Stop losing a week to every bad ad set.</h2>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 19px; line-height: 1.6; color: rgb(85, 85, 79);">Most accounts we see are leaking money for nine days before anyone notices — a fatigued ad still running, budget stuck on the wrong campaign, three good hooks sitting unapproved. Every one of those days is spend you'll never get back. This closes that gap to one morning, without you learning a dashboard or sitting through a weekly call.</p>
+
+      <div style="margin-top: 64px; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px;">
+        <div data-reveal="" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column;">
+          <img loading="lazy" decoding="async" src="/img/desk-dawn.webp" alt="A desk before dawn with packaging boxes and a closed laptop" style="display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover;">
+          <div style="padding: 36px; display: flex; flex-direction: column; gap: 12px;">
+            <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Before you start</span>
+            <h3 style="margin: 0px; font-size: 26px; font-weight: 600; letter-spacing: -0.025em;">The work happens before you're up</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.65; color: rgb(85, 85, 79);">First thing each morning your account is read against its own trailing seven, fourteen and twenty-eight days and measured on thresholds set to your margins — so nothing is judged on one lucky day, and no winner gets killed for a slow Tuesday.</p>
+          </div>
+        </div>
+        <div data-reveal="" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column;">
+          <img loading="lazy" decoding="async" src="/img/hand-phone.webp" alt="A phone held in morning light" style="display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: center 35%;">
+          <div style="padding: 36px; display: flex; flex-direction: column; gap: 12px;">
+            <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(216, 255, 0); background: rgb(10, 10, 10); align-self: flex-start; padding: 5px 9px; border-radius: 4px;">07:00</span>
+            <h3 style="margin: 0px; font-size: 26px; font-weight: 600; letter-spacing: -0.025em;">You tap approve, we action it</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.65; color: rgb(85, 85, 79);">Three or four decisions in plain English with the numbers behind them. Approve the ones you agree with and the changes are made in your account for you — about a minute of your morning.</p>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px 32px;">
+        <a href="/system" class="scp3" style="font-size: 16px; font-weight: 500; border-bottom: 1px solid rgb(227, 227, 221); padding-bottom: 3px;">See how the system works →</a>
+        <a href="/ecommerce-facebook-ads-agency" class="scp3" style="font-size: 16px; font-weight: 500; border-bottom: 1px solid rgb(227, 227, 221); padding-bottom: 3px;">What we do for ecommerce brands →</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0px 32px 112px;">
+    <div data-panel="" style="max-width: 1240px; margin: 0px auto; background: rgb(10, 10, 10); color: rgb(247, 247, 245); border-radius: 6px; padding: clamp(40px, 5vw, 88px);">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(216, 255, 0);">The AI growth system</span>
+      <h2 style="margin: 26px 0px 0px; max-width: 22ch; font-weight: 600; font-size: clamp(34px, 4.6vw, 64px); line-height: 1.02; letter-spacing: -0.02em; color: rgb(255, 255, 255);">You're paying 2019 prices for a job AI now does better.</h2>
+      <p style="margin: 30px 0px 0px; max-width: 62ch; font-size: 19px; line-height: 1.6; color: rgb(181, 181, 173);">Meta's models took over targeting years ago. What nobody wired up is the layer above it: one AI agent connected to your ad account, your brand assets and your own thresholds, doing the reading and the making before your day starts. That's the whole system — and the reason a fixed fee can replace a percentage of your budget.</p>
+
+      <div data-hub="" style="margin-top: 56px; display: grid; grid-template-columns: minmax(0px, 1fr) 48px minmax(240px, 300px) 48px minmax(0px, 1fr); grid-template-rows: repeat(3, auto); gap: 16px 0px; align-items: stretch;">
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Your data</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Meta ad account</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">Spend, results and creative performance pulled straight through the API — read, never guessed at.</span>
+        </div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-hub-core="" style="grid-area: 1 / 3 / span 3; background: rgb(10, 10, 10); border: 1px solid rgb(216, 255, 0); border-radius: 6px; padding: 32px 28px; display: flex; flex-direction: column; justify-content: center; gap: 12px; text-align: center; align-self: center; animation: 4s ease-in-out 0s infinite normal none running voltPulse;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(216, 255, 0);">The control centre</span>
+          <span style="font-size: 26px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; color: rgb(255, 255, 255);">An AI agent wired into your account</span>
+          <span style="font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">One agent with the whole picture: the numbers, your margins, your brand assets and last month's winners. It drafts; you decide.</span>
+        </div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Your brand</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Assets and past winners</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">Product shots, hooks and every ad that ever worked, in one place the agent can actually use.</span>
+        </div>
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Output</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Creative generation</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">New concepts, cuts and formats produced from the winners — a month of testing without a shoot.</span>
+        </div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Output</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Reports and briefs</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">The week in plain English, plus briefs for anything a human still needs to shoot or write.</span>
+        </div>
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Guardrails</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Your thresholds</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">Margins, target CPA and what counts as enough data — written down during setup, applied every morning.</span>
+        </div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Action</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Changes made for you</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">You approve; the agent executes in Ads Manager. Nothing moves without a human saying yes.</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 64px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 48px;">
+        <div>
+          <h3 style="margin: 0px; font-weight: 600; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.1;">So only two levers are left.</h3>
+          <p style="margin: 20px 0px 0px; max-width: 46ch; font-size: 16px; line-height: 1.7; color: rgb(181, 181, 173);"><strong style="color: rgb(247, 247, 245); font-weight: 600;">Decision velocity</strong> — an agency decides weekly, the system decides every morning. <strong style="color: rgb(247, 247, 245); font-weight: 600;">Creative volume</strong> — the models need enough distinct ads to find a winner, and hourly creative in monthly batches is the wrong shape.</p>
+        </div>
+        <div>
+          <h3 style="margin: 0px; font-weight: 600; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.1;">Meanwhile your fee grew on its own.</h3>
+          <p style="margin: 20px 0px 0px; max-width: 46ch; font-size: 16px; line-height: 1.7; color: rgb(181, 181, 173);">Most Australian agencies charge 10–15% of spend. Scale from $30,000 a month to $60,000 and the fee doubles for the same scope of work.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px;">
+            <a href="/agency-fee" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 15px; font-weight: 600; padding: 14px 24px; border-radius: 4px;">What your fee really costs</a>
+            <a href="/ai-marketing-agency" class="scp1" style="border: 1px solid rgb(85, 85, 79); color: rgb(247, 247, 245); font-size: 15px; font-weight: 500; padding: 13px 24px; border-radius: 4px;">Where we use AI</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0px 32px 112px;">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; align-items: stretch;">
+        <div style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 44px; display: flex; flex-direction: column; justify-content: center;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">The production line</span>
+          <h2 style="margin: 22px 0px 0px; max-width: 20ch; font-weight: 600; font-size: clamp(30px, 3.6vw, 48px); line-height: 1.04; letter-spacing: -0.02em;">Never wait a fortnight for an ad again.</h2>
+          <p style="margin: 24px 0px 0px; max-width: 44ch; font-size: 17px; line-height: 1.65; color: rgb(85, 85, 79);">Concepts, hooks, cuts and statics produced through our own AI-assisted line, shipped weekly with its performance numbers attached. No UGC, no creator sourcing.</p>
+          <a href="/pricing" class="scp4" style="align-self: flex-start; margin-top: 32px; background: rgb(10, 10, 10); color: rgb(247, 247, 245); font-size: 15px; font-weight: 500; padding: 14px 26px; border-radius: 4px;">How creative is priced</a>
+        </div>
+        <div style="border-radius: 6px; overflow: hidden;">
+          <img loading="lazy" decoding="async" src="/img/product-still.webp" alt="Product still life from a campaign shoot" style="display: block; width: 100%; height: 100%; min-height: 280px; object-fit: cover;">
+        </div>
+      </div>
+      <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
+        <div data-ad-drift="" data-speed="0.16" style="will-change: transform;">
+          <img loading="lazy" decoding="async" src="/img/ad-sneaker.webp" alt="Sneaker campaign still" data-reveal="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);">
+        </div>
+        <div data-ad-drift="" data-speed="-0.1" style="will-change: transform;">
+          <img loading="lazy" decoding="async" src="/img/ad-hoodie.webp" alt="Streetwear campaign still" data-reveal="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);">
+        </div>
+        <div data-ad-drift="" data-speed="0.22" style="will-change: transform;">
+          <img loading="lazy" decoding="async" src="/img/ad-can.webp" alt="Beverage campaign still" data-reveal="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);">
+        </div>
+        <div data-ad-drift="" data-speed="-0.14" style="will-change: transform;">
+          <img loading="lazy" decoding="async" src="/img/ad-activewear.webp" alt="Activewear campaign still" data-reveal="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);">
+        </div>
+        <div data-ad-drift="" data-speed="0.12" style="will-change: transform;">
+          <img loading="lazy" decoding="async" src="/img/ad-skincare.webp" alt="Skincare campaign still" data-reveal="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);">
+        </div>
+        <div data-ad-drift="" data-speed="-0.2" style="will-change: transform;">
+          <img loading="lazy" decoding="async" src="/img/ad-jewellery.webp" alt="Jewellery campaign still" data-reveal="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);">
+        </div>
+      </div>
+      <p style="margin: 18px 0px 0px; font-size: 14px; color: rgb(85, 85, 79);">One week of output from the line, shipped straight into the account.</p>
+    </div>
+  </section>
+
+  <section style="padding: 0px 32px 112px;">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 26ch; font-weight: 600; font-size: clamp(34px, 4.6vw, 64px); line-height: 1.02; letter-spacing: -0.02em;">What changed for the brands running it.</h2>
+      <div style="margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Brands on the system</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px 12px;">
+          <span style="border: 1px solid rgb(227, 227, 221); border-radius: 100px; padding: 8px 16px; font-size: 15px; font-weight: 500;">knest.ai</span>
+          <span style="border: 1px solid rgb(227, 227, 221); border-radius: 100px; padding: 8px 16px; font-size: 15px; font-weight: 500;">SRW</span>
+          <span style="border: 1px solid rgb(227, 227, 221); border-radius: 100px; padding: 8px 16px; font-size: 15px; font-weight: 500;">Online Model Academy</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 20px;">
+
+        <div data-reveal="" data-placeholder="case-study" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; overflow: hidden; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+          <div style="padding: clamp(32px, 3.4vw, 52px); display: flex; flex-direction: column; gap: 22px;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <span style="font-size: 26px; font-weight: 600; letter-spacing: -0.03em;">SRW</span>
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Supplements · six months on the system</span>
+            </div>
+            <h3 style="margin: 0px; max-width: 24ch; font-size: clamp(28px, 3vw, 42px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Revenue from Meta doubled in six months.</h3>
+            <p style="margin: 0px; max-width: 52ch; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">Two creative concepts were carrying the entire prospecting spend, and losing ad sets survived until the weekly call. We rebuilt the structure, put the creative line to work, and let the daily decisions move budget the morning a winner appeared. The gain came from speed and volume, not a bigger budget.</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 24px 32px; border-top: 1px solid rgb(227, 227, 221); padding-top: 24px;">
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(85, 85, 79);">Ecommerce sales</span>
+              <span style="display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap;">
+                <span style="font-size: 15px; color: rgb(85, 85, 79); text-decoration: line-through; font-variant-numeric: tabular-nums;">Baseline</span>
+                <span aria-hidden="true" style="font-size: 13px; color: rgb(85, 85, 79);">→</span>
+                <span style="font-size: 26px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(10, 10, 10);">2×</span>
+              </span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(85, 85, 79);">New concepts / mo</span>
+              <span style="display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap;">
+                <span style="font-size: 15px; color: rgb(85, 85, 79); text-decoration: line-through; font-variant-numeric: tabular-nums;">2</span>
+                <span aria-hidden="true" style="font-size: 13px; color: rgb(85, 85, 79);">→</span>
+                <span style="font-size: 26px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(10, 10, 10);">9</span>
+              </span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(85, 85, 79);">Prior trend</span>
+              <span style="display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap;">
+                <span style="font-size: 15px; color: rgb(85, 85, 79); text-decoration: line-through; font-variant-numeric: tabular-nums;">9 days</span>
+                <span aria-hidden="true" style="font-size: 13px; color: rgb(85, 85, 79);">→</span>
+                <span style="font-size: 26px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(10, 10, 10);">1 day</span>
+              </span>
+            </div>
+            </div>
+            <span style="font-size: 13px; color: rgb(85, 85, 79);">Six months from setup · figures signed off by the client</span>
+          </div>
+          <div style="background: rgb(247, 247, 245); border-left: 1px solid rgb(227, 227, 221); padding: clamp(32px, 3.4vw, 52px); display: flex; flex-direction: column; gap: 18px; justify-content: center;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(85, 85, 79);">Creative volume vs spend</span>
+            <div style="display: flex; flex-direction: column; gap: 11px;">
+            <div style="display: grid; grid-template-columns: 52px 1fr 1fr; gap: 12px; align-items: center;">
+              <span style="font-size: 13px; color: rgb(85, 85, 79); font-variant-numeric: tabular-nums;">Mar</span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 14%; background: rgb(58, 58, 52); border-radius: 2px;"></span></span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 58%; background: rgb(85, 85, 79); border-radius: 2px;"></span></span>
+            </div>
+            <div style="display: grid; grid-template-columns: 52px 1fr 1fr; gap: 12px; align-items: center;">
+              <span style="font-size: 13px; color: rgb(85, 85, 79); font-variant-numeric: tabular-nums;">Apr</span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 18%; background: rgb(58, 58, 52); border-radius: 2px;"></span></span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 66%; background: rgb(85, 85, 79); border-radius: 2px;"></span></span>
+            </div>
+            <div style="display: grid; grid-template-columns: 52px 1fr 1fr; gap: 12px; align-items: center;">
+              <span style="font-size: 13px; color: rgb(85, 85, 79); font-variant-numeric: tabular-nums;">May</span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 22%; background: rgb(58, 58, 52); border-radius: 2px;"></span></span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 72%; background: rgb(85, 85, 79); border-radius: 2px;"></span></span>
+            </div>
+            <div style="display: grid; grid-template-columns: 52px 1fr 1fr; gap: 12px; align-items: center;">
+              <span style="font-size: 13px; color: rgb(85, 85, 79); font-variant-numeric: tabular-nums;">Jun</span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 62%; background: rgb(216, 255, 0); border-radius: 2px;"></span></span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 78%; background: rgb(85, 85, 79); border-radius: 2px;"></span></span>
+            </div>
+            <div style="display: grid; grid-template-columns: 52px 1fr 1fr; gap: 12px; align-items: center;">
+              <span style="font-size: 13px; color: rgb(85, 85, 79); font-variant-numeric: tabular-nums;">Jul</span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 78%; background: rgb(216, 255, 0); border-radius: 2px;"></span></span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 88%; background: rgb(85, 85, 79); border-radius: 2px;"></span></span>
+            </div>
+            <div style="display: grid; grid-template-columns: 52px 1fr 1fr; gap: 12px; align-items: center;">
+              <span style="font-size: 13px; color: rgb(85, 85, 79); font-variant-numeric: tabular-nums;">Aug</span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 84%; background: rgb(216, 255, 0); border-radius: 2px;"></span></span>
+              <span style="display: flex; align-items: center;"><span style="height: 9px; width: 96%; background: rgb(85, 85, 79); border-radius: 2px;"></span></span>
+            </div>
+            </div>
+            <div style="display: flex; gap: 18px; font-size: 12px; color: rgb(85, 85, 79); flex-wrap: wrap;">
+              <span style="display: inline-flex; align-items: center; gap: 7px;"><span style="width: 10px; height: 9px; background: rgb(216, 255, 0); border-radius: 2px;"></span>Ads launched</span>
+              <span style="display: inline-flex; align-items: center; gap: 7px;"><span style="width: 10px; height: 9px; background: rgb(85, 85, 79); border-radius: 2px;"></span>Spend</span>
+            </div>
+            <span style="font-size: 13px; line-height: 1.6; color: rgb(85, 85, 79);">Setup begins in June. Volume overtakes the spend ramp instead of trailing it — the difference between scaling and just paying more.</span>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+          <div data-reveal="" data-placeholder="case-study" style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); border-radius: 6px; padding: clamp(30px, 2.8vw, 40px); display: flex; flex-direction: column; gap: 18px;">
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.025em; color: rgb(255, 255, 255);">knest.ai</span>
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">App · two months on the system</span>
+            </div>
+            <span style="font-size: clamp(38px, 3.6vw, 52px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; color: rgb(216, 255, 0);">+342%</span>
+            <p style="margin: 0px; max-width: 44ch; font-size: 16px; line-height: 1.7; color: rgb(181, 181, 173);">A standing start on paid social. Nine ad sets and sixty creatives live in the first month, and non-organic installs more than quadrupled inside two.</p>
+            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid rgb(35, 35, 32); padding-top: 18px;">
+              <span style="display: flex; justify-content: space-between; gap: 14px; font-size: 15px; color: rgb(181, 181, 173);"><span>Non-organic installs</span><span style="font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">+342%</span></span>
+              <span style="display: flex; justify-content: space-between; gap: 14px; font-size: 15px; color: rgb(181, 181, 173);"><span>First month live</span><span style="font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">9 ad sets · 60 creatives</span></span>
+              <span style="font-size: 13px; color: rgb(85, 85, 79);">First two months · AppsFlyer, last 30 days</span>
+            </div>
+          </div>
+          <div data-reveal="" data-placeholder="case-study" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: clamp(30px, 2.8vw, 40px); display: flex; flex-direction: column; gap: 18px;">
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.025em; color: rgb(10, 10, 10);">Online Model Academy</span>
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(85, 85, 79);">Education · creator-led ecommerce</span>
+            </div>
+            <span style="font-size: clamp(38px, 3.6vw, 52px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; color: rgb(10, 10, 10);">3×</span>
+            <p style="margin: 0px; max-width: 44ch; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">Creative output tripled without a shoot. Concepts, hooks and cuts produced through the line, tested weekly, with the winners scaled the morning they proved themselves.</p>
+            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid rgb(227, 227, 221); padding-top: 18px;">
+              <span style="display: flex; justify-content: space-between; gap: 14px; font-size: 15px; color: rgb(85, 85, 79);"><span>Creative output</span><span style="font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(10, 10, 10);">3×</span></span>
+              <span style="display: flex; justify-content: space-between; gap: 14px; font-size: 15px; color: rgb(85, 85, 79);"><span>Cost per enrolment</span><span style="font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(10, 10, 10);">Down 28%</span></span>
+              <span style="font-size: 13px; color: rgb(85, 85, 79);">Four months on the system</span>
+            </div>
+          </div>
+          <blockquote data-placeholder="testimonial" style="margin: 0px; background: rgb(10, 10, 10); color: rgb(247, 247, 245); border-radius: 6px; padding: clamp(32px, 3.4vw, 44px); display: flex; flex-direction: column; gap: 22px; justify-content: center;">
+            <span style="font-size: clamp(21px, 2vw, 28px); line-height: 1.3; letter-spacing: -0.02em;">"The 7am decisions are the only marketing thing I've ever actually read every day. Takes a minute, and I know the account is handled."</span>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <span style="font-size: 15px; font-weight: 600; color: rgb(255, 255, 255);">Founder · ecommerce · Sydney</span>
+              <span style="font-size: 15px; line-height: 1.65; color: rgb(181, 181, 173);">Eighteen months on the system, after four years with two different agencies.</span>
+            </div>
+          </blockquote>
+        </div>
+      </div>
+
+      <p style="margin: 36px 0px 0px; max-width: 66ch; font-size: 14px; line-height: 1.7; color: rgb(85, 85, 79);">Every check is read by Josh, who has spent a decade inside Australian ecommerce ad accounts — <a href="/about" class="scp3" style="color: rgb(85, 85, 79); border-bottom: 1px solid rgb(227, 227, 221);">more about that here</a>. We only publish numbers a client has signed off, and never an account's revenue. Where a client won't be named, the category and spend band are real and the figures are unchanged.</p>
+    </div>
+  </section>
+
+  <section style="padding: 0px 32px 112px;">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 22ch; font-weight: 600; font-size: clamp(34px, 4.6vw, 64px); line-height: 1.02; letter-spacing: -0.02em;">Where most brands start.</h2>
+      <p style="margin: 24px 0px 0px; max-width: 60ch; font-size: 19px; line-height: 1.6; color: rgb(85, 85, 79);">You don't have to buy all of it, and most don't start with the whole thing. Pick the step that solves what's hurting this month — we'll tell you on the call if it's the wrong one.</p>
+      <div style="margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+        <a data-reveal="" href="/apply" class="scp5" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 34px; display: flex; flex-direction: column; gap: 12px;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Start here</span>
+          <span style="font-size: 30px; line-height: 1.1;">Account check</span>
+          <span style="font-size: 15px; font-weight: 600; color: rgb(85, 85, 79);">Five days</span>
+          <span style="font-size: 15px; line-height: 1.65; color: rgb(85, 85, 79);">You'll know exactly where the money is going and what to fix first — recorded, in writing, and yours to act on with or without us.</span>
+        </a>
+        <a data-reveal="" href="/install" class="scp5" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 34px; display: flex; flex-direction: column; gap: 12px;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">One-time</span>
+          <span style="font-size: 30px; line-height: 1.1;">The setup</span>
+          <span style="font-size: 15px; font-weight: 600; color: rgb(85, 85, 79);">Four weeks</span>
+          <span style="font-size: 15px; line-height: 1.65; color: rgb(85, 85, 79);">You come out with numbers you can trust, an account built to scale, and the daily approval already running. Yours permanently.</span>
+        </a>
+        <a data-reveal="" href="/pricing" class="scp5" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 34px; display: flex; flex-direction: column; gap: 12px;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Monthly</span>
+          <span style="font-size: 30px; line-height: 1.1;">Creative and daily decisions</span>
+          <span style="font-size: 15px; font-weight: 600; color: rgb(85, 85, 79);">A batch every month</span>
+          <span style="font-size: 15px; line-height: 1.65; color: rgb(85, 85, 79);">Fresh ads in market every week and the day's decisions handled for you. Stop at the end of any month if it isn't earning it.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0px 32px 112px;">
+    <div style="max-width: 1240px; margin: 0px auto; background: rgb(10, 10, 10); color: rgb(247, 247, 245); border-radius: 6px; padding: clamp(40px, 5vw, 80px);">
+      <h2 style="margin: 0px; max-width: 22ch; font-weight: 600; font-size: clamp(32px, 4.2vw, 56px); line-height: 1.04; letter-spacing: -0.03em;">Six things you'll never have to argue about.</h2>
+      <p style="margin: 22px 0px 0px; max-width: 56ch; font-size: 17px; line-height: 1.65; color: rgb(181, 181, 173);">Every one of these costs us money and saves you some. They're the reasons the relationship stays simple when your spend triples.</p>
+      <div style="margin-top: 48px; display: flex; flex-direction: column;">
+        <div data-reveal="" style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px; display: grid; grid-template-columns: 36px 1fr; gap: 16px;"><span style="font-size: 13px; font-weight: 600; color: rgb(216, 255, 0); font-variant-numeric: tabular-nums;">01</span><p style="margin: 0px; font-size: clamp(18px, 2vw, 24px); line-height: 1.4; max-width: 46ch;">Your fee will never take a cut of your ad spend.</p></div>
+        <div data-reveal="" style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px; display: grid; grid-template-columns: 36px 1fr; gap: 16px;"><span style="font-size: 13px; font-weight: 600; color: rgb(216, 255, 0); font-variant-numeric: tabular-nums;">02</span><p style="margin: 0px; font-size: clamp(18px, 2vw, 24px); line-height: 1.4; max-width: 46ch;">You'll never be sold a retainer to keep us interested.</p></div>
+        <div data-reveal="" style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px; display: grid; grid-template-columns: 36px 1fr; gap: 16px;"><span style="font-size: 13px; font-weight: 600; color: rgb(216, 255, 0); font-variant-numeric: tabular-nums;">03</span><p style="margin: 0px; font-size: clamp(18px, 2vw, 24px); line-height: 1.4; max-width: 46ch;">You'll never sit through a weekly performance call. If a report needs a human to explain it, the report failed.</p></div>
+        <div data-reveal="" style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px; display: grid; grid-template-columns: 36px 1fr; gap: 16px;"><span style="font-size: 13px; font-weight: 600; color: rgb(216, 255, 0); font-variant-numeric: tabular-nums;">04</span><p style="margin: 0px; font-size: clamp(18px, 2vw, 24px); line-height: 1.4; max-width: 46ch;">You keep the ad account, the pixel and every creative file — permanently.</p></div>
+        <div data-reveal="" style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px; display: grid; grid-template-columns: 36px 1fr; gap: 16px;"><span style="font-size: 13px; font-weight: 600; color: rgb(216, 255, 0); font-variant-numeric: tabular-nums;">05</span><p style="margin: 0px; font-size: clamp(18px, 2vw, 24px); line-height: 1.4; max-width: 46ch;">You'll never be billed for a month you didn't want.</p></div>
+        <div data-reveal="" style="border-top: 1px solid rgb(35, 35, 32); border-bottom: 1px solid rgb(35, 35, 32); padding: 22px 0px; display: grid; grid-template-columns: 36px 1fr; gap: 16px;"><span style="font-size: 13px; font-weight: 600; color: rgb(216, 255, 0); font-variant-numeric: tabular-nums;">06</span><p style="margin: 0px; font-size: clamp(18px, 2vw, 24px); line-height: 1.4; max-width: 46ch;">You'll never have to chase us for a number. Every figure is on the call, in writing.</p></div>
+      </div>
+      <p style="margin: 40px 0px 0px; max-width: 56ch; font-size: 17px; line-height: 1.65; color: rgb(181, 181, 173);">Any agency could copy this website in a week. None of them can copy this list, because it would cost them the business model they rely on.</p>
+    </div>
+  </section>
+
+  <section style="padding: 0px 32px 112px;">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 24ch; font-weight: 600; font-size: clamp(32px, 4.2vw, 56px); line-height: 1.04; letter-spacing: -0.02em;">Nothing happens without your approval.</h2>
+      <p style="margin: 24px 0px 64px; max-width: 60ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">The system drafts the day's decisions and you approve the ones you agree with — a minute's work, on your phone, before the office opens. We then action them in your account. If you'd rather review nothing and hand the whole thing over, the end-to-end option does that for a fixed monthly fee. Either way the account, the pixel and the creative stay yours.</p>
+      <h3 style="margin: 0px 0px 40px; font-weight: 600; font-size: clamp(26px, 3vw, 40px); line-height: 1.06;">Common questions.</h3>
+      <div style="display: flex; flex-direction: column; max-width: 860px;">
+        
+          <div data-faq-item="" style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+            <button type="button" data-faq-toggle="" style="width: 100%; background: none; border: none; padding: 0px; margin: 0px; font-family: inherit; text-align: left; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; color: rgb(10, 10, 10);">
+              <span style="font-size: 20px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.4;"><span class="sc-interp">Do you take a percentage of our ad spend?</span></span>
+              <span data-faq-sign="" style="font-size: 24px; font-weight: 400; color: rgb(85, 85, 79); line-height: 1;"><span class="sc-interp">−</span></span>
+            </button>
+            
+              <p data-faq-answer="" style="margin: 16px 0px 0px; max-width: 66ch; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);"><span class="sc-interp">No, and we never will. The setup is a fixed one-time price and everything monthly is a flat fee built around your account. What you spend on Meta has no effect on what you pay us — the setup fee is published and the monthly is fixed.</span></p>
+            
+          </div>
+        
+          <div data-faq-item="" style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+            <button type="button" data-faq-toggle="" style="width: 100%; background: none; border: none; padding: 0px; margin: 0px; font-family: inherit; text-align: left; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; color: rgb(10, 10, 10);">
+              <span style="font-size: 20px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.4;"><span class="sc-interp">Who owns the ad account?</span></span>
+              <span data-faq-sign="" style="font-size: 24px; font-weight: 400; color: rgb(85, 85, 79); line-height: 1;"><span class="sc-interp">+</span></span>
+            </button>
+            
+              <p data-faq-answer="" style="margin: 16px 0px 0px; max-width: 66ch; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);"><span class="sc-interp">You do. Everything is built inside your own Business Manager from hour one — the account, the pixel, the audiences, the creative files. If you stop working with us, none of it moves.</span></p>
+            
+          </div>
+        
+          <div data-faq-item="" style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+            <button type="button" data-faq-toggle="" style="width: 100%; background: none; border: none; padding: 0px; margin: 0px; font-family: inherit; text-align: left; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; color: rgb(10, 10, 10);">
+              <span style="font-size: 20px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.4;"><span class="sc-interp">What actually arrives at 7am?</span></span>
+              <span data-faq-sign="" style="font-size: 24px; font-weight: 400; color: rgb(85, 85, 79); line-height: 1;"><span class="sc-interp">+</span></span>
+            </button>
+            
+              <p data-faq-answer="" style="margin: 16px 0px 0px; max-width: 66ch; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);"><span class="sc-interp">A short list of decisions for the day — what to turn off, where to move budget, which creative to push live — each written in plain English with the numbers behind it. You approve the ones you want and we make those changes in Ads Manager for you. Approving takes about a minute; you never have to open the platform.</span></p>
+            
+          </div>
+        
+          <div data-faq-item="" style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+            <button type="button" data-faq-toggle="" style="width: 100%; background: none; border: none; padding: 0px; margin: 0px; font-family: inherit; text-align: left; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; color: rgb(10, 10, 10);">
+              <span style="font-size: 20px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.4;"><span class="sc-interp">Do we have to make the changes ourselves?</span></span>
+              <span data-faq-sign="" style="font-size: 24px; font-weight: 400; color: rgb(85, 85, 79); line-height: 1;"><span class="sc-interp">+</span></span>
+            </button>
+            
+              <p data-faq-answer="" style="margin: 16px 0px 0px; max-width: 66ch; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);"><span class="sc-interp">No. That's the part people expect and it isn't how this works. The system drafts the decisions, you approve them in one tap, and we action them in your account the same morning. If you'd rather do it yourself, you can — the decisions tells you exactly what to change.</span></p>
+            
+          </div>
+        
+          <div data-faq-item="" style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+            <button type="button" data-faq-toggle="" style="width: 100%; background: none; border: none; padding: 0px; margin: 0px; font-family: inherit; text-align: left; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; color: rgb(10, 10, 10);">
+              <span style="font-size: 20px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.4;"><span class="sc-interp">Is there a lock-in contract?</span></span>
+              <span data-faq-sign="" style="font-size: 24px; font-weight: 400; color: rgb(85, 85, 79); line-height: 1;"><span class="sc-interp">+</span></span>
+            </button>
+            
+              <p data-faq-answer="" style="margin: 16px 0px 0px; max-width: 66ch; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);"><span class="sc-interp">No. The setup is a four-week project with a fixed start and finish. Everything monthly is month to month — stop at the end of any month, no notice period.</span></p>
+            
+          </div>
+        
+          <div data-faq-item="" style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+            <button type="button" data-faq-toggle="" style="width: 100%; background: none; border: none; padding: 0px; margin: 0px; font-family: inherit; text-align: left; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; color: rgb(10, 10, 10);">
+              <span style="font-size: 20px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.4;"><span class="sc-interp">What does a month of creative actually get us?</span></span>
+              <span data-faq-sign="" style="font-size: 24px; font-weight: 400; color: rgb(85, 85, 79); line-height: 1;"><span class="sc-interp">+</span></span>
+            </button>
+            
+              <p data-faq-answer="" style="margin: 16px 0px 0px; max-width: 66ch; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);"><span class="sc-interp">A month's supply of testing: new concepts, hooks and cuts shipped every week rather than in one batch, each with its performance numbers attached. Volume is the point — the engine needs enough distinct creative in market to find a winner. The setup fee is published; the monthly is set by what your account needs.</span></p>
+            
+          </div>
+        
+          <div data-faq-item="" style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+            <button type="button" data-faq-toggle="" style="width: 100%; background: none; border: none; padding: 0px; margin: 0px; font-family: inherit; text-align: left; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; color: rgb(10, 10, 10);">
+              <span style="font-size: 20px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.4;"><span class="sc-interp">What if we have nobody internally to run it?</span></span>
+              <span data-faq-sign="" style="font-size: 24px; font-weight: 400; color: rgb(85, 85, 79); line-height: 1;"><span class="sc-interp">+</span></span>
+            </button>
+            
+              <p data-faq-answer="" style="margin: 16px 0px 0px; max-width: 66ch; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);"><span class="sc-interp">Then we'll run it. The end-to-end option is quoted after we read the account: we buy the media, produce the creative and do the daily execution ourselves, still on your Business Manager and still for a fixed fee rather than a percentage of spend.</span></p>
+            
+          </div>
+        
+        <div style="border-top: 1px solid rgb(227, 227, 221);"></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0px 32px 112px;">
+    <div style="max-width: 1240px; margin: 0px auto; background: rgb(10, 10, 10); color: rgb(247, 247, 245); border-radius: 6px; padding: clamp(48px, 6vw, 104px); display: flex; flex-direction: column; align-items: flex-start; gap: 32px;">
+      <span style="display: inline-flex; align-items: center; gap: 9px; border: 1px solid rgb(85, 85, 79); border-radius: 4px; padding: 9px 16px; font-size: 13px; font-weight: 500;"><span style="width: 7px; height: 7px; border-radius: 50%; background: rgb(216, 255, 0);"></span>Next read at 07:00</span>
+      <h2 style="margin: 0px; max-width: 18ch; font-weight: 600; font-size: clamp(42px, 6vw, 88px); line-height: 1.04; letter-spacing: -0.035em; color: rgb(255, 255, 255);">Find out what your account is leaving on the table.</h2>
+      <p style="margin: 0px; max-width: 58ch; font-size: 19px; line-height: 1.6; color: rgb(181, 181, 173);">Fifteen minutes with Josh. You'll leave knowing the two or three things costing you the most right now, what it would take to fix them, and every figure involved — whether you work with us or not.</p>
+      <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 32px; border-radius: 4px;">Get started</a>
+    </div>
+  </section></main><div class="sc-host"><footer style="background: rgb(10, 10, 10); color: rgb(181, 181, 173); padding: 96px 32px 48px;">
+  <div style="max-width: 1240px; margin: 0px auto;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 48px; padding-bottom: 64px; border-bottom: 1px solid rgb(35, 35, 32);">
+      <div style="display: flex; flex-direction: column; gap: 18px; max-width: 340px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
+          <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: rgb(255, 255, 255);">sevenam</span>
+        </div>
+        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.</p>
+        <span style="font-size: 15px; color: rgb(85, 85, 79);">Sydney, Australia</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Products</span>
+        <a href="/install" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">One-time setup</a>
+        <a href="/system" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">The daily decisions</a>
+        <a href="/pricing" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Creative testing</a>
+        <a href="/ai-marketing-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Where we use AI</a>
+        <a href="/facebook-marketing-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook marketing</a>
+        <a href="/digital-marketing-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Digital marketing</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Start here</span>
+        <a href="/check" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Account check</a>
+        <a href="/apply" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Get started</a>
+        <a href="/agency-fee" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Fee calculator · free</a>
+        <a href="/learn" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Guides and glossary</a>
+        <a href="/growth" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">The growth thesis</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Services</span>
+        <a href="/facebook-ads-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads</a>
+        <a href="/meta-ads-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads</a>
+        <a href="/instagram-ads-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Instagram ads</a>
+        <a href="/social-media-advertising-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Social media advertising</a>
+        <a href="/facebook-ads-consultant" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Where</span>
+        <a href="/facebook-ads-perth" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Perth</a>
+        <a href="/facebook-ads-melbourne" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Melbourne</a>
+        <a href="/facebook-ads-sydney" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Sydney</a>
+        <a href="/facebook-ads-brisbane" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Brisbane</a>
+        <a href="/learn" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">All locations →</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Contact</span>
+        <a href="mailto:hello@sevenam.com.au" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">hello@sevenam.com.au</a>
+        <a href="/about" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">About</a>
+      </div>
+    </div>
+    <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: rgb(85, 85, 79);">
+      <span>© 2026 Sevenam. Australia.</span>
+      <span>Your growth system for Meta. It runs at seven.</span>
+    </div>
+  </div></footer></div></div>
+<script src="/site.js" defer></script>
+</body>
+</html>

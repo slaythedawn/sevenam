@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<style>x-dc{display:none!important}</style>
+<style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style>
+<title>Agency Fee Calculator — What A Percentage Of Spend Really Costs | Sevenam</title>
+<meta name="description" content="Free calculator: enter your monthly ad spend and your agency's percentage or flat retainer, and see the fee in dollars a month, a year, and over three years — plus what happens when you double your budget.">
+<link rel="canonical" href="https://sevenam.com.au/agency-fee">
+<meta property="og:title" content="Agency Fee Calculator — What A Percentage Of Spend Really Costs | Sevenam">
+<meta property="og:description" content="Free calculator: enter your monthly ad spend and your agency's percentage or flat retainer, and see the fee in dollars a month, a year, and over three years — plus what happens when you double your budget.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sevenam.com.au/agency-fee">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.","email":"hello@sevenam.com.au","areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/agency-fee","name":"Agency Fee Calculator — What A Percentage Of Spend Really Costs | Sevenam","description":"Free calculator: enter your monthly ad spend and your agency's percentage or flat retainer, and see the fee in dollars a month, a year, and over three years — plus what happens when you double your budget.","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"WebApplication","name":"Agency fee calculator","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"AUD"},"provider":{"@id":"https://sevenam.com.au/#org"}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @media (max-width: 720px) {
+    section { padding-left:20px !important; padding-right:20px !important; }
+    h1 { letter-spacing:-0.03em !important; }
+    img { max-width:100%; }
+  }
+  @media (max-width: 420px) { body { -webkit-text-size-adjust:100%; } }
+  input[type=range] { accent-color:#D8FF00; }
+</style>
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @keyframes pulseDot { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
+  @keyframes chipIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
+  @media (max-width: 780px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
+</style>
+</head>
+<body>
+<div class="sc-host"><div class="sc-host"><header style="position: sticky; top: 0px; z-index: 50; background: rgb(10, 10, 10); border-bottom: 1px solid rgb(35, 35, 32);">
+  <div data-nav-bar="" style="max-width: 1240px; margin: 0px auto; padding: 14px 32px; min-height: 80px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px;">
+    <a href="/" style="display: flex; align-items: flex-end; gap: 7px; flex-shrink: 0;">
+      <span style="font-size: 23px; font-weight: 600; letter-spacing: -0.035em; white-space: nowrap; color: rgb(255, 255, 255);">sevenam</span>
+      <span style="width: 7px; height: 7px; border-radius: 50%; background: rgb(216, 255, 0); margin-bottom: 5px; flex-shrink: 0; animation: 3.4s ease-in-out 0s infinite normal none running pulseDot;"></span>
+    </a>
+    <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; flex: 1 1 auto; min-width: 0px;">
+      <span data-nav-links="" style="display: flex; align-items: center; gap: 2px; min-width: 0px;">
+        <a href="/system" class="scp1" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">How it works</a>
+        <a href="/pricing" class="scp1" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Pricing</a>
+        <a href="/agency-fee" class="scp1" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Free tools</a>
+        <a href="/learn" class="scp1" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Learn</a>
+        <a href="/about" class="scp1" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">About</a>
+      </span>
+      <a href="/apply" class="scp2" style="display: inline-flex; align-items: center; gap: 9px; margin-left: 8px; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 15px; font-weight: 600; padding: 13px 20px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;">
+        <span>Get started</span>
+        <span aria-hidden="true" style="opacity: 0.55;">→</span>
+      </a>
+    </nav>
+  </div>
+  </header></div><main>
+  <section style="padding: 120px 32px 88px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: rgb(85, 85, 79);">FREE TOOL</span>
+      <h1 style="margin: 28px 0px 0px; max-width: 20ch; font-size: clamp(44px, 6.4vw, 88px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04;">What your agency actually costs.</h1>
+      <p style="margin: 36px 0px 0px; max-width: 64ch; font-size: 19px; line-height: 1.65; color: rgb(85, 85, 79);">Enter your own numbers. Percentage fees rise automatically every time you scale, which is the part nobody negotiated. Nothing is sent anywhere — this runs in your browser.</p>
+    </div>
+  </section>
+
+  <section style="padding: 0px 32px 128px;">
+    <div style="max-width: 1200px; margin: 0px auto; background: rgb(10, 10, 10); color: rgb(247, 247, 245); border-radius: 6px; overflow: hidden;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+        <div style="padding: 48px; border-right: 1px solid rgb(35, 35, 32); display: flex; flex-direction: column; gap: 40px;">
+          <div>
+            <label for="spend" style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Monthly ad spend</label>
+            <div style="display: flex; align-items: baseline; gap: 6px; margin-top: 14px;">
+              <span style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em; color: rgb(216, 255, 0);">$</span>
+              <input id="spend" type="number" min="0" step="1000" value="30000" style="width: 100%; background: none; border-top: none; border-right: none; border-bottom: 1px solid rgb(35, 35, 32); border-left: none; border-image: initial; color: rgb(216, 255, 0); font-family: inherit; font-size: 40px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; padding: 0px 0px 8px;">
+            </div>
+            <input data-range="spend" type="range" min="2000" max="200000" step="1000" aria-label="Monthly ad spend slider" value="30000" style="width: 100%; margin-top: 20px;">
+          </div>
+          <div>
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">How they charge</span>
+            <div style="display: flex; gap: 8px; margin-top: 14px;">
+              <button type="button" data-tab="pct" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); border: 1px solid rgb(216, 255, 0); border-radius: 4px; padding: 10px 14px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;">Percentage of spend</button>
+              <button type="button" data-tab="flat" style="background: transparent; color: rgb(181, 181, 173); border: 1px solid rgb(35, 35, 32); border-radius: 4px; padding: 10px 14px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;">Monthly retainer</button>
+            </div>
+          </div>
+          
+            <div id="pct-block">
+              <label for="pct" style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Their percentage</label>
+              <div style="display: flex; align-items: baseline; gap: 6px; margin-top: 14px;">
+                <input id="pct" type="number" min="10" max="40" step="0.5" value="20" style="width: 100%; background: none; border-top: none; border-right: none; border-bottom: 1px solid rgb(35, 35, 32); border-left: none; border-image: initial; color: rgb(216, 255, 0); font-family: inherit; font-size: 40px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; padding: 0px 0px 8px;">
+                <span style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em; color: rgb(216, 255, 0);">%</span>
+              </div>
+              <input data-range="pct" type="range" min="10" max="25" step="0.5" aria-label="Agency percentage slider" value="20" style="width: 100%; margin-top: 20px;">
+            </div>
+          
+          
+            <div id="flat-block">
+              <label for="flat" style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Their monthly retainer</label>
+              <div style="display: flex; align-items: baseline; gap: 6px; margin-top: 14px;">
+                <span style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em; color: rgb(216, 255, 0);">$</span>
+                <input id="flat" type="number" min="0" step="500" value="4500" style="width: 100%; background: none; border-top: none; border-right: none; border-bottom: 1px solid rgb(35, 35, 32); border-left: none; border-image: initial; color: rgb(216, 255, 0); font-family: inherit; font-size: 40px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; padding: 0px 0px 8px;">
+              </div>
+              <input data-range="flat" type="range" min="500" max="30000" step="250" aria-label="Monthly retainer slider" value="4500" style="width: 100%; margin-top: 20px;">
+            </div>
+          
+          <p data-out="note" style="margin: 0px; font-size: 14px; line-height: 1.6; color: rgb(85, 85, 79);"><span class="sc-interp">We ask you for the percentage rather than assuming one, so the number is yours and not ours.</span></p>
+        </div>
+
+        <div style="padding: 48px; display: flex; flex-direction: column; gap: 36px;">
+          <div>
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Their fee, this year</span>
+            <div data-out="annual" style="font-size: clamp(48px, 6.4vw, 80px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05; color: rgb(216, 255, 0); font-variant-numeric: tabular-nums; margin-top: 10px;"><span class="sc-interp">$72,000</span></div>
+            <div style="font-size: 16px; color: rgb(181, 181, 173); margin-top: 8px; font-variant-numeric: tabular-nums;"><span data-out="monthly"><span class="sc-interp">$6,000</span></span> a month, on top of the media itself</div>
+          </div>
+          <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 28px; display: flex; flex-direction: column; gap: 20px;">
+            <div>
+              <span data-out="doubledLabel" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);"><span class="sc-interp">If you double your spend</span></span>
+              <div data-out="doubled" style="font-size: 34px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; margin-top: 8px;"><span class="sc-interp">$144,000</span></div>
+              <div data-out="doubledNote" style="font-size: 15px; color: rgb(85, 85, 79); margin-top: 4px;"><span class="sc-interp">$72,000 more a year, for the same work</span></div>
+            </div>
+            <div>
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Over three years at that spend</span>
+              <div data-out="threeYear" style="font-size: 34px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; margin-top: 8px;"><span class="sc-interp">$216,000</span></div>
+            </div>
+          </div>
+          <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 28px;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">The same year with Sevenam</span>
+            <div style="font-size: 34px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; margin-top: 8px; color: rgb(216, 255, 0);">$30,180</div>
+            <div style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79); margin-top: 8px;">The Install once ($19,500) plus Sevenam for twelve months ($10,680). Fixed, whatever you spend. The Studio is separate and optional at $10,000 a month.</div>
+          </div>
+          <a href="/apply" class="scp0" style="align-self: flex-start; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Get a free check</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0px 32px 128px;">
+    <div style="max-width: 1200px; margin: 0px auto; display: grid; grid-template-columns: 1fr;">
+      <div>
+        <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(32px, 4vw, 54px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.07;">The work changed. The fee didn't.</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 56px;">
+          <div style="border-top: 1px solid rgb(227, 227, 221); padding-top: 22px;">
+            <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Meta automated the craft</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">Targeting, ranking and optimisation are the platform's models now. That's published, not alleged.</p>
+          </div>
+          <div style="border-top: 1px solid rgb(227, 227, 221); padding-top: 22px;">
+            <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">The percentage stayed</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">You pay a share of your budget for a job the platform does for free, and the share rises every time you scale.</p>
+          </div>
+          <div style="border-top: 1px solid rgb(227, 227, 221); padding-top: 22px;">
+            <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">So install a system</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">Fixed price, your account, and technology that never charges more because you grew.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section></main><div class="sc-host"><footer style="background: rgb(10, 10, 10); color: rgb(181, 181, 173); padding: 96px 32px 48px;">
+  <div style="max-width: 1240px; margin: 0px auto;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 48px; padding-bottom: 64px; border-bottom: 1px solid rgb(35, 35, 32);">
+      <div style="display: flex; flex-direction: column; gap: 18px; max-width: 340px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
+          <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: rgb(255, 255, 255);">sevenam</span>
+        </div>
+        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.</p>
+        <span style="font-size: 15px; color: rgb(85, 85, 79);">Sydney, Australia</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Products</span>
+        <a href="/install" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">One-time setup</a>
+        <a href="/system" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">The daily decisions</a>
+        <a href="/pricing" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Creative testing</a>
+        <a href="/ai-marketing-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Where we use AI</a>
+        <a href="/facebook-marketing-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook marketing</a>
+        <a href="/digital-marketing-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Digital marketing</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Start here</span>
+        <a href="/check" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Account check</a>
+        <a href="/apply" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Get started</a>
+        <a href="/agency-fee" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Fee calculator · free</a>
+        <a href="/learn" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Guides and glossary</a>
+        <a href="/growth" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">The growth thesis</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Services</span>
+        <a href="/facebook-ads-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads</a>
+        <a href="/meta-ads-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads</a>
+        <a href="/instagram-ads-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Instagram ads</a>
+        <a href="/social-media-advertising-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Social media advertising</a>
+        <a href="/facebook-ads-consultant" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Where</span>
+        <a href="/facebook-ads-perth" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Perth</a>
+        <a href="/facebook-ads-melbourne" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Melbourne</a>
+        <a href="/facebook-ads-sydney" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Sydney</a>
+        <a href="/facebook-ads-brisbane" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Brisbane</a>
+        <a href="/learn" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">All locations →</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Contact</span>
+        <a href="mailto:hello@sevenam.com.au" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">hello@sevenam.com.au</a>
+        <a href="/about" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">About</a>
+      </div>
+    </div>
+    <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: rgb(85, 85, 79);">
+      <span>© 2026 Sevenam. Australia.</span>
+      <span>Your growth system for Meta. It runs at seven.</span>
+    </div>
+  </div></footer></div></div>
+<script src="/site.js" defer></script>
+</body>
+</html>

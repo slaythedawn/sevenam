@@ -1,0 +1,779 @@
+/* Sevenam — site behaviour.
+   Ported from the Claude Design prototypes (dc-runtime) to dependency-free JS.
+   Every page ships its content in the HTML; this file only adds behaviour. */
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------ lead capture
+     LEAD_EMAIL   the address the "Send this to Josh" mailto is addressed to.
+                  It must be a mailbox that actually receives — if the domain has
+                  no mailbox yet, either add forwarding for it or put a working
+                  address here instead.
+     LEAD_ENDPOINT a webhook (Zapier, Make, a CRM) that receives the answers
+                  server-side. Leave empty to rely on the mailto alone.
+                  Posted form-encoded on purpose: that keeps it a "simple" CORS
+                  request, so the browser skips the preflight most webhook hosts
+                  reject. If the POST fails, the page falls back to the mailto
+                  rather than stranding a lead. */
+  var LEAD_EMAIL = "joshuapcck@gmail.com";
+  var LEAD_ENDPOINT = "";
+
+  var VOLT = "#D8FF00";
+  var EASE = "cubic-bezier(0.2,0.7,0.2,1)";
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var timers = [];
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function q(sel, root) { return (root || document).querySelector(sel); }
+  function qa(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  /* ---------------------------------------------------------------- reveals */
+  /* Elements ship visible. We hide only what is below the fold, then animate it
+     in. The reveal list is re-queried on every sweep and a safety sweep runs on
+     scroll, resize and first frame, so nothing can be left permanently hidden. */
+  function setupReveals() {
+    if (reduced || !("IntersectionObserver" in window)) return;
+    var io, groups = new Map();
+
+    function all() { return qa("[data-reveal]"); }
+
+    function arm() {
+      var vh = window.innerHeight;
+      all().forEach(function (el) {
+        if (el.dataset.armed) return;
+        el.dataset.armed = "1";
+        if (el.getBoundingClientRect().top < vh * 0.9) return;
+        el.style.opacity = "0";
+        el.style.transform = "translateY(22px)";
+        el.dataset.pending = "1";
+        io.observe(el);
+      });
+    }
+
+    function show(el, stagger) {
+      if (!el.dataset.pending) return;
+      delete el.dataset.pending;
+      io.unobserve(el);
+      var parent = el.parentElement;
+      var n = groups.get(parent) || 0;
+      groups.set(parent, n + 1);
+      var delay = stagger ? Math.min(n * 70, 420) : 0;
+      function paint() {
+        el.style.transition = "opacity 0.7s " + EASE + ", transform 0.7s " + EASE;
+        el.style.opacity = "1";
+        el.style.transform = "none";
+      }
+      if (delay) later(paint, delay); else paint();
+    }
+
+    function sweep() {
+      arm();
+      all().forEach(function (el) {
+        if (!el.dataset.pending) return;
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) show(el, false);
+      });
+    }
+
+    io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) show(e.target, true); });
+      sweep();
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0 });
+
+    arm();
+    window.addEventListener("scroll", sweep, { passive: true });
+    window.addEventListener("resize", sweep, { passive: true });
+    requestAnimationFrame(sweep);
+  }
+
+  /* ------------------------------------------------------- parallax + drift */
+  function setupParallax() {
+    var bg = q("[data-parallax]");
+    if (!bg || reduced) return;
+    var section = bg.parentElement;
+    var raf = null;
+    function onScroll() {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = null;
+        var r = section.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+        var p = (window.innerHeight - r.top) / (window.innerHeight + r.height);
+        bg.style.setProperty("translate", "0 " + ((p - 0.5) * -70).toFixed(1) + "px");
+      });
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  function setupDrift() {
+    var drifts = qa("[data-ad-drift]");
+    if (!drifts.length || reduced) return;
+    var raf = null;
+    function onDrift() {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = null;
+        drifts.forEach(function (el) {
+          var r = el.getBoundingClientRect();
+          if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+          var p = (window.innerHeight - r.top) / (window.innerHeight + r.height);
+          var speed = parseFloat(el.dataset.speed) || 0.1;
+          el.style.transform = "translate3d(0," + ((p - 0.5) * -120 * speed).toFixed(1) + "px,0)";
+        });
+      });
+    }
+    window.addEventListener("scroll", onDrift, { passive: true });
+    window.addEventListener("resize", onDrift, { passive: true });
+    onDrift();
+  }
+
+  /* ------------------------------------------------- header 07:00 announcement */
+  /* Real local time: the band shows for the five minutes after 7am. ?seven forces it. */
+  function setupNavBand() {
+    var header = q("header");
+    if (!header || q("[data-seven-band]")) return;
+    var demo = false;
+    try { demo = new URLSearchParams(location.search).has("seven"); } catch (e) {}
+    function check() {
+      var t = new Date();
+      var secs = t.getHours() * 3600 + t.getMinutes() * 60 + t.getSeconds();
+      var on = demo || (secs >= 25200 && secs < 25500);
+      var band = q("[data-seven-band]");
+      if (on && !band) {
+        band = document.createElement("div");
+        band.setAttribute("data-seven-band", "");
+        band.style.cssText = "background:" + VOLT + "; color:#0A0A0A; padding:9px 32px; text-align:center;" +
+          "font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;" +
+          (reduced ? "" : "animation:chipIn 0.5s " + EASE + " both;");
+        band.textContent = "07:00 — today's decisions are ready";
+        header.appendChild(band);
+      } else if (!on && band) {
+        band.remove();
+      }
+    }
+    check();
+    setInterval(check, 30000);
+  }
+
+  /* ------------------------------------------------------ the 7am hero moment */
+  function setupHero() {
+    var clock = q("[data-clock]");
+    if (!clock) return;
+    var label = q("[data-clock-label]");
+    var approved = false;
+
+    function settle(instant) {
+      clock.style.color = VOLT;
+      if (label) { label.textContent = "Today's decisions are ready"; label.style.color = VOLT; }
+      var btn = q("[data-approve]");
+      if (btn) { btn.style.background = VOLT; btn.style.color = "#0A0A0A"; btn.style.cursor = "pointer"; }
+      if (instant) {
+        var badge = q("[data-badge]");
+        if (badge) { badge.textContent = "3 to approve"; badge.style.color = VOLT; }
+      }
+    }
+
+    function approveAll() {
+      if (approved) return;
+      approved = true;
+      var btn = q("[data-approve]"), badge = q("[data-badge]"), foot = q("[data-foot]");
+      if (btn) {
+        btn.style.animation = "none";
+        btn.textContent = "Approved";
+        btn.style.background = "#161613";
+        btn.style.color = VOLT;
+        btn.style.cursor = "default";
+      }
+      qa("[data-act]").forEach(function (row, i) {
+        later(function () {
+          var tick = q("[data-tick]", row), state = q("[data-state]", row);
+          if (tick) {
+            tick.style.transition = "background 0.3s ease, border-color 0.3s ease, transform 0.3s " + EASE;
+            tick.style.background = VOLT;
+            tick.style.borderColor = VOLT;
+            tick.textContent = "✓";
+            tick.style.transform = "scale(1.12)";
+            later(function () { tick.style.transform = "scale(1)"; }, 220);
+          }
+          if (state) { state.textContent = "Actioned"; state.style.color = "#55554F"; }
+        }, 220 + i * 320);
+      });
+      later(function () {
+        if (badge) { badge.textContent = "Done · 07:04"; badge.style.color = "#55554F"; }
+        if (foot) {
+          foot.textContent = "All three changes are live in your account. Nothing else to do today.";
+          foot.style.color = "#B5B5AD";
+        }
+      }, 1300);
+    }
+
+    function fireSeven() {
+      var flash = q("[data-flash]"), ring = q("[data-ring]"),
+          card = q("[data-approve-card]"), badge = q("[data-badge]");
+      if (flash) {
+        flash.style.transition = "opacity 0.22s ease-out";
+        flash.style.opacity = "1";
+        later(function () {
+          flash.style.transition = "opacity 1.1s cubic-bezier(0.3,0,0.5,1)";
+          flash.style.opacity = "0";
+        }, 240);
+      }
+      if (ring) ring.style.animation = "ringOut 1.2s " + EASE + " forwards";
+      clock.style.transition = "color 0.3s ease, text-shadow 0.6s ease, transform 0.5s " + EASE;
+      clock.style.color = VOLT;
+      clock.style.textShadow = "0 0 46px rgba(216,255,0,0.45)";
+      clock.style.transform = "scale(1.04)";
+      later(function () {
+        clock.style.transform = "scale(1)";
+        clock.style.textShadow = "0 0 22px rgba(216,255,0,0.18)";
+      }, 520);
+      settle(false);
+      if (badge) later(function () { badge.textContent = "3 to approve"; badge.style.color = VOLT; }, 420);
+      if (card) {
+        card.style.transition = "border-color 0.5s ease, box-shadow 0.6s ease";
+        card.style.borderColor = "#3A3A32";
+        later(function () { card.style.borderColor = "#232320"; }, 1400);
+      }
+      qa("[data-act]").forEach(function (row, i) {
+        row.style.opacity = "0.35";
+        row.style.transform = "translateY(10px)";
+        later(function () {
+          row.style.transition = "opacity 0.55s " + EASE + ", transform 0.55s " + EASE;
+          row.style.opacity = "1";
+          row.style.transform = "none";
+          var state = q("[data-state]", row);
+          if (state) state.style.color = VOLT;
+        }, 260 + i * 150);
+      });
+      var btn = q("[data-approve]");
+      if (btn) {
+        later(function () { btn.style.animation = "voltPulse 2.4s ease-in-out infinite"; }, 900);
+        btn.addEventListener("click", approveAll);
+        later(function () { if (!approved) approveAll(); }, 4200);
+      }
+    }
+
+    function setClock(v) {
+      clock.textContent = v;
+    }
+
+    if (reduced) { setClock("07:00"); settle(true); return; }
+
+    /* Hold the sequence until the hero is actually looked at, so a visitor who
+       lands mid-scroll or returns to the tab still sees the signature moment. */
+    function run() {
+      ["06:58", "06:59", "07:00"].forEach(function (v, i) {
+        later(function () { setClock(v); }, 900 + i * 900);
+      });
+      later(fireSeven, 900 + 2 * 900);
+    }
+
+    if ("IntersectionObserver" in window) {
+      var started = false;
+      var hio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && !started) { started = true; hio.disconnect(); run(); }
+        });
+      }, { threshold: 0.25 });
+      hio.observe(clock);
+    } else {
+      run();
+    }
+  }
+
+  /* ------------------------------------------------------------ FAQ accordion */
+  function setupFaq() {
+    var items = qa("[data-faq-item]");
+    if (!items.length) return;
+    items.forEach(function (item, i) {
+      var btn = q("[data-faq-toggle]", item);
+      var sign = q("[data-faq-sign]", item);
+      var answer = q("[data-faq-answer]", item);
+      if (!btn || !answer) return;
+      var open = i === 0;
+      var id = "faq-a-" + i;
+      answer.id = id;
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.setAttribute("aria-controls", id);
+      function paint() {
+        answer.style.display = open ? "" : "none";
+        if (sign) sign.textContent = open ? "−" : "+";
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+      paint();
+      btn.addEventListener("click", function () {
+        if (!open) {
+          items.forEach(function (other) {
+            if (other === item) return;
+            var oa = q("[data-faq-answer]", other), os = q("[data-faq-sign]", other),
+                ob = q("[data-faq-toggle]", other);
+            if (oa) oa.style.display = "none";
+            if (os) os.textContent = "+";
+            if (ob) ob.setAttribute("aria-expanded", "false");
+          });
+        }
+        open = !open;
+        paint();
+      });
+    });
+  }
+
+  /* --------------------------------------------------------- fee calculator */
+  function setupCalculator() {
+    var spendEl = q("#spend");
+    if (!spendEl) return;
+    var pctBlock = q("#pct-block"), flatBlock = q("#flat-block");
+    var pctEl = q("#pct"), flatEl = q("#flat");
+    var state = { spend: 30000, pct: 20, flat: 4500, mode: "pct" };
+
+    function fmt(n) { return "$" + Math.round(n).toLocaleString("en-AU"); }
+    function out(name) { return q('[data-out="' + name + '"]'); }
+    function set(name, v) { var el = out(name); if (el) el.textContent = v; }
+
+    function tabStyle(btn, active) {
+      btn.style.background = active ? VOLT : "transparent";
+      btn.style.color = active ? "#0A0A0A" : "#B5B5AD";
+      btn.style.border = "1px solid " + (active ? VOLT : "#232320");
+      btn.setAttribute("aria-pressed", active ? "true" : "false");
+    }
+
+    function render() {
+      var spend = Number(state.spend) || 0;
+      var pct = Number(state.pct) || 0;
+      var isPct = state.mode === "pct";
+      var monthly = isPct ? spend * pct / 100 : (Number(state.flat) || 0);
+      var annual = monthly * 12;
+      var impliedPct = spend > 0 ? (monthly / spend * 100) : 0;
+
+      if (pctBlock) pctBlock.style.display = isPct ? "" : "none";
+      if (flatBlock) flatBlock.style.display = isPct ? "none" : "";
+      qa("[data-tab]").forEach(function (b) { tabStyle(b, b.dataset.tab === state.mode); });
+
+      set("note", isPct
+        ? "We ask you for the percentage rather than assuming one, so the number is yours and not ours."
+        : "A flat retainer at this spend works out at " + impliedPct.toFixed(1) +
+          "% of your media. Worth checking what happens to it the next time you scale.");
+      set("annual", fmt(annual));
+      set("monthly", fmt(monthly));
+      set("doubledLabel", "If you double your spend");
+      set("doubled", isPct ? fmt(annual * 2) : fmt(annual));
+      set("doubledNote", isPct
+        ? fmt(annual) + " more a year, for the same work"
+        : "Unchanged on paper — until the retainer is renegotiated");
+      set("threeYear", fmt(annual * 3));
+    }
+
+    function bind(el, key) {
+      if (!el) return;
+      el.addEventListener("input", function () {
+        state[key] = el.value;
+        qa('[data-range="' + key + '"]').forEach(function (r) { if (r !== el) r.value = el.value; });
+        var num = q("#" + key);
+        if (num && num !== el) num.value = el.value;
+        render();
+      });
+    }
+
+    bind(spendEl, "spend");
+    bind(pctEl, "pct");
+    bind(flatEl, "flat");
+    ["spend", "pct", "flat"].forEach(function (k) {
+      qa('[data-range="' + k + '"]').forEach(function (r) { bind(r, k); });
+    });
+    qa("[data-tab]").forEach(function (btn) {
+      btn.addEventListener("click", function () { state.mode = btn.dataset.tab; render(); });
+    });
+    render();
+  }
+
+  /* ------------------------------------------------------------- apply quiz */
+  var QUESTIONS = [
+    {
+      key: "spend", label: "Ad spend",
+      q: "What are you spending on Meta ads a month?",
+      helper: "Media only — not fees, not creative. Round to the nearest ten thousand; we're sizing whether a daily decision has enough information to be worth making.",
+      options: [
+        { v: "under-3k", label: "Under $3,000", note: "Or nothing at the moment" },
+        { v: "3-10k", label: "$3,000 – $10,000", note: "Enough to learn monthly, not daily" },
+        { v: "10-30k", label: "$10,000 – $30,000", note: "Where a daily decision starts to pay" },
+        { v: "30-100k", label: "$30,000 – $100,000", note: "Fees are now a real line item" },
+        { v: "100k+", label: "Over $100,000", note: "A percentage fee is costing you six figures" }
+      ]
+    },
+    {
+      key: "who", label: "Who runs it",
+      q: "Who runs the account today?",
+      helper: "We're not asking so we can pitch against them. Plenty of checks end with us telling you to keep who you've got.",
+      options: [
+        { v: "agency-pct", label: "An agency on a percentage of spend", note: "The fee grew every time you scaled" },
+        { v: "agency-flat", label: "An agency on a flat retainer", note: "Better structure, worth checking the effective rate" },
+        { v: "freelancer", label: "A freelancer or contractor", note: "Usually cheap and usually part-time" },
+        { v: "inhouse", label: "Someone in-house", note: "The system is built for exactly this" },
+        { v: "nobody", label: "Nobody — it's paused or unmanaged", note: "Spending without anyone deciding" }
+      ]
+    },
+    {
+      key: "problems", label: "What's in the way", multi: true,
+      q: "What's actually in the way?",
+      helper: "Pick everything that's true. This decides what we'd fix in the first fortnight, not just what we'd sell you.",
+      options: [
+        { v: "creative", label: "We can't make creative fast enough", note: "Two concepts a month, if that" },
+        { v: "decisions", label: "Nobody's making decisions daily", note: "Changes wait for a weekly meeting" },
+        { v: "tracking", label: "We don't trust the numbers", note: "Tracking, attribution or reporting we can't verify" },
+        { v: "fees", label: "Fees are eating the budget", note: "Paying a percentage on money you scaled yourself" },
+        { v: "stalled", label: "Scaling has stalled", note: "More budget stopped producing more sales" },
+        { v: "blind", label: "We don't know if any of it works", note: "No honest read on incrementality" }
+      ]
+    },
+    {
+      key: "operator", label: "Who approves",
+      q: "Who approves the 7am decisions?",
+      helper: "Each morning the system drafts the day's changes and somebody taps approve — about a minute. We action them from there. This one question decides which option we quote you.",
+      options: [
+        { v: "named", label: "A named person in-house", note: "Marketing coordinator, ecommerce manager, similar" },
+        { v: "founder", label: "Me, the founder", note: "Common — it's a minute on your phone" },
+        { v: "hiring", label: "We're hiring for it", note: "We can install ahead of them starting" },
+        { v: "nobody", label: "Nobody — you decide and act", note: "Then the end-to-end option is what we'd quote" }
+      ]
+    },
+    {
+      key: "category", label: "Business",
+      q: "What kind of business is it?",
+      helper: "Ecommerce is where most of our work sits, but the system runs on any account with enough daily volume.",
+      options: [
+        { v: "ecom", label: "Ecommerce / DTC", note: "Shopify, WooCommerce, marketplace" },
+        { v: "services", label: "Home services or trades", note: "Leads and booked jobs" },
+        { v: "regulated", label: "Healthcare, NDIS or education", note: "Compliance shapes the creative" },
+        { v: "retail", label: "Multi-location retail", note: "Local delivery across sites" },
+        { v: "other", label: "B2B or something else", note: "Tell us in the notes" }
+      ]
+    }
+  ];
+
+  var VERDICTS = {
+    fit: {
+      tag: "Strong fit",
+      title: "Start with a check, then install.",
+      body: "Your spend is high enough for a daily decision to be worth making, and somebody will be there to approve it. That's the whole precondition.",
+      why: "Send us these answers and Josh replies within a business day with a time to talk. On that call we look at the account, tell you what the setup would cost and whether you need a creative batch alongside it, and you leave with every figure in writing. Nothing to pay to have that conversation.",
+      ctaLabel: "Read what's involved", ctaHref: "/install"
+    },
+    studio: {
+      tag: "Strong fit · creative-led",
+      title: "You have a production problem, not a targeting problem.",
+      body: "At your spend, the binding constraint is how much distinct creative you can put in market. The system fixes the decisions; the monthly creative batch fixes the supply.",
+      why: "We'd start with the check so the creative brief is built on what the account actually shows, then install, then run creative alongside it. We size the batch to your spend and quote one fixed monthly figure.",
+      ctaLabel: "Read what's involved", ctaHref: "/install"
+    },
+    fees: {
+      tag: "Strong fit · fee-led",
+      title: "The first saving is on your invoice.",
+      body: "You're paying a percentage on a budget you scaled yourself, and the work behind it didn't change. That's a structural problem no amount of optimisation fixes.",
+      why: "Run the calculator to see the number in dollars a year, then send us your answers — we'll come back with what a fixed fee looks like against it, and whether the performance case is as strong as the fee case.",
+      ctaLabel: "Read what's involved", ctaHref: "/install"
+    },
+    playbook: {
+      tag: "Too early for the full system",
+      title: "Start smaller than the setup.",
+      body: "At this spend there isn't enough daily volume for a daily decision to earn its keep. We could sell you the setup and it still wouldn't be the right purchase.",
+      why: "Send your answers anyway: usually the answer is a one-off batch of creative and two or three structural fixes, not a system. We'll tell you the spend level at which the rest becomes worth buying.",
+      ctaLabel: "How to run it yourself", ctaHref: "/how-to-run-meta-ads-yourself"
+    },
+    endToEnd: {
+      tag: "End to end",
+      title: "You want the end-to-end option.",
+      body: "Nobody in-house has the twenty minutes a day, so the decisions would arrive and nothing would happen. The end-to-end option exists for exactly this: we buy the media, make the creative and do the daily execution on your account.",
+      why: "It's quoted after we've read the account, as one fixed monthly figure — no percentage of spend, no lock-in, and your Business Manager stays yours. If you'd rather name an internal operator instead, the self-run version is cheaper and we'll say so.",
+      ctaLabel: "Read what's involved", ctaHref: "/install"
+    },
+    tooSmall: {
+      tag: "Not yet — and not from us",
+      title: "None of this is the right purchase yet.",
+      body: "Under about $3,000 a month there isn't enough daily volume for any of it to pay for itself. A system that reads your account every morning needs something to read.",
+      why: "The honest answer is to spend the next few months on creative and offer, run the account yourself off our free guides, and come back when media spend is consistently past $10,000 a month. Send your answers if you'd like Josh to point you at the two or three things worth doing first — there's nothing to buy at the end of it.",
+      ctaLabel: "How to run it yourself", ctaHref: "/how-to-run-meta-ads-yourself"
+    }
+  };
+
+  function setupApply() {
+    var root = q("#apply-root");
+    if (!root) return;
+
+    var S = {
+      step: 0, answers: {}, problems: [],
+      name: "", company: "", site: "", email: "", phone: "", note: "",
+      tried: false, done: false, sent: false, sending: false
+    };
+    var TOTAL = QUESTIONS.length + 1;
+
+    function verdict() {
+      var a = S.answers, p = S.problems;
+      if (a.spend === "under-3k") return VERDICTS.tooSmall;
+      if (a.operator === "nobody") return VERDICTS.endToEnd;
+      if (a.spend === "3-10k") return VERDICTS.playbook;
+      if (a.who === "agency-pct" && (a.spend === "30-100k" || a.spend === "100k+")) return VERDICTS.fees;
+      if (p.indexOf("creative") > -1 && p.indexOf("fees") === -1) return VERDICTS.studio;
+      if (p.indexOf("fees") > -1) return VERDICTS.fees;
+      return VERDICTS.fit;
+    }
+
+    function labelFor(key, v) {
+      var question = QUESTIONS.filter(function (x) { return x.key === key; })[0];
+      var o = question && question.options.filter(function (x) { return x.v === v; })[0];
+      return o ? o.label : "—";
+    }
+
+    function summary() {
+      return [
+        { k: "Monthly ad spend", v: labelFor("spend", S.answers.spend) },
+        { k: "Runs the account", v: labelFor("who", S.answers.who) },
+        { k: "In the way", v: S.problems.length
+            ? S.problems.map(function (x) { return labelFor("problems", x); }).join(", ")
+            : "Nothing selected" },
+        { k: "Twenty minutes a day", v: labelFor("operator", S.answers.operator) },
+        { k: "Business type", v: labelFor("category", S.answers.category) },
+        { k: "Contact", v: (S.name || "—") + (S.company ? " · " + S.company : "") }
+      ];
+    }
+
+    function mailBody(v) {
+      return "Sevenam application\n\n" +
+        summary().map(function (r) { return r.k + ": " + r.v; }).join("\n") +
+        "\nEmail: " + S.email + "\nPhone: " + (S.phone || "—") +
+        "\nWebsite: " + (S.site || "—") + "\nNotes: " + (S.note || "—") +
+        "\n\nRecommendation shown: " + v.tag;
+    }
+
+    function mailto(v) {
+      return "mailto:" + LEAD_EMAIL + "?subject=" +
+        encodeURIComponent("Application — " + (S.company || S.name || "new enquiry")) +
+        "&body=" + encodeURIComponent(mailBody(v));
+    }
+
+    var OPT_BASE = "display:flex; flex-direction:column; gap:6px; align-items:flex-start; text-align:left;" +
+      "border-radius:6px; padding:20px 22px; cursor:pointer; color:#F7F7F5; min-height:44px;" +
+      "font-family:inherit; transition:border-color 0.2s ease, background 0.2s ease;";
+    var INPUT = "background:#161613; border:1px solid #232320; border-radius:4px; color:#F7F7F5;" +
+      "font-family:inherit; font-size:17px; padding:15px 16px;";
+    var LABEL = "font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#B5B5AD;";
+    var H1 = "margin:0; max-width:24ch; font-size:clamp(32px,4.6vw,58px); font-weight:600;" +
+      "letter-spacing:-0.035em; line-height:1.05; color:#FFFFFF;";
+    var LINK_BTN = "background:none; border:none; color:#B5B5AD; font-size:15px; font-weight:500;" +
+      "padding:12px 0; cursor:pointer; font-family:inherit; text-decoration:underline;";
+    var STEP_IN = reduced ? "" : "animation:stepIn 0.45s " + EASE + " both;";
+
+    function chrome(stepLabel, stepCount, pct) {
+      return '<div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:14px;">' +
+        '<span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:' + VOLT + ';">' + esc(stepLabel) + '</span>' +
+        '<span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#55554F; font-variant-numeric:tabular-nums;">' + esc(stepCount) + '</span>' +
+        '</div>' +
+        '<div style="height:3px; background:#161613; border-radius:2px; overflow:hidden; margin-bottom:56px;">' +
+        '<div style="height:3px; background:' + VOLT + '; border-radius:2px; transition:width 0.45s ' + EASE + '; width:' + pct + ';"></div>' +
+        '</div>';
+    }
+
+    function render() {
+      var onQuestion = S.step < QUESTIONS.length && !S.done;
+      var onDetails = S.step === QUESTIONS.length && !S.done;
+      var question = QUESTIONS[S.step];
+      var emailOk = /.+@.+\..+/.test(S.email);
+      var ready = S.name.trim() && emailOk;
+      var html;
+
+      if (onQuestion) {
+        html = chrome(question.label, "Step " + (S.step + 1) + " of " + TOTAL,
+          Math.round((S.step / TOTAL) * 100) + "%");
+        html += '<div style="' + STEP_IN + '">' +
+          '<h1 style="' + H1 + '">' + esc(question.q) + '</h1>' +
+          '<p style="margin:20px 0 0; max-width:56ch; font-size:17px; line-height:1.7; color:#B5B5AD;">' + esc(question.helper) + '</p>' +
+          '<div style="margin-top:44px; display:flex; flex-direction:column; gap:10px;">';
+        question.options.forEach(function (o, i) {
+          var active = question.multi
+            ? S.problems.indexOf(o.v) > -1
+            : S.answers[question.key] === o.v;
+          html += '<button type="button" data-pick="' + esc(o.v) + '" ' +
+            (question.multi ? 'aria-pressed="' + (active ? "true" : "false") + '" ' : "") +
+            'style="' + OPT_BASE +
+            "background:" + (active ? "#1C1F0A" : "#161613") + ";" +
+            "border:1px solid " + (active ? VOLT : "#232320") + ';">' +
+            '<span style="font-size:18px; font-weight:600; letter-spacing:-0.015em;">' + esc(o.label) + '</span>' +
+            '<span style="font-size:15px; line-height:1.5; color:#B5B5AD;">' + esc(o.note) + '</span>' +
+            '</button>';
+        });
+        html += '</div><div style="margin-top:36px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">';
+        if (question.multi) {
+          html += '<button type="button" data-next style="background:' + VOLT + '; color:#0A0A0A; border:none;' +
+            'font-family:inherit; font-size:16px; font-weight:600; padding:16px 26px; border-radius:4px; cursor:pointer;">Continue</button>';
+        }
+        if (S.step > 0) html += '<button type="button" data-back style="' + LINK_BTN + '">Back</button>';
+        html += '</div></div>';
+
+      } else if (onDetails) {
+        html = chrome("Your details", "Step " + (S.step + 1) + " of " + TOTAL,
+          Math.round((S.step / TOTAL) * 100) + "%");
+        html += '<div style="' + STEP_IN + '">' +
+          '<h1 style="' + H1 + ' max-width:22ch;">Where do we send the answer?</h1>' +
+          '<p style="margin:20px 0 0; max-width:56ch; font-size:17px; line-height:1.7; color:#B5B5AD;">One reply within a business day, from a person, with a straight read on whether this fits. No sequence, no newsletter, no call booked without asking.</p>' +
+          '<div style="margin-top:44px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;">' +
+          field("name", "Your name", "text", "Jordan Reid") +
+          field("company", "Business", "text", "Business name") +
+          field("site", "Website", "text", "yourstore.com.au") +
+          field("email", "Email", "email", "you@yourstore.com.au") +
+          field("phone", "Phone", "tel", "04xx xxx xxx", true) +
+          '</div>' +
+          '<label style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">' +
+          '<span style="' + LABEL + '">Anything we should know <span style="color:#55554F; font-weight:500; letter-spacing:0; text-transform:none;">optional</span></span>' +
+          '<textarea rows="4" data-field="note" placeholder="Contract dates, who else is involved, what you\'ve already tried." ' +
+          'style="' + INPUT + ' line-height:1.6; resize:vertical;">' + esc(S.note) + '</textarea>' +
+          '</label>' +
+          '<div style="margin-top:36px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">' +
+          '<button type="button" data-submit style="background:' + (ready ? VOLT : "#232320") + ';' +
+          'color:' + (ready ? "#0A0A0A" : "#55554F") + '; border:none; font-family:inherit; font-size:17px;' +
+          'font-weight:600; padding:18px 28px; border-radius:4px; cursor:' + (ready ? "pointer" : "not-allowed") + ';">See what fits</button>' +
+          '<button type="button" data-back style="' + LINK_BTN + '">Back</button>' +
+          '</div>' +
+          '<p style="margin:22px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:' +
+          (S.tried && !ready ? "#D8FF00" : "#55554F") + ';">' +
+          (S.tried && !ready
+            ? "We need a name and a valid email address to send you anything."
+            : "We use these to reply once. No list, no sequence, no sharing.") +
+          '</p></div>';
+
+      } else {
+        var v = verdict();
+        html = chrome("Your result", "Complete", "100%");
+        html += '<div style="' + (reduced ? "" : "animation:stepIn 0.5s " + EASE + " both;") + '">' +
+          '<span data-verdict style="display:inline-flex; align-items:center; gap:10px; background:' + VOLT + '; color:#0A0A0A;' +
+          'font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:7px 11px; border-radius:3px;">' + esc(v.tag) + '</span>' +
+          '<h1 style="' + H1 + ' margin:26px 0 0; max-width:22ch;">' + esc(v.title) + '</h1>' +
+          '<p style="margin:24px 0 0; max-width:58ch; font-size:19px; line-height:1.65; color:#F7F7F5;">' + esc(v.body) + '</p>' +
+          '<p style="margin:20px 0 0; max-width:58ch; font-size:17px; line-height:1.7; color:#B5B5AD;">' + esc(v.why) + '</p>' +
+          '<div style="margin-top:44px; border:1px solid #232320; border-radius:6px; padding:28px; background:#161613;">' +
+          '<span style="' + LABEL + '">What you told us</span>' +
+          '<div style="margin-top:18px; display:flex; flex-direction:column;">';
+        summary().forEach(function (row) {
+          html += '<div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px; border-top:1px solid #232320; padding:14px 0;">' +
+            '<span style="font-size:15px; color:#B5B5AD;">' + esc(row.k) + '</span>' +
+            '<span style="font-size:15px; font-weight:600; text-align:right;">' + esc(row.v) + '</span>' +
+            '</div>';
+        });
+        html += '</div></div>' +
+          '<div style="margin-top:36px; display:flex; flex-wrap:wrap; gap:12px;">' +
+          '<a href="' + esc(mailto(v)) + '" data-send style="background:' + VOLT + '; color:#0A0A0A; font-size:17px;' +
+          'font-weight:600; padding:18px 28px; border-radius:4px;">' +
+          (S.sent ? "Sent — thank you" : S.sending ? "Sending…" : "Send this to Josh") + '</a>' +
+          '<a href="' + esc(v.ctaHref) + '" style="border:1px solid #55554F; color:#F7F7F5; font-size:17px;' +
+          'font-weight:600; padding:17px 28px; border-radius:4px;">' + esc(v.ctaLabel) + '</a>' +
+          '</div>' +
+          '<p style="margin:24px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:#55554F;">' +
+          (S.sent
+            ? "Your answers are with Josh. He reads every one himself and replies within a business day with a time to talk — or a straight no."
+            : "Your answers stay in this browser until you send them. Josh reads every one himself and replies within a business day with a time to talk — or a straight no.") +
+          '</p></div>';
+      }
+
+      root.innerHTML = html;
+      wire();
+    }
+
+    function field(key, label, type, placeholder, optional) {
+      return '<label style="display:flex; flex-direction:column; gap:10px;">' +
+        '<span style="' + LABEL + '">' + esc(label) +
+        (optional ? ' <span style="color:#55554F; font-weight:500; letter-spacing:0; text-transform:none;">optional</span>' : "") +
+        '</span>' +
+        '<input type="' + type + '" data-field="' + key + '" value="' + esc(S[key]) + '" placeholder="' + esc(placeholder) + '" style="' + INPUT + '">' +
+        '</label>';
+    }
+
+    function send(anchor, v) {
+      if (!LEAD_ENDPOINT || S.sent || S.sending) return false;
+      S.sending = true;
+      anchor.textContent = "Sending…";
+      var payload = new URLSearchParams({
+        name: S.name, company: S.company, website: S.site, email: S.email,
+        phone: S.phone, notes: S.note, verdict: v.tag,
+        spend: labelFor("spend", S.answers.spend),
+        who: labelFor("who", S.answers.who),
+        problems: S.problems.map(function (x) { return labelFor("problems", x); }).join(", "),
+        operator: labelFor("operator", S.answers.operator),
+        category: labelFor("category", S.answers.category),
+        page: location.href
+      });
+      fetch(LEAD_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payload.toString()
+      }).then(function () {
+        S.sending = false; S.sent = true; render();
+      }).catch(function () {
+        /* Never strand a lead: fall back to the mail client. */
+        S.sending = false;
+        window.location.href = anchor.getAttribute("href");
+      });
+      return true;
+    }
+
+    function wire() {
+      var question = QUESTIONS[S.step];
+      qa("[data-pick]", root).forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var v = btn.dataset.pick;
+          if (question && question.multi) {
+            var i = S.problems.indexOf(v);
+            if (i > -1) S.problems.splice(i, 1); else S.problems.push(v);
+          } else {
+            S.answers[question.key] = v;
+            S.step += 1;
+          }
+          render();
+        });
+      });
+      var next = q("[data-next]", root);
+      if (next) next.addEventListener("click", function () { S.step += 1; render(); });
+      var back = q("[data-back]", root);
+      if (back) back.addEventListener("click", function () {
+        S.step = Math.max(0, S.step - 1); S.done = false; render();
+      });
+      qa("[data-field]", root).forEach(function (el) {
+        el.addEventListener("input", function () { S[el.dataset.field] = el.value; });
+        el.addEventListener("change", function () { S[el.dataset.field] = el.value; });
+      });
+      var submit = q("[data-submit]", root);
+      if (submit) submit.addEventListener("click", function () {
+        qa("[data-field]", root).forEach(function (el) { S[el.dataset.field] = el.value; });
+        S.tried = true;
+        if (S.name.trim() && /.+@.+\..+/.test(S.email)) S.done = true;
+        render();
+        root.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+      });
+      var sendBtn = q("[data-send]", root);
+      if (sendBtn) sendBtn.addEventListener("click", function (e) {
+        if (send(sendBtn, verdict())) e.preventDefault();
+      });
+    }
+
+    render();
+  }
+
+  /* ------------------------------------------------------------------- init */
+  function init() {
+    setupNavBand();
+    setupReveals();
+    setupParallax();
+    setupDrift();
+    setupHero();
+    setupFaq();
+    setupCalculator();
+    setupApply();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();

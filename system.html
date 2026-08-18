@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<style>x-dc{display:none!important}</style>
+<style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style>
+<title>How It Works — Daily Meta Ads Decisions At 7am | Sevenam</title>
+<meta name="description" content="Your account is read first thing each morning through the Meta API, analysed against thresholds written for it, and by 7am you have a written brief: what to change today, what to leave alone, and why.">
+<link rel="canonical" href="https://sevenam.com.au/system">
+<meta property="og:title" content="How It Works — Daily Meta Ads Decisions At 7am | Sevenam">
+<meta property="og:description" content="Your account is read first thing each morning through the Meta API, analysed against thresholds written for it, and by 7am you have a written brief: what to change today, what to leave alone, and why.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sevenam.com.au/system">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.","email":"hello@sevenam.com.au","areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/system","name":"How It Works — Daily Meta Ads Decisions At 7am | Sevenam","description":"Your account is read first thing each morning through the Meta API, analysed against thresholds written for it, and by 7am you have a written brief: what to change today, what to leave alone, and why.","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"Service","name":"Daily Meta ads decision reporting","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"Australia","serviceType":"Advertising analytics and reporting"}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @media (max-width: 1000px) {
+    [data-hub] { grid-template-columns:1fr !important; grid-template-rows:none !important; gap:14px !important; }
+    [data-hub-wire] { display:none !important; }
+    [data-hub-core] { grid-column:1 !important; grid-row:auto !important; order:-1; text-align:left !important; }
+  }
+  @keyframes voltPulse { 0%, 100% { box-shadow:0 0 0 0 rgba(216,255,0,0); } 50% { box-shadow:0 0 0 7px rgba(216,255,0,0.16); } }
+  @media (max-width: 720px) {
+    section { padding-left:20px !important; padding-right:20px !important; }
+    h1 { letter-spacing:-0.03em !important; }
+    img { max-width:100%; }
+  }
+  @media (max-width: 420px) { body { -webkit-text-size-adjust:100%; } }
+</style>
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @keyframes pulseDot { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
+  @keyframes chipIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
+  @media (max-width: 780px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
+</style>
+</head>
+<body>
+<div class="sc-host"><div class="sc-host"><header style="position: sticky; top: 0px; z-index: 50; background: rgb(10, 10, 10); border-bottom: 1px solid rgb(35, 35, 32);">
+  <div data-nav-bar="" style="max-width: 1240px; margin: 0px auto; padding: 14px 32px; min-height: 80px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px;">
+    <a href="/" style="display: flex; align-items: flex-end; gap: 7px; flex-shrink: 0;">
+      <span style="font-size: 23px; font-weight: 600; letter-spacing: -0.035em; white-space: nowrap; color: rgb(255, 255, 255);">sevenam</span>
+      <span style="width: 7px; height: 7px; border-radius: 50%; background: rgb(216, 255, 0); margin-bottom: 5px; flex-shrink: 0; animation: 3.4s ease-in-out 0s infinite normal none running pulseDot;"></span>
+    </a>
+    <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; flex: 1 1 auto; min-width: 0px;">
+      <span data-nav-links="" style="display: flex; align-items: center; gap: 2px; min-width: 0px;">
+        <a href="/system" class="scp2" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">How it works</a>
+        <a href="/pricing" class="scp2" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Pricing</a>
+        <a href="/agency-fee" class="scp2" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Free tools</a>
+        <a href="/learn" class="scp2" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Learn</a>
+        <a href="/about" class="scp2" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">About</a>
+      </span>
+      <a href="/apply" class="scp3" style="display: inline-flex; align-items: center; gap: 9px; margin-left: 8px; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 15px; font-weight: 600; padding: 13px 20px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;">
+        <span>Get started</span>
+        <span aria-hidden="true" style="opacity: 0.55;">→</span>
+      </a>
+    </nav>
+  </div>
+  </header></div><main>
+  <section style="padding: 120px 32px 96px; border-bottom: 1px solid rgb(227, 227, 221);">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: rgb(85, 85, 79);">HOW IT WORKS</span>
+      <h1 style="margin: 28px 0px 0px; max-width: 22ch; font-size: clamp(42px, 6vw, 88px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04;">Your account, decided before you've had coffee.</h1>
+      <p style="margin: 36px 0px 0px; max-width: 64ch; font-size: 19px; line-height: 1.65; color: rgb(85, 85, 79);">Sevenam reads your account first thing every morning and writes you a brief. It arrives at 7am, every morning, whether or not anyone is thinking about the account. It costs $890 a month and it never books a meeting.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 44px;">
+        <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Get started</a>
+        <a href="/pricing" class="scp1" style="border: 1px solid rgb(10, 10, 10); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 15px 26px; border-radius: 4px;">See what it costs</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: rgb(10, 10, 10);">
+    <img loading="lazy" decoding="async" src="/img/vision-scan.webp" alt="Products analysed by a computer-vision overlay" style="display: block; width: 100%; height: clamp(300px, 50vh, 560px); object-fit: cover;">
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 120px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto; display: grid; grid-template-columns: 1fr;">
+      <div>
+        <h2 style="margin: 0px 0px 64px; max-width: 24ch; font-size: clamp(32px, 4vw, 56px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.06;">What happens while you sleep.</h2>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: grid; grid-template-columns: 140px 1fr; gap: 32px; border-top: 1px solid rgb(35, 35, 32); padding: 32px 0px;">
+            <span style="font-size: 18px; font-weight: 600; color: rgb(216, 255, 0); letter-spacing: -0.01em;">Before you're up</span>
+            <div>
+              <h3 style="margin: 0px 0px 10px; font-size: 22px; font-weight: 600; letter-spacing: -0.02em;">The account is read</h3>
+              <p style="margin: 0px; max-width: 56ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Sevenam pulls yesterday's delivery, spend, results and creative performance from the Meta API, alongside the trailing seven, fourteen and twenty-eight day windows.</p>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 140px 1fr; gap: 32px; border-top: 1px solid rgb(35, 35, 32); padding: 32px 0px;">
+            <span style="font-size: 18px; font-weight: 600; color: rgb(216, 255, 0); letter-spacing: -0.01em;">Then</span>
+            <div>
+              <h3 style="margin: 0px 0px 10px; font-size: 22px; font-weight: 600; letter-spacing: -0.02em;">The analysis layer decides</h3>
+              <p style="margin: 0px; max-width: 56ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Signal is separated from noise against your own thresholds — what has enough volume to act on, what is still learning, what has quietly stopped working.</p>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 140px 1fr; gap: 32px; border-top: 1px solid rgb(35, 35, 32); padding: 32px 0px;">
+            <span style="font-size: 22px; font-weight: 600; color: rgb(216, 255, 0); font-variant-numeric: tabular-nums; letter-spacing: -0.02em;">07:00</span>
+            <div>
+              <h3 style="margin: 0px 0px 10px; font-size: 22px; font-weight: 600; letter-spacing: -0.02em;">The decisions lands</h3>
+              <p style="margin: 0px; max-width: 56ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">A written brief: do this today, leave this alone, here are the numbers, here is why. Two minutes to read, about twenty minutes to act on.</p>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 140px 1fr; gap: 32px; border-top: 1px solid rgb(35, 35, 32); border-bottom: 1px solid rgb(35, 35, 32); padding: 32px 0px;">
+            <span style="font-size: 22px; font-weight: 600; color: rgb(216, 255, 0); font-variant-numeric: tabular-nums; letter-spacing: -0.02em;">Weekly</span>
+            <div>
+              <h3 style="margin: 0px 0px 10px; font-size: 22px; font-weight: 600; letter-spacing: -0.02em;">The weekly deep dive and the playbook</h3>
+              <p style="margin: 0px; max-width: 56ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">A longer look at the week: creative themes that are working, what to produce next, structural changes worth making. Your playbook is updated monthly so the written system never goes stale.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 120px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(216, 255, 0);">The control centre</span>
+      <h2 style="margin: 26px 0px 0px; max-width: 24ch; font-size: clamp(32px, 4vw, 56px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.06; color: rgb(255, 255, 255);">One AI agent, wired into everything it needs.</h2>
+      <p style="margin: 26px 0px 0px; max-width: 62ch; font-size: 18px; line-height: 1.65; color: rgb(181, 181, 173);">The old model had a person opening Ads Manager, exporting a spreadsheet and forming an opinion once a week. Here, a single agent holds your account data, your brand assets, your thresholds and your past winners at once — and works the account before your day starts. You stay the decision-maker; it does the reading, the making and the executing.</p>
+      <div data-hub="" style="margin-top: 56px; display: grid; grid-template-columns: minmax(0px, 1fr) 48px minmax(240px, 300px) 48px minmax(0px, 1fr); grid-template-rows: repeat(3, auto); gap: 16px 0px; align-items: stretch;">
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Your data</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Meta ad account</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">Spend, results and creative performance pulled straight through the API — read, never guessed at.</span>
+        </div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-hub-core="" style="grid-area: 1 / 3 / span 3; background: rgb(10, 10, 10); border: 1px solid rgb(216, 255, 0); border-radius: 6px; padding: 32px 28px; display: flex; flex-direction: column; justify-content: center; gap: 12px; text-align: center; align-self: center; animation: 4s ease-in-out 0s infinite normal none running voltPulse;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(216, 255, 0);">The control centre</span>
+          <span style="font-size: 26px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; color: rgb(255, 255, 255);">An AI agent wired into your account</span>
+          <span style="font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">One agent with the whole picture: the numbers, your margins, your brand assets and last month's winners. It drafts; you decide.</span>
+        </div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Your brand</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Assets and past winners</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">Product shots, hooks and every ad that ever worked, in one place the agent can actually use.</span>
+        </div>
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Output</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Creative generation</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">New concepts, cuts and formats produced from the winners — a month of testing without a shoot.</span>
+        </div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Output</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Reports and briefs</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">The week in plain English, plus briefs for anything a human still needs to shoot or write.</span>
+        </div>
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Guardrails</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Your thresholds</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">Margins, target CPA and what counts as enough data — written down during setup, applied every morning.</span>
+        </div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-hub-wire="" aria-hidden="true" style="display: flex; align-items: center;"><span style="width: 100%; height: 0px; border-top: 1px dashed rgb(58, 58, 52);"></span></div>
+        <div data-reveal="" data-hub-node="" style="background: rgb(17, 17, 16); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 22px 24px; display: flex; flex-direction: column; gap: 7px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">Action</span>
+          <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">Changes made for you</span>
+          <span style="font-size: 14px; line-height: 1.55; color: rgb(181, 181, 173);">You approve; the agent executes in Ads Manager. Nothing moves without a human saying yes.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 128px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
+    <div style="max-width: 1200px; margin: 0px auto; display: grid; grid-template-columns: 1fr;">
+      <div>
+        <h2 style="margin: 0px 0px 20px; max-width: 24ch; font-size: clamp(32px, 4vw, 56px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.06;">What's doing the work for you.</h2>
+        <p style="margin: 0px 0px 56px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Four pieces of working software and one page of plain English. Two of them are free to use before you speak to anyone.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px;">
+          <div style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 32px 28px;">
+            <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">The 07:00 read</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">Meta API, an analysis layer, and a written brief delivered every morning. A subscription, not a freelancer.</p>
+          </div>
+          <div style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 32px 28px;">
+            <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">The teardown tool</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">Pulls any competitor's live ads from the public Meta Ad Library and returns a written creative diagnosis. Free.</p>
+          </div>
+          <div style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 32px 28px;">
+            <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">The fee calculator</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">Enter your spend and your agency's percentage, see the true annual cost and the automatic increases. <a href="/agency-fee" style="font-weight: 600; border-bottom: 1px solid rgb(227, 227, 221);">Use it →</a></p>
+          </div>
+          <div style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 32px 28px;">
+            <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">The creative line</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">Templated and AI-assisted production, shipped weekly, with its performance numbers attached. A month's supply of testing for $10,000 — that's The Studio.</p>
+          </div>
+          <div style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 32px 28px;">
+            <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">The glossary</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">Every confusing Meta term in one plain sentence each. If Meta can be made legible in a page, a daily decisions is believable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 128px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
+    <div style="max-width: 1200px; margin: 0px auto; display: grid; grid-template-columns: 1fr;">
+      <div>
+        <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(32px, 4vw, 56px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.06;">Walk away tomorrow and you keep everything.</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 56px;">
+          <div style="border-top: 1px solid rgb(227, 227, 221); padding-top: 22px;">
+            <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Your Business Manager</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">The account, pixel, audiences and creative are yours from hour one. We're granted access; we never hold the asset.</p>
+          </div>
+          <div style="border-top: 1px solid rgb(227, 227, 221); padding-top: 22px;">
+            <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Your playbook</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">The written system: structure, naming, thresholds, testing rules. It stays with you whatever happens to us.</p>
+          </div>
+          <div style="border-top: 1px solid rgb(227, 227, 221); padding-top: 22px;">
+            <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Your call to stop</h3>
+            <p style="margin: 0px; font-size: 16px; line-height: 1.7; color: rgb(85, 85, 79);">Month to month on the system and on the creative. No notice period, no offboarding fee.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 140px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto; display: flex; flex-direction: column; align-items: flex-start; gap: 32px;">
+      <span style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; padding: 5px 9px; border-radius: 3px;">07:00</span>
+      <h2 style="margin: 0px; max-width: 20ch; font-size: clamp(40px, 5.6vw, 76px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05;">See what it would find in your account.</h2>
+      <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173);">Fifteen minutes, no pitch. You'll leave with the two or three things costing you the most right now — yours to fix with or without us.</p>
+      <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a>
+    </div>
+  </section></main><div class="sc-host"><footer style="background: rgb(10, 10, 10); color: rgb(181, 181, 173); padding: 96px 32px 48px;">
+  <div style="max-width: 1240px; margin: 0px auto;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 48px; padding-bottom: 64px; border-bottom: 1px solid rgb(35, 35, 32);">
+      <div style="display: flex; flex-direction: column; gap: 18px; max-width: 340px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
+          <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: rgb(255, 255, 255);">sevenam</span>
+        </div>
+        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.</p>
+        <span style="font-size: 15px; color: rgb(85, 85, 79);">Sydney, Australia</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Products</span>
+        <a href="/install" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">One-time setup</a>
+        <a href="/system" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">The daily decisions</a>
+        <a href="/pricing" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Creative testing</a>
+        <a href="/ai-marketing-agency" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Where we use AI</a>
+        <a href="/facebook-marketing-agency" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook marketing</a>
+        <a href="/digital-marketing-agency" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Digital marketing</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Start here</span>
+        <a href="/check" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Account check</a>
+        <a href="/apply" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Get started</a>
+        <a href="/agency-fee" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Fee calculator · free</a>
+        <a href="/learn" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Guides and glossary</a>
+        <a href="/growth" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">The growth thesis</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Services</span>
+        <a href="/facebook-ads-agency" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads</a>
+        <a href="/meta-ads-agency" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads</a>
+        <a href="/instagram-ads-agency" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Instagram ads</a>
+        <a href="/social-media-advertising-agency" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Social media advertising</a>
+        <a href="/facebook-ads-consultant" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Where</span>
+        <a href="/facebook-ads-perth" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Perth</a>
+        <a href="/facebook-ads-melbourne" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Melbourne</a>
+        <a href="/facebook-ads-sydney" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Sydney</a>
+        <a href="/facebook-ads-brisbane" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">Brisbane</a>
+        <a href="/learn" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">All locations →</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Contact</span>
+        <a href="mailto:hello@sevenam.com.au" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">hello@sevenam.com.au</a>
+        <a href="/about" class="scp4" style="color: rgb(181, 181, 173); font-size: 15px;">About</a>
+      </div>
+    </div>
+    <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: rgb(85, 85, 79);">
+      <span>© 2026 Sevenam. Australia.</span>
+      <span>Your growth system for Meta. It runs at seven.</span>
+    </div>
+  </div></footer></div></div>
+<script src="/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# https://sevenam.com.au
+User-agent: *
+Allow: /
+
+# No crawlable value, and nothing to index
+Disallow: /*.json$
+Disallow: /support.js
+Disallow: /image-slot.js
+
+# AI crawlers: everything here is published deliberately
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://sevenam.com.au/sitemap.xml

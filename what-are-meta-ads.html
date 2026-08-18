@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<style>x-dc{display:none!important}</style>
+<style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style>
+<title>What Are Meta Ads? A Plain-English Explanation (2026) | Sevenam</title>
+<meta name="description" content="Meta ads explained without jargon: what they are, how the auction and delivery models work, what campaigns, ad sets and ads do, what things cost, and how to tell whether yours are working.">
+<link rel="canonical" href="https://sevenam.com.au/what-are-meta-ads">
+<meta property="og:title" content="What Are Meta Ads? A Plain-English Explanation (2026) | Sevenam">
+<meta property="og:description" content="Meta ads explained without jargon: what they are, how the auction and delivery models work, what campaigns, ad sets and ads do, what things cost, and how to tell whether yours are working.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sevenam.com.au/what-are-meta-ads">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.","email":"hello@sevenam.com.au","areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"Article","url":"https://sevenam.com.au/what-are-meta-ads","name":"What Are Meta Ads? A Plain-English Explanation (2026) | Sevenam","headline":"What Are Meta Ads? A Plain-English Explanation (2026) | Sevenam","description":"Meta ads explained without jargon: what they are, how the auction and delivery models work, what campaigns, ad sets and ads do, what things cost, and how to tell whether yours are working.","isPartOf":{"@id":"https://sevenam.com.au/#org"},"author":{"@id":"https://sevenam.com.au/#org"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What are Meta ads in simple terms?","acceptedAnswer":{"@type":"Answer","text":"Paid ads bought through one system that shows them across Facebook, Instagram, Messenger and Audience Network. You give Meta an objective, a budget and creative; its models decide who sees what."}},{"@type":"Question","name":"Are Meta ads and Facebook ads the same thing?","acceptedAnswer":{"@type":"Answer","text":"Functionally yes. Meta is the company; Facebook and Instagram are placements inside the same ad system and the same auction."}},{"@type":"Question","name":"Do I need a Business Manager?","acceptedAnswer":{"@type":"Answer","text":"Yes, and it should be registered to your business rather than an agency's. It owns the ad account, pixel and pages — everything you're paying to build."}},{"@type":"Question","name":"What's a good ROAS?","acceptedAnswer":{"@type":"Answer","text":"There isn't a universal number, because it depends on margin and repeat purchase. Judge cost per outcome against what a customer is worth to you, and sanity-check against blended revenue."}}]}]}</script>
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @media (max-width: 720px) {
+    section { padding-left:20px !important; padding-right:20px !important; }
+    h1 { letter-spacing:-0.03em !important; }
+    img { max-width:100%; }
+  }
+  @media (max-width: 420px) { body { -webkit-text-size-adjust:100%; } }
+</style>
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @keyframes pulseDot { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
+  @keyframes chipIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
+  @media (max-width: 780px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
+</style>
+</head>
+<body>
+<div class="sc-host"><div class="sc-host"><header style="position: sticky; top: 0px; z-index: 50; background: rgb(10, 10, 10); border-bottom: 1px solid rgb(35, 35, 32);">
+  <div data-nav-bar="" style="max-width: 1240px; margin: 0px auto; padding: 14px 32px; min-height: 80px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px;">
+    <a href="/" style="display: flex; align-items: flex-end; gap: 7px; flex-shrink: 0;">
+      <span style="font-size: 23px; font-weight: 600; letter-spacing: -0.035em; white-space: nowrap; color: rgb(255, 255, 255);">sevenam</span>
+      <span style="width: 7px; height: 7px; border-radius: 50%; background: rgb(216, 255, 0); margin-bottom: 5px; flex-shrink: 0; animation: 3.4s ease-in-out 0s infinite normal none running pulseDot;"></span>
+    </a>
+    <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; flex: 1 1 auto; min-width: 0px;">
+      <span data-nav-links="" style="display: flex; align-items: center; gap: 2px; min-width: 0px;">
+        <a href="/system" class="scp7" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">How it works</a>
+        <a href="/pricing" class="scp7" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Pricing</a>
+        <a href="/agency-fee" class="scp7" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Free tools</a>
+        <a href="/learn" class="scp7" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Learn</a>
+        <a href="/about" class="scp7" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">About</a>
+      </span>
+      <a href="/apply" class="scp0" style="display: inline-flex; align-items: center; gap: 9px; margin-left: 8px; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 15px; font-weight: 600; padding: 13px 20px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;">
+        <span>Get started</span>
+        <span aria-hidden="true" style="opacity: 0.55;">→</span>
+      </a>
+    </nav>
+  </div>
+  </header></div><main style="background: rgb(247, 247, 245); color: rgb(10, 10, 10);">
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 110px 32px 120px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: rgb(216, 255, 0);">GUIDE · THE BASICS</span>
+      <h1 style="margin: 26px 0px 0px; max-width: 22ch; font-size: clamp(40px, 6vw, 84px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; color: rgb(255, 255, 255);">What are Meta ads?</h1>
+      <p style="margin: 32px 0px 0px; max-width: 60ch; font-size: 21px; font-weight: 500; line-height: 1.5; letter-spacing: -0.01em; color: rgb(247, 247, 245);">Paid placements bought through one system that serves Facebook, Instagram, Messenger and Audience Network.</p>
+      <p style="margin: 24px 0px 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">You choose an outcome and a budget, supply creative, and Meta's models decide which people see which ad. That last part is the whole modern story — you no longer buy audiences, you supply creative and rules and the platform does the matching.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 44px;">
+        <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Get started</a>
+        <a href="/system" class="scp1" style="border: 1px solid rgb(85, 85, 79); color: rgb(247, 247, 245); font-size: 16px; font-weight: 600; padding: 15px 26px; border-radius: 4px;">See how it works</a>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 32px; font-size: 14px; font-weight: 500; color: rgb(181, 181, 173);"><span>No retainer</span><span>·</span><span>No lock-in</span><span>·</span><span>No percentage of spend</span></div>
+    </div>
+  </section>
+
+  <section style="border-bottom: 1px solid rgb(227, 227, 221); padding: 112px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">The parts, in the order you'll meet them.</h2>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">An account holds everything. Inside it, a campaign sets the objective and the budget; an ad set governs delivery and any targeting constraints; an ad is the creative itself. Three levels, and most confusion comes from arguing about the wrong one.</p>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Above that sits your Business Manager — the container that owns the ad account, pages and pixel. It should always be yours, not an agency's, because it's where every asset you're paying to build actually lives.</p>
+      <div style="margin-top: 36px; display: flex; flex-direction: column; max-width: 840px;">
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;"><strong>Objective</strong> — the outcome you want optimised: purchases, leads, calls. Pick the real outcome, not clicks.</div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;"><strong>Campaign</strong> — objective and budget.</div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;"><strong>Ad set</strong> — delivery, placements, any audience constraints.</div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;"><strong>Ad</strong> — the video, image or carousel a person actually sees.</div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;"><strong>Pixel and Conversions API</strong> — how results are reported back to Meta so it can optimise.</div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); border-bottom: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;"><strong>Business Manager</strong> — the container that owns all of it. Keep it in your name.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 112px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">How Meta decides who sees your ad.</h2>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Every impression is an auction. Meta estimates how likely each eligible ad is to produce the outcome you asked for, weighs that against your bid and the quality signals, and serves the winner. You're not buying attention directly; you're buying predicted outcomes.</p>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Two systems do the heavy lifting: retrieval narrows millions of possible ads to the ones eligible for a given person, then ranking sequences those candidates. Advantage+ campaigns simply hand more of that decision to the models by default.</p>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">The practical implication is uncomfortable for the industry: constraining delivery usually costs more for less. Your leverage is what you feed the auction, not how tightly you fence it.</p>
+
+    </div>
+  </section>
+
+  <section style="border-bottom: 1px solid rgb(227, 227, 221); padding: 112px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">What they cost, and what to measure.</h2>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Cost per thousand impressions is set by competition, not a rate card, and Australian CPMs run above the US. Manage cost per outcome instead — per purchase, per qualified lead, per booked job — because expensive clicks with cheap purchases is a good result.</p>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Be careful with ROAS: it's the platform reporting on itself, inside its own attribution window. Change the window and the number changes with no change to reality. Blended revenue over total spend (MER) is harder to fool.</p>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">A fuller breakdown of Australian costs, fees and GST is in the cost guide.</p>
+
+    </div>
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 112px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">How to tell if yours are working.</h2>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Three questions. Is cost per outcome stable or improving as spend rises? Is total revenue moving, not just attributed revenue? And are new creatives surviving long enough to scale?</p>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">If you can't answer those, the problem is usually measurement, not media. That's the first thing we fix in a setup and the first thing we look for in a check.</p>
+
+    </div>
+  </section>
+
+  <section style="border-bottom: 1px solid rgb(227, 227, 221); padding: 112px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 26ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Where Meta ads actually appear.</h2>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">One buy, many surfaces. You rarely pick these by hand any more — Meta distributes across whichever placement is cheapest for the outcome you asked for, which is why one creative needs to survive several shapes.</p>
+      <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: rgb(227, 227, 221); border: 1px solid rgb(227, 227, 221); border-radius: 6px; overflow: hidden;">
+        <div style="background: rgb(255, 255, 255); padding: 30px 26px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 18px; font-weight: 600; letter-spacing: -0.02em;">Facebook feed</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Still the volume engine for most Australian accounts, and the most forgiving of longer copy.</span></div>
+        <div style="background: rgb(255, 255, 255); padding: 30px 26px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 18px; font-weight: 600; letter-spacing: -0.02em;">Instagram feed and Explore</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Where brand-led statics and product photography tend to do their best work.</span></div>
+        <div style="background: rgb(255, 255, 255); padding: 30px 26px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 18px; font-weight: 600; letter-spacing: -0.02em;">Reels and Stories</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Nine-by-sixteen, sound-on, first second decides everything. Cheap impressions, unforgiving format.</span></div>
+        <div style="background: rgb(255, 255, 255); padding: 30px 26px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 18px; font-weight: 600; letter-spacing: -0.02em;">Advantage+ catalogue placements</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Product-feed driven, dynamic, and the reason your catalogue hygiene matters more than your targeting.</span></div>
+        <div style="background: rgb(255, 255, 255); padding: 30px 26px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 18px; font-weight: 600; letter-spacing: -0.02em;">Messenger and Audience Network</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Usually inventory filler. Worth watching, rarely worth optimising toward.</span></div>
+        <div style="background: rgb(255, 255, 255); padding: 30px 26px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 18px; font-weight: 600; letter-spacing: -0.02em;">Threads</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Newest surface, thin data, and not yet a channel to plan a quarter around.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 112px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 26ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">The objectives, and which one you probably want.</h2>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">The objective tells Meta what to optimise toward, and it's the single most consequential setting in the account. Pick the wrong one and the models will faithfully deliver the wrong outcome, cheaply.</p>
+      <div style="margin-top: 44px; display: flex; flex-direction: column; max-width: 940px;">
+        <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px; display: grid; grid-template-columns: minmax(140px, 180px) 1fr; gap: 20px; align-items: start;">
+          <span style="font-size: 17px; font-weight: 600; color: rgb(216, 255, 0);">Sales</span>
+          <span style="font-size: 16px; line-height: 1.65; color: rgb(181, 181, 173);">What almost every ecommerce brand should run. Optimises to purchase events, needs clean signal from the pixel or Conversions API to work properly.</span>
+        </div>
+        <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px; display: grid; grid-template-columns: minmax(140px, 180px) 1fr; gap: 20px; align-items: start;">
+          <span style="font-size: 17px; font-weight: 600; color: rgb(216, 255, 0);">Leads</span>
+          <span style="font-size: 16px; line-height: 1.65; color: rgb(181, 181, 173);">For service businesses and considered purchases. Optimise to a qualified event further down the funnel, not raw form fills, or you'll buy junk efficiently.</span>
+        </div>
+        <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px; display: grid; grid-template-columns: minmax(140px, 180px) 1fr; gap: 20px; align-items: start;">
+          <span style="font-size: 17px; font-weight: 600; color: rgb(216, 255, 0);">App promotion</span>
+          <span style="font-size: 16px; line-height: 1.65; color: rgb(181, 181, 173);">Installs and in-app events. Attribution lives in an SDK rather than a pixel, which changes what you can trust.</span>
+        </div>
+        <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px; display: grid; grid-template-columns: minmax(140px, 180px) 1fr; gap: 20px; align-items: start;">
+          <span style="font-size: 17px; font-weight: 600; color: rgb(85, 85, 79);">Traffic and engagement</span>
+          <span style="font-size: 16px; line-height: 1.65; color: rgb(181, 181, 173);">The two objectives most often sold as a "brand awareness campaign". They buy clicks and reactions, which is not the same as buying customers.</span>
+        </div>
+        <div style="border-top: 1px solid rgb(35, 35, 32); border-bottom: 1px solid rgb(35, 35, 32); padding: 22px 0px; display: grid; grid-template-columns: minmax(140px, 180px) 1fr; gap: 20px; align-items: start;">
+          <span style="font-size: 17px; font-weight: 600; color: rgb(85, 85, 79);">Awareness</span>
+          <span style="font-size: 16px; line-height: 1.65; color: rgb(181, 181, 173);">Legitimate for large brands with a reach mandate. If you're under $100k a month in spend, it's usually a way to look busy.</span>
+        </div>
+      </div>
+      <p style="margin: 32px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Automation sits on top of all of this — <a href="/meta-advantage-plus" class="scp2" style="color: rgb(216, 255, 0); border-bottom: 1px solid rgb(85, 85, 79);">what Advantage+ actually does</a> and where it takes control away from you.</p>
+    </div>
+  </section>
+
+  <section style="border-bottom: 1px solid rgb(227, 227, 221); padding: 112px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 26ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Why creative is now the whole game.</h2>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">When targeting was manual, the lever was audiences. It isn't any more. The models find the buyer if you give them enough distinct ads to test — so the constraint moved from who you target to how much new work you can put in front of them, and how fast you act on the results.</p>
+      <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+        <div style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 6px; padding: 32px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: 34px; font-weight: 600; letter-spacing: -0.035em; font-variant-numeric: tabular-nums;">3–5</span>
+          <span style="font-size: 16px; line-height: 1.6; color: rgb(85, 85, 79);">Distinct concepts a month is the floor for a scaling account. Variants on top of that, not instead of it.</span>
+        </div>
+        <div style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 6px; padding: 32px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: 34px; font-weight: 600; letter-spacing: -0.035em; font-variant-numeric: tabular-nums;">1 day</span>
+          <span style="font-size: 16px; line-height: 1.6; color: rgb(85, 85, 79);">How quickly a decision should follow the data. A weekly cadence means nine days of spend on a losing ad set.</span>
+        </div>
+        <div style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 6px; padding: 32px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: 34px; font-weight: 600; letter-spacing: -0.035em; font-variant-numeric: tabular-nums;">9:16</span>
+          <span style="font-size: 16px; line-height: 1.6; color: rgb(85, 85, 79);">Every concept needs a vertical cut. A square ad in Reels is a wasted impression you still pay for.</span>
+        </div>
+      </div>
+      <p style="margin: 32px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">More on this: <a href="/facebook-ad-creative-testing" class="scp3" style="font-weight: 600; border-bottom: 1px solid rgb(181, 181, 173);">how to test creative properly</a>, and <a href="/scaling-meta-ads" class="scp3" style="font-weight: 600; border-bottom: 1px solid rgb(181, 181, 173);">what breaks when you scale spend</a>.</p>
+    </div>
+  </section>
+
+  <section style="padding: 112px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px 0px 40px; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Questions people actually ask.</h2>
+      <div style="display: flex; flex-direction: column; max-width: 840px;">
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+          <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">What are Meta ads in simple terms?</h3>
+          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Paid ads bought through one system that shows them across Facebook, Instagram, Messenger and Audience Network. You give Meta an objective, a budget and creative; its models decide who sees what.</p>
+        </div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+          <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Are Meta ads and Facebook ads the same thing?</h3>
+          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Functionally yes. Meta is the company; Facebook and Instagram are placements inside the same ad system and the same auction.</p>
+        </div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+          <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Do I need a Business Manager?</h3>
+          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Yes, and it should be registered to your business rather than an agency's. It owns the ad account, pixel and pages — everything you're paying to build.</p>
+        </div>
+        <div style="border-top: 1px solid rgb(227, 227, 221); border-bottom: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
+          <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">What's a good ROAS?</h3>
+          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">There isn't a universal number, because it depends on margin and repeat purchase. Judge cost per outcome against what a customer is worth to you, and sanity-check against blended revenue.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section style="padding: 88px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
+    <div style="max-width: 1200px; margin: 0px auto; display: flex; flex-direction: column; gap: 36px;">
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">Guides</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <a href="/facebook-ads-cost-australia" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">What they cost here</a>
+          <a href="/are-facebook-ads-worth-it" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Still worth it?</a>
+          <a href="/facebook-ads-strategy" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Strategy in 2026</a>
+          <a href="/how-to-run-meta-ads-yourself" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Run them yourself</a>
+          <a href="/facebook-ads-audit" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Audit your account</a>
+          <a href="/meta-advantage-plus" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Advantage+</a>
+          <a href="/google-ads-vs-facebook-ads" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Google vs Meta</a>
+          <a href="/glossary" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Glossary</a>
+          <a href="/meta-ad-library" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Ad Library</a>
+          <a href="/gst-on-facebook-advertising" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">GST</a>
+          <a href="/ai-marketing-agency" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Where we use AI</a>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">Costs and fees</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <a href="/what-facebook-ads-agencies-charge" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Agency fees</a>
+          <a href="/social-media-management-cost" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Social media cost</a>
+          <a href="/facebook-ads-packages" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Ads packages</a>
+          <a href="/best-facebook-ads-agencies-australia" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Picking an agency</a>
+          <a href="/agency-fee" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Fee calculator</a>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">Where we work</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <a href="/facebook-ads-perth" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Perth</a>
+          <a href="/facebook-ads-melbourne" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Melbourne</a>
+          <a href="/facebook-ads-sydney" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Sydney</a>
+          <a href="/facebook-ads-brisbane" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Brisbane</a>
+          <a href="/facebook-ads-gold-coast" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Gold Coast</a>
+          <a href="/facebook-ads-sunshine-coast" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Sunshine Coast</a>
+          <a href="/facebook-ads-adelaide" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Adelaide</a>
+          <a href="/facebook-ads-canberra" class="scp4" style="border: 1px solid rgb(227, 227, 221); background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">Canberra</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 96px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">Keep reading</span>
+      <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+        <a href="/glossary" class="scp5" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em;">Meta in plain English</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Every confusing term, one sentence each.</span></a>
+        <a href="/meta-advantage-plus" class="scp5" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em;">Advantage+ explained</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Without the platform jargon.</span></a>
+        <a href="/facebook-ads-cost-australia" class="scp5" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em;">What Facebook ads cost here</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Media, fees and creative, separated.</span></a>
+        <a href="/are-facebook-ads-worth-it" class="scp5" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em;">Are Facebook ads still worth it?</span><span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">An honest 2026 answer.</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 130px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto; display: flex; flex-direction: column; align-items: flex-start; gap: 30px;">
+      <span style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; padding: 5px 9px; border-radius: 3px;">07:00</span>
+      <h2 style="margin: 0px; max-width: 18ch; font-size: clamp(38px, 5.4vw, 74px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05;">Want yours read by someone who does this daily?</h2>
+      <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173);">Fifteen minutes with Josh, no pitch. You'll leave knowing the two or three things costing you the most right now — and what it would take to fix them.</p>
+      <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a>
+        <a href="/apply" class="scp6" style="color: rgb(216, 255, 0); font-size: 16px; font-weight: 600; border-bottom: 1px solid rgb(85, 85, 79);">Five questions, two minutes →</a>
+    </div>
+  </section></main><div class="sc-host"><footer style="background: rgb(10, 10, 10); color: rgb(181, 181, 173); padding: 96px 32px 48px;">
+  <div style="max-width: 1240px; margin: 0px auto;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 48px; padding-bottom: 64px; border-bottom: 1px solid rgb(35, 35, 32);">
+      <div style="display: flex; flex-direction: column; gap: 18px; max-width: 340px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
+          <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: rgb(255, 255, 255);">sevenam</span>
+        </div>
+        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.</p>
+        <span style="font-size: 15px; color: rgb(85, 85, 79);">Sydney, Australia</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Products</span>
+        <a href="/install" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">One-time setup</a>
+        <a href="/system" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">The daily decisions</a>
+        <a href="/pricing" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Creative testing</a>
+        <a href="/ai-marketing-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Where we use AI</a>
+        <a href="/facebook-marketing-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook marketing</a>
+        <a href="/digital-marketing-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Digital marketing</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Start here</span>
+        <a href="/check" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Account check</a>
+        <a href="/apply" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Get started</a>
+        <a href="/agency-fee" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Fee calculator · free</a>
+        <a href="/learn" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Guides and glossary</a>
+        <a href="/growth" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">The growth thesis</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Services</span>
+        <a href="/facebook-ads-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads</a>
+        <a href="/meta-ads-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads</a>
+        <a href="/instagram-ads-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Instagram ads</a>
+        <a href="/social-media-advertising-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Social media advertising</a>
+        <a href="/facebook-ads-consultant" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Where</span>
+        <a href="/facebook-ads-perth" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Perth</a>
+        <a href="/facebook-ads-melbourne" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Melbourne</a>
+        <a href="/facebook-ads-sydney" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Sydney</a>
+        <a href="/facebook-ads-brisbane" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Brisbane</a>
+        <a href="/learn" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">All locations →</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Contact</span>
+        <a href="mailto:hello@sevenam.com.au" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">hello@sevenam.com.au</a>
+        <a href="/about" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">About</a>
+      </div>
+    </div>
+    <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: rgb(85, 85, 79);">
+      <span>© 2026 Sevenam. Australia.</span>
+      <span>Your growth system for Meta. It runs at seven.</span>
+    </div>
+  </div></footer></div></div>
+<script src="/site.js" defer></script>
+</body>
+</html>

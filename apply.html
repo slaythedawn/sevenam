@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<style>x-dc{display:none!important}</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.","email":"hello@sevenam.com.au","areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/apply","name":"Get started — see if the system fits your account","isPartOf":{"@id":"https://sevenam.com.au/#org"}}]}</script>
+<title>Get Started — See If The System Fits Your Account | Sevenam</title>
+<meta name="description" content="Five questions about your ad spend, who runs your Meta account now and what's in the way. You'll get a straight answer on which Sevenam product fits — or whether none of them do.">
+<link rel="canonical" href="https://sevenam.com.au/apply">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Get Started — See If The System Fits Your Account | Sevenam">
+<meta property="og:description" content="Five questions. A straight answer on what fits, including when the answer is nothing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#0A0A0A; color:#F7F7F5; -webkit-font-smoothing:antialiased; }
+  a { text-decoration:none; }
+  * { box-sizing:border-box; }
+  @media (max-width: 720px) {
+    section { padding-left:20px !important; padding-right:20px !important; }
+    h1 { letter-spacing:-0.03em !important; }
+    img { max-width:100%; }
+  }
+  @media (max-width: 420px) { body { -webkit-text-size-adjust:100%; } }
+  input, textarea, button { font-family:inherit; }
+  input::placeholder, textarea::placeholder { color:#55554F; }
+  @keyframes stepIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+  @keyframes voltSweep { from { transform:translateX(-100%); } to { transform:translateX(100%); } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @keyframes pulseDot { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
+  @keyframes chipIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
+  @media (max-width: 780px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
+</style>
+</head>
+<body>
+<div class="sc-host"><div class="sc-host"><header style="position: sticky; top: 0px; z-index: 50; background: rgb(10, 10, 10); border-bottom: 1px solid rgb(35, 35, 32);">
+  <div data-nav-bar="" style="max-width: 1240px; margin: 0px auto; padding: 14px 32px; min-height: 80px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px;">
+    <a href="/" style="display: flex; align-items: flex-end; gap: 7px; flex-shrink: 0;">
+      <span style="font-size: 23px; font-weight: 600; letter-spacing: -0.035em; white-space: nowrap; color: rgb(255, 255, 255);">sevenam</span>
+      <span style="width: 7px; height: 7px; border-radius: 50%; background: rgb(216, 255, 0); margin-bottom: 5px; flex-shrink: 0; animation: 3.4s ease-in-out 0s infinite normal none running pulseDot;"></span>
+    </a>
+    <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; flex: 1 1 auto; min-width: 0px;">
+      <span data-nav-links="" style="display: flex; align-items: center; gap: 2px; min-width: 0px;">
+        <a href="/system" class="scp2" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">How it works</a>
+        <a href="/pricing" class="scp2" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Pricing</a>
+        <a href="/agency-fee" class="scp2" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Free tools</a>
+        <a href="/learn" class="scp2" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Learn</a>
+        <a href="/about" class="scp2" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">About</a>
+      </span>
+      <a href="/apply" class="scp0" style="display: inline-flex; align-items: center; gap: 9px; margin-left: 8px; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 15px; font-weight: 600; padding: 13px 20px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;">
+        <span>Get started</span>
+        <span aria-hidden="true" style="opacity: 0.55;">→</span>
+      </a>
+    </nav>
+  </div>
+  </header></div><main style="min-height: 70vh; padding: 72px 32px 120px; background: rgb(10, 10, 10); color: rgb(247, 247, 245);">
+  <div id="apply-root" style="max-width: 860px; margin: 0px auto;">
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(216, 255, 0);"><span class="sc-interp">Ad spend</span></span>
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79); font-variant-numeric: tabular-nums;"><span class="sc-interp">Step 1 of 6</span></span>
+    </div>
+    <div style="height: 3px; background: rgb(22, 22, 19); border-radius: 2px; overflow: hidden; margin-bottom: 56px;">
+      <div style="height: 3px; background: rgb(216, 255, 0); border-radius: 2px; transition: width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); width: 0%;"></div>
+    </div>
+
+    
+      <div style="animation: 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) 0s 1 normal both running stepIn;">
+        <h1 style="margin: 0px; max-width: 24ch; font-size: clamp(32px, 4.6vw, 58px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05; color: rgb(255, 255, 255);"><span class="sc-interp">What are you spending on Meta ads a month?</span></h1>
+        <p style="margin: 20px 0px 0px; max-width: 56ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);"><span class="sc-interp">Media only — not fees, not creative. Round to the nearest ten thousand; we're sizing whether a daily decision has enough information to be worth making.</span></p>
+
+        <div style="margin-top: 44px; display: flex; flex-direction: column; gap: 10px;">
+          
+            <button type="button" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; background: rgb(22, 22, 19); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 20px 22px; cursor: pointer; color: rgb(247, 247, 245); min-height: 44px; transition: border-color 0.2s, background 0.2s;">
+              <span style="font-size: 18px; font-weight: 600; letter-spacing: -0.015em;"><span class="sc-interp">Under $3,000</span></span>
+              <span style="font-size: 15px; line-height: 1.5; color: rgb(181, 181, 173);"><span class="sc-interp">Or nothing at the moment</span></span>
+            </button>
+          
+            <button type="button" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; background: rgb(22, 22, 19); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 20px 22px; cursor: pointer; color: rgb(247, 247, 245); min-height: 44px; transition: border-color 0.2s, background 0.2s;">
+              <span style="font-size: 18px; font-weight: 600; letter-spacing: -0.015em;"><span class="sc-interp">$3,000 – $10,000</span></span>
+              <span style="font-size: 15px; line-height: 1.5; color: rgb(181, 181, 173);"><span class="sc-interp">Enough to learn monthly, not daily</span></span>
+            </button>
+          
+            <button type="button" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; background: rgb(22, 22, 19); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 20px 22px; cursor: pointer; color: rgb(247, 247, 245); min-height: 44px; transition: border-color 0.2s, background 0.2s;">
+              <span style="font-size: 18px; font-weight: 600; letter-spacing: -0.015em;"><span class="sc-interp">$10,000 – $30,000</span></span>
+              <span style="font-size: 15px; line-height: 1.5; color: rgb(181, 181, 173);"><span class="sc-interp">Where a daily decision starts to pay</span></span>
+            </button>
+          
+            <button type="button" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; background: rgb(22, 22, 19); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 20px 22px; cursor: pointer; color: rgb(247, 247, 245); min-height: 44px; transition: border-color 0.2s, background 0.2s;">
+              <span style="font-size: 18px; font-weight: 600; letter-spacing: -0.015em;"><span class="sc-interp">$30,000 – $100,000</span></span>
+              <span style="font-size: 15px; line-height: 1.5; color: rgb(181, 181, 173);"><span class="sc-interp">Fees are now a real line item</span></span>
+            </button>
+          
+            <button type="button" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; background: rgb(22, 22, 19); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 20px 22px; cursor: pointer; color: rgb(247, 247, 245); min-height: 44px; transition: border-color 0.2s, background 0.2s;">
+              <span style="font-size: 18px; font-weight: 600; letter-spacing: -0.015em;"><span class="sc-interp">Over $100,000</span></span>
+              <span style="font-size: 15px; line-height: 1.5; color: rgb(181, 181, 173);"><span class="sc-interp">A percentage fee is costing you six figures</span></span>
+            </button>
+          
+        </div>
+
+        <div style="margin-top: 36px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          
+          
+        </div>
+      </div>
+    
+
+    
+
+    
+  </div></main><div class="sc-host"><footer style="background: rgb(10, 10, 10); color: rgb(181, 181, 173); padding: 96px 32px 48px;">
+  <div style="max-width: 1240px; margin: 0px auto;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 48px; padding-bottom: 64px; border-bottom: 1px solid rgb(35, 35, 32);">
+      <div style="display: flex; flex-direction: column; gap: 18px; max-width: 340px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
+          <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: rgb(255, 255, 255);">sevenam</span>
+        </div>
+        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.</p>
+        <span style="font-size: 15px; color: rgb(85, 85, 79);">Sydney, Australia</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Products</span>
+        <a href="/install" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">One-time setup</a>
+        <a href="/system" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">The daily decisions</a>
+        <a href="/pricing" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Creative testing</a>
+        <a href="/ai-marketing-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Where we use AI</a>
+        <a href="/facebook-marketing-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook marketing</a>
+        <a href="/digital-marketing-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Digital marketing</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Start here</span>
+        <a href="/check" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Account check</a>
+        <a href="/apply" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Get started</a>
+        <a href="/agency-fee" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Fee calculator · free</a>
+        <a href="/learn" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Guides and glossary</a>
+        <a href="/growth" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">The growth thesis</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Services</span>
+        <a href="/facebook-ads-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads</a>
+        <a href="/meta-ads-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads</a>
+        <a href="/instagram-ads-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Instagram ads</a>
+        <a href="/social-media-advertising-agency" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Social media advertising</a>
+        <a href="/facebook-ads-consultant" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Where</span>
+        <a href="/facebook-ads-perth" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Perth</a>
+        <a href="/facebook-ads-melbourne" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Melbourne</a>
+        <a href="/facebook-ads-sydney" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Sydney</a>
+        <a href="/facebook-ads-brisbane" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">Brisbane</a>
+        <a href="/learn" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">All locations →</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Contact</span>
+        <a href="mailto:hello@sevenam.com.au" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">hello@sevenam.com.au</a>
+        <a href="/about" class="scp3" style="color: rgb(181, 181, 173); font-size: 15px;">About</a>
+      </div>
+    </div>
+    <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: rgb(85, 85, 79);">
+      <span>© 2026 Sevenam. Australia.</span>
+      <span>Your growth system for Meta. It runs at seven.</span>
+    </div>
+  </div></footer></div></div>
+<script src="/site.js" defer></script>
+</body>
+</html>

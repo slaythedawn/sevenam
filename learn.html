@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<style>x-dc{display:none!important}</style>
+<style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style>
+<title>Learn Meta Advertising — Guides, Glossary and Free Tools | Sevenam</title>
+<meta name="description" content="Plain-English guides to Meta advertising for Australian businesses: what it costs, whether it's worth it, how to audit your own account, the Ad Library, GST, the glossary, and a free agency fee calculator.">
+<link rel="canonical" href="https://sevenam.com.au/learn">
+<meta property="og:title" content="Learn Meta Advertising | Sevenam">
+<meta property="og:description" content="Everything we know, published. No gated PDFs, no webinar funnel.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sevenam.com.au/learn">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","email":"hello@sevenam.com.au","areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"CollectionPage","url":"https://sevenam.com.au/learn","name":"Learn Meta advertising","description":"Guides, glossary and free tools for Australian Meta advertisers.","isPartOf":{"@id":"https://sevenam.com.au/#org"}}]}</script>
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @media (max-width: 720px) {
+    section { padding-left:20px !important; padding-right:20px !important; }
+    h1 { letter-spacing:-0.03em !important; }
+    img { max-width:100%; }
+  }
+  @media (max-width: 420px) { body { -webkit-text-size-adjust:100%; } }
+</style>
+<style>
+  html, body { margin:0; padding:0; }
+  body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#55554F; }
+  * { box-sizing:border-box; }
+  @keyframes pulseDot { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
+  @keyframes chipIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
+  @media (max-width: 780px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
+</style>
+</head>
+<body>
+<div class="sc-host"><div class="sc-host"><header style="position: sticky; top: 0px; z-index: 50; background: rgb(10, 10, 10); border-bottom: 1px solid rgb(35, 35, 32);">
+  <div data-nav-bar="" style="max-width: 1240px; margin: 0px auto; padding: 14px 32px; min-height: 80px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px;">
+    <a href="/" style="display: flex; align-items: flex-end; gap: 7px; flex-shrink: 0;">
+      <span style="font-size: 23px; font-weight: 600; letter-spacing: -0.035em; white-space: nowrap; color: rgb(255, 255, 255);">sevenam</span>
+      <span style="width: 7px; height: 7px; border-radius: 50%; background: rgb(216, 255, 0); margin-bottom: 5px; flex-shrink: 0; animation: 3.4s ease-in-out 0s infinite normal none running pulseDot;"></span>
+    </a>
+    <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; flex: 1 1 auto; min-width: 0px;">
+      <span data-nav-links="" style="display: flex; align-items: center; gap: 2px; min-width: 0px;">
+        <a href="/system" class="scp4" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">How it works</a>
+        <a href="/pricing" class="scp4" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Pricing</a>
+        <a href="/agency-fee" class="scp4" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Free tools</a>
+        <a href="/learn" class="scp4" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Learn</a>
+        <a href="/about" class="scp4" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">About</a>
+      </span>
+      <a href="/apply" class="scp0" style="display: inline-flex; align-items: center; gap: 9px; margin-left: 8px; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 15px; font-weight: 600; padding: 13px 20px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;">
+        <span>Get started</span>
+        <span aria-hidden="true" style="opacity: 0.55;">→</span>
+      </a>
+    </nav>
+  </div>
+  </header></div><main style="background: rgb(247, 247, 245); color: rgb(10, 10, 10);">
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 110px 32px 120px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: rgb(216, 255, 0);">LEARN</span>
+      <h1 style="margin: 26px 0px 0px; max-width: 20ch; font-size: clamp(40px, 6vw, 84px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; color: rgb(255, 255, 255);">Everything we know, published.</h1>
+      <p style="margin: 32px 0px 0px; max-width: 60ch; font-size: 21px; font-weight: 500; line-height: 1.5; letter-spacing: -0.01em; color: rgb(247, 247, 245);">No gated PDFs. No webinar funnel. If you can run the system yourself from what's on this page, do that.</p>
+      <p style="margin: 24px 0px 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">These are the guides we'd want if we were the ones paying an agency 12% of a media budget, plus two free tools that do the arithmetic for you.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 44px;">
+        <a href="/agency-fee" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Open the fee calculator</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 112px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 22ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Start here.</h2>
+      <p style="margin: 24px 0px 0px; max-width: 60ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">The four questions almost everyone arrives with, answered without a sales pitch attached.</p>
+      <div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+        <a href="/what-are-meta-ads" class="scp1" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 32px 28px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: 21px; font-weight: 600; letter-spacing: -0.02em;">What are Meta ads?</span>
+          <span style="font-size: 16px; line-height: 1.6; color: rgb(85, 85, 79);">The whole thing plainly: the auction, the three levels, what to measure.</span>
+        </a>
+        <a href="/facebook-ads-cost-australia" class="scp1" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 32px 28px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: 21px; font-weight: 600; letter-spacing: -0.02em;">What do they cost in Australia?</span>
+          <span style="font-size: 16px; line-height: 1.6; color: rgb(85, 85, 79);">Media, fees and creative separated, with real floors and ranges.</span>
+        </a>
+        <a href="/are-facebook-ads-worth-it" class="scp1" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 32px 28px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: 21px; font-weight: 600; letter-spacing: -0.02em;">Are they still worth it?</span>
+          <span style="font-size: 16px; line-height: 1.6; color: rgb(85, 85, 79);">Including the four cases where the honest answer is no.</span>
+        </a>
+        <a href="/facebook-ads-audit" class="scp1" style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 6px; padding: 32px 28px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: 21px; font-weight: 600; letter-spacing: -0.02em;">Audit your own account</span>
+          <span style="font-size: 16px; line-height: 1.6; color: rgb(85, 85, 79);">The checklist we work through in a check, in order.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 112px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 22ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Free tools.</h2>
+      <p style="margin: 24px 0px 0px; max-width: 60ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Both do arithmetic nobody in this industry wants you doing.</p>
+      <div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <a href="/agency-fee" class="scp2" style="border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 36px 32px; display: flex; flex-direction: column; gap: 12px; color: rgb(247, 247, 245);">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(216, 255, 0);">Calculator</span>
+          <span style="font-size: 24px; font-weight: 600; letter-spacing: -0.025em;">What your agency fee really costs</span>
+          <span style="font-size: 16px; line-height: 1.65; color: rgb(181, 181, 173);">Your spend, their percentage or retainer, and the figure in dollars a month, a year and over three years — plus what happens the day you double your budget.</span>
+        </a>
+        <a href="/meta-ad-library" class="scp2" style="border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 36px 32px; display: flex; flex-direction: column; gap: 12px; color: rgb(247, 247, 245);">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(216, 255, 0);">Research</span>
+          <span style="font-size: 24px; font-weight: 600; letter-spacing: -0.025em;">How to read the Meta Ad Library</span>
+          <span style="font-size: 16px; line-height: 1.65; color: rgb(181, 181, 173);">Every live ad on Facebook and Instagram is public. The five things actually worth looking for in a competitor's account.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 112px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 22ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Guides.</h2>
+      <div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 56px;">
+
+        <div>
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">Costs and fees</span>
+          <div style="margin-top: 18px; display: flex; flex-direction: column;">
+            <a href="/facebook-ads-cost-australia" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">How much do Facebook ads cost in Australia?</a>
+            <a href="/what-facebook-ads-agencies-charge" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">What Facebook ads agencies actually charge</a>
+            <a href="/social-media-management-cost" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">What should social media management cost?</a>
+            <a href="/facebook-ads-packages" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">Facebook ads packages, and why they misfit</a>
+            <a href="/gst-on-facebook-advertising" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); border-bottom: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">Is there GST on Facebook advertising?</a>
+          </div>
+        </div>
+
+        <div>
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">How the platform works</span>
+          <div style="margin-top: 18px; display: flex; flex-direction: column;">
+            <a href="/what-are-meta-ads" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">What are Meta ads?</a>
+            <a href="/glossary" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">Meta ads in plain English — the glossary</a>
+            <a href="/meta-advantage-plus" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">Meta Advantage+ explained</a>
+            <a href="/ai-marketing-agency" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">Where we use AI, and where we don't</a>
+            <a href="/growth" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); border-bottom: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">The growth thesis</a>
+          </div>
+        </div>
+
+        <div>
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">Doing the work</span>
+          <div style="margin-top: 18px; display: flex; flex-direction: column;">
+            <a href="/facebook-ads-strategy" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">Facebook ads strategy in 2026</a>
+            <a href="/how-to-run-meta-ads-yourself" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">How to run Meta ads yourself</a>
+            <a href="/facebook-ads-audit" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">How to audit your own ad account</a>
+            <a href="/google-ads-vs-facebook-ads" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">Google Ads vs Facebook ads</a>
+            <a href="/best-facebook-ads-agencies-australia" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); border-bottom: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px; line-height: 1.5;">How to pick an agency: seven questions</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 112px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
+    <div style="max-width: 1200px; margin: 0px auto;">
+      <h2 style="margin: 0px; max-width: 22ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">By business type, and by city.</h2>
+      <p style="margin: 24px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Most of what we do is ecommerce at $30k–$500k a month, so that's where the detail is. The lead-generation guides underneath are written for smaller budgets, where the honest answer is often the self-serve playbook rather than a system.</p>
+      <div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 56px;">
+        <div>
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(216, 255, 0); background: rgb(10, 10, 10); padding: 4px 8px; border-radius: 3px;">Ecommerce · core</span>
+          <div style="margin-top: 18px; display: flex; flex-direction: column;">
+            <a href="/ecommerce-facebook-ads-agency" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Meta ads for ecommerce brands</a>
+            <a href="/facebook-marketing-agency" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Facebook marketing vs Facebook advertising</a>
+            <a href="/digital-marketing-agency" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Full-service agency or specialist?</a>
+            <a href="/shopify-facebook-ads" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Shopify and Meta ads</a>
+            <a href="/scaling-meta-ads" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Scaling past $50k a month</a>
+            <a href="/facebook-ad-creative-testing" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Creative testing that works</a>
+            <a href="/meta-advantage-plus" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Advantage+ for catalogues</a>
+            <a href="/agency-fee" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); border-bottom: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">What a % fee costs at scale</a>
+          </div>
+        </div>
+        <div>
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">Lead generation · smaller budgets</span>
+          <div style="margin-top: 18px; display: flex; flex-direction: column;">
+            <a href="/facebook-ads-for-tradies" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Tradies and home services</a>
+            <a href="/facebook-ads-for-real-estate-agents" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Real estate agents</a>
+            <a href="/ndis-facebook-ads" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">NDIS providers</a>
+            <a href="/facebook-ads-for-healthcare" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Healthcare and allied health</a>
+            <a href="/facebook-ads-for-schools" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Schools</a>
+            <a href="/facebook-ads-for-hotels" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); border-bottom: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Hotels and accommodation</a>
+          </div>
+        </div>
+        <div>
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">Cities</span>
+          <div style="margin-top: 18px; display: flex; flex-direction: column;">
+            <a href="/facebook-ads-perth" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Perth</a>
+            <a href="/facebook-ads-melbourne" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Melbourne</a>
+            <a href="/facebook-ads-sydney" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Sydney</a>
+            <a href="/facebook-ads-brisbane" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Brisbane</a>
+            <a href="/facebook-ads-gold-coast" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Gold Coast</a>
+            <a href="/facebook-ads-sunshine-coast" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Sunshine Coast</a>
+            <a href="/facebook-ads-adelaide" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Adelaide</a>
+            <a href="/facebook-ads-canberra" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); border-bottom: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Canberra</a>
+          </div>
+        </div>
+        <div>
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79);">Services</span>
+          <div style="margin-top: 18px; display: flex; flex-direction: column;">
+            <a href="/facebook-ads-agency" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Facebook ads agency alternative</a>
+            <a href="/meta-ads-agency" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Meta ads agency alternative</a>
+            <a href="/instagram-ads-agency" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Instagram ads</a>
+            <a href="/social-media-advertising-agency" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Social media advertising</a>
+            <a href="/facebook-ads-consultant" class="scp3" style="border-top: 1px solid rgb(227, 227, 221); border-bottom: 1px solid rgb(227, 227, 221); padding: 16px 0px; font-size: 17px;">Facebook ads consulting</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 130px 32px;">
+    <div style="max-width: 1200px; margin: 0px auto; display: flex; flex-direction: column; align-items: flex-start; gap: 30px;">
+      <span style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; padding: 5px 9px; border-radius: 3px;">07:00</span>
+      <h2 style="margin: 0px; max-width: 18ch; font-size: clamp(38px, 5.4vw, 74px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05;">Or skip ahead and have your account read.</h2>
+      <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173);">Fifteen minutes with Josh, no pitch. You'll leave knowing the two or three things costing you the most right now — and what it would take to fix them.</p>
+      <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a>
+    </div>
+  </section></main><div class="sc-host"><footer style="background: rgb(10, 10, 10); color: rgb(181, 181, 173); padding: 96px 32px 48px;">
+  <div style="max-width: 1240px; margin: 0px auto;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 48px; padding-bottom: 64px; border-bottom: 1px solid rgb(35, 35, 32);">
+      <div style="display: flex; flex-direction: column; gap: 18px; max-width: 340px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
+          <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: rgb(255, 255, 255);">sevenam</span>
+        </div>
+        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.</p>
+        <span style="font-size: 15px; color: rgb(85, 85, 79);">Sydney, Australia</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Products</span>
+        <a href="/install" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">One-time setup</a>
+        <a href="/system" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">The daily decisions</a>
+        <a href="/pricing" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Creative testing</a>
+        <a href="/ai-marketing-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Where we use AI</a>
+        <a href="/facebook-marketing-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook marketing</a>
+        <a href="/digital-marketing-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Digital marketing</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Start here</span>
+        <a href="/check" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Account check</a>
+        <a href="/apply" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Get started</a>
+        <a href="/agency-fee" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Fee calculator · free</a>
+        <a href="/learn" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Guides and glossary</a>
+        <a href="/growth" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">The growth thesis</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Services</span>
+        <a href="/facebook-ads-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads</a>
+        <a href="/meta-ads-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads</a>
+        <a href="/instagram-ads-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Instagram ads</a>
+        <a href="/social-media-advertising-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Social media advertising</a>
+        <a href="/facebook-ads-consultant" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Where</span>
+        <a href="/facebook-ads-perth" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Perth</a>
+        <a href="/facebook-ads-melbourne" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Melbourne</a>
+        <a href="/facebook-ads-sydney" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Sydney</a>
+        <a href="/facebook-ads-brisbane" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Brisbane</a>
+        <a href="/learn" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">All locations →</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Contact</span>
+        <a href="mailto:hello@sevenam.com.au" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">hello@sevenam.com.au</a>
+        <a href="/about" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">About</a>
+      </div>
+    </div>
+    <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: rgb(85, 85, 79);">
+      <span>© 2026 Sevenam. Australia.</span>
+      <span>Your growth system for Meta. It runs at seven.</span>
+    </div>
+  </div></footer></div></div>
+<script src="/site.js" defer></script>
+</body>
+</html>
