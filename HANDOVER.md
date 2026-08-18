@@ -62,7 +62,7 @@ design — but breaking that one file breaks all 35.
 
 ## Page inventory
 
-56 pages. Every URL in
+58 pages. Every URL in
 `sitemap.xml` resolves and no internal link 404s.
 
 | Group | Count |

@@ -30,14 +30,14 @@ hard-coded API key. CI runs the same script.
   `learn`, `glossary`, `agency-fee`, `what-are-meta-ads`, `facebook-ads-agency`,
   `ecommerce-facebook-ads-agency`, `ai-marketing-agency`, `facebook-ads-sydney`,
   `facebook-ads-for-tradies`.
-- **40 generated pages** (other cities, industries, head terms, guides) are built from
+- **42 generated pages** (other cities, industries, head terms, guides) are built from
   data in `tools/content/*.js`. **Editing their `.html` directly is wasted work** — the
   next `node tools/build-pages.js` overwrites it. Edit the content file, then rebuild.
 
 `tools/build-pages.js` also rewrites `sitemap.xml` and prunes redirects that would
 shadow a page. `tools/layout.js` lifts the nav, footer and stylesheet out of
 `facebook-ads-sydney.html` at build time, so generated pages cannot drift from the
-design — but it also means **breaking that file breaks all 35**.
+design — but it also means **breaking that file breaks all 42**.
 
 ## Things that will silently break the site
 
@@ -80,6 +80,21 @@ design — but it also means **breaking that file breaks all 35**.
   deliberately removed from 34 pages; do not reintroduce it.
 - Every CTA routes to `/apply`. There is no direct calendar booking anywhere, on
   purpose: qualify and capture first, then Josh replies with a time.
+
+## Icons and social cards
+
+`img/favicon.svg` is the source — volt square, ink 7. The PNGs beside it
+(`favicon-32`, `apple-touch-icon`, `icon-192`, `icon-512`) are rasterised from it,
+and `site.webmanifest` points at the last two.
+
+`og/<slug>.jpg` is one 1200x630 social card per page, built from that page's own
+`h1` and meta description by `node tools/build-og.js`. **Rerun it after changing a
+headline**, or the card and the page disagree. It is the one tool that needs
+Playwright, it is not part of `check.js`, and the cards live in `og/` rather than
+`img/` precisely because `img/*` is served immutable for a year.
+
+`check.js` fails a page with no `og:image` or one pointing at a file that is not
+there — a card that 404s renders as a blank box, which is worse than none.
 
 ## Design tokens
 

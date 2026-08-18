@@ -342,6 +342,17 @@ function page(p) {
 <meta property="og:description" content="${esc(p.ogDescription || p.description)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="${esc(url)}">
+<meta property="og:site_name" content="Sevenam">
+<meta property="og:image" content="${ORIGIN}/og/${esc(p.path.replace(/^\//, '') || 'index')}.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${esc(p.h1)} — Sevenam">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A0A0A">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <script type="application/ld+json">${graph(p)}</script>
 ${SHELL.fonts}

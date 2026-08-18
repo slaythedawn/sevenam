@@ -90,9 +90,22 @@ for (const file of htmlFiles) {
     }
   }
 
-  /* Every internal link and asset must resolve. */
+  /* A social card that 404s is worse than none: the platform falls back to a
+     blank box and the link looks broken. */
+  const og = html.match(/<meta property="og:image" content="([^"]+)"/);
+  if (!og) {
+    fail(file, 'no og:image — a shared link renders as a bare box');
+  } else {
+    const rel = og[1].replace(ORIGIN, '');
+    if (!fs.existsSync(path.join(ROOT, rel.slice(1)))) fail(file, `og:image missing: ${rel}`);
+  }
+
+  /* Every internal link and asset must resolve. An href pointing at a file on
+     disk — an icon, the manifest — is an asset; anything else has to be a page. */
+  const isAsset = (href) => href.startsWith('/img/') || href.startsWith('/og/')
+    || /\.(js|json|webmanifest|xml|txt|svg|png|jpe?g|webp|ico)$/.test(href);
   for (const [, href] of html.matchAll(/href="(\/[^"#?]*)"/g)) {
-    if (href.startsWith('/img/') || href.endsWith('.js')) {
+    if (isAsset(href)) {
       if (!fs.existsSync(path.join(ROOT, href.slice(1)))) fail(file, `missing asset ${href}`);
     } else if (!routes.has(href)) {
       fail(file, `link to ${href}, which is not a page`);

@@ -125,6 +125,104 @@ const PAGES = [
     closing: { h2: 'Order what the account needs.', p: "Answer five questions about the account and Josh comes back with what it would cost and whether creative alone is the right buy." },
   },
   {
+    /* "performance marketing agency" is 700 a month in Australia at a difficulty
+       of 0, and the site had no page for it — the one genuinely soft head term
+       in this space. The care needed is that the phrase has been captured by two
+       things Sevenam is not: percentage-of-spend agencies, and pay-on-results
+       shops. Neighbouring terms like "pay for performance marketing agency" are
+       deliberately answered rather than targeted, because ranking for them would
+       bring people wanting a commission deal we do not offer. */
+    slug: 'performance-marketing-agency',
+    title: 'Performance Marketing Agency (Australia) — Fixed Fee | Sevenam',
+    description: 'A performance marketing agency for Australian ecommerce brands: Meta media buying, creative production and written decisions at 7am, on your own ad account for a fixed fee.',
+    eyebrow: 'PERFORMANCE MARKETING', h1: 'Performance Marketing Agency',
+    lead: 'Paid acquisition judged on what it returns — priced on the work, not on what you spend.',
+    s1: {
+      h2: 'What the term is supposed to mean.',
+      paras: [
+        "Performance marketing means spending money where the return can be measured and stopping where it cannot. Every part of that is a claim about measurement, which is why the discipline collapses the moment the tracking is wrong — and in most accounts we read, the tracking is wrong in at least one place that matters.",
+        "So the first work is never media buying. It is making the numbers true: the pixel, the conversions API, the deduplication between them, and a definition of a conversion that finance would recognise. An account optimising towards a number nobody trusts is not performance marketing, whatever the invoice says.",
+      ],
+      items: [
+        'Measurement first, because everything after it inherits the error.',
+        'One definition of a conversion, agreed before anything scales.',
+        'Spend that stops where the return stops, not where the contract ends.',
+        'Decisions written down, so the reasoning outlives the person who had it.',
+      ],
+    },
+    s2: {
+      h2: 'Two things this is not.',
+      paras: [
+        "The first is a percentage of spend. It is the default in this market and it prices the one thing that does not get harder as it grows: reading an account and deciding what to change takes the same judgment at $30,000 a month as at $300,000. A percentage means the invoice climbs with a budget you added, for work that did not.",
+        "The second is pay-on-results. It sounds like alignment and behaves like the opposite — the incentive becomes claiming credit for demand you already had, which means last-click attribution, brand-term bidding and heavy retargeting. It reliably produces a good-looking report and a flat business.",
+      ],
+      items: [
+        'A fixed setup fee and a fixed monthly, quoted after the account is read.',
+        'No commission, so nothing is gained by claiming existing demand.',
+        'Your ad account, pixel, audiences and creative library, from hour one.',
+        'Month to month, because the work should have to be earned again.',
+      ],
+    },
+    faqs: [
+      { q: 'Do you work on a performance basis — a share of revenue or spend?', a: "No, and it is worth being specific about why. A commission on revenue rewards attributing demand you already had: bidding your own brand terms, retargeting people who were going to buy anyway, and reporting on last click. A percentage of spend rewards spending more. Both put the agency's interest somewhere other than yours. We quote a fixed setup and a fixed monthly against the work the account actually needs, and it does not move because you scaled." },
+      { q: 'What makes an account performance marketing rather than just advertising?', a: "That you can say what a conversion is worth, that the number is measured the same way twice, and that spend moves when it changes. If any of those three is missing you are buying reach and calling it performance. It is why the first thing we do is the measurement build rather than the campaign build." },
+      { q: 'Which channels do you actually run?', a: "Meta — Facebook and Instagram — and that is deliberate. It is where the depth is for Australian ecommerce, and a team spread across six platforms is not better at any of them. If your best next dollar is in search or a marketplace, we will say so rather than take the budget." },
+      { q: 'How is this different from a full-service digital agency?', a: "Scope and ownership. A full-service agency sells you a retainer across several channels and usually holds the accounts. This is one channel, installed on infrastructure you own, with the daily decisions written out in plain English so somebody in-house can audit them or take over entirely." },
+      { q: 'What size account does this suit?', a: "Australian ecommerce brands spending roughly $30,000 to $500,000 a month on Meta. Below that the setup rarely pays for itself and we will tell you so — plenty of brands take the published guides and run it themselves, which is a fine outcome." },
+    ],
+    related: [
+      { href: '/agency-fee', title: 'What the fee model costs you', note: 'The percentage, in dollars.' },
+      { href: '/ecommerce-performance-marketing-agency', title: 'Ecommerce performance marketing', note: 'Where the margin actually goes.' },
+      { href: '/system', title: 'How the system works', note: 'Installed, then run.' },
+    ],
+    closing: { h2: 'Have the account read first.', p: "Answer five questions and Josh comes back with what the account needs, what it would cost, and whether it is worth doing at all." },
+  },
+  {
+    slug: 'ecommerce-performance-marketing-agency',
+    title: 'Ecommerce Performance Marketing Agency (Australia) | Sevenam',
+    description: 'Performance marketing for Australian ecommerce brands on Meta: measurement built properly, creative produced on demand, and a fixed fee that does not rise with your budget.',
+    eyebrow: 'ECOMMERCE', h1: 'Ecommerce Performance Marketing',
+    lead: 'For brands where the margin is real and the reporting has to survive contact with it.',
+    s1: {
+      h2: 'Ecommerce makes the measurement problem worse.',
+      paras: [
+        "A lead generation account can live with a loose definition of success for a while. An ecommerce account cannot, because there is a real margin underneath every order and a wrong number compounds daily into stock you bought and discounts you did not need to give.",
+        "The usual failures are specific and fixable: purchases counted twice across the pixel and the conversions API, returns and cancellations never subtracted, shipping and payment fees left out of the contribution figure, and a platform ROAS that has quietly drifted from what the bank statement says.",
+      ],
+      items: [
+        'Deduplicated purchases, so one order is one order.',
+        'Returns and cancellations subtracted, not assumed away.',
+        'Contribution margin, not revenue, as the number that decides spend.',
+        'Platform reporting reconciled against what actually landed.',
+      ],
+    },
+    s2: {
+      h2: 'Then creative becomes the constraint.',
+      paras: [
+        "Once the numbers are true, the thing limiting an ecommerce account is almost never targeting — the platform's models handle that now. It is how much distinct creative goes into the auction, and how quickly the losers are replaced. A shoot takes weeks to organise and prices volume by the hour, so most brands ship three or four concepts a quarter and watch frequency climb while they wait.",
+        "Concepts, hooks, cuts and statics are produced end to end on our own line and briefed against what the account's own numbers already say is working, which is why an order comes back in days rather than weeks.",
+      ],
+      items: [
+        'Creative volume sized to the account, not to a percentage of the budget.',
+        'Briefed against the account data, not a mood board.',
+        'Ordered when it is needed, with no minimum.',
+        'Every file yours, in your own library, permanently.',
+      ],
+    },
+    faqs: [
+      { q: 'What do you need from our store to start?', a: "Read access to the ad account and the Business Manager, the storefront platform, and whatever you use for order and returns data. The measurement build is the first week's work and most of it is reconciling what the platform reports against what your back end says actually happened." },
+      { q: 'We already have an in-house media buyer. Is this still useful?', a: "Often more useful. The setup and the measurement build are one-time work that an in-house buyer inherits, and the daily written decisions are something they can argue with rather than a black box. Several accounts take the install and run it themselves from there." },
+      { q: 'Do you handle Shopify tracking specifically?', a: "Yes — the pixel, the conversions API, deduplication, and the catalogue feed, since a broken or stale feed is one of the most common reasons an ecommerce account underperforms without anything obviously looking wrong." },
+      { q: 'What about the rest of our marketing?', a: "We run Meta. If the constraint on your growth is email flows, search, or a marketplace, we will say so during the account check rather than quietly widening the scope to fill a retainer." },
+    ],
+    related: [
+      { href: '/performance-marketing-agency', title: 'Performance marketing agency', note: 'What the term should mean.' },
+      { href: '/ad-creative', title: 'Ad creative, without the shoot', note: 'Where volume comes from.' },
+      { href: '/ecommerce-facebook-ads-agency', title: 'Ecommerce Facebook ads', note: 'The channel in detail.' },
+    ],
+    closing: { h2: 'Start with the numbers.', p: "Answer five questions about the account and Josh comes back with what the measurement is likely hiding and what it would cost to fix." },
+  },
+  {
     slug: 'meta-ads-agency',
     title: 'Meta Ads Agency (Australia) — Or a System You Own | Sevenam',
     description: 'Looking for a Meta ads agency in Australia? There is a structural alternative: a system installed on your own ad account, decisions at 7am, and a fixed fee.',
