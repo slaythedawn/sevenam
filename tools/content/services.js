@@ -27,8 +27,8 @@ const PAGES = [
     slug: 'ad-creative',
     title: 'AI Ad Creative for Ecommerce Brands | Sevenam',
     description: 'Ad creative produced end to end on an AI line: concepts, hooks, cuts and statics, ordered on demand and delivered in days. $750 a concept, no minimum.',
-    eyebrow: 'AD CREATIVE', h1: 'Ad Creative, Produced on an AI Line',
-    lead: 'Ordered when you need it, delivered in days, priced per concept.',
+    eyebrow: 'AD CREATIVE', h1: 'Ad Creative, Without the Shoot',
+    lead: 'Order what the account needs. It comes back in days, priced per concept.',
     s1: {
       h2: 'Creative volume is the constraint now.',
       paras: [
