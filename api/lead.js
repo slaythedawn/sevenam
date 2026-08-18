@@ -160,7 +160,12 @@ module.exports = async (req, res) => {
          a delivery route is configured. */
       const seen = ['RESEND_API_KEY', 'LEAD_WEBHOOK', 'LEAD_TO', 'LEAD_FROM']
         .filter((k) => process.env[k]);
-      return res.status(503).json({ ok: false, error: 'no_delivery_configured', seen });
+      /* Which build answered. A variable only reaches deployments created after
+         it was set, so "did the key not take" and "am I talking to the build
+         from before I set it" are the two questions here, and this answers the
+         second without a trip to the dashboard. */
+      const build = (process.env.VERCEL_GIT_COMMIT_SHA || 'unknown').slice(0, 7);
+      return res.status(503).json({ ok: false, error: 'no_delivery_configured', seen, build });
     }
   } catch (err) {
     console.error('lead delivery failed:', err && err.message);
