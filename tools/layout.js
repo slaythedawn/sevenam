@@ -148,7 +148,6 @@ const ORG = {
   "name": "Sevenam",
   "url": ORIGIN,
   "description": "Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.",
-  "email": "hello@sevenam.com.au",
   /* Named so Google can tie the company to the person behind it. There is no
      Sevenam company page on LinkedIn yet; when there is, its URL belongs on the
      Organization as sameAs, alongside this. */

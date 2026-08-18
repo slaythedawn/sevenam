@@ -157,9 +157,12 @@ var LEAD_EMAIL    = "joshuapcck@gmail.com";  // mailto target on the quiz result
 var LEAD_ENDPOINT = "";                      // optional webhook
 ```
 
-`LEAD_EMAIL` must be a mailbox that actually receives, and it is visible to anyone who
-finishes the quiz. Currently a personal Gmail so leads land somewhere real; move it to
-`hello@sevenam.com.au` once that address exists or forwards.
+Applications POST to `/api/lead`, which emails them via Resend. `LEAD_EMAIL` in
+`site.js` is only the failure path — used when that POST does not return a 200 — and
+must be a mailbox that actually receives. It is a personal Gmail for that reason.
+
+The site publishes no email address anywhere: `sevenam.com.au` has no MX record, so
+any address on the domain bounces. Contact routes through `/apply` only.
 
 `LEAD_ENDPOINT` is more reliable, because the `mailto:` depends on the visitor having a
 mail client configured. When set, answers POST server-side as form-encoded —

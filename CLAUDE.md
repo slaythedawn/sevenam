@@ -133,7 +133,11 @@ Only a 200 counts as delivered. On 503 or 502 the result screen says plainly tha
 did not go through and opens the `mailto:` in `LEAD_EMAIL` with the answers already
 written out. That address is the failure path only; nothing on the page invites it.
 
-**`hello@sevenam.com.au` has no MX record** — the domain has no mail server, so that
-address bounces, and it is published in all 56 footers and in the Organization schema.
-Either add forwarding at the registrar or change what is published; do not point the
-lead fallback at it while it is dead.
+**There is no published email address anywhere on the site, on purpose.**
+`hello@sevenam.com.au` never had an MX record — the domain has no mail server, so it
+always bounced — and rather than stand up a mailbox, contact routes through `/apply`
+only. The footer Contact column links there, and the Organization schema has no
+`email` property. Do not reintroduce an address without a mailbox behind it.
+
+`LEAD_EMAIL` in `site.js` is the one address left in the codebase. It is the failure
+path and nothing links to it.

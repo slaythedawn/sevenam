@@ -89,9 +89,7 @@ var LEAD_ENDPOINT = "";                       // optional webhook
 ```
 
 `LEAD_EMAIL` is currently a personal Gmail so that leads land somewhere that
-actually receives. Switch it to `hello@sevenam.com.au` once that mailbox exists
-or forwards — it appears in the `mailto:` link on the result screen, so it is
-visible to anyone who reaches the end of the quiz. **Whatever is set here must be
+actually receives. **Whatever is set here must be
 a mailbox that receives**, or leads go nowhere and nothing visibly breaks.
 
 `LEAD_ENDPOINT` is the more reliable path, because it does not depend on the
