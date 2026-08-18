@@ -5,6 +5,51 @@ const SUPPORT = "Sevenam installs a Meta advertising system on your own ad accou
 
 const PAGES = [
   {
+    slug: 'seedance-2-5',
+    title: 'Seedance 2.5 for Ad Creative: What Changes | Sevenam',
+    description: 'Seedance 2.5 is the newer generation of the video model. What actually matters for Meta ad creative, how to judge a new version, and what still does not work.',
+    eyebrow: 'GUIDE', h1: 'Seedance 2.5 for Ad Creative',
+    lead: 'A new version is only worth switching to if it fixes something that was costing you ads.',
+    s1: {
+      h2: 'How to judge a new model version.',
+      paras: [
+        "Every new release of a video model arrives with a reel of its best output, which tells you almost nothing about whether it will make your ads better. The useful test is narrower: does it fix the specific failure that was forcing you to discard generations? For advertisers that is nearly always one of three things \u2014 hands and faces, product physics, or motion that reads as synthetic.",
+        "So run the new version against the shots you already abandoned. If the clips you had to throw away last month come back usable, the upgrade is real for you. If it just makes the shots that already worked slightly prettier, it changes nothing about your output rate, which is the only number that moves performance.",
+      ],
+      items: [
+        'Test it on the generations you previously binned, not on new ideas.',
+        'Measure the usable-output rate, not the best single clip.',
+        'Hands, faces and product physics are where versions actually differ.',
+        'Prettier is not the same as usable in an ad account.',
+      ],
+    },
+    s2: {
+      h2: 'What has not changed.',
+      paras: [
+        "The limits that matter for advertising have been stubborn across every generation so far. Sustained human performance is still the least reliable output, text inside the frame should still be laid over afterwards rather than generated, and any product with fine detail still needs checking frame by frame before it goes near an ad account.",
+        "The other constant is that direction beats the model. An undirected generation converges on the same weightless look regardless of which version produced it, and that look is what a viewer scrolls past. The rejection rate is doing more work than the release notes.",
+      ],
+      items: [
+        'Faces and hands remain the weakest element in any generation.',
+        'Overlay text afterwards; do not generate it inside the frame.',
+        'Check fine product detail frame by frame before shipping.',
+        'Direction and a high rejection rate matter more than the version number.',
+      ],
+    },
+    faqs: [
+      { q: 'Should we move from Seedance 2.0 to 2.5?', a: "Only if it fixes a failure that was costing you usable output. Most accounts we see are not limited by model quality \u2014 they are limited by how many concepts get briefed and how much gets rejected. Upgrading the model does not fix either of those." },
+      { q: 'Is it good enough to replace filming?', a: "For product motion, hooks and cuts, it does work that would otherwise not get made at all. For a founder to camera, a genuine customer testimonial, or a demonstration that depends on someone handling the product, no \u2014 and treating it as a substitute for those is the most common way brands waste money on video generation." },
+      { q: 'What do you actually use?', a: "Whichever tool suits the shot. Seedance for video, Nano Banana for stills and edits, Higgsfield when the camera move is the point. Treating any one of them as the single answer is the mistake." },
+      { q: 'How current is this page?', a: "Model versions move faster than any page can. What we keep current here is the method for judging a release and the limits that have held across every version so far \u2014 those change far more slowly than the capabilities do." },
+    ],
+    related: [
+      { href: '/ad-creative', title: 'Ad creative on an AI line', note: 'What we produce, and what it costs.' },
+      { href: '/seedance-2', title: 'Seedance 2.0 for ad creative', note: 'The version most work still runs on.' },
+      { href: '/higgsfield-ads', title: 'Higgsfield for ad creative', note: 'Directed motion, not prompt-and-hope.' },
+    ],
+    closing: { h2: 'Would rather not run the line yourself?', p: "Answer five questions about the account and Josh comes back with what producing the creative would cost." },
+  },
+  {
     slug: 'nano-banana-2',
     title: 'Nano Banana 2 for Ad Creative: What It Is Good At | Sevenam',
     description: 'Nano Banana 2 is Google\u2019s image model, and it has become a practical tool for ecommerce ad creative. What it does well, where it fails, and how to brief it.',
@@ -44,13 +89,13 @@ const PAGES = [
     related: [
       { href: '/ad-creative', title: 'Ad creative on an AI line', note: 'What we produce, and what it costs.' },
       { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
-      { href: '/learn', title: 'All guides', note: 'The rest of what we publish.' },
+      { href: '/seedance-2-5', title: 'Seedance 2.5 for ad creative', note: 'Judging a new model version.' },
     ],
     closing: { h2: 'Would rather not run the line yourself?', p: "Answer five questions about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
   },
   {
     slug: 'seedance-2',
-    title: 'Seedance 2.0 for Ad Creative: A Practical Guide | Sevenam',
+    title: 'Seedance 2.0 for Ad Creative: A Practical Guide (and 2.5) | Sevenam',
     description: 'Seedance 2.0 generates short video from a prompt or a still. Where it is genuinely useful for Meta ad creative, where it is not, and how to brief it properly.',
     eyebrow: 'GUIDE', h1: 'Seedance 2.0 for Ad Creative',
     lead: 'Short-form video without a shoot, which is either the unlock or the trap depending on the brief.',
@@ -88,14 +133,14 @@ const PAGES = [
     related: [
       { href: '/ad-creative', title: 'Ad creative on an AI line', note: 'What we produce, and what it costs.' },
       { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
-      { href: '/learn', title: 'All guides', note: 'The rest of what we publish.' },
+      { href: '/seedance-2-5', title: 'Seedance 2.5 for ad creative', note: 'Judging a new model version.' },
     ],
     closing: { h2: 'Would rather not run the line yourself?', p: "Answer five questions about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
   },
   {
     slug: 'higgsfield-ads',
-    title: 'Higgsfield for Ad Creative: What It Does Well | Sevenam',
-    description: 'Higgsfield is built around motion and camera control rather than prompt-and-hope. Where that helps Meta ad creative, what it cannot do, and how to brief it.',
+    title: 'Higgsfield AI for Ad Creative: What It Does Well | Sevenam',
+    description: 'Higgsfield AI is built around motion and camera control rather than prompt-and-hope. Where that helps Meta ad creative, what it cannot do, and how to brief it.',
     eyebrow: 'GUIDE', h1: 'Higgsfield for Ad Creative',
     lead: 'Motion control is the part most generation tools get wrong, which is the whole reason to use this one.',
     s1: {
@@ -132,7 +177,7 @@ const PAGES = [
     related: [
       { href: '/ad-creative', title: 'Ad creative on an AI line', note: 'What we produce, and what it costs.' },
       { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
-      { href: '/learn', title: 'All guides', note: 'The rest of what we publish.' },
+      { href: '/seedance-2-5', title: 'Seedance 2.5 for ad creative', note: 'Judging a new model version.' },
     ],
     closing: { h2: 'Would rather not run the line yourself?', p: "Answer five questions about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
   },

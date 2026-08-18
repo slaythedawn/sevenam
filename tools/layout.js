@@ -203,10 +203,30 @@ function graph(p) {
   return JSON.stringify({ "@context": "https://schema.org", "@graph": nodes });
 }
 
+/* Optional image strip, rendered directly under the hero when a page supplies
+   one. Only /ad-creative uses it: a page selling creative production that shows
+   no creative is asking to be disbelieved. */
+function gallery(g) {
+  if (!g || !g.images || !g.images.length) return '';
+  const tiles = g.images.map(im =>
+    `<img loading="lazy" decoding="async" src="${esc(im.src)}" alt="${esc(im.alt)}" data-reveal="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px;">`
+  ).join('\n          ');
+  return `<section style="background: rgb(247, 247, 245); padding: 72px 32px 8px;">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">${esc(g.label)}</span>
+      <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
+          ${tiles}
+      </div>
+      <p style="margin: 18px 0px 0px; max-width: 76ch; font-size: 14px; line-height: 1.65; color: rgb(85, 85, 79);">${esc(g.note)}</p>
+    </div>
+  </section>`;
+}
+
 function page(p) {
   const url = ORIGIN + p.path;
   const main = [
     hero(p),
+    gallery(p.gallery),
     ...(p.sections || []).map(prose),
     p.faqs && p.faqs.length ? faqSection(p.faqs, p.faqHeading) : '',
     p.pills ? pills(p.pills.label, p.pills.links) : '',
