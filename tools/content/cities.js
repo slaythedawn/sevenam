@@ -319,7 +319,7 @@ const CITIES = [
   },
 ];
 
-const SUPPORT = "Sevenam installs a Meta advertising system on your own ad account and runs the technology that operates it — written decisions at 7am every morning telling you exactly what to do that day. One fixed setup fee, a fixed monthly, and never a share of your media budget.";
+const SUPPORT = "Sevenam installs a Meta advertising system on your own ad account and runs the technology that operates it — written decisions at 7am every morning telling you exactly what to do that day. One fixed setup fee, a fixed monthly, priced to the work rather than your media budget.";
 
 function build() {
   return CITIES.map(c => {
