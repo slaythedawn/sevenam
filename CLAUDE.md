@@ -4,6 +4,10 @@ Marketing site for Sevenam. **Static HTML, no build step, no dependencies.** Ver
 serves these files directly — pushing to `main` deploys to https://sevenam.com.au
 within about a minute. There is no staging environment, so a bad push is live.
 
+The one exception to "static" is `api/lead.js`, a Vercel Node function that receives
+the finished application. It has no dependencies either — no `package.json`, global
+`fetch`, `module.exports` — so the no-build-step rule still holds.
+
 ## Before you commit, always
 
 ```bash
@@ -38,6 +42,9 @@ design — but it also means **breaking that file breaks all 35**.
 - **`"framework": null` in `vercel.json`.** The Vercel project's preset is Next.js.
   Without this override, every deploy runs `next build`, finds no `package.json`, and
   fails. Do not remove it.
+- **`/img/*` is served `immutable` for a year.** Replacing an image in place is
+  invisible to anyone who has already loaded the page. Give the new file a new name —
+  the two homepage images carry a content hash for exactly this reason.
 - **`data-` attributes are behaviour hooks**, not styling: `data-reveal`,
   `data-faq-item` / `data-faq-toggle` / `data-faq-sign` / `data-faq-answer`,
   `data-clock`, `data-approve`, `data-act`, `data-ad-drift`, `data-parallax`,
@@ -102,7 +109,29 @@ touch that function, walk all six paths by hand.
 
 ## Lead capture
 
-`LEAD_EMAIL` at the top of `site.js` is the `mailto:` target on the quiz result screen
-and is visible to anyone who finishes the quiz. `LEAD_ENDPOINT` is an optional webhook;
-when set, answers POST server-side as form-encoded (deliberately, to avoid a CORS
-preflight) and fall back to the `mailto:` if the request fails.
+A finished application POSTs to `/api/lead` (`api/lead.js`), form-encoded on purpose —
+that keeps it a "simple" CORS request, so the browser skips a preflight. The function
+validates, drops honeypot submissions, `console.log`s the lead so it survives in the
+Vercel runtime logs whatever happens next, then delivers by the first route configured:
+
+| Variable | Effect |
+| --- | --- |
+| `RESEND_API_KEY` | Emails the lead via Resend. `reply_to` is the applicant. |
+| `LEAD_WEBHOOK` | POSTs the lead as JSON instead. |
+| `LEAD_TO` / `LEAD_FROM` | Recipient and sender. Both default sensibly. |
+
+**These live in the Vercel project, never in the repo.** With none of them set the
+function returns 503 rather than claiming success.
+
+**Vercel only exposes an environment variable to deployments built after it was
+added.** Setting a key changes nothing until the next deploy — so after adding one,
+push something or redeploy, then confirm with a real POST rather than assuming.
+
+Only a 200 counts as delivered. On 503 or 502 the result screen says plainly that it
+did not go through and opens the `mailto:` in `LEAD_EMAIL` with the answers already
+written out. That address is the failure path only; nothing on the page invites it.
+
+**`hello@sevenam.com.au` has no MX record** — the domain has no mail server, so that
+address bounces, and it is published in all 56 footers and in the Organization schema.
+Either add forwarding at the registrar or change what is published; do not point the
+lead fallback at it while it is dead.
