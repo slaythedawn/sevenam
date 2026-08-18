@@ -5,18 +5,18 @@
   "use strict";
 
   /* ------------------------------------------------------------ lead capture
-     LEAD_EMAIL   the address the "Send this to Josh" mailto is addressed to.
-                  It must be a mailbox that actually receives — if the domain has
-                  no mailbox yet, either add forwarding for it or put a working
-                  address here instead.
-     LEAD_ENDPOINT a webhook (Zapier, Make, a CRM) that receives the answers
-                  server-side. Leave empty to rely on the mailto alone.
-                  Posted form-encoded on purpose: that keeps it a "simple" CORS
-                  request, so the browser skips the preflight most webhook hosts
-                  reject. If the POST fails, the page falls back to the mailto
-                  rather than stranding a lead. */
+     LEAD_ENDPOINT where a finished application is POSTed. /api/lead is a
+                  function in this repo that emails it to Josh; see that file for
+                  the environment variables it needs. Posted form-encoded on
+                  purpose: that keeps it a "simple" CORS request, so the browser
+                  skips the preflight most webhook hosts reject.
+     LEAD_EMAIL   fallback only. If the POST fails — the function is down, the
+                  visitor is offline mid-submit — the page opens a mail client
+                  addressed here rather than stranding a lead. It must be a
+                  mailbox that actually receives. Nobody reaches this path in
+                  normal use, and nothing on the page invites them to. */
+  var LEAD_ENDPOINT = "/api/lead";
   var LEAD_EMAIL = "joshuapcck@gmail.com";
-  var LEAD_ENDPOINT = "";
 
   var VOLT = "#D8FF00";
   var EASE = "cubic-bezier(0.2,0.7,0.2,1)";
@@ -563,7 +563,9 @@
     var S = {
       step: 0, answers: {}, problems: [],
       name: "", company: "", site: "", email: "", phone: "", note: "",
-      tried: false, done: false, sent: false, sending: false
+      /* hp is the honeypot: hidden from people, irresistible to bots. */
+      hp: "",
+      tried: false, done: false, sent: false, sending: false, failed: false
     };
     var TOTAL = QUESTIONS.length + 1;
 
@@ -682,6 +684,12 @@
           field("email", "Email", "email", "you@yourstore.com.au") +
           field("phone", "Phone", "tel", "04xx xxx xxx", true) +
           '</div>' +
+          /* Named so no browser autofill heuristic recognises it. A honeypot that
+             autofill populates would silently discard real applications. */
+          '<div aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;">' +
+          '<label>Leave this field empty<input type="text" tabindex="-1" autocomplete="off" ' +
+          'data-field="hp" name="hp-no-autofill" value="' + esc(S.hp) + '"></label>' +
+          '</div>' +
           '<label style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">' +
           '<span style="' + LABEL + '">Anything we should know <span style="color:#55554F; font-weight:500; letter-spacing:0; text-transform:none;">optional</span></span>' +
           '<textarea rows="4" data-field="note" placeholder="Contract dates, who else is involved, what you\'ve already tried." ' +
@@ -720,16 +728,20 @@
         });
         html += '</div></div>' +
           '<div style="margin-top:36px; display:flex; flex-wrap:wrap; gap:12px;">' +
-          '<a href="' + esc(mailto(v)) + '" data-send style="background:' + VOLT + '; color:#0A0A0A; font-size:17px;' +
-          'font-weight:600; padding:18px 28px; border-radius:4px;">' +
-          (S.sent ? "Sent — thank you" : S.sending ? "Sending…" : "Send this to Josh") + '</a>' +
+          '<button type="button" data-send' + (S.sent || S.sending ? ' disabled' : '') +
+          ' style="background:' + VOLT + '; color:#0A0A0A; font-size:17px; font-family:inherit;' +
+          'font-weight:600; padding:18px 28px; border-radius:4px; border:none; cursor:' +
+          (S.sent || S.sending ? 'default' : 'pointer') + ';">' +
+          (S.sent ? "Sent — thank you" : S.sending ? "Sending…" : S.failed ? "Try again" : "Send this to Josh") + '</button>' +
           '<a href="' + esc(v.ctaHref) + '" style="border:1px solid #55554F; color:#F7F7F5; font-size:17px;' +
           'font-weight:600; padding:17px 28px; border-radius:4px;">' + esc(v.ctaLabel) + '</a>' +
           '</div>' +
           '<p style="margin:24px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:#55554F;">' +
           (S.sent
             ? "Your answers are with Josh. He reads every one himself and replies within a business day with a time to talk — or a straight no."
-            : "Your answers stay in this browser until you send them. Josh reads every one himself and replies within a business day with a time to talk — or a straight no.") +
+            : S.failed
+              ? "That did not go through, so your mail client is opening with the answers already written out. Send it and it reaches Josh the same way."
+              : "Your answers stay in this browser until you send them. Josh reads every one himself and replies within a business day with a time to talk — or a straight no.") +
           '</p></div>';
       }
 
@@ -746,10 +758,21 @@
         '</label>';
     }
 
-    function send(anchor, v) {
-      if (!LEAD_ENDPOINT || S.sent || S.sending) return false;
+    /* The applicant's mail client is never the happy path. It is reached only
+       when the POST could not be delivered, and the wording on the button
+       changes to say so before anything opens. */
+    function fallbackToMail(v) {
+      S.sending = false;
+      S.failed = true;
+      render();
+      window.location.href = mailto(v);
+    }
+
+    function send(btn, v) {
+      if (S.sent || S.sending) return;
       S.sending = true;
-      anchor.textContent = "Sending…";
+      render();
+
       var payload = new URLSearchParams({
         name: S.name, company: S.company, website: S.site, email: S.email,
         phone: S.phone, notes: S.note, verdict: v.tag,
@@ -758,20 +781,23 @@
         problems: S.problems.map(function (x) { return labelFor("problems", x); }).join(", "),
         operator: labelFor("operator", S.answers.operator),
         category: labelFor("category", S.answers.category),
-        page: location.href
+        page: location.href,
+        company_url: S.hp
       });
+
       fetch(LEAD_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: payload.toString()
-      }).then(function () {
+      }).then(function (res) {
+        /* A 200 is the only thing that counts as delivered. Anything else —
+           503 with no mail provider configured, 502 if the provider refused —
+           means the lead is not with Josh, and saying otherwise loses it. */
+        if (!res.ok) return fallbackToMail(v);
         S.sending = false; S.sent = true; render();
       }).catch(function () {
-        /* Never strand a lead: fall back to the mail client. */
-        S.sending = false;
-        window.location.href = anchor.getAttribute("href");
+        fallbackToMail(v);
       });
-      return true;
     }
 
     function wire() {
@@ -808,8 +834,8 @@
         root.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
       });
       var sendBtn = q("[data-send]", root);
-      if (sendBtn) sendBtn.addEventListener("click", function (e) {
-        if (send(sendBtn, verdict())) e.preventDefault();
+      if (sendBtn) sendBtn.addEventListener("click", function () {
+        send(sendBtn, verdict());
       });
     }
 
