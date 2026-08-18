@@ -16,7 +16,7 @@ const OWNERSHIP = {
   ],
   items: [
     'Your ad account, your pixel, your creative library. Always.',
-    'A fixed setup fee and a fixed monthly, never a share of spend.',
+    'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
     'Month to month, with no notice period.',
     'Every decision written down, with the numbers behind it.',
   ],
@@ -46,7 +46,7 @@ const PAGES = [
       h2: 'What replaces it.',
       paras: [
         "A one-time setup that builds the account, the tracking and the measurement properly, then a system that reads it every night and writes the day's decisions in plain English. You approve what you agree with; we action it in Ads Manager.",
-        "Creative is produced by the batch or by the month, sized to what the account needs rather than to what the budget would justify as a percentage.",
+        "Creative is ordered on demand and delivered in days, sized to what the account needs rather than to what the budget would justify as a percentage.",
       ],
       items: [
         'A setup you buy once and keep.',
@@ -92,7 +92,7 @@ const PAGES = [
       h2: 'What actually needs solving.',
       paras: [
         "If Instagram is underperforming for you, the cause is almost always that it is being fed creative made for a different surface, at a volume too low to find what works in a format that fatigues quickly.",
-        "The system handles the decisions; the creative batch handles the supply, in the formats each placement actually rewards.",
+        "The system handles the decisions; creative on demand handles the supply, in the formats each placement actually rewards.",
       ],
       items: [
         'Vertical video and Stories-native creative produced as a matter of course.',
@@ -190,7 +190,7 @@ const PAGES = [
         'The account is read every night, not when someone gets to it.',
         'Decisions arrive at 7am in plain English, with the numbers attached.',
         'You approve; we action it in your account the same morning.',
-        'Creative shipped weekly rather than in one monthly batch.',
+        'Creative ordered when you need it, delivered in days.',
       ],
     },
     faqs: [
@@ -368,22 +368,22 @@ const PAGES = [
     s2: {
       h2: 'How we structure it instead.',
       paras: [
-        "A one-time setup you buy once and own, then creative by the batch or by the month, sized to what the account actually consumes. If you would rather hand the whole thing over, the end-to-end option is quoted after we have read the account.",
+        "A one-time setup you buy once and own, then creative ordered on demand, sized to what the account actually consumes. If you would rather hand the whole thing over, the end-to-end option is quoted after we have read the account.",
         "There are no tiers, because the useful variable is your account rather than a price point. Every figure is quoted in writing before you commit.",
       ],
       items: [
         'A setup bought once, owned permanently.',
-        'Creative sized to the account, by batch or by month.',
+        'Creative on demand, priced by what you order.',
         'An end-to-end option quoted after the account is read.',
-        'Fixed fees, quoted in writing, never a share of spend.',
+        'Fixed fees, quoted in writing, priced to the work rather than your budget.',
       ],
     },
     faqs: [
       { q: 'Why are there no prices on this page?', a: "Because the honest figure depends on what the account needs, and a number picked before anyone has read it would be a guess dressed as a quote. Every figure is in writing before you commit to anything, and the conversation that produces it is free." },
       { q: 'Is there a minimum commitment?', a: "The setup is a four-week project with a fixed start and finish. Everything monthly is month to month with no notice period." },
       { q: 'Can we buy the setup and stop there?', a: "Yes, and some do. You own it — the account, the tracking, the structure and the documentation stay with you whether or not you buy anything else." },
-      { q: 'What is in the creative batch?', a: "A month's supply of testing: new concepts, hooks and cuts shipped weekly rather than in one drop, each with its performance numbers attached." },
-      { q: 'Do you charge a percentage of ad spend?', a: "No, and we never will. What you spend on Meta has no effect on what you pay us." },
+      { q: 'How does the creative work?', a: "Concepts, hooks, cuts and statics produced end to end on our own AI line, ordered when you need them and delivered in days rather than weeks. Each one ships with its performance numbers attached, and there is no batch to commit to." },
+      { q: 'Do you charge a percentage of ad spend?', a: "Our fees are priced to the work \u2014 installing the system, running the decisions, producing the creative. None of that gets harder because you spent more, so none of it costs more." },
     ],
     closing: { h2: 'Get the figures in writing.', p: "Fifteen minutes with Josh, no pitch deck. You will leave with every number written down, whether or not you buy anything." },
     related: [
@@ -429,7 +429,7 @@ const PAGES = [
     faqs: [
       { q: 'Is ten to twenty per cent of spend reasonable?', a: "It depends entirely on your spend. At five thousand a month it is a modest fee for real work, and the minimum monthly fee most agencies apply probably matters more than the percentage. At a hundred thousand a month the same percentage is a very large number for work that has not changed much — put both into the fee calculator and the difference is stark." },
       { q: 'What about performance or hybrid pricing?', a: "A lower base fee plus a share of results above an agreed baseline — commonly ten to thirty per cent of verified revenue, profit or qualified leads. It can align incentives well, and the whole thing rests on how the baseline is set and who verifies the numbers. Agree both in writing before you start." },
-      { q: 'What do you charge?', a: "A fixed setup fee and a fixed monthly, quoted in writing after we have read your account, and never a percentage of your media budget. The figure depends on how much creative the account consumes and how much execution you want us doing." },
+      { q: 'What do you charge?', a: "A fixed setup fee and a fixed monthly, quoted in writing after we have read your account, priced to the work rather than your media budget. The figure depends on how much creative the account consumes and how much execution you want us doing." },
       { q: 'Should creative be included in the management fee?', a: "It rarely is, and you should confirm it explicitly. Creative volume is the single biggest driver of performance, so a management fee that excludes it is only paying for half the job." },
       { q: 'Is there a standard setup or onboarding fee?', a: "Many agencies charge one, often equivalent to a month or two of retainer. What matters more is what you own at the end of it — an onboarding that builds the account in the agency's Business Manager is worth considerably less to you." },
       { q: 'How do we work out what we are really paying?', a: "Add the management fee, the creative cost and any platform or reporting fees, then divide by media spend. That effective percentage is the number to compare, and it is usually higher than the headline." },
