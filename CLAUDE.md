@@ -24,7 +24,7 @@ in `FAQPage` schema is actually visible on the page. It also fails if
   `learn`, `glossary`, `agency-fee`, `what-are-meta-ads`, `facebook-ads-agency`,
   `ecommerce-facebook-ads-agency`, `ai-marketing-agency`, `facebook-ads-sydney`,
   `facebook-ads-for-tradies`.
-- **35 generated pages** (other cities, industries, head terms, guides) are built from
+- **40 generated pages** (other cities, industries, head terms, guides) are built from
   data in `tools/content/*.js`. **Editing their `.html` directly is wasted work** — the
   next `node tools/build-pages.js` overwrites it. Edit the content file, then rebuild.
 
@@ -55,8 +55,15 @@ design — but it also means **breaking that file breaks all 35**.
 - Copy on the money pages is written against search terms. **Do not rewrite it for tone.**
 - Never state a precise time for the overnight run — "Before you're up", never "02:00".
 - No pricing on the homepage, and no pricing in any CTA button label.
-- No Sevenam dollar figures anywhere. Fees are quoted in writing after the account is
-  read. Market rates on the cost pages are other agencies' typical ranges, never ours.
+- Two Sevenam figures are published and must stay consistent wherever they appear: the
+  Install at **$19,500** (`/pricing`, `/agency-fee`, `/install`) and creative at **$750 a
+  concept** (`/pricing`). Everything else — the monthly, managed scope, deal terms — is
+  quoted in writing after the account is read. Market rates on the cost pages are other
+  agencies' typical ranges, never ours.
+- **Do not write the fee model as a vow.** "Never a percentage of spend" was removed from
+  ~140 places; fees are "priced to the work rather than your budget". Absolutes foreclose
+  the managed line. Grep loosely before declaring it clean — three separate sweeps missed
+  phrasings like "never a share of your spend" and "your fee will never take a cut".
 - Case studies: SRW, knest.ai, Online Model Academy only. Never a client's revenue.
 - Sydney-based, working nationally. No phone number in body copy.
 - No emoji, no "AI-powered" filler, no urgency theatre.
@@ -76,9 +83,14 @@ All animation must be disabled under `prefers-reduced-motion: reduce`.
 
 ## What `tools/check.js` cannot see
 
-It has no browser, so these still need a human to look at after changing `site.js`:
+It has no browser, so these still need looking at after changing `site.js`. Chromium and
+Playwright are installed — drive them rather than guessing (launch with
+`--no-proxy-server` and serve over `127.0.0.1`, or Chromium tries to proxy localhost):
 
-- the hero clock running 06:57 → 07:00 and the approve sequence completing
+- the hero clock running 06:57 → 07:00, the approve sequence completing, and the whole
+  sequence **looping** — it restores from a snapshot between cycles, and restoring
+  `textContent` on a container like `[data-approve-card]` or a `[data-act]` row wipes
+  its children, which is exactly the bug that shipped once already
 - the FAQ accordion opening and closing
 - the fee calculator recalculating and switching between percentage and retainer
 - the quiz reaching all six verdicts, and refusing to submit without a name and a

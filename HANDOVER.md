@@ -62,7 +62,7 @@ design — but breaking that one file breaks all 35.
 
 ## Page inventory
 
-51 pages, matching the design bundle's full planned inventory. Every URL in
+56 pages. Every URL in
 `sitemap.xml` resolves and no internal link 404s.
 
 | Group | Count |
@@ -126,8 +126,11 @@ From the brief, and load-bearing rather than stylistic.
 - Copy on the money pages is written against search terms. **Do not rewrite it for tone.**
 - Never state a precise time for the overnight run — "Before you're up", never "02:00".
 - No pricing on the homepage, and none in any CTA button label.
-- No Sevenam dollar figures anywhere. Fees are quoted in writing after the account is
-  read. Market rates on the cost pages are other agencies' typical ranges, never ours.
+- Two figures are published: the Install at **$19,500** and creative at **$750 a concept**.
+  Everything else is quoted in writing after the account is read. Market rates on the cost
+  pages are other agencies' typical ranges, never ours.
+- The fee model is an argument, not a vow: "priced to the work rather than your budget",
+  never an absolute promise about percentages.
 - Case studies: SRW, knest.ai and Online Model Academy only. Never a client's revenue.
 - Sydney-based, working nationally. No phone number in body copy.
 - No emoji, no "AI-powered" filler, no urgency theatre.
@@ -141,8 +144,9 @@ Ink `#0A0A0A` · Raised `#161613` · Hairline dark `#232320` · Volt `#D8FF00` �
 Volt hover `#CCFF00` · Paper `#F7F7F5` · Hairline light `#E3E3DD` · Body on ink
 `#C9C9C2` · Muted on ink `#B5B5AD` · Body on paper `#55554F`.
 
-One typeface throughout: Inter Tight, 400–700. Content caps at 1200px on inner pages,
-1240px on the homepage. `#9A9A92` is legal on ink only — it fails AA on white, so use
+One typeface throughout: Inter Tight, 400–700. **Every container caps at 1240px**, on the
+homepage and inner pages alike — they used to differ by 20px, which made the content jump
+sideways on every nav click. `#9A9A92` is legal on ink only — it fails AA on white, so use
 `#55554F` for labels on light and nothing lighter than `#6B6B63` for fine print. All
 animation must be disabled under `prefers-reduced-motion: reduce`.
 
