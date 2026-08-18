@@ -149,6 +149,15 @@ const ORG = {
   "url": ORIGIN,
   "description": "Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.",
   "email": "hello@sevenam.com.au",
+  /* Named so Google can tie the company to the person behind it. There is no
+     Sevenam company page on LinkedIn yet; when there is, its URL belongs on the
+     Organization as sameAs, alongside this. */
+  "founder": {
+    "@type": "Person",
+    "name": "Josh Peacock",
+    "jobTitle": "Founder",
+    "sameAs": ["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]
+  },
   "areaServed": "AU",
   "address": {
     "@type": "PostalAddress", "addressLocality": "Sydney",
