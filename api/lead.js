@@ -6,6 +6,9 @@
    configured, and it asks someone who has just answered five questions to
    perform a sixth, unrelated action in another application.
 
+   The recipient lives here rather than in site.js, so no address is served to
+   anyone who opens the page source.
+
    Delivery is decided by whichever environment variable is set, checked in this
    order. All are set in the Vercel project, never in the repo:
 
@@ -18,8 +21,8 @@
                       address that owns the Resend account, which is the case
                       here.
 
-   With none of them set this returns 503 and the page falls back to the mailto,
-   so deploying this file changes nothing until the key exists. */
+   With none of them set this returns 503. The page then shows "Try again" — there
+   is no mailto fallback and no address in the client at all. */
 
 const LEAD_FALLBACK = 'joshuapcck@gmail.com';
 
@@ -150,8 +153,9 @@ module.exports = async (req, res) => {
     } else if (process.env.LEAD_WEBHOOK) {
       await sendWebhook(lead);
     } else {
-      /* Nothing configured. Say so honestly so the page can fall back to the
-         mailto rather than telling the applicant their answers were sent.
+      /* Nothing configured. Say so honestly rather than telling the applicant
+         their answers were sent, which is the one thing that actually loses a
+         lead — the page shows "Try again" and keeps the answers on screen.
 
          `seen` lists which of the names this function looks for are actually
          present — names only, never values. Setting a variable in Vercel but
