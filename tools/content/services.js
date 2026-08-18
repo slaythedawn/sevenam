@@ -46,7 +46,7 @@ const PAGES = [
       h2: 'What replaces it.',
       paras: [
         "A one-time setup that builds the account, the tracking and the measurement properly, then a system that reads it every night and writes the day's decisions in plain English. You approve what you agree with; we action it in Ads Manager.",
-        "Creative is produced by the batch or by the month, sized to what the account needs rather than to what the budget would justify as a percentage.",
+        "Creative is ordered on demand and delivered in days, sized to what the account needs rather than to what the budget would justify as a percentage.",
       ],
       items: [
         'A setup you buy once and keep.',
@@ -92,7 +92,7 @@ const PAGES = [
       h2: 'What actually needs solving.',
       paras: [
         "If Instagram is underperforming for you, the cause is almost always that it is being fed creative made for a different surface, at a volume too low to find what works in a format that fatigues quickly.",
-        "The system handles the decisions; the creative batch handles the supply, in the formats each placement actually rewards.",
+        "The system handles the decisions; creative on demand handles the supply, in the formats each placement actually rewards.",
       ],
       items: [
         'Vertical video and Stories-native creative produced as a matter of course.',
@@ -190,7 +190,7 @@ const PAGES = [
         'The account is read every night, not when someone gets to it.',
         'Decisions arrive at 7am in plain English, with the numbers attached.',
         'You approve; we action it in your account the same morning.',
-        'Creative shipped weekly rather than in one monthly batch.',
+        'Creative ordered when you need it, delivered in days.',
       ],
     },
     faqs: [
@@ -368,12 +368,12 @@ const PAGES = [
     s2: {
       h2: 'How we structure it instead.',
       paras: [
-        "A one-time setup you buy once and own, then creative by the batch or by the month, sized to what the account actually consumes. If you would rather hand the whole thing over, the end-to-end option is quoted after we have read the account.",
+        "A one-time setup you buy once and own, then creative ordered on demand, sized to what the account actually consumes. If you would rather hand the whole thing over, the end-to-end option is quoted after we have read the account.",
         "There are no tiers, because the useful variable is your account rather than a price point. Every figure is quoted in writing before you commit.",
       ],
       items: [
         'A setup bought once, owned permanently.',
-        'Creative sized to the account, by batch or by month.',
+        'Creative on demand, priced by what you order.',
         'An end-to-end option quoted after the account is read.',
         'Fixed fees, quoted in writing, priced to the work rather than your budget.',
       ],
@@ -382,7 +382,7 @@ const PAGES = [
       { q: 'Why are there no prices on this page?', a: "Because the honest figure depends on what the account needs, and a number picked before anyone has read it would be a guess dressed as a quote. Every figure is in writing before you commit to anything, and the conversation that produces it is free." },
       { q: 'Is there a minimum commitment?', a: "The setup is a four-week project with a fixed start and finish. Everything monthly is month to month with no notice period." },
       { q: 'Can we buy the setup and stop there?', a: "Yes, and some do. You own it — the account, the tracking, the structure and the documentation stay with you whether or not you buy anything else." },
-      { q: 'What is in the creative batch?', a: "A month's supply of testing: new concepts, hooks and cuts shipped weekly rather than in one drop, each with its performance numbers attached." },
+      { q: 'How does the creative work?', a: "Concepts, hooks, cuts and statics produced end to end on our own AI line, ordered when you need them and delivered in days rather than weeks. Each one ships with its performance numbers attached, and there is no batch to commit to." },
       { q: 'Do you charge a percentage of ad spend?', a: "Our fees are priced to the work \u2014 installing the system, running the decisions, producing the creative. None of that gets harder because you spent more, so none of it costs more." },
     ],
     closing: { h2: 'Get the figures in writing.', p: "Fifteen minutes with Josh, no pitch deck. You will leave with every number written down, whether or not you buy anything." },

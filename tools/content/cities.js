@@ -266,7 +266,7 @@ const CITIES = [
     faqs: [
       { q: 'Are you a Gold Coast agency?', a: "No, we are based in Sydney and work nationally. The system runs on your own ad account, and the day's decisions land at 7am in your morning." },
       { q: 'I have always run the ads myself. Will I lose control?', a: "The opposite, in practice. You approve every decision before it happens and you keep the account, so you can see exactly what changed and why. Founders who have run their own ads tend to get the most out of it, because they can read the reasoning." },
-      { q: 'Can we start with just creative?', a: "Yes. If the account is structurally fine and the real problem is that you cannot ship enough new ads, the creative batch on its own is often the right purchase and we will say so." },
+      { q: 'Can we start with just creative?', a: "Yes. If the account is structurally fine and the real problem is that you cannot ship enough new ads, buying creative on its own is often the right purchase and we will say so." },
       { q: 'What spend does this need?', a: "About ten thousand a month in media before daily decisions start earning their keep. Under three thousand, none of it is the right purchase yet and we will tell you that plainly." },
       { q: 'How long is the commitment?', a: "The setup is a four-week project with a fixed start and finish. Everything monthly is month to month, with no notice period." },
     ],
