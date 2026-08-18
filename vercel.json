@@ -1,0 +1,99 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "trailingSlash": false,
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/index.dc.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/facebook-ads-audit-checklist",
+      "destination": "/facebook-ads-audit",
+      "permanent": true
+    },
+    {
+      "source": "/tools/agency-fee",
+      "destination": "/agency-fee",
+      "permanent": true
+    },
+    {
+      "source": "/tools/teardown",
+      "destination": "/meta-ad-library",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/check",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/learn",
+      "permanent": true
+    },
+    {
+      "source": "/get-started",
+      "destination": "/apply",
+      "permanent": true
+    },
+    {
+      "source": "/ecommerce-meta-ads-agency",
+      "destination": "/ecommerce-facebook-ads-agency",
+      "permanent": true
+    },
+    {
+      "source": "/creative-testing",
+      "destination": "/facebook-ad-creative-testing",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)\\.dc\\.html",
+      "destination": "/$1",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/img/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/site.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        }
+      ]
+    }
+  ]
+}
