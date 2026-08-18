@@ -5,6 +5,17 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sevenam.com.au"
+        }
+      ],
+      "destination": "https://sevenam.com.au/:path*",
+      "permanent": true
+    },
+    {
       "source": "/index.dc.html",
       "destination": "/",
       "permanent": true

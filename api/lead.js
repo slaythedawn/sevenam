@@ -1,0 +1,163 @@
+/* Receives a finished /apply quiz and delivers it to Josh.
+
+   This exists so the visitor never has to open their own mail client. The old
+   flow handed them a mailto: link on the result screen — which is a drop-off
+   point twice over: it fails silently on any machine with no mail client
+   configured, and it asks someone who has just answered five questions to
+   perform a sixth, unrelated action in another application.
+
+   Delivery is decided by whichever environment variable is set, checked in this
+   order. All are set in the Vercel project, never in the repo:
+
+     RESEND_API_KEY   send the lead as email through Resend.
+     LEAD_WEBHOOK     POST the lead as JSON to a webhook (Zapier, Make, Slack).
+     LEAD_TO          who the email is addressed to. Defaults to LEAD_FALLBACK.
+     LEAD_FROM        the from address. Must be on a Resend-verified domain;
+                      until sevenam.com.au is verified there, Resend's own
+                      onboarding@resend.dev works and can only send to the
+                      address that owns the Resend account, which is the case
+                      here.
+
+   With none of them set this returns 503 and the page falls back to the mailto,
+   so deploying this file changes nothing until the key exists. */
+
+const LEAD_FALLBACK = 'joshuapcck@gmail.com';
+
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    let raw = '';
+    req.on('data', (chunk) => {
+      raw += chunk;
+      /* A lead is a few hundred bytes. Anything past 64KB is not a lead. */
+      if (raw.length > 65536) reject(new Error('too large'));
+    });
+    req.on('end', () => resolve(raw));
+    req.on('error', reject);
+  });
+}
+
+function parse(req, raw) {
+  const type = String(req.headers['content-type'] || '');
+  if (type.indexOf('application/json') === 0) {
+    try { return JSON.parse(raw); } catch (e) { return {}; }
+  }
+  const out = {};
+  new URLSearchParams(raw).forEach((value, key) => { out[key] = value; });
+  return out;
+}
+
+const FIELDS = [
+  ['name', 'Name'], ['company', 'Company'], ['email', 'Email'], ['phone', 'Phone'],
+  ['website', 'Website'], ['spend', 'Monthly spend'], ['who', 'Who runs it'],
+  ['problems', 'Problems'], ['operator', 'Operator'], ['category', 'Business type'],
+  ['verdict', 'Recommendation shown'], ['notes', 'Notes'], ['page', 'Submitted from'],
+];
+
+function textOf(lead) {
+  return FIELDS
+    .filter(([key]) => lead[key])
+    .map(([key, label]) => label + ': ' + lead[key])
+    .join('\n');
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"]/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]
+  ));
+}
+
+function htmlOf(lead) {
+  const rows = FIELDS
+    .filter(([key]) => lead[key])
+    .map(([key, label]) =>
+      '<tr>' +
+      '<td style="padding:6px 16px 6px 0;color:#55554F;white-space:nowrap;vertical-align:top">' + escapeHtml(label) + '</td>' +
+      '<td style="padding:6px 0;color:#0A0A0A"><strong>' + escapeHtml(lead[key]) + '</strong></td>' +
+      '</tr>')
+    .join('');
+  return '<div style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:15px;line-height:1.6">' +
+    '<p style="margin:0 0 14px">New application from sevenam.com.au</p>' +
+    '<table style="border-collapse:collapse">' + rows + '</table></div>';
+}
+
+async function sendEmail(lead) {
+  const to = process.env.LEAD_TO || LEAD_FALLBACK;
+  const from = process.env.LEAD_FROM || 'Sevenam <onboarding@resend.dev>';
+  const who = lead.company || lead.name || 'new enquiry';
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + process.env.RESEND_API_KEY,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from,
+      to: [to],
+      /* So a reply in the mail client goes to the applicant, not to Resend. */
+      reply_to: lead.email || undefined,
+      subject: 'Application — ' + who,
+      text: textOf(lead),
+      html: htmlOf(lead),
+    }),
+  });
+
+  if (!res.ok) throw new Error('resend ' + res.status + ' ' + (await res.text()).slice(0, 200));
+}
+
+async function sendWebhook(lead) {
+  const res = await fetch(process.env.LEAD_WEBHOOK, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(lead),
+  });
+  if (!res.ok) throw new Error('webhook ' + res.status);
+}
+
+module.exports = async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).json({ ok: false, error: 'method_not_allowed' });
+  }
+
+  let lead;
+  try {
+    lead = parse(req, await readBody(req));
+  } catch (e) {
+    return res.status(413).json({ ok: false, error: 'too_large' });
+  }
+
+  /* A field no human sees and no human fills in. Bots fill in everything. */
+  if (lead.company_url) return res.status(200).json({ ok: true });
+
+  if (!lead.email || !/.+@.+\..+/.test(lead.email)) {
+    return res.status(400).json({ ok: false, error: 'email_required' });
+  }
+  if (!lead.name) {
+    return res.status(400).json({ ok: false, error: 'name_required' });
+  }
+
+  /* Logged before any delivery attempt, so an application is recoverable from
+     the Vercel runtime logs even when delivery is unconfigured or the provider
+     is down. It is the applicant's own contact details, on Josh's own project. */
+  console.log('lead:', JSON.stringify(lead));
+
+  try {
+    if (process.env.RESEND_API_KEY) {
+      await sendEmail(lead);
+    } else if (process.env.LEAD_WEBHOOK) {
+      await sendWebhook(lead);
+    } else {
+      /* Nothing configured. Say so honestly so the page can fall back to the
+         mailto rather than telling the applicant their answers were sent. */
+      return res.status(503).json({ ok: false, error: 'no_delivery_configured' });
+    }
+  } catch (err) {
+    console.error('lead delivery failed:', err && err.message);
+    return res.status(502).json({ ok: false, error: 'delivery_failed' });
+  }
+
+  return res.status(200).json({ ok: true });
+};
