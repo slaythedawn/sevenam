@@ -6,17 +6,15 @@
 
   /* ------------------------------------------------------------ lead capture
      LEAD_ENDPOINT where a finished application is POSTed. /api/lead is a
-                  function in this repo that emails it to Josh; see that file for
-                  the environment variables it needs. Posted form-encoded on
-                  purpose: that keeps it a "simple" CORS request, so the browser
-                  skips the preflight most webhook hosts reject.
-     LEAD_EMAIL   fallback only. If the POST fails — the function is down, the
-                  visitor is offline mid-submit — the page opens a mail client
-                  addressed here rather than stranding a lead. It must be a
-                  mailbox that actually receives. Nobody reaches this path in
-                  normal use, and nothing on the page invites them to. */
+                  function in this repo that emails it on; see that file for the
+                  environment variables it needs. Posted form-encoded on purpose:
+                  that keeps it a "simple" CORS request, so the browser skips the
+                  preflight most webhook hosts reject.
+
+     No address appears anywhere in this file. The function knows where the lead
+     goes; the browser has no reason to, and anything written here would be
+     readable by everyone who opens the page source. */
   var LEAD_ENDPOINT = "/api/lead";
-  var LEAD_EMAIL = "joshuapcck@gmail.com";
 
   var VOLT = "#D8FF00";
   var EASE = "cubic-bezier(0.2,0.7,0.2,1)";
@@ -599,20 +597,6 @@
       ];
     }
 
-    function mailBody(v) {
-      return "Sevenam application\n\n" +
-        summary().map(function (r) { return r.k + ": " + r.v; }).join("\n") +
-        "\nEmail: " + S.email + "\nPhone: " + (S.phone || "—") +
-        "\nWebsite: " + (S.site || "—") + "\nNotes: " + (S.note || "—") +
-        "\n\nRecommendation shown: " + v.tag;
-    }
-
-    function mailto(v) {
-      return "mailto:" + LEAD_EMAIL + "?subject=" +
-        encodeURIComponent("Application — " + (S.company || S.name || "new enquiry")) +
-        "&body=" + encodeURIComponent(mailBody(v));
-    }
-
     var OPT_BASE = "display:flex; flex-direction:column; gap:6px; align-items:flex-start; text-align:left;" +
       "border-radius:6px; padding:20px 22px; cursor:pointer; color:#F7F7F5; min-height:44px;" +
       "font-family:inherit; transition:border-color 0.2s ease, background 0.2s ease;";
@@ -740,7 +724,7 @@
           (S.sent
             ? "Your answers are with Josh. He reads every one himself and replies within a business day with a time to talk — or a straight no."
             : S.failed
-              ? "That did not go through, so your mail client is opening with the answers already written out. Send it and it reaches Josh the same way."
+              ? "That did not go through. Your answers are still here — try again in a moment."
               : "Your answers stay in this browser until you send them. Josh reads every one himself and replies within a business day with a time to talk — or a straight no.") +
           '</p></div>';
       }
@@ -758,14 +742,13 @@
         '</label>';
     }
 
-    /* The applicant's mail client is never the happy path. It is reached only
-       when the POST could not be delivered, and the wording on the button
-       changes to say so before anything opens. */
-    function fallbackToMail(v) {
+    /* Nothing to fall back to and nothing lost by saying so: the answers stay on
+       screen, and a request that reached the function at all was written to its
+       log before delivery was attempted. */
+    function failed() {
       S.sending = false;
       S.failed = true;
       render();
-      window.location.href = mailto(v);
     }
 
     function send(btn, v) {
@@ -793,10 +776,10 @@
         /* A 200 is the only thing that counts as delivered. Anything else —
            503 with no mail provider configured, 502 if the provider refused —
            means the lead is not with Josh, and saying otherwise loses it. */
-        if (!res.ok) return fallbackToMail(v);
+        if (!res.ok) return failed();
         S.sending = false; S.sent = true; render();
       }).catch(function () {
-        fallbackToMail(v);
+        failed();
       });
     }
 

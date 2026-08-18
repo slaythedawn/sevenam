@@ -133,11 +133,13 @@ Only a 200 counts as delivered. On 503 or 502 the result screen says plainly tha
 did not go through and opens the `mailto:` in `LEAD_EMAIL` with the answers already
 written out. That address is the failure path only; nothing on the page invites it.
 
-**There is no published email address anywhere on the site, on purpose.**
+**No email address appears anywhere on the site or in `site.js`, on purpose.**
 `hello@sevenam.com.au` never had an MX record — the domain has no mail server, so it
 always bounced — and rather than stand up a mailbox, contact routes through `/apply`
 only. The footer Contact column links there, and the Organization schema has no
 `email` property. Do not reintroduce an address without a mailbox behind it.
 
-`LEAD_EMAIL` in `site.js` is the one address left in the codebase. It is the failure
-path and nothing links to it.
+The function knows where a lead goes; the browser does not, and must not. A failed
+POST shows "Try again" and leaves the answers on screen — there is no `mailto:`
+fallback, because handing the applicant back to their own mail client is the drop-off
+this whole thing was built to remove.

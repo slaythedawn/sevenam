@@ -157,9 +157,9 @@ var LEAD_EMAIL    = "joshuapcck@gmail.com";  // mailto target on the quiz result
 var LEAD_ENDPOINT = "";                      // optional webhook
 ```
 
-Applications POST to `/api/lead`, which emails them via Resend. `LEAD_EMAIL` in
-`site.js` is only the failure path — used when that POST does not return a 200 — and
-must be a mailbox that actually receives. It is a personal Gmail for that reason.
+Applications POST to `/api/lead`, which emails them via Resend. The recipient is set
+server-side; `site.js` contains no address at all. A failed POST shows "Try again"
+rather than opening a mail client.
 
 The site publishes no email address anywhere: `sevenam.com.au` has no MX record, so
 any address on the domain bounces. Contact routes through `/apply` only.
