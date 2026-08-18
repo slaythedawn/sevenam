@@ -160,11 +160,49 @@
   }
 
   /* ------------------------------------------------------ the 7am hero moment */
+  /* The sequence loops. Every element it mutates is snapshotted before the first
+     run and restored between cycles, so a repeat starts from exactly the state
+     the HTML shipped in rather than from wherever the last cycle left off. It
+     only advances while the hero is on screen and the tab is visible. */
   function setupHero() {
     var clock = q("[data-clock]");
     if (!clock) return;
     var label = q("[data-clock-label]");
     var approved = false;
+
+    var hTimers = [];
+    function hLater(fn, ms) { hTimers.push(setTimeout(fn, ms)); }
+    function clearHero() { hTimers.forEach(clearTimeout); hTimers = []; }
+
+    /* Snapshot inline style for everything the sequence touches, and text only
+       for the leaves whose text it rewrites. Restoring textContent on a element
+       that has children would destroy them — the card and the rows are
+       containers, so they get their style back and nothing else. */
+    var snap = [];
+    function collect() {
+      function add(el, withText) {
+        if (el) snap.push({ el: el, text: withText ? el.textContent : null, style: el.getAttribute("style") });
+      }
+      add(clock, true);
+      add(label, true);
+      add(q("[data-approve]"), true);
+      add(q("[data-badge]"), true);
+      add(q("[data-foot]"), true);
+      add(q("[data-approve-card]"), false);
+      qa("[data-act]").forEach(function (row) {
+        add(row, false);
+        add(q("[data-tick]", row), true);
+        add(q("[data-state]", row), true);
+      });
+    }
+    function restore() {
+      snap.forEach(function (s) {
+        if (s.text !== null) s.el.textContent = s.text;
+        if (s.style === null) s.el.removeAttribute("style");
+        else s.el.setAttribute("style", s.style);
+      });
+      approved = false;
+    }
 
     function settle(instant) {
       clock.style.color = VOLT;
@@ -189,7 +227,7 @@
         btn.style.cursor = "default";
       }
       qa("[data-act]").forEach(function (row, i) {
-        later(function () {
+        hLater(function () {
           var tick = q("[data-tick]", row), state = q("[data-state]", row);
           if (tick) {
             tick.style.transition = "background 0.3s ease, border-color 0.3s ease, transform 0.3s " + EASE;
@@ -197,12 +235,12 @@
             tick.style.borderColor = VOLT;
             tick.textContent = "✓";
             tick.style.transform = "scale(1.12)";
-            later(function () { tick.style.transform = "scale(1)"; }, 220);
+            hLater(function () { tick.style.transform = "scale(1)"; }, 220);
           }
           if (state) { state.textContent = "Actioned"; state.style.color = "#55554F"; }
         }, 220 + i * 320);
       });
-      later(function () {
+      hLater(function () {
         if (badge) { badge.textContent = "Done · 07:04"; badge.style.color = "#55554F"; }
         if (foot) {
           foot.textContent = "All three changes are live in your account. Nothing else to do today.";
@@ -217,31 +255,31 @@
       if (flash) {
         flash.style.transition = "opacity 0.22s ease-out";
         flash.style.opacity = "1";
-        later(function () {
+        hLater(function () {
           flash.style.transition = "opacity 1.1s cubic-bezier(0.3,0,0.5,1)";
           flash.style.opacity = "0";
         }, 240);
       }
-      if (ring) ring.style.animation = "ringOut 1.2s " + EASE + " forwards";
+      if (ring) { ring.style.animation = "none"; void ring.offsetWidth; ring.style.animation = "ringOut 1.2s " + EASE + " forwards"; }
       clock.style.transition = "color 0.3s ease, text-shadow 0.6s ease, transform 0.5s " + EASE;
       clock.style.color = VOLT;
       clock.style.textShadow = "0 0 46px rgba(216,255,0,0.45)";
       clock.style.transform = "scale(1.04)";
-      later(function () {
+      hLater(function () {
         clock.style.transform = "scale(1)";
         clock.style.textShadow = "0 0 22px rgba(216,255,0,0.18)";
       }, 520);
       settle(false);
-      if (badge) later(function () { badge.textContent = "3 to approve"; badge.style.color = VOLT; }, 420);
+      if (badge) hLater(function () { badge.textContent = "3 to approve"; badge.style.color = VOLT; }, 420);
       if (card) {
         card.style.transition = "border-color 0.5s ease, box-shadow 0.6s ease";
         card.style.borderColor = "#3A3A32";
-        later(function () { card.style.borderColor = "#232320"; }, 1400);
+        hLater(function () { card.style.borderColor = "#232320"; }, 1400);
       }
       qa("[data-act]").forEach(function (row, i) {
         row.style.opacity = "0.35";
         row.style.transform = "translateY(10px)";
-        later(function () {
+        hLater(function () {
           row.style.transition = "opacity 0.55s " + EASE + ", transform 0.55s " + EASE;
           row.style.opacity = "1";
           row.style.transform = "none";
@@ -251,37 +289,56 @@
       });
       var btn = q("[data-approve]");
       if (btn) {
-        later(function () { btn.style.animation = "voltPulse 2.4s ease-in-out infinite"; }, 900);
+        hLater(function () { btn.style.animation = "voltPulse 2.4s ease-in-out infinite"; }, 900);
         btn.addEventListener("click", approveAll);
-        later(function () { if (!approved) approveAll(); }, 4200);
+        hLater(function () { if (!approved) approveAll(); }, 4200);
       }
     }
 
-    function setClock(v) {
-      clock.textContent = v;
-    }
+    function setClock(v) { clock.textContent = v; }
 
     if (reduced) { setClock("07:00"); settle(true); return; }
 
-    /* Hold the sequence until the hero is actually looked at, so a visitor who
-       lands mid-scroll or returns to the tab still sees the signature moment. */
+    collect();
+
+    var HOLD = 5200;          /* pause on the finished state before restarting */
+    var CYCLE = 900 * 3 + 4200 + 1300;   /* ticks, then auto-approve, then the footer line */
+    var visible = false, looping = false;
+
     function run() {
+      clearHero();
+      restore();
       ["06:58", "06:59", "07:00"].forEach(function (v, i) {
-        later(function () { setClock(v); }, 900 + i * 900);
+        hLater(function () { setClock(v); }, 900 + i * 900);
       });
-      later(fireSeven, 900 + 2 * 900);
+      hLater(fireSeven, 900 + 2 * 900);
+      hLater(next, CYCLE + HOLD);
+    }
+
+    /* Only advance while the hero is on screen and the tab is in front; a
+       backgrounded tab throttles timers and would desynchronise the sequence. */
+    function next() {
+      if (!visible || document.hidden) { hLater(next, 1200); return; }
+      run();
+    }
+
+    function start() {
+      if (looping) return;
+      looping = true;
+      run();
     }
 
     if ("IntersectionObserver" in window) {
-      var started = false;
       var hio = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
-          if (e.isIntersecting && !started) { started = true; hio.disconnect(); run(); }
+          visible = e.isIntersecting;
+          if (visible) start();
         });
       }, { threshold: 0.25 });
       hio.observe(clock);
     } else {
-      run();
+      visible = true;
+      start();
     }
   }
 

@@ -42,7 +42,7 @@ function hero(p) {
   const trust = (p.trust || ['No retainer', 'No lock-in', 'No fee that climbs with your budget'])
     .map(t => '<span>' + esc(t) + '</span>').join('<span>·</span>');
   return `<section style="background: ${INK}; color: rgb(247, 247, 245); padding: 110px 32px 120px;">
-    <div style="max-width: 1200px; margin: 0px auto;">
+    <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: ${VOLT};">${esc(p.eyebrow)}</span>
       <h1 style="margin: 26px 0px 0px; max-width: 22ch; font-size: clamp(40px, 6vw, 84px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; color: rgb(255, 255, 255);">${esc(p.h1)}</h1>
       <p style="margin: 32px 0px 0px; max-width: 60ch; font-size: 21px; font-weight: 500; line-height: 1.5; letter-spacing: -0.01em; color: rgb(247, 247, 245);">${esc(p.lead)}</p>
@@ -74,7 +74,7 @@ function prose(s) {
     ? `background: ${INK}; color: rgb(247, 247, 245); padding: 112px 32px;`
     : `border-bottom: 1px solid ${HAIRLINE_LIGHT}; padding: 112px 32px;`;
   return `<section style="${style}">
-    <div style="max-width: 1200px; margin: 0px auto;">
+    <div style="max-width: 1240px; margin: 0px auto;">
       <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">${esc(s.h2)}</h2>
       ${paras}
       ${list}
@@ -89,7 +89,7 @@ function faqSection(faqs, heading) {
           <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: ${PAPER_TEXT};">${esc(f.a)}</p>
         </div>`).join('\n        ');
   return `<section style="padding: 112px 32px; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
-    <div style="max-width: 1200px; margin: 0px auto;">
+    <div style="max-width: 1240px; margin: 0px auto;">
       <h2 style="margin: 0px 0px 40px; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">${esc(heading || 'Questions people actually ask.')}</h2>
       <div style="display: flex; flex-direction: column; max-width: 840px;">
         ${rows}
@@ -103,7 +103,7 @@ function pills(label, links) {
   const items = links.map(l =>
     `<a href="${esc(l.href)}" class="scp2" style="border: 1px solid ${HAIRLINE_LIGHT}; background: rgb(255, 255, 255); border-radius: 100px; padding: 9px 16px; font-size: 15px; font-weight: 500;">${esc(l.label)}</a>`).join('\n          ');
   return `<section style="padding: 88px 32px; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
-    <div style="max-width: 1200px; margin: 0px auto; display: flex; flex-direction: column; gap: 36px;">
+    <div style="max-width: 1240px; margin: 0px auto; display: flex; flex-direction: column; gap: 36px;">
       <div style="display: flex; flex-direction: column; gap: 14px;">
         <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(label)}</span>
         <div style="display: flex; flex-wrap: wrap; gap: 8px;">
@@ -119,7 +119,7 @@ function related(cards) {
   const items = cards.map(c =>
     `<a href="${esc(c.href)}" class="scp3" style="background: rgb(255, 255, 255); border: 1px solid ${HAIRLINE_LIGHT}; border-radius: 6px; padding: 24px; display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em;">${esc(c.title)}</span><span style="font-size: 15px; line-height: 1.6; color: ${PAPER_TEXT};">${esc(c.note)}</span></a>`).join('\n        ');
   return `<section style="padding: 96px 32px; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
-    <div style="max-width: 1200px; margin: 0px auto;">
+    <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: ${PAPER_TEXT};">Keep reading</span>
       <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
         ${items}
@@ -130,7 +130,7 @@ function related(cards) {
 
 function closing(c) {
   return `<section style="background: ${INK}; color: rgb(247, 247, 245); padding: 130px 32px;">
-    <div style="max-width: 1200px; margin: 0px auto; display: flex; flex-direction: column; align-items: flex-start; gap: 30px;">
+    <div style="max-width: 1240px; margin: 0px auto; display: flex; flex-direction: column; align-items: flex-start; gap: 30px;">
       <span style="background: ${VOLT}; color: ${INK}; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; padding: 5px 9px; border-radius: 3px;">07:00</span>
       <h2 style="margin: 0px; max-width: 18ch; font-size: clamp(38px, 5.4vw, 74px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05;">${esc(c.h2)}</h2>
       <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: ${INK_TEXT};">${esc(c.p)}</p>
