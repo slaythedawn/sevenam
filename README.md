@@ -81,16 +81,20 @@ option — if you edit `verdict()` in `site.js`, re-run the verification.
 
 ### Lead delivery
 
-Two settings at the top of `site.js`:
+`site.js` holds one setting and no address:
 
 ```js
-var LEAD_EMAIL    = "joshuapcck@gmail.com";   // the mailto target
-var LEAD_ENDPOINT = "";                       // optional webhook
+var LEAD_ENDPOINT = "/api/lead";
 ```
 
-`LEAD_EMAIL` is currently a personal Gmail so that leads land somewhere that
-actually receives. **Whatever is set here must be
-a mailbox that receives**, or leads go nowhere and nothing visibly breaks.
+A finished application POSTs there. `api/lead.js` emails it on via Resend, to
+whichever address `LEAD_TO` names in the Vercel project. **No recipient is
+hard-coded** — this repository is public, so an address in either file would be
+an address on display.
+
+Delivery needs both `RESEND_API_KEY` and `LEAD_TO` set for Production. With
+either missing the function returns 503 and the result screen says the
+submission did not go through, rather than claiming it did.
 
 `LEAD_ENDPOINT` is the more reliable path, because it does not depend on the
 visitor having a mail client configured. Point it at a Zapier/Make catch hook or

@@ -153,13 +153,13 @@ animation must be disabled under `prefers-reduced-motion: reduce`.
 ## Lead capture
 
 ```js
-var LEAD_EMAIL    = "joshuapcck@gmail.com";  // mailto target on the quiz result screen
-var LEAD_ENDPOINT = "";                      // optional webhook
+var LEAD_ENDPOINT = "/api/lead";   // the only lead setting in site.js
 ```
 
-Applications POST to `/api/lead`, which emails them via Resend. The recipient is set
-server-side; `site.js` contains no address at all. A failed POST shows "Try again"
-rather than opening a mail client.
+Applications POST there. `api/lead.js` emails them via Resend to whichever address
+`LEAD_TO` names in the Vercel project. No recipient is hard-coded in either file —
+this repository is public. A failed POST shows "Try again" rather than opening a mail
+client.
 
 The site publishes no email address anywhere: `sevenam.com.au` has no MX record, so
 any address on the domain bounces. Contact routes through `/apply` only.

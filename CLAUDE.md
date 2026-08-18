@@ -119,8 +119,9 @@ Vercel runtime logs whatever happens next, then delivers by the first route conf
 | Variable | Effect |
 | --- | --- |
 | `RESEND_API_KEY` | Emails the lead via Resend. `reply_to` is the applicant. |
+| `LEAD_TO` | Who it goes to. **Required** alongside the key — there is no default, because this repository is public and a default would be an address on display. |
 | `LEAD_WEBHOOK` | POSTs the lead as JSON instead. |
-| `LEAD_TO` / `LEAD_FROM` | Recipient and sender. Both default sensibly. |
+| `LEAD_FROM` | Sender. Defaults to Resend's `onboarding@resend.dev` until the domain is verified there. |
 
 **These live in the Vercel project, never in the repo.** With none of them set the
 function returns 503 rather than claiming success.

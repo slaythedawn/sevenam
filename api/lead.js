@@ -6,15 +6,18 @@
    configured, and it asks someone who has just answered five questions to
    perform a sixth, unrelated action in another application.
 
-   The recipient lives here rather than in site.js, so no address is served to
-   anyone who opens the page source.
+   No address appears in this file either. This repository is public, so a
+   recipient hard-coded here would be as exposed as one in site.js — it comes
+   from LEAD_TO in the Vercel project instead.
 
    Delivery is decided by whichever environment variable is set, checked in this
    order. All are set in the Vercel project, never in the repo:
 
-     RESEND_API_KEY   send the lead as email through Resend.
+     RESEND_API_KEY   send the lead as email through Resend. Requires LEAD_TO.
+     LEAD_TO          who the email is addressed to. Required for the email
+                      route — there is no default, because a default would mean
+                      a real address sitting in a public repository.
      LEAD_WEBHOOK     POST the lead as JSON to a webhook (Zapier, Make, Slack).
-     LEAD_TO          who the email is addressed to. Defaults to LEAD_FALLBACK.
      LEAD_FROM        the from address. Must be on a Resend-verified domain;
                       until sevenam.com.au is verified there, Resend's own
                       onboarding@resend.dev works and can only send to the
@@ -23,8 +26,6 @@
 
    With none of them set this returns 503. The page then shows "Try again" — there
    is no mailto fallback and no address in the client at all. */
-
-const LEAD_FALLBACK = 'joshuapcck@gmail.com';
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -84,7 +85,7 @@ function htmlOf(lead) {
 }
 
 async function sendEmail(lead) {
-  const to = process.env.LEAD_TO || LEAD_FALLBACK;
+  const to = process.env.LEAD_TO;
   const from = process.env.LEAD_FROM || 'Sevenam <onboarding@resend.dev>';
   const who = lead.company || lead.name || 'new enquiry';
 
@@ -148,7 +149,7 @@ module.exports = async (req, res) => {
   console.log('lead:', JSON.stringify(lead));
 
   try {
-    if (process.env.RESEND_API_KEY) {
+    if (process.env.RESEND_API_KEY && process.env.LEAD_TO) {
       await sendEmail(lead);
     } else if (process.env.LEAD_WEBHOOK) {
       await sendWebhook(lead);
