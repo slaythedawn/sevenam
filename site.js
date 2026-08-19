@@ -445,6 +445,71 @@
     render();
   }
 
+  /* ---------------------------------------------------- creative calculator
+     The companion to the fee calculator. That one prices the agency; this one
+     prices the thing the agency does not cover, and the number almost nobody
+     has to hand: what one finished concept costs before a cent of media. */
+  function setupCreativeCost() {
+    var conceptsEl = q("#concepts");
+    if (!conceptsEl) return;
+
+    var state = { concepts: 6, rate: 800, days: 2, shoot: 4000, perShoot: 8 };
+
+    function fmt(n) { return "$" + Math.round(n).toLocaleString("en-AU"); }
+    function set(name, v) {
+      var el = q('[data-cc="' + name + '"]');
+      if (el) el.textContent = v;
+    }
+
+    function render() {
+      var concepts = Math.max(0, Number(state.concepts) || 0);
+      var rate = Math.max(0, Number(state.rate) || 0);
+      var days = Math.max(0, Number(state.days) || 0);
+      var shoot = Math.max(0, Number(state.shoot) || 0);
+      var perShoot = Math.max(1, Number(state.perShoot) || 1);
+
+      var labour = rate * days;
+      /* A shoot is bought in batches, so its cost is spread across what comes
+         out of it rather than charged to whichever concept triggered it. */
+      var shootShare = shoot / perShoot;
+      var perConcept = labour + shootShare;
+      var monthly = perConcept * concepts;
+
+      set("perConcept", fmt(perConcept));
+      set("labour", fmt(labour));
+      set("shootShare", fmt(shootShare));
+      set("monthly", fmt(monthly));
+      set("annual", fmt(monthly * 12));
+      set("doubled", fmt(monthly * 12));
+      set("volume", concepts + (concepts === 1 ? " concept" : " concepts") + " a month");
+      set("days", days + (days === 1 ? " day" : " days"));
+
+      /* The point of the tool. Fatigue is answered with volume, and volume on
+         this cost base is what stops people — so the number is worth seeing. */
+      set("note", concepts >= 20
+        ? "At this volume the production line is the business. Worth knowing what each concept costs before deciding how many you can run."
+        : "Doubling to " + (concepts * 2) + " concepts a month costs " + fmt(monthly * 12) +
+          " more a year on these numbers — which is usually the real reason creative volume stays where it is.");
+    }
+
+    function bind(el, key) {
+      if (!el) return;
+      el.addEventListener("input", function () {
+        state[key] = el.value;
+        qa('[data-ccrange="' + key + '"]').forEach(function (r) { if (r !== el) r.value = el.value; });
+        var num = q("#" + key);
+        if (num && num !== el) num.value = el.value;
+        render();
+      });
+    }
+
+    ["concepts", "rate", "days", "shoot", "perShoot"].forEach(function (k) {
+      bind(q("#" + k), k);
+      qa('[data-ccrange="' + k + '"]').forEach(function (r) { bind(r, k); });
+    });
+    render();
+  }
+
   /* ------------------------------------------------------------- apply quiz */
   var QUESTIONS = [
     {
@@ -847,6 +912,7 @@
     setupHero();
     setupFaq();
     setupCalculator();
+    setupCreativeCost();
     setupApply();
   }
 

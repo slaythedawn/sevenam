@@ -29,7 +29,7 @@ hard-coded API key. CI runs the same script.
   directly: `index`, `apply`, `pricing`, `system`, `install`, `check`, `about`,
   `learn`, `glossary`, `agency-fee`, `what-are-meta-ads`, `facebook-ads-agency`,
   `ecommerce-facebook-ads-agency`, `ai-marketing-agency`, `facebook-ads-sydney`,
-  `facebook-ads-for-tradies`.
+  `facebook-ads-for-tradies`, `tools`, `creative-cost`.
 - **42 generated pages** (other cities, industries, head terms, guides) are built from
   data in `tools/content/*.js`. **Editing their `.html` directly is wasted work** — the
   next `node tools/build-pages.js` overwrites it. Edit the content file, then rebuild.
@@ -50,7 +50,8 @@ design — but it also means **breaking that file breaks all 42**.
 - **`data-` attributes are behaviour hooks**, not styling: `data-reveal`,
   `data-faq-item` / `data-faq-toggle` / `data-faq-sign` / `data-faq-answer`,
   `data-clock`, `data-approve`, `data-act`, `data-ad-drift`, `data-parallax`,
-  `data-out`, `data-tab`, `data-range`, `data-field`, `data-verdict`, `#apply-root`,
+  `data-out`, `data-tab`, `data-range`, `data-field`, `data-verdict`, `#apply-root`, `#concepts` and the `data-cc` / `data-ccrange` hooks on the creative
+  calculator,
   `#pct-block`, `#flat-block`. Remove one while editing markup and the feature
   detaches with no error.
 - **`agency-fee.html` carries the calculator's figures in the HTML**, so the page is
