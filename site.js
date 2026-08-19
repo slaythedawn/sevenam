@@ -607,7 +607,7 @@
       tag: "End to end",
       title: "You want the end-to-end option.",
       body: "Nobody in-house has the twenty minutes a day, so the decisions would arrive and nothing would happen. The end-to-end option exists for exactly this: we buy the media, make the creative and do the daily execution on your account.",
-      why: "It's quoted after we've read the account, as one fixed monthly figure — no percentage of spend, no lock-in, and your Business Manager stays yours. If you'd rather name an internal operator instead, the self-run version is cheaper and we'll say so.",
+      why: "It's quoted after we've read the account, as one fixed monthly figure, priced to the work rather than your media budget, with no lock-in and your Business Manager staying yours. If you'd rather name an internal operator instead, the self-run version is cheaper and we'll say so.",
       ctaLabel: "Read what's involved", ctaHref: "/install"
     },
     tooSmall: {
