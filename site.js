@@ -663,8 +663,8 @@
           '<p style="margin:20px 0 0; max-width:56ch; font-size:17px; line-height:1.7; color:#B5B5AD;">One reply within a business day, from a person, with a straight read on whether this fits. No sequence, no newsletter, no call booked without asking.</p>' +
           '<div style="margin-top:44px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;">' +
           field("name", "Your name", "text", "Jordan Reid") +
-          field("company", "Business", "text", "Business name") +
-          field("site", "Website", "text", "yourstore.com.au") +
+          field("company", "Business", "text", "Business name", true) +
+          field("site", "Website", "text", "yourstore.com.au", true) +
           field("email", "Email", "email", "you@yourstore.com.au") +
           field("phone", "Phone", "tel", "04xx xxx xxx", true) +
           '</div>' +
@@ -680,16 +680,23 @@
           'style="' + INPUT + ' line-height:1.6; resize:vertical;">' + esc(S.note) + '</textarea>' +
           '</label>' +
           '<div style="margin-top:36px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">' +
-          '<button type="button" data-submit style="background:' + (ready ? VOLT : "#232320") + ';' +
-          'color:' + (ready ? "#0A0A0A" : "#55554F") + '; border:none; font-family:inherit; font-size:17px;' +
-          'font-weight:600; padding:18px 28px; border-radius:4px; cursor:' + (ready ? "pointer" : "not-allowed") + ';">See what fits</button>' +
+          /* Always live. Browser autofill populates an input without firing the
+             events this state is built from, so a button greyed out from that
+             state told an applicant with every field filled that they could not
+             continue — while the click handler, which reads the DOM, would have
+             accepted it. Validation happens on click and says what is missing. */
+          '<button type="button" data-submit style="background:' + VOLT + ';' +
+          'color:#0A0A0A; border:none; font-family:inherit; font-size:17px;' +
+          'font-weight:600; padding:18px 28px; border-radius:4px; cursor:pointer;">See what fits</button>' +
           '<button type="button" data-back style="' + LINK_BTN + '">Back</button>' +
           '</div>' +
           '<p style="margin:22px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:' +
           (S.tried && !ready ? "#D8FF00" : "#55554F") + ';">' +
           (S.tried && !ready
-            ? "We need a name and a valid email address to send you anything."
-            : "We use these to reply once. No list, no sequence, no sharing.") +
+            ? (!S.name.trim()
+                ? "Add your name and we can send you something."
+                : "That email address does not look right — we have no other way to reply.")
+            : "Your name and email are all we need. We use them to reply once — no list, no sequence, no sharing.") +
           '</p></div>';
 
       } else {
@@ -805,6 +812,9 @@
         S.step = Math.max(0, S.step - 1); S.done = false; render();
       });
       qa("[data-field]", root).forEach(function (el) {
+        /* Autofill can land before this runs and fires no event, so whatever is
+           already in the field is adopted rather than assumed empty. */
+        if (el.value && !S[el.dataset.field]) S[el.dataset.field] = el.value;
         el.addEventListener("input", function () { S[el.dataset.field] = el.value; });
         el.addEventListener("change", function () { S[el.dataset.field] = el.value; });
       });
