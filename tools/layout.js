@@ -44,7 +44,7 @@ function hero(p) {
   return `<section style="background: ${INK}; color: rgb(247, 247, 245); padding: 110px 32px 120px;">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: ${VOLT};">${esc(p.eyebrow)}</span>
-      <h1 style="margin: 26px 0px 0px; max-width: 22ch; font-size: clamp(40px, 6vw, 84px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; color: rgb(255, 255, 255);">${esc(p.h1)}</h1>
+      <h1 style="margin: 26px 0px 0px; max-width: 22ch; font-size: clamp(40px, 6vw, 84px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; color: rgb(255, 255, 255); text-wrap: balance;">${esc(p.h1)}</h1>
       <p style="margin: 32px 0px 0px; max-width: 60ch; font-size: 21px; font-weight: 500; line-height: 1.5; letter-spacing: -0.01em; color: rgb(247, 247, 245);">${esc(p.lead)}</p>
       <p style="margin: 24px 0px 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: ${INK_TEXT};">${esc(p.support)}</p>
       <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 44px;">

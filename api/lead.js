@@ -142,6 +142,14 @@ module.exports = async (req, res) => {
   if (!lead.name) {
     return res.status(400).json({ ok: false, error: 'name_required' });
   }
+  if (!lead.company) {
+    return res.status(400).json({ ok: false, error: 'company_required' });
+  }
+  /* Digits only, so +61, spaces and brackets all pass. Eight is the shortest
+     real Australian number; anything under it is a keyboard mash. */
+  if (String(lead.phone || '').replace(/[^0-9]/g, '').length < 8) {
+    return res.status(400).json({ ok: false, error: 'phone_required' });
+  }
 
   /* Logged before any delivery attempt, so an application is recoverable from
      the Vercel runtime logs even when delivery is unconfigured or the provider

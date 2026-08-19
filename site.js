@@ -604,7 +604,7 @@
       "font-family:inherit; font-size:17px; padding:15px 16px;";
     var LABEL = "font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#B5B5AD;";
     var H1 = "margin:0; max-width:24ch; font-size:clamp(32px,4.6vw,58px); font-weight:600;" +
-      "letter-spacing:-0.035em; line-height:1.05; color:#FFFFFF;";
+      "letter-spacing:-0.035em; line-height:1.05; color:#FFFFFF; text-wrap:balance;";
     var LINK_BTN = "background:none; border:none; color:#B5B5AD; font-size:15px; font-weight:500;" +
       "padding:12px 0; cursor:pointer; font-family:inherit; text-decoration:underline;";
     var STEP_IN = reduced ? "" : "animation:stepIn 0.45s " + EASE + " both;";
@@ -624,7 +624,8 @@
       var onDetails = S.step === QUESTIONS.length && !S.done;
       var question = QUESTIONS[S.step];
       var emailOk = /.+@.+\..+/.test(S.email);
-      var ready = S.name.trim() && emailOk;
+      var phoneOk = (S.phone || "").replace(/[^0-9]/g, "").length >= 8;
+      var ready = S.name.trim() && S.company.trim() && emailOk && phoneOk;
       var html;
 
       if (onQuestion) {
@@ -663,10 +664,10 @@
           '<p style="margin:20px 0 0; max-width:56ch; font-size:17px; line-height:1.7; color:#B5B5AD;">One reply within a business day, from a person, with a straight read on whether this fits. No sequence, no newsletter, no call booked without asking.</p>' +
           '<div style="margin-top:44px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;">' +
           field("name", "Your name", "text", "Jordan Reid") +
-          field("company", "Business", "text", "Business name", true) +
+          field("company", "Business", "text", "Business name") +
           field("site", "Website", "text", "yourstore.com.au", true) +
           field("email", "Email", "email", "you@yourstore.com.au") +
-          field("phone", "Phone", "tel", "04xx xxx xxx", true) +
+          field("phone", "Phone", "tel", "04xx xxx xxx") +
           '</div>' +
           /* Named so no browser autofill heuristic recognises it. A honeypot that
              autofill populates would silently discard real applications. */
@@ -693,10 +694,11 @@
           '<p style="margin:22px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:' +
           (S.tried && !ready ? "#D8FF00" : "#55554F") + ';">' +
           (S.tried && !ready
-            ? (!S.name.trim()
-                ? "Add your name and we can send you something."
-                : "That email address does not look right — we have no other way to reply.")
-            : "Your name and email are all we need. We use them to reply once — no list, no sequence, no sharing.") +
+            ? (!S.name.trim() ? "Add your name and we can send you something."
+              : !S.company.trim() ? "Which business is this for?"
+              : !emailOk ? "That email address does not look right — we have no other way to reply."
+              : "Add a phone number Josh can reach you on.")
+            : "Name, business, email and phone. We use them to reply once — no list, no sequence, no sharing.") +
           '</p></div>';
 
       } else {
@@ -822,7 +824,8 @@
       if (submit) submit.addEventListener("click", function () {
         qa("[data-field]", root).forEach(function (el) { S[el.dataset.field] = el.value; });
         S.tried = true;
-        if (S.name.trim() && /.+@.+\..+/.test(S.email)) S.done = true;
+        if (S.name.trim() && S.company.trim() && /.+@.+\..+/.test(S.email)
+            && (S.phone || "").replace(/[^0-9]/g, "").length >= 8) S.done = true;
         render();
         root.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
       });
