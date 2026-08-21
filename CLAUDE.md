@@ -65,11 +65,12 @@ design — but it also means **breaking that file breaks all 42**.
 - Copy on the money pages is written against search terms. **Do not rewrite it for tone.**
 - Never state a precise time for the overnight run — "Before you're up", never "02:00".
 - No pricing on the homepage, and no pricing in any CTA button label.
-- Two Sevenam figures are published and must stay consistent wherever they appear: the
-  Install at **$19,500** (`/pricing`, `/agency-fee`, `/install`) and creative at **$750 a
-  concept** (`/pricing`). Everything else — the monthly, managed scope, deal terms — is
-  quoted in writing after the account is read. Market rates on the cost pages are other
-  agencies' typical ranges, never ours.
+- One Sevenam figure is published and must stay consistent wherever it appears: the
+  Install at **$19,500** (`/pricing`, `/agency-fee`, `/install`). Creative is sold per
+  concept and `/pricing` says so, but the per-concept figure is deliberately **not**
+  published — do not add one back. Everything else — the monthly, managed scope, deal
+  terms — is quoted in writing after the account is read. Market rates on the cost pages
+  are other agencies' typical ranges, never ours.
 - **Do not write the fee model as a vow.** "Never a percentage of spend" was removed from
   ~140 places; fees are "priced to the work rather than your budget". Absolutes foreclose
   the managed line. Grep loosely before declaring it clean — three separate sweeps missed
