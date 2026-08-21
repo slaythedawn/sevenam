@@ -39,7 +39,7 @@ const CITIES = [
       'Month to month, with no notice period.',
     ],
     faqs: [
-      { q: 'Are you a Melbourne agency?', a: "We are not an agency at all, and we are based in Sydney. We install the system on your own ad account and the decisions land first thing in your morning. Most of the businesses we work with we have never met in person, and it has never been the thing that mattered." },
+      { q: 'Are you a Facebook ads agency in Melbourne?', a: "We are not an agency at all, and we are based in Sydney. We install the system on your own ad account and the decisions land first thing in your morning. Most of the businesses we work with we have never met in person, and it has never been the thing that mattered." },
       { q: 'Is Melbourne more expensive to advertise in?', a: "Media costs are set by the auction you are actually competing in, not by your postcode — a Melbourne fashion brand and a Sydney fashion brand bidding for the same national audience see much the same CPMs. What differs here is the density of advertisers on the same seasonal peaks, which is a creative volume problem more than a cost problem." },
       { q: 'Our agency charges a percentage of spend. Is that standard?', a: "It is common, and it is worth seeing in dollars rather than percent. Put your monthly spend into the fee calculator and look at the annual figure, then at what it becomes the next time you double the budget for the same work." },
       { q: 'Do we need someone in-house to run this?', a: "Someone needs about a minute each morning to approve the day's decisions — usually a founder, a marketing coordinator or an ecommerce manager. If nobody can, we quote the end-to-end option instead and do the execution ourselves." },
@@ -84,7 +84,7 @@ const CITIES = [
       'Month to month, with no notice period.',
     ],
     faqs: [
-      { q: 'Are you a Brisbane agency?', a: "We are not an agency, and we are based in Sydney. The system runs on your own ad account and the decisions arrive first thing in your morning, in your timezone. We work with Queensland businesses remotely." },
+      { q: 'Are you a Facebook ads agency in Brisbane?', a: "We are not an agency, and we are based in Sydney. The system runs on your own ad account and the decisions arrive first thing in your morning, in your timezone. We work with Queensland businesses remotely." },
       { q: 'We are with a digital agency that also does SEO and web. Is that a problem?', a: "Not necessarily, but it is worth checking how many hours a month actually go into the ad account, and who makes the call when performance turns on a Tuesday. Generalist agencies are usually fine at build and campaign setup, and structurally bad at daily decisions." },
       { q: 'What spend does this start making sense at?', a: "Around ten thousand a month in media. Below that there is not enough daily volume for a daily decision to be worth making, and we will tell you so rather than sell you the setup." },
       { q: 'Do you work with trades and home services?', a: "Yes. Lead quality matters more than lead volume there, so the decisions are built around booked jobs and cost per qualified enquiry rather than cost per form fill." },
@@ -129,7 +129,7 @@ const CITIES = [
       'Month to month, with no notice period.',
     ],
     faqs: [
-      { q: 'Are you a Perth agency?', a: "No, we are based in Sydney, and the timezone is the reason the system exists in the shape it does. The decisions are written overnight and land at 7am your time, so you are never waiting on the east coast to wake up." },
+      { q: 'Are you a Facebook ads agency in Perth?', a: "No, we are based in Sydney, and the timezone is the reason the system exists in the shape it does. The decisions are written overnight and land at 7am your time, so you are never waiting on the east coast to wake up." },
       { q: 'Does the 7am timing follow WA time?', a: "Yes. The point of the system is that the day's decisions are ready before your working day starts, wherever that is." },
       { q: 'Is WA media more expensive?', a: "Not inherently. Some WA-specific audiences are thinner, which pushes frequency up faster at high spend, and that is a creative volume problem. The auction itself does not charge you extra for a postcode." },
       { q: 'Who approves the decisions?', a: "Whoever you nominate — usually the founder or a marketing coordinator. It takes about a minute on a phone. If nobody in the business can, we quote the end-to-end option and do the execution ourselves." },
@@ -174,7 +174,7 @@ const CITIES = [
       'Month to month, with no notice period.',
     ],
     faqs: [
-      { q: 'Are you an Adelaide agency?', a: "No, we are based in Sydney and work nationally. The system runs on your own account and the decisions land at 7am in your morning." },
+      { q: 'Are you a Facebook ads agency in Adelaide?', a: "No, we are based in Sydney and work nationally. The system runs on your own account and the decisions land at 7am in your morning." },
       { q: 'Is our spend big enough?', a: "If you are consistently past about ten thousand a month in media, yes. Below that we will say so — there is not enough daily volume for the system to earn its keep, and we would rather tell you than sell you the setup." },
       { q: 'How is this cheaper than an agency?', a: "It may not be, and we would not lead with that. What it is, is fixed: the setup fee is quoted in writing and the monthly does not move when your budget does. Whether that is cheaper depends on what you are paying now, which the fee calculator will show you in about a minute." },
       { q: 'Do you understand the South Australian market?', a: "We understand the account. The auction, the creative constraint and the decision lag behave the same way in Adelaide as everywhere else, and your customers are usually national anyway." },
@@ -219,7 +219,7 @@ const CITIES = [
       'Month to month, with no notice period.',
     ],
     faqs: [
-      { q: 'Are you a Canberra agency?', a: "No, we are based in Sydney and work nationally. The system runs on your own ad account and the daily decisions land at 7am." },
+      { q: 'Are you a Facebook ads agency in Canberra?', a: "No, we are based in Sydney and work nationally. The system runs on your own ad account and the daily decisions land at 7am." },
       { q: 'Does this work for B2B and long sales cycles?', a: "Yes, with the measurement built around qualified enquiries rather than in-platform conversions. The honest caveat is that the feedback loop is slower, so decisions lean harder on leading indicators and creative testing than on daily conversion counts." },
       { q: 'Our audience is tiny. Is Meta even right for us?', a: "Sometimes not, and we will say so. Where it does work, the answer is usually fewer audiences and far more creative, because frequency rather than reach is what is holding the account back." },
       { q: 'Can we own the account for procurement reasons?', a: "You already do — everything is built in your own Business Manager from the first hour. That is the default, not an option we charge for." },
@@ -264,7 +264,7 @@ const CITIES = [
       'Month to month, with no notice period.',
     ],
     faqs: [
-      { q: 'Are you a Gold Coast agency?', a: "No, we are based in Sydney and work nationally. The system runs on your own ad account, and the day's decisions land at 7am in your morning." },
+      { q: 'Are you a Facebook ads agency in Gold Coast?', a: "No, we are based in Sydney and work nationally. The system runs on your own ad account, and the day's decisions land at 7am in your morning." },
       { q: 'I have always run the ads myself. Will I lose control?', a: "The opposite, in practice. You approve every decision before it happens and you keep the account, so you can see exactly what changed and why. Founders who have run their own ads tend to get the most out of it, because they can read the reasoning." },
       { q: 'Can we start with just creative?', a: "Yes. If the account is structurally fine and the real problem is that you cannot ship enough new ads, buying creative on its own is often the right purchase and we will say so." },
       { q: 'What spend does this need?', a: "About ten thousand a month in media before daily decisions start earning their keep. Under three thousand, none of it is the right purchase yet and we will tell you that plainly." },
@@ -309,7 +309,7 @@ const CITIES = [
       'Month to month, with no notice period.',
     ],
     faqs: [
-      { q: 'Are you a Sunshine Coast agency?', a: "No, we are based in Sydney and work nationally. The system runs on your own account and the decisions land at 7am in your morning." },
+      { q: 'Are you a Facebook ads agency in Sunshine Coast?', a: "No, we are based in Sydney and work nationally. The system runs on your own account and the decisions land at 7am in your morning." },
       { q: 'Our budget is fairly small. Is this worth it?', a: "Honestly, maybe not yet. Under about three thousand a month in media there is not enough daily volume for any of this to pay for itself, and we will point you at the free guides instead. Past ten thousand it starts to make clear sense." },
       { q: 'We only sell locally. Does that change anything?', a: "It changes the audience size, which means frequency climbs faster and creative has to be replaced more often. The structure of the work is the same; the creative cadence matters more." },
       { q: 'Can we do this without hiring anyone?', a: "Yes, provided somebody can spend about a minute a morning approving decisions. If nobody can, the end-to-end option exists and we quote it as a fixed monthly." },
