@@ -21,6 +21,21 @@
       "permanent": true
     },
     {
+      "source": "/blog/:path*",
+      "destination": "/learn",
+      "permanent": true
+    },
+    {
+      "source": "/cgi-sys/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/sevenam.htm",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/facebook-ads-audit-checklist",
       "destination": "/facebook-ads-audit",
       "permanent": true
