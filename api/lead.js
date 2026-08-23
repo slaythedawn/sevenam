@@ -54,7 +54,12 @@ const FIELDS = [
   ['name', 'Name'], ['company', 'Company'], ['email', 'Email'], ['phone', 'Phone'],
   ['website', 'Website'], ['spend', 'Monthly spend'], ['who', 'Who runs it'],
   ['problems', 'Problems'], ['operator', 'Operator'], ['category', 'Business type'],
-  ['verdict', 'Recommendation shown'], ['notes', 'Notes'], ['page', 'Submitted from'],
+  ['verdict', 'Recommendation shown'], ['notes', 'Notes'],
+  /* Where the visit started, not where the form is — see recordFirstTouch
+     in site.js. Without these every lead reported /apply and said nothing
+     about which page earned it. */
+  ['landing', 'Landed on'], ['referrer', 'Came from'], ['utm', 'Campaign'],
+  ['page', 'Submitted from'],
 ];
 
 function textOf(lead) {

@@ -839,6 +839,9 @@
         operator: labelFor("operator", S.answers.operator),
         category: labelFor("category", S.answers.category),
         page: location.href,
+        landing: firstTouch().landing || "",
+        referrer: firstTouch().referrer || "",
+        utm: firstTouch().utm || "",
         company_url: S.hp
       });
 
@@ -903,8 +906,48 @@
     render();
   }
 
+  /* --------------------------------------------------------- first touch */
+
+  /* A lead used to arrive saying "Submitted from: /apply", because that is where
+     the form is. It said nothing about which of the sixty-odd pages actually
+     earned the application, which made it impossible to tell whether the work
+     was paying off anywhere in particular.
+
+     So the first page of a visit is recorded once, in sessionStorage, and
+     travels with the application. sessionStorage rather than a cookie because
+     it needs no banner, dies with the tab, and never leaves the browser except
+     as three short strings attached to an application the person chose to send.
+
+     Wrapped in try/catch throughout: private windows and locked-down browsers
+     throw on the accessor itself, and a lead is worth more than its source. */
+  var TOUCH = "sevenam:first-touch";
+
+  function recordFirstTouch() {
+    try {
+      if (sessionStorage.getItem(TOUCH)) return;
+      var q = new URLSearchParams(location.search);
+      var utm = ["utm_source", "utm_medium", "utm_campaign"]
+        .map(function (k) { return q.get(k); })
+        .filter(Boolean)
+        .join(" / ");
+      sessionStorage.setItem(TOUCH, JSON.stringify({
+        landing: location.pathname,
+        /* Same-origin referrers are internal navigation, not a source. */
+        referrer: (document.referrer && document.referrer.indexOf(location.origin) !== 0)
+          ? document.referrer : "",
+        utm: utm
+      }));
+    } catch (e) { /* storage unavailable — the lead still sends without it */ }
+  }
+
+  function firstTouch() {
+    try { return JSON.parse(sessionStorage.getItem(TOUCH)) || {}; }
+    catch (e) { return {}; }
+  }
+
   /* ------------------------------------------------------------------- init */
   function init() {
+    recordFirstTouch();
     setupNavBand();
     setupReveals();
     setupParallax();
