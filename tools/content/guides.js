@@ -43,6 +43,7 @@ const PAGES = [
       { q: 'How current is this page?', a: "Model versions move faster than any page can. What we keep current here is the method for judging a release and the limits that have held across every version so far \u2014 those change far more slowly than the capabilities do." },
     ],
     related: [
+      { href: '/creative-cost', title: 'Creative cost calculator', note: 'Freelance day rate vs a line.' },
       { href: '/ad-creative', title: 'Ad creative on an AI line', note: 'What we produce, and what it costs.' },
       { href: '/seedance-2', title: 'Seedance 2.0 for ad creative', note: 'The version most work still runs on.' },
       { href: '/higgsfield-ads', title: 'Higgsfield for ad creative', note: 'Directed motion, not prompt-and-hope.' },
@@ -87,6 +88,7 @@ const PAGES = [
       { q: 'Will Meta penalise AI-generated creative?', a: "Meta does not penalise it for being generated. What gets punished is the same thing that always did \u2014 low engagement. Generated creative that looks generic performs badly because people scroll past it, not because a policy caught it." },
     ],
     related: [
+      { href: '/creative-cost', title: 'Creative cost calculator', note: 'Freelance day rate vs a line.' },
       { href: '/ad-creative', title: 'Ad creative on an AI line', note: 'What we produce, and what it costs.' },
       { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
       { href: '/seedance-2-5', title: 'Seedance 2.5 for ad creative', note: 'Judging a new model version.' },
@@ -131,6 +133,7 @@ const PAGES = [
       { q: 'Which placements suit it best?', a: "Reels and Stories, where the first second decides everything and variation on the hook is the highest-leverage thing you can test. It is far less useful for long-form or anything carrying detailed product explanation." },
     ],
     related: [
+      { href: '/creative-cost', title: 'Creative cost calculator', note: 'Freelance day rate vs a line.' },
       { href: '/ad-creative', title: 'Ad creative on an AI line', note: 'What we produce, and what it costs.' },
       { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
       { href: '/seedance-2-5', title: 'Seedance 2.5 for ad creative', note: 'Judging a new model version.' },
@@ -175,6 +178,7 @@ const PAGES = [
       { q: 'How does this fit with a Meta account?', a: "Motion variations are hook tests. The account tells you which opening earns attention, the line produces more of that shape, and the next brief is better than the last. Without that loop it is just an expensive way to make videos nobody measures." },
     ],
     related: [
+      { href: '/creative-cost', title: 'Creative cost calculator', note: 'Freelance day rate vs a line.' },
       { href: '/ad-creative', title: 'Ad creative on an AI line', note: 'What we produce, and what it costs.' },
       { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
       { href: '/seedance-2-5', title: 'Seedance 2.5 for ad creative', note: 'Judging a new model version.' },
@@ -222,6 +226,7 @@ const PAGES = [
     ],
     closing: { h2: 'Get a straight answer for your account.', p: "Five questions, two minutes, and an honest read on whether any of this fits — including if the answer is that it does not." },
     related: [
+      { href: '/check', title: 'The account check', note: 'Whether they work on yours.' },
       { href: '/what-are-meta-ads', title: 'What are Meta ads?', note: 'The plain-English explanation.' },
       { href: '/facebook-ads-cost-australia', title: 'What ads cost', note: 'How the auction prices you.' },
       { href: '/google-ads-vs-facebook-ads', title: 'Google vs Facebook', note: 'Which does what.' },
@@ -268,6 +273,7 @@ const PAGES = [
     ],
     closing: { h2: 'Find out where your growth is actually coming from.', p: "Fifteen minutes with Josh, no pitch deck. You will leave with a clearer read on which channel is doing the work." },
     related: [
+      { href: '/check', title: 'The account check', note: 'A straight read, five days.' },
       { href: '/what-are-meta-ads', title: 'What are Meta ads?', note: 'Placements and objectives.' },
       { href: '/are-facebook-ads-worth-it', title: 'Are Facebook ads worth it?', note: 'An honest answer.' },
       { href: '/facebook-ads-strategy', title: 'Meta ads strategy', note: 'How to structure it.' },
@@ -361,6 +367,7 @@ const PAGES = [
     ],
     closing: { h2: 'Or have someone read it once, properly.', p: "The account check is five days and ends in a written list of what would change — plenty of them conclude you should keep running it yourself." },
     related: [
+      { href: '/tools', title: 'Free calculators', note: 'Fee and creative cost.' },
       { href: '/what-are-meta-ads', title: 'What are Meta ads?', note: 'Start here if it is all new.' },
       { href: '/facebook-ad-creative-testing', title: 'Creative testing', note: 'The part most people skip.' },
       { href: '/glossary', title: 'Glossary', note: 'Every term, in plain English.' },
@@ -408,6 +415,7 @@ const PAGES = [
     ],
     closing: { h2: 'Turn competitive research into creative output.', p: "Fifteen minutes with Josh, no pitch deck. Research only pays once something gets made from it." },
     related: [
+      { href: '/tools', title: 'Free calculators', note: 'Fee and creative cost.' },
       { href: '/facebook-ad-creative-testing', title: 'Creative testing', note: 'What to do with the ideas.' },
       { href: '/what-are-meta-ads', title: 'What are Meta ads?', note: 'The fundamentals.' },
       { href: '/glossary', title: 'Glossary', note: 'Every term, in plain English.' },
@@ -454,6 +462,7 @@ const PAGES = [
     ],
     closing: { h2: 'Find out whether automation is helping or hiding a problem.', p: "Fifteen minutes with Josh, no pitch deck. Automation flatters accounts right up until it does not." },
     related: [
+      { href: '/check', title: 'The account check', note: 'What yours is actually doing.' },
       { href: '/ai-marketing-agency', title: 'Where we use AI', note: 'And where we do not.' },
       { href: '/facebook-ad-creative-testing', title: 'Creative testing', note: 'The remaining constraint.' },
       { href: '/scaling-meta-ads', title: 'Scaling Meta ads', note: 'What breaks as you grow.' },
@@ -501,6 +510,7 @@ const PAGES = [
     ],
     closing: { h2: 'Find out where your ceiling actually is.', p: "Fifteen minutes with Josh, no pitch deck. Most ceilings turn out to be creative supply wearing a media buying costume." },
     related: [
+      { href: '/creative-cost', title: 'Creative cost calculator', note: 'What a concept costs you now.' },
       { href: '/facebook-ad-creative-testing', title: 'Creative testing', note: 'How to lift the ceiling.' },
       { href: '/meta-advantage-plus', title: 'Advantage+', note: 'What automation changes.' },
       { href: '/facebook-ads-cost-australia', title: 'What ads cost', note: 'Why costs drift up.' },
@@ -594,6 +604,7 @@ const PAGES = [
     ],
     closing: { h2: 'Fix the supply, not the settings.', p: "Fifteen minutes with Josh, no pitch deck. In most accounts the ceiling is creative volume, and it is the easiest thing to prove." },
     related: [
+      { href: '/creative-cost', title: 'Creative cost calculator', note: 'What a concept costs you now.' },
       { href: '/scaling-meta-ads', title: 'Scaling Meta ads', note: 'Why the ceiling appears.' },
       { href: '/meta-ad-library', title: 'Meta Ad Library', note: 'Where to find angles.' },
       { href: '/pricing', title: 'How it works to buy', note: 'Creative by batch or month.' },
@@ -641,6 +652,7 @@ const PAGES = [
     ],
     closing: { h2: 'Find out which of the four is failing.', p: "Fifteen minutes with Josh, no pitch deck. It is usually measurement or creative, and it is usually fixable." },
     related: [
+      { href: '/check', title: 'The account check', note: 'Before you change anything.' },
       { href: '/facebook-ad-creative-testing', title: 'Creative testing', note: 'The main constraint.' },
       { href: '/meta-advantage-plus', title: 'Advantage+', note: 'What automation changed.' },
       { href: '/system', title: 'How it works', note: 'Decisions, daily.' },
@@ -737,6 +749,7 @@ const PAGES = [
     ],
     closing: { h2: 'See what the thesis looks like applied to your account.', p: "Fifteen minutes with Josh, no pitch deck. Or answer five questions first and get a straight read on which part fits." },
     related: [
+      { href: '/agency-fee', title: 'Agency fee calculator', note: 'The percentage, in dollars.' },
       { href: '/about', title: 'About', note: 'Who builds the system.' },
       { href: '/system', title: 'How it works', note: 'Overnight, then 7am.' },
       { href: '/ai-marketing-agency', title: 'Where we use AI', note: 'And where we do not.' },
