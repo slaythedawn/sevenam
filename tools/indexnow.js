@@ -23,7 +23,7 @@ const path = require('path');
 const HOST = 'sevenam.com.au';
 const KEY = '7dda69eb31274ca1af96731e66389ffa';
 const KEY_FILE = `https://${HOST}/${KEY}.txt`;
-const ENDPOINT = 'https://api.indexnow.org/indexnow';
+const ENDPOINT = 'https://api.indexnow.org/IndexNow';
 
 const ROOT = path.join(__dirname, '..');
 
