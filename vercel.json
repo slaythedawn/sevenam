@@ -36,6 +36,21 @@
       "permanent": true
     },
     {
+      "source": "/facebook-advertising-agency",
+      "destination": "/facebook-ads-agency",
+      "permanent": true
+    },
+    {
+      "source": "/meta-advertising-agency",
+      "destination": "/meta-ads-agency",
+      "permanent": true
+    },
+    {
+      "source": "/meta-ads-consultant",
+      "destination": "/facebook-ads-consultant",
+      "permanent": true
+    },
+    {
       "source": "/facebook-ads-audit-checklist",
       "destination": "/facebook-ads-audit",
       "permanent": true

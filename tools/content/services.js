@@ -255,6 +255,7 @@ const PAGES = [
       ],
     },
     faqs: [
+      { q: 'Is a Meta advertising agency the same thing as a Meta ads agency?', a: "Yes — they are the same search with different wording, and the results Google returns for each are largely the same pages. What the words do hint at is scope: “Meta advertising” tends to imply the message and the creative as well as the buying, which is the more useful way to think about it now that Meta's own models handle targeting, bidding and placement." },
       { q: 'Is this just an agency with different branding?', a: "The test is what happens when you leave. With an agency you typically negotiate over the account, the pixel history and the creative files. Here they were always yours, so there is nothing to negotiate — and that changes the incentives on both sides." },
       { q: 'Do you ever recommend keeping our agency?', a: "Regularly. Plenty of account checks end with us saying the setup is sound and the problem is creative volume, which your existing agency may well be able to fix." },
       { q: 'What if we want you to do everything?', a: "Then the end-to-end option is what we quote — we buy the media, produce the creative and do the daily execution, still on your account and still for a fixed monthly." },
@@ -485,6 +486,7 @@ const PAGES = [
       ],
     },
     faqs: [
+      { q: 'Are you a Meta ads consultant or a Facebook ads consultant?', a: "Both describe the same work. Facebook and Instagram are one auction inside Meta, so there is no separate Facebook engagement and Meta engagement — there is one account, read end to end. The account check covers every surface the account runs on rather than only the Facebook placements." },
       { q: 'Do you do consulting?', a: "The account check is the closest thing to it: five days, a written read on the account, and a plain list of what would change. Plenty of them end with us saying you do not need the rest of what we sell." },
       { q: 'Can we just buy a few hours of your time?', a: "Not really, and it would not serve you well. Advertising decisions need the context of the account and the data behind it, and an hour is not enough to build either honestly." },
       { q: 'What if we want the strategy but will execute ourselves?', a: "That works, and the guides cover most of what a competent in-house operator needs. The account check gives you the account-specific part." },
@@ -732,58 +734,6 @@ const PAGES = [
       { href: '/scaling-meta-ads', title: 'Scaling Meta ads', note: 'What breaks as you grow.' },
     ],
   },
-  {
-    /* "facebook advertising agency" is 1,100 a month at KD 3 — the same volume as
-       "facebook ads agency", which we already own. They are near-synonyms, so this
-       page has to argue something the ads-agency page does not, or the two will
-       compete with each other. The split taken here: "ads" is what people call the
-       media buying, "advertising" is the whole remit — strategy, creative, buying.
-       That is a real distinction and it is the one this page is built on. */
-    slug: 'facebook-advertising-agency',
-    title: 'Facebook Advertising Agency (Australia) — The Whole Remit | Sevenam',
-    description: 'A Facebook advertising agency covers strategy, creative and buying — not just the campaign build. What that remit looks like when the buying itself is automated.',
-    eyebrow: 'FACEBOOK ADVERTISING', h1: 'Facebook Advertising Agency',
-    lead: 'Strategy, creative and buying are one job now. Most of the market still sells them as three.',
-    s1: {
-      h2: 'Advertising is not the same as running ads.',
-      paras: [
-        "Most briefs that come to us describe media buying — build the campaigns, watch the numbers, move the budget. That was the whole job when targeting was a craft and a good operator could out-structure the competition. It is not the job any more, because Meta's own models now decide who sees what, when, and at what price.",
-        "What is left is the part that was always called advertising: deciding what to say, making enough of it, and knowing which of it worked. An agency that only sells the buying is selling you the one part of this the platform has already taken over.",
-      ],
-      items: [
-        'Targeting, bidding and placement are the platform’s models now.',
-        'What you can still influence is the message and how much of it there is.',
-        'A campaign build is a week of work, not a monthly retainer.',
-        'The recurring work is production and judgment, not button-pressing.',
-      ],
-    },
-    s2: {
-      h2: 'What a full remit looks like here.',
-      paras: [
-        "Three things run continuously: the creative line producing concepts at volume, the measurement that says which of them earned their spend, and a written decision each morning about what to change that day. None of those is a campaign build, and all of them compound.",
-        "The account, the pixel, the audiences and every file the line produces sit in your own Business Manager from the first hour. That is the part most agencies structure differently, and it is the part that decides how this ends rather than how it starts.",
-      ],
-      items: [
-        'Creative produced at volume, briefed against what the account already proves.',
-        'Measurement built before anything scales, so the numbers are worth acting on.',
-        'A written decision every morning, with the numbers behind each one.',
-        'Everything inside your own Business Manager, permanently.',
-      ],
-    },
-    faqs: [
-      { q: 'What is the difference between a Facebook ads agency and a Facebook advertising agency?', a: "In practice most people use them interchangeably, and search treats them almost identically. Where the distinction is real is scope: shops that sell “ads” usually mean the media buying — campaign structure, budgets, bid strategy — while “advertising” implies the message and the creative too. That matters more than it used to, because the buying is now largely done by Meta's models and the creative is the part still under your control." },
-      { q: 'Do you make the creative, or just run the ads?', a: "Both, and they are not separable any more. Creative is produced end to end on our own line — concepts, hooks, cuts and statics — briefed against what the account's own numbers say is working. An account being fed three concepts a quarter cannot be bought out of a fatigue problem, no matter how the campaigns are structured." },
-      { q: 'Do we have to buy the whole thing?', a: "No. Some brands buy the account check and go no further, some buy creative alone because the structure is already sound, and some take the guides on this site and run it themselves. We will tell you on the call which of those you actually need." },
-      { q: 'Are you an agency or not?', a: "By how the market uses the word, near enough — we are the people who do your Facebook advertising. Structurally we are not built like one: no retainer that renews on autopilot, no agency-owned ad account, no fee that climbs with your media budget, and a month-to-month arrangement with no notice period." },
-      { q: 'Do you work with brands outside Sydney?', a: "Yes — we are Sydney-based and work across Australia. The auction does not know where your agency sits, and the decisions land in your morning wherever you are. Most brands we work with we have never met in person." },
-    ],
-    related: [
-      { href: '/facebook-ads-agency', title: 'Facebook ads agency', note: 'The same case, from the buying side.' },
-      { href: '/ad-creative', title: 'How the creative gets made', note: 'Volume without a shoot.' },
-      { href: '/system', title: 'How the system works', note: 'Installed, then run.' },
-    ],
-    closing: { h2: 'Have your Facebook advertising read properly.', p: "Answer five questions about the account and Josh comes back with what is actually wrong and what it would take to fix it." },
-  },
 
   {
     /* "ecommerce marketing agency" is 400 a month at KD 6 and had no page. The
@@ -836,57 +786,6 @@ const PAGES = [
     closing: { h2: 'Find out which one is your constraint.', p: "Answer five questions and Josh comes back with what the numbers say to fix first — including when that is not us." },
   },
 
-  {
-    /* "meta advertising agency" is 150 a month. Near-synonym of "meta ads agency",
-       which we own, so this page argues the surface question instead: Meta is one
-       auction across several placements, and buying it as "Facebook ads" is how
-       accounts end up with creative that only works in one shape. */
-    slug: 'meta-advertising-agency',
-    title: 'Meta Advertising Agency (Australia) — One Auction, Six Surfaces | Sevenam',
-    description: 'Meta is Facebook, Instagram, Reels, Stories and Advantage+ in a single auction. What a Meta advertising remit covers, and why creative has to survive several shapes.',
-    eyebrow: 'META ADVERTISING', h1: 'Meta Advertising Agency',
-    lead: 'One buy, several surfaces. The creative has to work on all of them.',
-    s1: {
-      h2: 'Meta is not a synonym for Facebook.',
-      paras: [
-        "The name change was not cosmetic. A single Meta buy distributes across the Facebook feed, Instagram feed and Explore, Reels, Stories, Advantage+ catalogue placements, Messenger and Threads — and the platform decides which of those your money goes to based on where the outcome you asked for is cheapest.",
-        "That has a practical consequence most accounts have not absorbed. You are no longer choosing placements; you are supplying creative that has to survive being shown in all of them. A concept built for a square feed placement and cropped into a nine-by-sixteen Reel does not fail loudly — it just quietly costs more.",
-      ],
-      items: [
-        'Facebook and Instagram are one auction, not two channels.',
-        'Placement selection is the platform’s decision, not a lever you pull.',
-        'One concept has to hold up in several aspect ratios and contexts.',
-        'Sound-on and sound-off are different ads with the same media budget.',
-      ],
-    },
-    s2: {
-      h2: 'What that means for how the work is done.',
-      paras: [
-        "Every concept the line produces is made for the surfaces it will actually run on rather than cropped into them afterwards — the vertical cut, the sound-off version, the catalogue-ready still. That is production volume, which is exactly the thing a shoot-based process cannot deliver on a monthly cadence.",
-        "Underneath that, the catalogue and the feed have to be clean, because Advantage+ placements are only as good as the product data behind them. It is unglamorous work and it is usually where the first real gain in an account comes from.",
-      ],
-      items: [
-        'Concepts produced per surface, not cropped into them.',
-        'Catalogue and feed hygiene, because Advantage+ runs on it.',
-        'A written decision each morning covering the whole auction.',
-        'Everything inside your own Business Manager.',
-      ],
-    },
-    faqs: [
-      { q: 'Is a Meta advertising agency different from a Facebook ads agency?', a: "The words are used interchangeably and the SERP treats them nearly the same. Where it matters is scope — “Facebook ads” describes how the platform worked a decade ago, when you bought Facebook placements deliberately. Today it is one auction across Facebook, Instagram, Reels, Stories, Messenger, Threads and Advantage+ catalogue, and an operator still thinking in Facebook placements is leaving the rest of it to chance." },
-      { q: 'Do you run Instagram as well?', a: "There is no separate thing to run. Instagram placements are part of the same Meta buy and the same auction. What differs is the creative each surface rewards, which is why concepts are produced per surface rather than cropped between them." },
-      { q: 'Should we pick our own placements?', a: "Almost never now. Restricting placements narrows the auction and usually raises your cost per result, because you have removed the cheapest inventory Meta could have used to get you the outcome. The exception is brand-safety constraints in regulated categories, where it is a business decision rather than a media one." },
-      { q: 'What about Threads?', a: "Newest surface, thin data, and not yet a channel to plan a quarter around. It is included in the buy, we watch what it returns, and we do not pretend it is more than it is." },
-      { q: 'Do you handle the catalogue and product feed?', a: "Yes, as part of the setup. Advantage+ catalogue placements are only as accurate as the feed behind them, and feed problems are common, invisible in the ads manager, and expensive. It is usually where the first real gain shows up." },
-    ],
-    related: [
-      { href: '/meta-ads-agency', title: 'Meta ads agency', note: 'The same case, stated plainly.' },
-      { href: '/meta-advantage-plus', title: 'What Advantage+ automates', note: 'And what it does not.' },
-      { href: '/meta-advertising-agency', title: 'Meta advertising agency', note: 'One auction, six surfaces.' },
-      { href: '/what-are-meta-ads', title: 'What Meta ads are', note: 'Plain English, from zero.' },
-    ],
-    closing: { h2: 'Have the whole auction read, not just Facebook.', p: "Answer five questions about the account and Josh comes back with what the numbers say across every surface it is running on." },
-  },
 
   {
     /* "meta ads management" is 150 a month. The searcher is looking for the
@@ -1037,7 +936,6 @@ const PAGES = [
     ],
     related: [
       { href: '/facebook-ads-consultant', title: 'Facebook ads consultant', note: 'Advice, or execution?' },
-      { href: '/meta-ads-consultant', title: 'Meta ads consultant', note: 'Advice that gets actioned.' },
       { href: '/check', title: 'The account check', note: 'Five days, in writing.' },
       { href: '/how-to-run-meta-ads-yourself', title: 'Run it yourself', note: 'The whole process, published.' },
       { href: '/facebook-ads-expert', title: 'Facebook ads expert', note: 'Hire a person, or install a system.' },
@@ -1096,57 +994,6 @@ const PAGES = [
     closing: { h2: 'Find out whether Meta is actually saturated.', p: "Answer five questions about the account and Josh comes back with whether a second channel would help or just spread you thinner." },
   },
 
-  {
-    /* "meta ads consultant" is 70 a month. We already own "facebook ads
-       consultant", so this page takes the narrower question the term implies:
-       what a consultant hands over, and the gap between a recommendation and
-       somebody actually doing it. */
-    slug: 'meta-ads-consultant',
-    title: 'Meta Ads Consultant (Australia) — Advice That Gets Actioned | Sevenam',
-    description: 'A consultant hands you a document. What usually happens to it, and what it takes for a Meta ads recommendation to actually get implemented.',
-    eyebrow: 'META ADS CONSULTANT', h1: 'Meta Ads Consultant',
-    lead: 'The recommendations are rarely the problem. Nobody having time to do them is.',
-    s1: {
-      h2: 'What happens to most consulting documents.',
-      paras: [
-        "A consultant reads the account, finds the real problems, and writes them up. Then the document goes to a founder with eleven other priorities, or to a marketing coordinator who does not have permission to restructure the account, and about a third of it gets done over the next quarter — usually the easy third rather than the important one.",
-        "This is not a failure of the advice. It is that a recommendation and a change are separated by somebody's Tuesday, and consulting is priced and scoped as though that gap does not exist.",
-      ],
-      items: [
-        'The findings are usually right.',
-        'Implementation lands on somebody who did not plan for it.',
-        'The easy items get done; the structural ones do not.',
-        'Three months later the same audit finds the same things.',
-      ],
-    },
-    s2: {
-      h2: 'Advice, then the doing, as separate purchases.',
-      paras: [
-        "The account check is the consulting piece and it stands alone: five days, a straight read of what is wrong and what to fix first, recorded and in writing, and yours to act on with or without us. Plenty of brands take it and do the work themselves, which is a fine outcome and the reason the guides on this site are free.",
-        "If you would rather it got done, the same findings become the setup and then a written decision each morning telling you exactly what to do that day. What does not happen is a document that assumes somebody in-house will find a spare fortnight.",
-      ],
-      items: [
-        'The account check works as a standalone piece of advice.',
-        'Recorded and in writing, yours whether you continue or not.',
-        'If you want it implemented, the findings become the build.',
-        'Then a decision each morning, so nothing waits for a quarter.',
-      ],
-    },
-    faqs: [
-      { q: 'Can we just buy the advice?', a: "Yes. The account check is five days and stands completely on its own — you get a recorded walkthrough and a written list of what is wrong and what to fix first, and it is yours to act on with or without us. A reasonable number of brands take it and never come back, which is the point of publishing the guides too." },
-      { q: 'What is the difference between a consultant and what you do?', a: "Scope, mostly. A consultant reads and recommends; the implementation is yours. We do both, as separate purchases, because the honest failure mode of consulting is that the document does not get actioned — not that it was wrong." },
-      { q: 'Do you charge by the hour?', a: "No. The account check is a fixed price for a fixed piece of work, and anything ongoing is a fixed monthly quoted after the account is read. Hourly billing prices the wrong thing in this channel — the value is in the judgment, not the duration." },
-      { q: 'How long does the account check take?', a: "Five working days from getting access. You come out with a recorded read of the account, a written list of what is costing you the most, and what it would take to fix each one." },
-      { q: 'Will you tell us if we do not need you?', a: "Yes, and it happens. If the account is too small for the setup to pay for itself, or the constraint is somewhere we do not work, that is what the check will say. Everything we know is published — the guides, the glossary, the calculators — precisely so brands can run it themselves where that is the right call." },
-    ],
-    related: [
-      { href: '/facebook-ads-consultant', title: 'Facebook ads consultant', note: 'Advice, or execution?' },
-      { href: '/meta-ads-consultant', title: 'Meta ads consultant', note: 'Advice that gets actioned.' },
-      { href: '/check', title: 'The account check', note: 'Five days, standalone.' },
-      { href: '/learn', title: 'Everything published', note: 'Guides, glossary and tools.' },
-    ],
-    closing: { h2: 'Start with the read.', p: "Answer five questions and Josh comes back with what the account needs — including when the answer is that you can do it yourself." },
-  },
 
 
 ];
