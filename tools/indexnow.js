@@ -66,13 +66,21 @@ async function main() {
     body: JSON.stringify({ host: HOST, key: KEY, keyLocation: KEY_FILE, urlList: urls }),
   });
 
-  /* IndexNow returns an empty body, so the status code is the whole answer.
-     These are the ones worth naming — the rest fall through with their code. */
+  /* IndexNow itself returns an empty body, so its status code is the whole
+     answer — but a proxy, VPN or corporate egress filter in front of you will
+     also answer 403, with a body saying why. Read it before blaming the key:
+     assuming the status was the whole story once cost an hour of looking for a
+     problem with a key file that was live and correct the entire time. */
+  const detail = (await res.text()).trim();
+  if (detail) console.log('response body:', detail.slice(0, 300));
+
   const meaning = {
     200: 'accepted',
     202: 'accepted — key still being validated, which is normal on a first run',
     400: 'bad request: the JSON or the URL list was malformed',
-    403: `key rejected: check ${KEY_FILE} is live and contains exactly the key`,
+    403: detail
+      ? 'refused before reaching IndexNow — see the body above; this is not a key problem'
+      : `key rejected: check ${KEY_FILE} is live and contains exactly the key`,
     422: `URLs did not match host ${HOST}, or the key does not match the host`,
     429: 'rate limited: too many submissions, try again later',
   }[res.status];
