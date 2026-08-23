@@ -98,6 +98,21 @@ Playwright, it is not part of `check.js`, and the cards live in `og/` rather tha
 `check.js` fails a page with no `og:image` or one pointing at a file that is not
 there — a card that 404s renders as a blank box, which is worse than none.
 
+## Telling search engines a page changed
+
+`node tools/indexnow.js` pings IndexNow with every URL in `sitemap.xml`, or with
+just the paths you name (`node tools/indexnow.js /pricing /about`). Bing removed
+its bulk URL submission page and this is what replaced it; Yandex, Seznam and
+Naver read the same feed.
+
+**Run it after the deploy is live, never before.** It tells search engines to come
+and look now, so a page that has not shipped yet gets re-read as it was.
+
+The key is `7dda69eb31274ca1af96731e66389ffa.txt` at the site root, and it is in
+this repository deliberately — the key's whole job is to be publicly fetchable,
+which is how it proves the domain is ours. Delete that file and IndexNow returns
+403. Nothing else uses it.
+
 ## Design tokens
 
 Ink `#0A0A0A` · Ink raised `#161613` · Hairline dark `#232320` · Volt `#D8FF00` ·
