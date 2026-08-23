@@ -766,7 +766,7 @@ const PAGES = [
       ],
       items: [
         'Meta acquisition and the creative that feeds it. That is the scope.',
-        'No email, no SEO, no content retainer, no percentage of spend.',
+        'No email, no SEO, no content retainer, and a fee priced to the work.',
         'We say when your constraint is somewhere we do not work.',
         'Your ad account, pixel and creative library, from hour one.',
       ],
