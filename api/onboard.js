@@ -151,6 +151,10 @@ function derive(d) {
 
 const money = (v) => '$' + Math.round(v).toLocaleString('en-AU');
 
+/* Checkboxes post the literal string "yes". Fine as a wire value, scruffy in a
+   document someone reads — so it is capitalised at the point of display only. */
+const pretty = (v) => (v === 'yes' ? 'Yes' : String(v));
+
 function deriveLines(x) {
   if (!x) return [];
   const l = [
@@ -178,7 +182,7 @@ function textOf(d) {
   if (x) parts.push('DERIVED\n' + deriveLines(x).map((s) => '  ' + s).join('\n') + '\n');
 
   SECTIONS.forEach(([title, fields]) => {
-    const rows = fields.filter(([k]) => d[k]).map(([k, label]) => '  ' + label + ': ' + d[k]);
+    const rows = fields.filter(([k]) => d[k]).map(([k, label]) => '  ' + label + ': ' + pretty(d[k]));
     if (rows.length) parts.push(title.toUpperCase() + '\n' + rows.join('\n'));
   });
   const meta = META.filter(([k]) => d[k]).map(([k, label]) => '  ' + label + ': ' + d[k]);
@@ -205,32 +209,44 @@ function htmlOf(d) {
     H.push('<div style="margin:0 0 20px;padding:14px 16px;background:#0A0A0A;color:#F7F7F5;border-radius:8px">');
     H.push('<p style="margin:0 0 8px;font-size:13px;color:#B5B5AD;text-transform:uppercase;letter-spacing:.06em">Derived</p>');
     H.push('<table style="border-collapse:collapse;font-size:15px">');
-    H.push('<tr><td style="padding:3px 18px 3px 0;color:#C9C9C2">Profit per sale</td><td><strong>' + money(x.contribution_per_sale) + '</strong></td></tr>');
-    H.push('<tr><td style="padding:3px 18px 3px 0;color:#C9C9C2">Break-even CPA</td><td><strong>' + money(x.breakeven_cpa) + '</strong></td></tr>');
+    H.push('<tr><td style="padding:3px 18px 3px 0;color:#C9C9C2">Profit per sale</td><td style="color:#F7F7F5"><strong>' + money(x.contribution_per_sale) + '</strong></td></tr>');
+    H.push('<tr><td style="padding:3px 18px 3px 0;color:#C9C9C2">Break-even CPA</td><td style="color:#F7F7F5"><strong>' + money(x.breakeven_cpa) + '</strong></td></tr>');
     H.push('<tr><td style="padding:3px 18px 3px 0;color:#C9C9C2">Target CPA</td><td><strong style="color:#D8FF00;font-size:17px">' + money(x.target_cpa) + '</strong></td></tr>');
     if (x.target_cpl) H.push('<tr><td style="padding:3px 18px 3px 0;color:#C9C9C2">Target cost per lead</td><td><strong style="color:#D8FF00">' + money(x.target_cpl) + '</strong></td></tr>');
-    H.push('<tr><td style="padding:3px 18px 3px 0;color:#C9C9C2">Break-even ROAS</td><td><strong>' + x.breakeven_roas.toFixed(2) + 'x</strong></td></tr>');
+    H.push('<tr><td style="padding:3px 18px 3px 0;color:#C9C9C2">Break-even ROAS</td><td style="color:#F7F7F5"><strong>' + x.breakeven_roas.toFixed(2) + 'x</strong></td></tr>');
     if (x.conversions_per_week !== undefined) {
-      H.push('<tr><td style="padding:3px 18px 3px 0;color:#C9C9C2">Conversions / week</td><td><strong' +
-        (x.below_learning_threshold ? ' style="color:#FF6B5A"' : '') + '>' +
+      H.push('<tr><td style="padding:3px 18px 3px 0;color:#C9C9C2">Conversions / week</td>' +
+        '<td style="color:' + (x.below_learning_threshold ? '#FF6B5A' : '#F7F7F5') + '"><strong>' +
         x.conversions_per_week.toFixed(1) +
         (x.below_learning_threshold ? ' — below the ~50/wk learning threshold' : '') +
         '</strong></td></tr>');
     }
     H.push('</table></div>');
   }
+  /* Every cell states its own colour. Tables do not inherit colour in quirks
+     mode, which plenty of email clients still render in — the derived panel
+     shipped once with near-black figures on its black card because the value
+     cells relied on inheriting from the wrapper.
+
+     ONE table for every section, with the section headings as full-width rows
+     inside it. A table per section lets each one auto-size its label column to
+     its own longest label, so the value column starts somewhere different in
+     every block — which is what shipped first and read as broken. */
+  H.push('<table style="border-collapse:collapse;width:100%;max-width:640px">');
   SECTIONS.forEach(([title, fields]) => {
     const rows = fields.filter(([k]) => d[k]);
     if (!rows.length) return;
-    H.push('<p style="margin:22px 0 6px;font-size:13px;color:#55554F;text-transform:uppercase;letter-spacing:.06em"><strong>' + escapeHtml(title) + '</strong></p>');
-    H.push('<table style="border-collapse:collapse;width:100%">');
+    H.push('<tr><td colspan="2" style="padding:22px 0 6px;font-size:13px;color:#55554F;' +
+      'text-transform:uppercase;letter-spacing:.06em"><strong>' + escapeHtml(title) + '</strong></td></tr>');
     rows.forEach(([k, label]) => {
-      H.push('<tr><td style="padding:5px 16px 5px 0;color:#55554F;white-space:nowrap;vertical-align:top">' +
-        escapeHtml(label) + '</td><td style="padding:5px 0"><strong>' +
-        escapeHtml(d[k]).replace(/\n/g, '<br>') + '</strong></td></tr>');
+      H.push('<tr>' +
+        '<td width="190" style="width:190px;padding:5px 16px 5px 0;color:#55554F;' +
+        'white-space:nowrap;vertical-align:top">' + escapeHtml(label) + '</td>' +
+        '<td style="padding:5px 0;vertical-align:top;color:#0A0A0A"><strong>' +
+        escapeHtml(pretty(d[k])).replace(/\n/g, '<br>') + '</strong></td></tr>');
     });
-    H.push('</table>');
   });
+  H.push('</table>');
   const meta = META.filter(([k]) => d[k]);
   if (meta.length) {
     H.push('<p style="margin:24px 0 0;padding-top:12px;border-top:1px solid #E3E3DD;font-size:13px;color:#55554F">');
