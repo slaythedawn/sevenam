@@ -113,7 +113,7 @@
   </div>
 
   <form id="form" novalidate>
-    <div class="hp"><label>Leave this empty<input type="text" name="company_url" tabindex="-1" autocomplete="off"></label></div>
+    <div class="hp" aria-hidden="true"><input type="text" name="hp_leave_blank" tabindex="-1" autocomplete="off"></div>
 
     <!-- 0 -->
     <section data-step="0">
@@ -463,7 +463,7 @@
 
   function collect(into){
     Array.prototype.forEach.call(form.elements,function(el){
-      if(!el.name||el.name==='company_url') return;
+      if(!el.name||el.name==='hp_leave_blank') return;
       if(el.type==='checkbox'){ if(el.checked) into[el.name]='yes'; }
       else if(el.value) into[el.name]=el.value;
     });
@@ -590,7 +590,7 @@
     data.partial=partial?'yes':'no';
     data.section_reached=String(step);
     data.page=location.pathname+location.search;
-    var hp=form.elements.company_url; if(hp&&hp.value) data.company_url=hp.value;
+    var hp=form.elements.hp_leave_blank; if(hp&&hp.value) data.hp_leave_blank=hp.value;
 
     var body=new URLSearchParams();
     Object.keys(data).forEach(function(k){ body.append(k,data[k]); });

@@ -104,7 +104,8 @@ const SECTIONS = [
 ];
 
 const META = [['token', 'Token'], ['partial', 'Partial'],
-  ['section_reached', 'Reached section'], ['page', 'Submitted from']];
+  ['section_reached', 'Reached section'], ['page', 'Submitted from'],
+  ['suspected_bot', 'Flagged']];
 
 /* The same derivation the form shows the client, recomputed here so the
    delivered intake carries the numbers rather than depending on what the
@@ -288,8 +289,27 @@ module.exports = async (req, res) => {
     return res.status(413).json({ ok: false, error: 'too_large' });
   }
 
-  /* A field no human sees and no human fills in. Bots fill in everything. */
-  if (d.company_url) return res.status(200).json({ ok: true });
+  /* Logged FIRST, before any check that could discard this. An earlier version
+     ran the honeypot above this line, so a trapped submission returned 200 and
+     left no trace anywhere — the client saw a thank-you screen and the answers
+     were gone. Silent data loss with a success screen is the exact failure this
+     form exists to prevent. Nothing gets dropped without a log line. */
+  console.log('onboard:', JSON.stringify(Object.assign({}, d, { derived: derive(d) })));
+
+  /* A field no human sees and no human fills in — but browser autofill and
+     password managers do, which is how a real intake got eaten once. So a trip
+     is no longer fatal on its own: a submission carrying a link token came from
+     someone we sent that link to, so it is delivered with a flag rather than
+     discarded. Only an untokened trip — which is what an actual bot looks like,
+     since the form is not linked from anywhere — is dropped. */
+  if (d.hp_leave_blank) {
+    if (!d.token) {
+      console.log('onboard: honeypot tripped with no token, dropped');
+      return res.status(200).json({ ok: true });
+    }
+    console.log('onboard: honeypot tripped but token present, delivering flagged');
+    d.suspected_bot = 'yes — honeypot filled, likely autofill';
+  }
 
   /* A partial is allowed to be sparse — that is the entire point of it. A
      finished intake is held to the fields every later decision depends on. */
@@ -302,10 +322,6 @@ module.exports = async (req, res) => {
     /* Nothing identifying at all — no way to attribute it, so nothing to send. */
     return res.status(400).json({ ok: false, error: 'nothing_to_save' });
   }
-
-  /* Logged before any delivery attempt, so an intake survives in the Vercel
-     runtime logs even when delivery is unconfigured or Resend is down. */
-  console.log('onboard:', JSON.stringify(Object.assign({}, d, { derived: derive(d) })));
 
   try {
     if (process.env.RESEND_API_KEY && (process.env.ONBOARD_TO || process.env.LEAD_TO)) {
