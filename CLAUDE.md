@@ -76,7 +76,9 @@ design — but it also means **breaking that file breaks all 42**.
   the managed line. Grep loosely before declaring it clean — three separate sweeps missed
   phrasings like "never a share of your spend" and "your fee will never take a cut".
 - Case studies: SRW, knest.ai, Online Model Academy only. Never a client's revenue.
-- Sydney-based, working nationally. No phone number in body copy.
+- Sydney-based, working wherever the auction runs. Australian-based, not Australian-only:
+  the AU-targeted pages keep their local copy because that is the ranking strategy, but the
+  global positioning lines must not read as a limit. No phone number in body copy.
 - No emoji, no "AI-powered" filler, no urgency theatre.
 - Exactly one hero CTA and one closing CTA per SEO page. A mid-page CTA block was
   deliberately removed from 34 pages; do not reintroduce it.
