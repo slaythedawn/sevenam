@@ -631,7 +631,7 @@
       /* The email step comes first and posts on its own, so somebody who
          abandons at question three is a lead rather than nothing. Before this,
          five questions stood between a visitor and any data capture at all. */
-      emailed: false, emailTried: false,
+      emailed: false, emailTried: false, skipped: false,
       tried: false, done: false, sent: false, sending: false, failed: false
     };
     var TOTAL = QUESTIONS.length + 2;
@@ -701,7 +701,9 @@
       var onQuestion = S.emailed && S.step < QUESTIONS.length && !S.done;
       var onDetails = S.emailed && S.step === QUESTIONS.length && !S.done;
       var question = QUESTIONS[S.step];
-      var ready = siteOk && emailOk;
+      /* Nothing after the email step can block anything: the lead was captured
+         the moment they pressed Start, so every field from here is enrichment. */
+      var ready = true;
       var html;
 
       if (onEmail) {
@@ -709,7 +711,8 @@
         html += '<div style="' + STEP_IN + '">' +
           '<h1 style="' + H1 + ' max-width:20ch;">Give us your email and we\'ll get started.</h1>' +
           '<p style="margin:20px 0 0; max-width:56ch; font-size:17px; line-height:1.7; color:#B5B5AD;">' +
-          'Five short questions after this, then a straight read on which product fits \u2014 or whether none of them do.</p>' +
+          'That\'s all we need \u2014 you\'re through. Five optional questions after this get you a straight ' +
+          'read on which product fits, or whether none of them do.</p>' +
           '<div style="margin-top:44px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;">' +
           field("email", "Email", "email", "you@yourstore.com.au") +
           field("name", "First name", "text", "Jordan", true) +
@@ -752,6 +755,7 @@
             'font-family:inherit; font-size:16px; font-weight:600; padding:16px 26px; border-radius:4px; cursor:pointer;">Continue</button>';
         }
         html += '<button type="button" data-back style="' + LINK_BTN + '">Back</button>';
+        html += '<button type="button" data-skip style="' + LINK_BTN + '">Skip the questions</button>';
         html += '</div></div>';
 
       } else if (onDetails) {
@@ -785,12 +789,31 @@
           '<button type="button" data-back style="' + LINK_BTN + '">Back</button>' +
           '</div>' +
           '<p style="margin:22px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:' +
-          (S.tried && !ready ? "#D8FF00" : "#55554F") + ';">' +
-          (S.tried && !ready
-            ? (!siteOk ? "We need the website to read the account before replying."
-              : "That email address does not look right — we have no other way to reply.")
-            : "Website and email are all we need. Everything else is optional.") +
+          '#55554F;">' +
+          "All optional — we already have your email. Anything you add here just means a sharper reply." +
           '</p></div>';
+
+      } else if (S.skipped) {
+        /* Skipping means no answers, and verdict() falls through to "Strong fit"
+           when nothing is set — showing that to somebody who answered nothing
+           would be telling them something we have not established. The lead was
+           already captured at the email step, so there is nothing left to send:
+           this is a confirmation, not a result. */
+        html = chrome("You're in", "Complete", "100%");
+        html += '<div style="' + (reduced ? "" : "animation:stepIn 0.5s " + EASE + " both;") + '">' +
+          '<h1 style="' + H1 + ' max-width:22ch;">That\'s you through.</h1>' +
+          '<p style="margin:24px 0 0; max-width:58ch; font-size:19px; line-height:1.65; color:#F7F7F5;">' +
+          'Josh has your email and reads every one himself. Expect a reply within a business day.</p>' +
+          '<p style="margin:20px 0 0; max-width:58ch; font-size:17px; line-height:1.7; color:#B5B5AD;">' +
+          'If you would rather he arrived knowing something about the account, the five questions ' +
+          'take under a minute and change what he can tell you.</p>' +
+          '<div style="margin-top:44px; display:flex; flex-wrap:wrap; gap:12px;">' +
+          '<button type="button" data-unskip style="background:' + VOLT + '; color:#0A0A0A; font-size:17px;' +
+          'font-family:inherit; font-weight:600; padding:18px 28px; border-radius:4px; border:none; cursor:pointer;">' +
+          'Answer them anyway</button>' +
+          '<a href="/learn" style="border:1px solid #55554F; color:#F7F7F5; font-size:17px;' +
+          'font-weight:600; padding:17px 28px; border-radius:4px;">Read something useful instead</a>' +
+          '</div></div>';
 
       } else {
         var v = verdict();
@@ -936,6 +959,15 @@
         capture();
         render();
       });
+      var skip = q("[data-skip]", root);
+      if (skip) skip.addEventListener("click", function () {
+        S.skipped = true; S.done = true; render();
+        root.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+      });
+      var unskip = q("[data-unskip]", root);
+      if (unskip) unskip.addEventListener("click", function () {
+        S.skipped = false; S.done = false; render();
+      });
       var back = q("[data-back]", root);
       if (back) back.addEventListener("click", function () {
         S.done = false;
@@ -953,7 +985,7 @@
       if (submit) submit.addEventListener("click", function () {
         qa("[data-field]", root).forEach(function (el) { S[el.dataset.field] = el.value; });
         S.tried = true;
-        if (S.site.trim() && /.+@.+\..+/.test(S.email)) S.done = true;
+        S.done = true;
         render();
         root.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
       });

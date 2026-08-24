@@ -151,19 +151,13 @@ module.exports = async (req, res) => {
     return res.status(200).json({ ok: true });
   }
 
-  /* Email is the only thing required of a partial, because a partial is fired
-     from the first step of /apply — before any question is asked — precisely so
-     that somebody who abandons midway is a lead rather than nothing.
-
-     A completed application is held to email and website: the website is what
-     makes the account readable before replying. Name, business and phone are
-     welcome but no longer gate the submission — four mandatory fields on top of
-     a five-question survey cost more applications than the data was worth. */
+  /* Email is the only requirement, on a first-step capture and on a completed
+     application alike. /apply captures the lead the moment an email is entered,
+     before a single question — everything after that is enrichment, and none of
+     it may block a submission. Four mandatory fields on top of a five-question
+     survey cost more applications than the data was ever worth. */
   if (!lead.email || !/.+@.+\..+/.test(lead.email)) {
     return res.status(400).json({ ok: false, error: 'email_required' });
-  }
-  if (lead.partial !== 'yes' && !lead.website) {
-    return res.status(400).json({ ok: false, error: 'website_required' });
   }
 
   try {
