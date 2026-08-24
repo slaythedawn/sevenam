@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client onboarding — Sevenam</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0A0A; --raised:#161613; --hair:#232320; --volt:#D8FF00; --volt-h:#CCFF00;
+    --paper:#F7F7F5; --body:#C9C9C2; --muted:#B5B5AD; --faint:#9A9A92;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Inter Tight',-apple-system,system-ui,sans-serif;background:var(--ink);
+    color:var(--paper);-webkit-font-smoothing:antialiased;line-height:1.55}
+  input,textarea,select,button{font-family:inherit;font-size:16px}
+  a{color:var(--volt);text-decoration:none}
+
+  .wrap{max-width:680px;margin:0 auto;padding:0 24px 96px}
+  header.top{border-bottom:1px solid var(--hair);margin-bottom:36px}
+  .bar{max-width:680px;margin:0 auto;padding:18px 24px;display:flex;align-items:flex-end;gap:7px}
+  .logo{font-size:21px;font-weight:600;letter-spacing:-.035em;color:#fff}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--volt);margin-bottom:6px}
+
+  .prog{position:sticky;top:0;z-index:10;background:var(--ink);padding:12px 0 16px;
+    border-bottom:1px solid var(--hair);margin-bottom:32px}
+  .prog-track{height:3px;background:var(--hair);border-radius:2px;overflow:hidden}
+  .prog-fill{height:100%;background:var(--volt);width:0;transition:width .3s ease}
+  .prog-label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:9px}
+
+  h1{font-size:30px;font-weight:600;letter-spacing:-.03em;margin:0 0 12px;line-height:1.2}
+  h2{font-size:23px;font-weight:600;letter-spacing:-.02em;margin:0 0 6px}
+  .lede{color:var(--body);margin:0 0 28px;font-size:16px}
+  .sec-why{color:var(--muted);font-size:14px;margin:0 0 26px;padding-left:12px;
+    border-left:2px solid var(--hair)}
+
+  .f{margin-bottom:24px}
+  label{display:block;font-weight:500;margin-bottom:5px;font-size:15px}
+  .why{color:var(--faint);font-size:13px;margin-bottom:9px;line-height:1.45}
+  .opt{color:var(--faint);font-weight:400;font-size:13px}
+  input[type=text],input[type=url],input[type=email],input[type=number],textarea,select{
+    width:100%;padding:11px 13px;background:var(--raised);border:1px solid var(--hair);
+    border-radius:7px;color:var(--paper);outline:none}
+  input:focus,textarea:focus,select:focus{border-color:var(--volt)}
+  input::placeholder,textarea::placeholder{color:#55554F}
+  textarea{min-height:88px;resize:vertical}
+  select{appearance:none;background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23B5B5AD' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 13px center;background-size:12px;padding-right:36px}
+  .row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+  .row .f{flex:1 1 180px;margin-bottom:0}
+  .chk{display:flex;align-items:flex-start;gap:9px;margin-bottom:10px;font-weight:400;font-size:15px}
+  .chk input{margin-top:4px;accent-color:var(--volt);width:16px;height:16px;flex-shrink:0}
+
+  .calc{background:var(--raised);border:1px solid var(--hair);border-radius:10px;padding:20px;margin:26px 0}
+  .calc h3{margin:0 0 4px;font-size:16px;font-weight:600}
+  .calc .sub{color:var(--faint);font-size:13px;margin:0 0 16px}
+  .calc-row{display:flex;justify-content:space-between;padding:7px 0;font-size:15px;
+    border-bottom:1px solid var(--hair)}
+  .calc-row:last-of-type{border-bottom:0}
+  .calc-row span:first-child{color:var(--body)}
+  .calc-row b{font-variant-numeric:tabular-nums}
+  .calc-row.key b{color:var(--volt);font-size:18px}
+  .calc-note{margin-top:14px;padding-top:14px;border-top:1px solid var(--hair);
+    color:var(--muted);font-size:13px;line-height:1.5}
+  .calc-empty{color:var(--faint);font-size:14px}
+
+  .nav{display:flex;gap:12px;align-items:center;margin-top:36px;padding-top:24px;
+    border-top:1px solid var(--hair);flex-wrap:wrap}
+  button{cursor:pointer;border-radius:8px;border:1px solid transparent;padding:12px 22px;font-weight:600}
+  .go{background:var(--volt);color:var(--ink)}
+  .go:hover{background:var(--volt-h)}
+  .back{background:transparent;color:var(--muted);border-color:var(--hair)}
+  .back:hover{color:var(--paper)}
+  .later{background:transparent;color:var(--faint);border:0;padding:12px 0;
+    font-weight:400;font-size:14px;text-decoration:underline;margin-left:auto}
+  .later:hover{color:var(--body)}
+
+  .saved{color:var(--faint);font-size:13px;margin-top:14px;min-height:18px}
+  .err{color:#FF6B5A;font-size:14px;margin-top:12px}
+  .callout{background:var(--raised);border:1px solid var(--hair);border-left:2px solid var(--volt);
+    border-radius:8px;padding:16px 18px;margin:20px 0;color:var(--body);font-size:15px}
+  .callout b{color:var(--paper)}
+  .callout ul{margin:10px 0 0;padding-left:20px}
+  .callout li{margin-bottom:5px}
+  code{background:var(--ink);border:1px solid var(--hair);border-radius:4px;
+    padding:2px 7px;font-size:14px;color:var(--volt)}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  section[hidden]{display:none}
+  .done{text-align:center;padding:60px 0}
+  .done .tick{width:52px;height:52px;border-radius:50%;background:var(--volt);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:26px;font-weight:700}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media (max-width:520px){h1{font-size:25px}.wrap{padding:0 18px 72px}.bar{padding:16px 18px}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="bar"><span class="logo">sevenam</span><span class="dot"></span></div></header>
+
+<div class="wrap">
+
+  <div class="prog" id="prog" hidden>
+    <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+    <div class="prog-label"><span id="progStep"></span><span id="progPct"></span></div>
+  </div>
+
+  <form id="form" novalidate>
+    <div class="hp"><label>Leave this empty<input type="text" name="company_url" tabindex="-1" autocomplete="off"></label></div>
+
+    <!-- 0 -->
+    <section data-step="0">
+      <h1>Let's get your account set up</h1>
+      <p class="lede">This takes about 15 minutes. Your answers save as you go, so you can stop and
+        come back to this same link whenever you like.</p>
+      <div class="callout">
+        <b>Worth having to hand:</b>
+        <ul>
+          <li>Your average order value and rough gross margin</li>
+          <li>Access to your Meta Business Manager</li>
+        </ul>
+        <p style="margin:12px 0 0">The numbers section matters most — it's how we work out what a
+        customer can cost you <b>before</b> we spend anything. If you don't know a figure exactly,
+        estimate it. An honest guess we know is a guess is far more useful than a confident wrong number.</p>
+      </div>
+      <div class="nav"><button type="button" class="go" data-next>Start</button></div>
+    </section>
+
+    <!-- 1 -->
+    <section data-step="1" hidden>
+      <h2>The business</h2>
+      <p class="sec-why">The basics, so everything after this is about you rather than a generic account.</p>
+      <div class="f"><label>Business name</label><input type="text" name="business_name" data-req></div>
+      <div class="f"><label>Website</label>
+        <p class="why">We read it as part of the audit.</p>
+        <input type="url" name="website" placeholder="https://" data-req></div>
+      <div class="f"><label>What do you sell, in one sentence?</label>
+        <p class="why">Everything downstream depends on getting this right.</p>
+        <textarea name="what_you_sell" data-req></textarea></div>
+      <div class="f"><label>How do you make money?</label>
+        <p class="why">This decides how we work out what a customer can cost.</p>
+        <select name="revenue_model" data-req>
+          <option value="">Choose one</option>
+          <option>One-off sale</option>
+          <option>Repeat purchase</option>
+          <option>Subscription</option>
+          <option>Leads that close offline</option>
+        </select></div>
+      <div class="f"><label>Who signs off on ad spend and creative?</label>
+        <p class="why">Unclear sign-off is the most common reason a launch stalls.</p>
+        <input type="text" name="decision_maker" data-req></div>
+      <div class="f"><label>Where do you sell?</label>
+        <p class="why">Countries, states, or a radius around a location.</p>
+        <input type="text" name="markets" data-req></div>
+      <div class="nav"><button type="button" class="back" data-back>Back</button><button type="button" class="go" data-next>Continue</button><button type="button" class="later" data-later>Finish later</button></div>
+    </section>
+
+    <!-- 2 -->
+    <section data-step="2" hidden>
+      <h2>The numbers</h2>
+      <p class="sec-why">The most important section. We never ask you to guess a target cost per
+        customer — we work it out from these, and show you the maths as you type.</p>
+      <div class="row">
+        <div class="f"><label>Average order value</label>
+          <p class="why">Or average deal size.</p>
+          <input type="number" name="aov" min="0" step="any" placeholder="$" data-req data-calc></div>
+        <div class="f"><label>Gross margin</label>
+          <p class="why">Revenue isn't money. Profit is.</p>
+          <input type="number" name="gross_margin" min="0" max="100" step="any" placeholder="%" data-req data-calc></div>
+      </div>
+      <div class="f" id="closeWrap" hidden><label>What share of leads become customers?</label>
+        <p class="why">Turns a cost per lead into a cost per customer.</p>
+        <input type="number" name="close_rate" min="0" max="100" step="any" placeholder="%" data-calc></div>
+      <div class="f"><label>Does a customer buy again? <span class="opt">Optional</span></label>
+        <p class="why">Roughly how many times in 12 months, on average.</p>
+        <input type="number" name="repeat_purchases" min="0" step="any" data-calc></div>
+      <div class="f"><label>How long can you wait to earn back what a customer costs?</label>
+        <p class="why">A cashflow limit, not a maths one — and usually what really caps spend.</p>
+        <select name="payback_window" data-req>
+          <option value="">Choose one</option>
+          <option>Immediately — the first sale must pay for itself</option>
+          <option>Within 30 days</option>
+          <option>Within 90 days</option>
+          <option>Longer than 90 days</option>
+        </select></div>
+      <div class="f"><label>What share of the profit on a sale would you spend to win it?</label>
+        <p class="why">Most answer somewhere between 30% and 50%.</p>
+        <input type="number" name="profit_share" min="1" max="100" step="any" placeholder="%" data-req data-calc></div>
+      <div class="row">
+        <div class="f"><label>Monthly ad budget</label>
+          <input type="number" name="monthly_budget" min="0" step="any" placeholder="$" data-req data-calc></div>
+        <div class="f"><label>Is that fixed?</label>
+          <select name="budget_flex" data-req>
+            <option value="">Choose one</option>
+            <option>Fixed</option>
+            <option>Will follow results</option>
+          </select></div>
+      </div>
+
+      <div class="calc" id="calc">
+        <h3>What this means</h3>
+        <p class="sub">Updates as you type. Nothing here is fixed — we'll confirm it with you in writing.</p>
+        <div id="calcOut"><p class="calc-empty">Fill in order value, margin and profit share to see the numbers.</p></div>
+      </div>
+
+      <div class="nav"><button type="button" class="back" data-back>Back</button><button type="button" class="go" data-next>Continue</button><button type="button" class="later" data-later>Finish later</button></div>
+    </section>
+
+    <!-- 3 -->
+    <section data-step="3" hidden>
+      <h2>The offer</h2>
+      <p class="sec-why">Most accounts leak after the click, not before it. This is where we look.</p>
+      <div class="f"><label>Where does the ad send people?</label>
+        <p class="why">A page URL, an app store listing, or a form.</p>
+        <input type="text" name="destination" data-req></div>
+      <div class="f"><label>What's the offer, exactly as a customer sees it?</label>
+        <p class="why">An ad can't outperform a weak offer.</p>
+        <textarea name="offer" data-req></textarea></div>
+      <div class="f"><label>Any discount, trial or guarantee? <span class="opt">Optional</span></label>
+        <p class="why">Often the biggest lever available.</p>
+        <textarea name="incentive"></textarea></div>
+      <div class="f"><label>What happens after someone converts?</label>
+        <p class="why">Who contacts them, how fast, and what they get. Slow follow-up wastes good leads.</p>
+        <textarea name="after_convert" data-req></textarea></div>
+      <div class="f"><label>What objection stops people buying?</label>
+        <p class="why">Usually the most productive thing an ad can address.</p>
+        <textarea name="main_objection" data-req></textarea></div>
+      <div class="nav"><button type="button" class="back" data-back>Back</button><button type="button" class="go" data-next>Continue</button><button type="button" class="later" data-later>Finish later</button></div>
+    </section>
+
+    <!-- 4 -->
+    <section data-step="4" hidden>
+      <h2>The customer</h2>
+      <p class="sec-why">Seeds both targeting and what the ads actually say.</p>
+      <div class="f"><label>Describe your best customer</label><textarea name="best_customer" data-req></textarea></div>
+      <div class="f"><label>Who is <em>not</em> a good customer? <span class="opt">Optional</span></label>
+        <p class="why">Helps us read a bad lead correctly rather than chasing more of them.</p>
+        <textarea name="not_customer"></textarea></div>
+      <div class="f"><label>What makes someone start looking?</label>
+        <p class="why">The trigger, and therefore the hook.</p>
+        <textarea name="trigger" data-req></textarea></div>
+      <div class="f"><label>Who else do they consider? <span class="opt">Optional</span></label>
+        <input type="text" name="competitors"></div>
+      <div class="f"><label>Anything customers say in their own words? <span class="opt">Optional</span></label>
+        <p class="why">Reviews, support tickets, sales calls. The best ad copy is transcribed, not written.</p>
+        <textarea name="customer_words"></textarea></div>
+      <div class="nav"><button type="button" class="back" data-back>Back</button><button type="button" class="go" data-next>Continue</button><button type="button" class="later" data-later>Finish later</button></div>
+    </section>
+
+    <!-- 5 -->
+    <section data-step="5" hidden>
+      <h2>What's been tried</h2>
+      <p class="sec-why">So we don't re-run an experiment you've already settled.</p>
+      <div class="f"><label>Have you run Meta ads before?</label>
+        <select name="ran_before" data-req>
+          <option value="">Choose one</option><option>No, never</option>
+          <option>Yes, currently running</option><option>Yes, but stopped</option>
+        </select></div>
+      <div class="f"><label>Roughly what did you spend, and what happened? <span class="opt">Optional</span></label>
+        <textarea name="past_spend_result"></textarea></div>
+      <div class="f"><label>What clearly worked, and what clearly didn't? <span class="opt">Optional</span></label>
+        <textarea name="what_worked"></textarea></div>
+      <div class="f"><label>What other channels are you running now?</label>
+        <p class="why">Meta will claim conversions Google also claims. Better to know upfront.</p>
+        <input type="text" name="other_channels" data-req></div>
+      <div class="f"><label>Is anyone else working in the ad account?</label>
+        <p class="why">Two people editing an account is how it stops learning.</p>
+        <input type="text" name="others_in_account" data-req></div>
+      <div class="nav"><button type="button" class="back" data-back>Back</button><button type="button" class="go" data-next>Continue</button><button type="button" class="later" data-later>Finish later</button></div>
+    </section>
+
+    <!-- 6 -->
+    <section data-step="6" hidden>
+      <h2>Assets</h2>
+      <p class="sec-why">Decides whether creative is a production job or an editing one.</p>
+      <div class="f"><label>What do you already have?</label>
+        <label class="chk"><input type="checkbox" name="asset_video" value="yes">Video footage</label>
+        <label class="chk"><input type="checkbox" name="asset_photo" value="yes">Photography</label>
+        <label class="chk"><input type="checkbox" name="asset_product" value="yes">Product shots</label>
+        <label class="chk"><input type="checkbox" name="asset_brand" value="yes">Brand guidelines, fonts, logos</label>
+      </div>
+      <div class="f"><label>Can you supply customer footage or testimonials?</label>
+        <p class="why">Usually the best-performing format, and the slowest to source — so we ask early.</p>
+        <select name="can_supply_ugc" data-req>
+          <option value="">Choose one</option><option>Yes, readily</option>
+          <option>Possibly, with notice</option><option>No</option>
+        </select></div>
+      <div class="f"><label>Who approves creative, and how long does that usually take?</label>
+        <p class="why">Approval speed is a real limit on how fast we can test.</p>
+        <input type="text" name="creative_approver" data-req></div>
+      <div class="nav"><button type="button" class="back" data-back>Back</button><button type="button" class="go" data-next>Continue</button><button type="button" class="later" data-later>Finish later</button></div>
+    </section>
+
+    <!-- 7 -->
+    <section data-step="7" hidden>
+      <h2>Constraints</h2>
+      <p class="sec-why">These change what can actually be built, so they're worth getting exactly right.</p>
+      <div class="f"><label>Does your advertising relate to any of these?</label>
+        <p class="why">Meta restricts targeting for these categories — it changes what we can build.</p>
+        <select name="special_category" data-req>
+          <option value="">Choose one</option><option>None of these</option>
+          <option>Housing or property</option><option>Employment or jobs</option>
+          <option>Credit or finance</option><option>Social issues, elections or politics</option>
+        </select></div>
+      <div class="f"><label>Any claims you're not allowed to make?</label>
+        <p class="why">Health, finance and similar. Getting this wrong risks the account, not just the ad.</p>
+        <textarea name="regulated_claims" data-req></textarea></div>
+      <div class="f"><label>Anything you never want said about the brand? <span class="opt">Optional</span></label>
+        <textarea name="never_say"></textarea></div>
+      <div class="f"><label>Seasonality, blackout periods, or capacity limits?</label>
+        <p class="why">Scaling into a month you can't service is worse than not scaling.</p>
+        <textarea name="seasonality" data-req></textarea></div>
+      <div class="f"><label>Is there a daily spend level we should never cross without asking?</label>
+        <input type="text" name="spend_ceiling" data-req></div>
+      <div class="nav"><button type="button" class="back" data-back>Back</button><button type="button" class="go" data-next>Continue</button><button type="button" class="later" data-later>Finish later</button></div>
+    </section>
+
+    <!-- 8 -->
+    <section data-step="8" hidden>
+      <h2>Measurement</h2>
+      <p class="sec-why">Without this, optimisation is guesswork.</p>
+      <div class="f"><label>Is a Meta pixel or Conversions API installed?</label>
+        <select name="pixel_installed" data-req>
+          <option value="">Choose one</option><option>Yes, both</option><option>Pixel only</option>
+          <option>Not sure</option><option>No</option><option>Not applicable — app install</option>
+        </select></div>
+      <div class="f"><label>Which action counts as success?</label>
+        <p class="why">Purchase, lead, booking, signup — the one that matters most.</p>
+        <input type="text" name="success_event" data-req></div>
+      <div class="f"><label>What's your source of truth for sales?</label>
+        <p class="why">Meta's numbers will disagree with yours. Better to agree now which one settles it.</p>
+        <input type="text" name="crm" placeholder="CRM, Shopify, spreadsheet…" data-req></div>
+      <div class="f"><label>Can you tell us later what a customer was actually worth? <span class="opt">Optional</span></label>
+        <select name="can_share_value"><option value="">Choose one</option>
+          <option>Yes</option><option>Maybe</option><option>No</option></select></div>
+      <div class="nav"><button type="button" class="back" data-back>Back</button><button type="button" class="go" data-next>Continue</button><button type="button" class="later" data-later>Finish later</button></div>
+    </section>
+
+    <!-- 9 -->
+    <section data-step="9" hidden>
+      <h2>Access</h2>
+      <p class="sec-why">The step that most often stalls, so here's exactly what to click.</p>
+      <div class="callout">
+        <p style="margin:0 0 12px"><b>We never ask for your password.</b> You grant partner access
+        through Meta Business Manager, and you can revoke it yourself at any time. Your account,
+        your pixel and your data history stay yours.</p>
+        <p style="margin:0 0 6px">In Business Manager, go to <b>Settings → Partners → Add partner</b>
+        and enter our Business Manager ID:</p>
+        <p style="margin:8px 0 12px"><code data-bm-id>Ask Josh for the Business Manager ID</code></p>
+        <p style="margin:0">Then grant access to:</p>
+        <ul>
+          <li>Ad account</li><li>Facebook Page</li><li>Instagram account</li>
+          <li>Pixel or dataset <em>(the one most often missed)</em></li>
+          <li>Product catalogue, if you sell products</li>
+          <li>App, if you're promoting one</li>
+        </ul>
+      </div>
+      <div class="f">
+        <label class="chk"><input type="checkbox" name="access_granted" value="yes">
+          I've granted partner access</label>
+        <p class="why">We'll verify it automatically and tell you if anything's missing — partial
+          access is normal, so don't worry about getting it perfect.</p>
+      </div>
+      <div class="f"><label>Your Business Manager ID <span class="opt">Optional</span></label>
+        <p class="why">Speeds up matching your account on our side.</p>
+        <input type="text" name="client_bm_id"></div>
+      <div class="nav"><button type="button" class="back" data-back>Back</button><button type="button" class="go" data-next>Continue</button><button type="button" class="later" data-later>Finish later</button></div>
+    </section>
+
+    <!-- 10 -->
+    <section data-step="10" hidden>
+      <h2>How we'll work together</h2>
+      <p class="sec-why">Last one.</p>
+      <div class="row">
+        <div class="f"><label>Your name</label><input type="text" name="contact_name" data-req></div>
+        <div class="f"><label>Email</label><input type="email" name="contact_email" data-req></div>
+      </div>
+      <div class="f"><label>Best channel for day-to-day</label>
+        <input type="text" name="contact_channel" placeholder="Email, WhatsApp, Slack…" data-req></div>
+      <div class="f"><label>How often do you want reporting?</label>
+        <select name="reporting_frequency" data-req>
+          <option value="">Choose one</option><option>Weekly</option><option>Fortnightly</option>
+          <option>Monthly</option><option>Only when something needs a decision</option>
+        </select></div>
+      <div class="f"><label>What do you want to approve before it goes live?</label>
+        <p class="why">Some clients want to see every ad, others just the plan. Either is fine.</p>
+        <select name="approval_preference" data-req>
+          <option value="">Choose one</option><option>Every ad before it runs</option>
+          <option>Budget changes and new campaigns</option>
+          <option>The plan only — then trust us to run it</option>
+        </select></div>
+      <div class="f"><label>What would make this obviously worth it in 90 days?</label>
+        <p class="why">In your words. We'll read it back at every review.</p>
+        <textarea name="success_90d" data-req></textarea></div>
+      <div class="nav"><button type="button" class="back" data-back>Back</button>
+        <button type="button" class="go" id="submitBtn" data-submit>Send it through</button></div>
+      <div class="err" id="err" hidden></div>
+    </section>
+
+    <!-- done -->
+    <section data-step="done" hidden>
+      <div class="done">
+        <div class="tick">&#10003;</div>
+        <h2 id="doneTitle">That's everything</h2>
+        <p class="lede" id="doneMsg">Josh will read this properly and come back to you with the
+          numbers confirmed in writing before anything is built or spent.</p>
+      </div>
+    </section>
+  </form>
+
+  <p class="saved" id="saved"></p>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var form=document.getElementById('form');
+  var secs=Array.prototype.slice.call(form.querySelectorAll('section[data-step]'));
+  var LAST=10;
+  var token=(new URLSearchParams(location.search).get('c')||'').replace(/[^A-Za-z0-9_-]/g,'').slice(0,64);
+  var KEY='sevenam-onboard-'+(token||'anon');
+  var step=0, sent=false;
+
+  var prog=document.getElementById('prog'),fill=document.getElementById('progFill'),
+      pStep=document.getElementById('progStep'),pPct=document.getElementById('progPct'),
+      saved=document.getElementById('saved'),err=document.getElementById('err');
+
+  /* ---- draft persistence -------------------------------------------------
+     Kept in the visitor's own browser, keyed by their link token. No account,
+     no login, no server round trip. Per-browser and per-device by nature, so
+     starting on a laptop and finishing on a phone will not carry across —
+     acceptable for a form of this length, where returning on the same device
+     is the common case. Every accessor is guarded: private windows and
+     blocked site data both throw rather than returning empty. */
+  function store(){ try{ return window.localStorage; }catch(e){ return null; } }
+  function save(){
+    var s=store(); if(!s) return;
+    var d={step:step,at:Date.now(),v:{}};
+    collect(d.v);
+    try{ s.setItem(KEY,JSON.stringify(d)); note('Saved'); }catch(e){}
+  }
+  function restore(){
+    var s=store(); if(!s) return false;
+    var raw; try{ raw=s.getItem(KEY); }catch(e){ return false; }
+    if(!raw) return false;
+    var d; try{ d=JSON.parse(raw); }catch(e){ return false; }
+    if(!d||!d.v) return false;
+    Object.keys(d.v).forEach(function(k){
+      var el=form.elements[k]; if(!el) return;
+      if(el.type==='checkbox'){ el.checked=d.v[k]==='yes'; } else { el.value=d.v[k]; }
+    });
+    step=Math.min(d.step||0,LAST);
+    return true;
+  }
+  function wipe(){ var s=store(); if(!s) return; try{ s.removeItem(KEY); }catch(e){} }
+
+  function collect(into){
+    Array.prototype.forEach.call(form.elements,function(el){
+      if(!el.name||el.name==='company_url') return;
+      if(el.type==='checkbox'){ if(el.checked) into[el.name]='yes'; }
+      else if(el.value) into[el.name]=el.value;
+    });
+    return into;
+  }
+
+  var noteT;
+  function note(t){ saved.textContent=t; clearTimeout(noteT);
+    noteT=setTimeout(function(){ saved.textContent=''; },1800); }
+
+  /* ---- navigation ---- */
+  function show(n){
+    step=n;
+    secs.forEach(function(s){ s.hidden = s.getAttribute('data-step')!==String(n); });
+    var on = n>0 && n<=LAST;
+    prog.hidden=!on;
+    if(on){
+      var pct=Math.round(n/LAST*100);
+      fill.style.width=pct+'%';
+      pStep.textContent='Section '+n+' of '+LAST;
+      pPct.textContent=pct+'%';
+    }
+    window.scrollTo(0,0);
+  }
+  function done(msg,title){
+    secs.forEach(function(s){ s.hidden = s.getAttribute('data-step')!=='done'; });
+    prog.hidden=true;
+    if(title) document.getElementById('doneTitle').textContent=title;
+    if(msg) document.getElementById('doneMsg').textContent=msg;
+    window.scrollTo(0,0);
+  }
+
+  function validate(n){
+    var sec=secs[n]; if(!sec) return true;
+    var bad=null;
+    Array.prototype.forEach.call(sec.querySelectorAll('[data-req]'),function(el){
+      if(el.offsetParent===null && el.type!=='hidden') return; /* hidden branch */
+      var ok = el.type==='checkbox' ? el.checked : String(el.value||'').trim()!=='';
+      if(ok && el.type==='email') ok=/.+@.+\..+/.test(el.value);
+      el.style.borderColor = ok ? '' : '#FF6B5A';
+      if(!ok && !bad) bad=el;
+    });
+    if(bad){ bad.focus(); note('Please fill in the highlighted fields'); return false; }
+    return true;
+  }
+
+  form.addEventListener('click',function(e){
+    var t=e.target;
+    if(t.hasAttribute('data-next')){ if(!validate(step)) return; save(); show(step+1); }
+    else if(t.hasAttribute('data-back')){ save(); show(Math.max(0,step-1)); }
+    else if(t.hasAttribute('data-later')){ save(); submit(true); }
+    else if(t.hasAttribute('data-submit')){ if(!validate(step)) return; submit(false); }
+  });
+
+  form.addEventListener('input',function(){ save(); recalc(); });
+  form.addEventListener('change',function(e){
+    save(); recalc();
+    if(e.target.name==='revenue_model'){
+      document.getElementById('closeWrap').hidden = e.target.value!=='Leads that close offline';
+    }
+  });
+
+  /* ---- the derivation ----------------------------------------------------
+     Shown live so the client watches their own target compute, rather than
+     being handed a number to take on trust. Mirrors the maths in
+     templates/intake-form.md — change both together. */
+  function num(n){ var v=parseFloat((form.elements[n]||{}).value); return isFinite(v)?v:0; }
+  function money(v){ return '$'+v.toLocaleString(undefined,{maximumFractionDigits:0}); }
+  function recalc(){
+    var out=document.getElementById('calcOut');
+    var aov=num('aov'), margin=num('gross_margin')/100, share=num('profit_share')/100;
+    if(!(aov>0&&margin>0&&share>0)){
+      out.innerHTML='<p class="calc-empty">Fill in order value, margin and profit share to see the numbers.</p>';
+      return;
+    }
+    var contribution=aov*margin;
+    var repeat=num('repeat_purchases');
+    var lifetime=repeat>1?contribution*repeat:contribution;
+    var target=contribution*share;
+    var roas=1/margin;
+    var isLead=(form.elements.revenue_model||{}).value==='Leads that close offline';
+    var close=num('close_rate')/100;
+
+    var h='';
+    h+=row('Profit per sale',money(contribution));
+    if(repeat>1) h+=row('Profit over 12 months',money(lifetime));
+    h+=row('Break-even — above this you lose money',money(contribution));
+    h+=row('Target cost per customer',money(target),true);
+    if(isLead&&close>0){
+      h+=row('Which means a lead is worth',money(contribution*close));
+      h+=row('Target cost per lead',money(target*close),true);
+    }
+    h+=row('Break-even ROAS',roas.toFixed(2)+'x');
+
+    /* Volume check: Meta needs roughly 50 optimisation events per ad set per
+       week to leave the learning phase. Stated neutrally — it is a structural
+       conversation, not a verdict on the client. */
+    var budget=num('monthly_budget');
+    var optCost=(isLead&&close>0)?target*close:target;
+    if(budget>0&&optCost>0){
+      var perWeek=(budget/optCost)/4.33;
+      var n=perWeek<10?perWeek.toFixed(1):Math.round(perWeek);
+      h+='<p class="calc-note">At this budget and target that’s roughly <b>'+n+
+        ' '+(isLead&&close>0?'leads':'customers')+' a week</b>. Meta needs around 50 conversions a week per ad set to optimise '+
+        'reliably, so '+(perWeek<50
+          ? 'we’d likely optimise to an earlier step in your funnel and keep the structure tight. Worth a conversation.'
+          : 'there’s comfortable room to test properly.')+'</p>';
+    }
+    out.innerHTML=h;
+  }
+  function row(label,val,key){
+    return '<div class="calc-row'+(key?' key':'')+'"><span>'+label+'</span><b>'+val+'</b></div>';
+  }
+
+  /* ---- submit ---- */
+  function submit(partial){
+    if(sent) return;
+    var btn=document.getElementById('submitBtn');
+    err.hidden=true;
+    if(!partial&&btn){ btn.disabled=true; btn.textContent='Sending…'; }
+
+    var data=collect({});
+    data.token=token;
+    data.partial=partial?'yes':'no';
+    data.section_reached=String(step);
+    data.page=location.pathname+location.search;
+    var hp=form.elements.company_url; if(hp&&hp.value) data.company_url=hp.value;
+
+    var body=new URLSearchParams();
+    Object.keys(data).forEach(function(k){ body.append(k,data[k]); });
+
+    /* Form-encoded on purpose: keeps this a "simple" CORS request so the
+       browser skips the preflight. Same reasoning as /api/lead. */
+    fetch('/api/onboard',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:body.toString()})
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok,j:j}; }); })
+      .then(function(r){
+        if(!r.ok) throw new Error((r.j&&r.j.error)||'failed');
+        sent=true;
+        if(partial){
+          done('Saved. Come back to this same link whenever you’re ready and your answers '+
+               'will still be here — Josh will follow up in the meantime.','Progress saved');
+        } else {
+          wipe();
+          done();
+        }
+      })
+      .catch(function(){
+        if(btn){ btn.disabled=false; btn.textContent='Send it through'; }
+        err.hidden=false;
+        err.textContent='That didn’t go through. Your answers are still saved here — '+
+          'please try again in a moment.';
+      });
+  }
+
+  /* ---- boot ---- */
+  if(restore()&&step>0){ note('Picked up where you left off'); }
+  var rm=form.elements.revenue_model;
+  if(rm) document.getElementById('closeWrap').hidden = rm.value!=='Leads that close offline';
+  recalc();
+  show(step);
+})();
+</script>
+</body>
+</html>

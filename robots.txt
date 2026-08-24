@@ -7,6 +7,9 @@ Disallow: /*.json$
 Disallow: /support.js
 Disallow: /image-slot.js
 
+# Client onboarding intake — reached only by a private per-client link
+Disallow: /onboard
+
 # AI crawlers: everything here is published deliberately
 User-agent: GPTBot
 Allow: /
