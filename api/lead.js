@@ -54,7 +54,7 @@ const FIELDS = [
   ['name', 'Name'], ['company', 'Company'], ['email', 'Email'], ['phone', 'Phone'],
   ['website', 'Website'], ['spend', 'Monthly spend'], ['who', 'Who runs it'],
   ['problems', 'Problems'], ['operator', 'Operator'], ['category', 'Business type'],
-  ['verdict', 'Recommendation shown'], ['notes', 'Notes'],
+  ['verdict', 'Recommendation shown'], ['notes', 'Notes'], ['partial', 'Partial'],
   /* Where the visit started, not where the form is — see recordFirstTouch
      in site.js. Without these every lead reported /apply and said nothing
      about which page earned it. */
@@ -92,7 +92,8 @@ function htmlOf(lead) {
 async function sendEmail(lead) {
   const to = process.env.LEAD_TO;
   const from = process.env.LEAD_FROM || 'Sevenam <onboarding@resend.dev>';
-  const who = lead.company || lead.name || 'new enquiry';
+  const who = lead.company || lead.name || lead.email || 'new enquiry';
+  const tag = lead.partial === 'yes' ? 'Enquiry started' : 'Application';
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -105,7 +106,7 @@ async function sendEmail(lead) {
       to: [to],
       /* So a reply in the mail client goes to the applicant, not to Resend. */
       reply_to: lead.email || undefined,
-      subject: 'Application — ' + who,
+      subject: tag + ' — ' + who,
       text: textOf(lead),
       html: htmlOf(lead),
     }),
@@ -138,28 +139,32 @@ module.exports = async (req, res) => {
     return res.status(413).json({ ok: false, error: 'too_large' });
   }
 
-  /* A field no human sees and no human fills in. Bots fill in everything. */
-  if (lead.company_url) return res.status(200).json({ ok: true });
+  /* Logged FIRST, before any check that could discard this. The honeypot used to
+     run above this line, so a trapped submission returned 200 and left no trace
+     anywhere — the visitor saw a thank-you and the application was gone. Nothing
+     is dropped without a log line. */
+  console.log('lead:', JSON.stringify(lead));
 
+  /* A field no human sees and no human fills in. Bots fill in everything. */
+  if (lead.company_url) {
+    console.log('lead: honeypot tripped, dropped');
+    return res.status(200).json({ ok: true });
+  }
+
+  /* Email is the only thing required of a partial, because a partial is fired
+     from the first step of /apply — before any question is asked — precisely so
+     that somebody who abandons midway is a lead rather than nothing.
+
+     A completed application is held to email and website: the website is what
+     makes the account readable before replying. Name, business and phone are
+     welcome but no longer gate the submission — four mandatory fields on top of
+     a five-question survey cost more applications than the data was worth. */
   if (!lead.email || !/.+@.+\..+/.test(lead.email)) {
     return res.status(400).json({ ok: false, error: 'email_required' });
   }
-  if (!lead.name) {
-    return res.status(400).json({ ok: false, error: 'name_required' });
+  if (lead.partial !== 'yes' && !lead.website) {
+    return res.status(400).json({ ok: false, error: 'website_required' });
   }
-  if (!lead.company) {
-    return res.status(400).json({ ok: false, error: 'company_required' });
-  }
-  /* Digits only, so +61, spaces and brackets all pass. Eight is the shortest
-     real Australian number; anything under it is a keyboard mash. */
-  if (String(lead.phone || '').replace(/[^0-9]/g, '').length < 8) {
-    return res.status(400).json({ ok: false, error: 'phone_required' });
-  }
-
-  /* Logged before any delivery attempt, so an application is recoverable from
-     the Vercel runtime logs even when delivery is unconfigured or the provider
-     is down. It is the applicant's own contact details, on Josh's own project. */
-  console.log('lead:', JSON.stringify(lead));
 
   try {
     if (process.env.RESEND_API_KEY && process.env.LEAD_TO) {

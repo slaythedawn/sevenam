@@ -628,9 +628,13 @@
       name: "", company: "", site: "", email: "", phone: "", note: "",
       /* hp is the honeypot: hidden from people, irresistible to bots. */
       hp: "",
+      /* The email step comes first and posts on its own, so somebody who
+         abandons at question three is a lead rather than nothing. Before this,
+         five questions stood between a visitor and any data capture at all. */
+      emailed: false, emailTried: false,
       tried: false, done: false, sent: false, sending: false, failed: false
     };
-    var TOTAL = QUESTIONS.length + 1;
+    var TOTAL = QUESTIONS.length + 2;
 
     function verdict() {
       var a = S.answers, p = S.problems;
@@ -673,6 +677,12 @@
     var LINK_BTN = "background:none; border:none; color:#B5B5AD; font-size:15px; font-weight:500;" +
       "padding:12px 0; cursor:pointer; font-family:inherit; text-decoration:underline;";
     var STEP_IN = reduced ? "" : "animation:stepIn 0.45s " + EASE + " both;";
+    /* Named so no browser autofill heuristic recognises it. A honeypot that
+       autofill populates would silently discard real applications. Rendered on
+       both posting steps, since the email step now posts on its own. */
+    var HONEYPOT = '<div aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;">' +
+      '<input type="text" tabindex="-1" autocomplete="off" data-field="hp" name="hp-no-autofill">' +
+      '</div>';
 
     function chrome(stepLabel, stepCount, pct) {
       return '<div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:14px;">' +
@@ -685,17 +695,40 @@
     }
 
     function render() {
-      var onQuestion = S.step < QUESTIONS.length && !S.done;
-      var onDetails = S.step === QUESTIONS.length && !S.done;
-      var question = QUESTIONS[S.step];
       var emailOk = /.+@.+\..+/.test(S.email);
-      var phoneOk = (S.phone || "").replace(/[^0-9]/g, "").length >= 8;
-      var ready = S.name.trim() && S.company.trim() && emailOk && phoneOk;
+      var siteOk = (S.site || "").trim().length > 0;
+      var onEmail = !S.emailed && !S.done;
+      var onQuestion = S.emailed && S.step < QUESTIONS.length && !S.done;
+      var onDetails = S.emailed && S.step === QUESTIONS.length && !S.done;
+      var question = QUESTIONS[S.step];
+      var ready = siteOk && emailOk;
       var html;
 
-      if (onQuestion) {
-        html = chrome(question.label, "Step " + (S.step + 1) + " of " + TOTAL,
-          Math.round((S.step / TOTAL) * 100) + "%");
+      if (onEmail) {
+        html = chrome("Get started", "Step 1 of " + TOTAL, Math.round((1 / TOTAL) * 100) + "%");
+        html += '<div style="' + STEP_IN + '">' +
+          '<h1 style="' + H1 + ' max-width:20ch;">Give us your email and we\'ll get started.</h1>' +
+          '<p style="margin:20px 0 0; max-width:56ch; font-size:17px; line-height:1.7; color:#B5B5AD;">' +
+          'Five short questions after this, then a straight read on which product fits \u2014 or whether none of them do.</p>' +
+          '<div style="margin-top:44px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;">' +
+          field("email", "Email", "email", "you@yourstore.com.au") +
+          field("name", "First name", "text", "Jordan", true) +
+          '</div>' + HONEYPOT +
+          '<div style="margin-top:36px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">' +
+          '<button type="button" data-capture style="background:' + VOLT + ';' +
+          'color:#0A0A0A; border:none; font-family:inherit; font-size:17px;' +
+          'font-weight:600; padding:18px 28px; border-radius:4px; cursor:pointer;">Start</button>' +
+          '</div>' +
+          '<p style="margin:22px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:' +
+          (S.emailTried && !emailOk ? "#D8FF00" : "#55554F") + ';">' +
+          (S.emailTried && !emailOk
+            ? "That email address does not look right \u2014 we have no other way to reply."
+            : "One reply from a person. No list, no sequence, no sharing.") +
+          '</p></div>';
+
+      } else if (onQuestion) {
+        html = chrome(question.label, "Step " + (S.step + 2) + " of " + TOTAL,
+          Math.round(((S.step + 1) / TOTAL) * 100) + "%");
         html += '<div style="' + STEP_IN + '">' +
           '<h1 style="' + H1 + '">' + esc(question.q) + '</h1>' +
           '<p style="margin:20px 0 0; max-width:56ch; font-size:17px; line-height:1.7; color:#B5B5AD;">' + esc(question.helper) + '</p>' +
@@ -718,28 +751,23 @@
           html += '<button type="button" data-next style="background:' + VOLT + '; color:#0A0A0A; border:none;' +
             'font-family:inherit; font-size:16px; font-weight:600; padding:16px 26px; border-radius:4px; cursor:pointer;">Continue</button>';
         }
-        if (S.step > 0) html += '<button type="button" data-back style="' + LINK_BTN + '">Back</button>';
+        html += '<button type="button" data-back style="' + LINK_BTN + '">Back</button>';
         html += '</div></div>';
 
       } else if (onDetails) {
-        html = chrome("Your details", "Step " + (S.step + 1) + " of " + TOTAL,
-          Math.round((S.step / TOTAL) * 100) + "%");
+        html = chrome("Your details", "Step " + (S.step + 2) + " of " + TOTAL,
+          Math.round(((S.step + 1) / TOTAL) * 100) + "%");
         html += '<div style="' + STEP_IN + '">' +
           '<h1 style="' + H1 + ' max-width:22ch;">Where do we send the answer?</h1>' +
           '<p style="margin:20px 0 0; max-width:56ch; font-size:17px; line-height:1.7; color:#B5B5AD;">One reply within a business day, from a person, with a straight read on whether this fits. No sequence, no newsletter, no call booked without asking.</p>' +
           '<div style="margin-top:44px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;">' +
-          field("name", "Your name", "text", "Jordan Reid") +
-          field("company", "Business", "text", "Business name") +
-          field("site", "Website", "text", "yourstore.com.au", true) +
+          field("site", "Website", "text", "yourstore.com.au") +
           field("email", "Email", "email", "you@yourstore.com.au") +
-          field("phone", "Phone", "tel", "04xx xxx xxx") +
+          field("company", "Business", "text", "Business name", true) +
+          field("name", "Your name", "text", "Jordan Reid", true) +
+          field("phone", "Phone", "tel", "04xx xxx xxx", true) +
           '</div>' +
-          /* Named so no browser autofill heuristic recognises it. A honeypot that
-             autofill populates would silently discard real applications. */
-          '<div aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;">' +
-          '<label>Leave this field empty<input type="text" tabindex="-1" autocomplete="off" ' +
-          'data-field="hp" name="hp-no-autofill" value="' + esc(S.hp) + '"></label>' +
-          '</div>' +
+          HONEYPOT +
           '<label style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">' +
           '<span style="' + LABEL + '">Anything we should know <span style="color:#55554F; font-weight:500; letter-spacing:0; text-transform:none;">optional</span></span>' +
           '<textarea rows="4" data-field="note" placeholder="Contract dates, who else is involved, what you\'ve already tried." ' +
@@ -759,11 +787,9 @@
           '<p style="margin:22px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:' +
           (S.tried && !ready ? "#D8FF00" : "#55554F") + ';">' +
           (S.tried && !ready
-            ? (!S.name.trim() ? "Add your name and we can send you something."
-              : !S.company.trim() ? "Which business is this for?"
-              : !emailOk ? "That email address does not look right — we have no other way to reply."
-              : "Add a phone number Josh can reach you on.")
-            : "Name, business, email and phone. We use them to reply once — no list, no sequence, no sharing.") +
+            ? (!siteOk ? "We need the website to read the account before replying."
+              : "That email address does not look right — we have no other way to reply.")
+            : "Website and email are all we need. Everything else is optional.") +
           '</p></div>';
 
       } else {
@@ -825,6 +851,30 @@
       render();
     }
 
+    /* Fired the moment we have an email, before any question is asked. Somebody
+       who abandons at question three is then still a lead rather than nothing,
+       which is the entire reason the email step comes first.
+
+       Deliberately fire-and-forget: a failed capture must never block the person
+       from continuing, and the full submit at the end carries everything anyway.
+       Marked partial so a half-finished enquiry is never mistaken for a
+       completed one. */
+    function capture() {
+      var payload = new URLSearchParams({
+        partial: "yes", email: S.email, name: S.name,
+        page: location.href,
+        landing: firstTouch().landing || "",
+        referrer: firstTouch().referrer || "",
+        utm: firstTouch().utm || "",
+        company_url: S.hp
+      });
+      fetch(LEAD_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payload.toString()
+      }).catch(function () {});
+    }
+
     function send(btn, v) {
       if (S.sent || S.sending) return;
       S.sending = true;
@@ -832,7 +882,7 @@
 
       var payload = new URLSearchParams({
         name: S.name, company: S.company, website: S.site, email: S.email,
-        phone: S.phone, notes: S.note, verdict: v.tag,
+        phone: S.phone, notes: S.note, verdict: v.tag, partial: "no",
         spend: labelFor("spend", S.answers.spend),
         who: labelFor("who", S.answers.who),
         problems: S.problems.map(function (x) { return labelFor("problems", x); }).join(", "),
@@ -877,9 +927,20 @@
       });
       var next = q("[data-next]", root);
       if (next) next.addEventListener("click", function () { S.step += 1; render(); });
+      var capBtn = q("[data-capture]", root);
+      if (capBtn) capBtn.addEventListener("click", function () {
+        qa("[data-field]", root).forEach(function (el) { S[el.dataset.field] = el.value; });
+        S.emailTried = true;
+        if (!/.+@.+\..+/.test(S.email)) { render(); return; }
+        S.emailed = true;
+        capture();
+        render();
+      });
       var back = q("[data-back]", root);
       if (back) back.addEventListener("click", function () {
-        S.step = Math.max(0, S.step - 1); S.done = false; render();
+        S.done = false;
+        if (S.step === 0) S.emailed = false; else S.step -= 1;
+        render();
       });
       qa("[data-field]", root).forEach(function (el) {
         /* Autofill can land before this runs and fires no event, so whatever is
@@ -892,8 +953,7 @@
       if (submit) submit.addEventListener("click", function () {
         qa("[data-field]", root).forEach(function (el) { S[el.dataset.field] = el.value; });
         S.tried = true;
-        if (S.name.trim() && S.company.trim() && /.+@.+\..+/.test(S.email)
-            && (S.phone || "").replace(/[^0-9]/g, "").length >= 8) S.done = true;
+        if (S.site.trim() && /.+@.+\..+/.test(S.email)) S.done = true;
         render();
         root.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
       });
