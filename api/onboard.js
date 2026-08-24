@@ -277,8 +277,28 @@ async function sendWebhook(d) {
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
 
+  /* GET is a health check, not an error. Twice now, time has gone into
+     "is the key reaching production" and "am I looking at a stale build" —
+     both answerable from a browser, so they should be.
+
+     It reports which delivery route the running build would take and which
+     commit is serving. Never a variable name, never a value, never the from
+     address: only whether delivery is wired, which leaks nothing an attacker
+     can use and saves a dashboard trip every time. */
+  if (req.method === 'GET') {
+    const route = (process.env.RESEND_API_KEY && (process.env.ONBOARD_TO || process.env.LEAD_TO))
+      ? 'email'
+      : (process.env.ONBOARD_WEBHOOK || process.env.LEAD_WEBHOOK) ? 'webhook' : 'none';
+    return res.status(200).json({
+      ok: true,
+      delivery: route,
+      ready: route !== 'none',
+      build: (process.env.VERCEL_GIT_COMMIT_SHA || 'unknown').slice(0, 7),
+    });
+  }
+
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
+    res.setHeader('Allow', 'GET, POST');
     return res.status(405).json({ ok: false, error: 'method_not_allowed' });
   }
 
