@@ -55,6 +55,7 @@ const FIELDS = [
   ['website', 'Website'], ['spend', 'Monthly spend'], ['who', 'Who runs it'],
   ['problems', 'Problems'], ['operator', 'Operator'], ['category', 'Business type'],
   ['verdict', 'Recommendation shown'], ['notes', 'Notes'], ['partial', 'Partial'],
+  ['abandoned', 'Abandoned'], ['step_reached', 'Step reached'], ['step_label', 'Stopped at'],
   /* Where the visit started, not where the form is — see recordFirstTouch
      in site.js. Without these every lead reported /apply and said nothing
      about which page earned it. */
@@ -93,7 +94,9 @@ async function sendEmail(lead) {
   const to = process.env.LEAD_TO;
   const from = process.env.LEAD_FROM || 'Sevenam <onboarding@resend.dev>';
   const who = lead.company || lead.name || lead.email || 'new enquiry';
-  const tag = lead.partial === 'yes' ? 'Enquiry started' : 'Application';
+  const tag = lead.abandoned === 'yes'
+    ? 'Abandoned — ' + (lead.step_label || 'unknown step')
+    : lead.partial === 'yes' ? 'Enquiry started' : 'Application';
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',

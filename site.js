@@ -933,6 +933,42 @@
       });
     }
 
+    /* Where somebody stopped, sent once as the tab goes away.
+
+       navigator.sendBeacon rather than fetch: the browser commits to delivering
+       a beacon during unload, where an ordinary request is routinely cancelled
+       mid-flight — which would lose precisely the people this is measuring.
+       visibilitychange and pagehide rather than beforeunload, which mobile
+       Safari and Chrome on Android largely ignore.
+
+       Only fires for somebody who started and did not finish. A completed
+       application and a deliberate skip are both endings, not drop-offs. */
+    var beaconSent = false;
+    function beaconDropOff() {
+      if (beaconSent || !S.emailed || S.sent || S.skipped) return;
+      if (!navigator.sendBeacon) return;
+      beaconSent = true;
+      var label = S.step < QUESTIONS.length
+        ? "Question " + (S.step + 1) + " — " + QUESTIONS[S.step].label
+        : "Your details";
+      var body = new URLSearchParams({
+        partial: "yes", abandoned: "yes",
+        step_reached: String(S.step + 2), step_label: label,
+        email: S.email, name: S.name, page: location.href,
+        landing: firstTouch().landing || "",
+        referrer: firstTouch().referrer || "",
+        utm: firstTouch().utm || ""
+      }).toString();
+      try {
+        navigator.sendBeacon(LEAD_ENDPOINT,
+          new Blob([body], { type: "application/x-www-form-urlencoded" }));
+      } catch (e) { /* nothing to recover: the tab is going */ }
+    }
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "hidden") beaconDropOff();
+    });
+    window.addEventListener("pagehide", beaconDropOff);
+
     function wire() {
       var question = QUESTIONS[S.step];
       qa("[data-pick]", root).forEach(function (btn) {

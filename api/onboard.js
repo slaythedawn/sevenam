@@ -105,7 +105,7 @@ const SECTIONS = [
 
 const META = [['token', 'Token'], ['partial', 'Partial'],
   ['section_reached', 'Reached section'], ['page', 'Submitted from'],
-  ['suspected_bot', 'Flagged']];
+  ['abandoned', 'Abandoned'], ['suspected_bot', 'Flagged']];
 
 /* The same derivation the form shows the client, recomputed here so the
    delivered intake carries the numbers rather than depending on what the
@@ -261,7 +261,9 @@ async function sendEmail(d) {
   const to = process.env.ONBOARD_TO || process.env.LEAD_TO;
   const from = process.env.LEAD_FROM || 'Sevenam <onboarding@resend.dev>';
   const who = d.business_name || d.contact_name || 'new client';
-  const tag = d.partial === 'yes' ? 'Onboarding (unfinished)' : 'Onboarding';
+  const tag = d.abandoned === 'yes'
+    ? 'Onboarding abandoned at section ' + (d.section_reached || '?')
+    : d.partial === 'yes' ? 'Onboarding (unfinished)' : 'Onboarding';
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',

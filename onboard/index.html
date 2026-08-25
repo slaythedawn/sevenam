@@ -618,6 +618,37 @@
       });
   }
 
+  /* ---- drop-off ----------------------------------------------------------
+     "Finish later" already reports where somebody stopped, but only for the
+     people who press it. Most abandonment is silent: the tab closes at
+     section 2 because they went to look up their gross margin and did not
+     come back. Without this, that section looks identical to one nobody ever
+     reached.
+
+     sendBeacon rather than fetch, because an ordinary request is cancelled
+     during unload — losing exactly the people being measured. Fires once, only
+     for somebody who started and has not submitted. */
+  var beaconSent = false;
+  function beaconDropOff(){
+    if(beaconSent || sent || step===0) return;
+    if(!navigator.sendBeacon) return;
+    beaconSent=true;
+    var d=collect({});
+    d.token=token; d.partial='yes'; d.abandoned='yes';
+    d.section_reached=String(step);
+    d.page=location.pathname+location.search;
+    var body=new URLSearchParams();
+    Object.keys(d).forEach(function(k){ body.append(k,d[k]); });
+    try{
+      navigator.sendBeacon('/api/onboard',
+        new Blob([body.toString()],{type:'application/x-www-form-urlencoded'}));
+    }catch(e){}
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='hidden') beaconDropOff();
+  });
+  window.addEventListener('pagehide',beaconDropOff);
+
   /* ---- boot ---- */
   if(restore()&&step>0){ note('Picked up where you left off'); }
   var rm=form.elements.revenue_model;
