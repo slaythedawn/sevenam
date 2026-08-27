@@ -49,16 +49,28 @@ To fix, in Blotato:
 **Decided 27 Aug 2026: every LinkedIn slot goes to the personal profile.** The page stays
 connected and correct for anyone who looks Sevenam up, and carries no scheduled posts.
 
-Two reasons, in order. **The page has no followers**, so a post to it reaches nobody while
-costing the same to write and approve. And the voice spec in section 6 is first person —
-Josh's own decisions, his own concessions — which is personal-profile writing anyway.
+Two reasons, in order. **The personal profile has 5,494 followers and the page has
+roughly none** (27 Aug 2026), so a post to the page reaches nobody while costing the same
+to write and approve. And the voice spec in section 6 is first person — Josh's own
+decisions, his own concessions — which is personal-profile writing anyway.
 
-The first reason expires if the page ever builds an audience; the second does not.
-Reconnecting the page does not reopen this. If it ever changes, it changes here first,
-and the week plan grows a channel column at the same time.
+The audience gap would have to close a long way before the first reason expires, and the
+second does not expire at all. Reconnecting the page does not reopen this. If it ever
+changes, it changes here first, and the week plan grows a channel column at the same time.
 
-Same on X: everything goes to @girlboyrobot, the only connected account, posting as a
-person rather than as a brand.
+Same on X: everything goes to @girlboyrobot, posting as a person rather than as a brand.
+
+### Audience, 27 Aug 2026
+
+| Channel | Followers | Note |
+|---|---|---|
+| LinkedIn, Josh Peacock | 5,494 | 500+ connections, 197 profile views. The main lead channel |
+| X, @girlboyrobot | 530 | Following 1,900. The ratio is worth fixing |
+| LinkedIn, Sevenam page | ~0 | Not connected to Blotato, carries no posts |
+
+LinkedIn is roughly ten times X and is where the buyers are. Weight effort accordingly:
+the six LinkedIn slots matter more than the ten to fourteen X slots, even though X is
+more of them.
 
 ### Before the first real post
 
@@ -403,7 +415,20 @@ the daily Routine reminds you on Mondays.
 - [ ] Reconnect LinkedIn in Blotato with the organisation scope, so the company page
       appears as a subaccount. Until then everything posts to the personal profile
 - [ ] LinkedIn headline, about section, featured section and banner updated
-- [ ] X bio, pinned post and header updated. The handle is @girlboyrobot, not a Sevenam one
+- [ ] **X bio and pinned post rewritten. This is a blocker, not a polish item.** As of
+      27 Aug 2026 the bio reads "Building the smartest AI marketing community | Ex-CMO
+      (Netflix, McDonald's) sharing daily strategies | 10k+ marketers already learning",
+      under a "Commentary account" label, with an emoji. None of those claims is in
+      `state/truth-file.md`, none appears on sevenam.com.au, and the positioning is a
+      different business entirely. The pinned post is emoji-and-hashtag styled and breaks
+      most of the voice spec.
+
+      Every X reply drives traffic to that profile. Guardrail 5 governs what a post may
+      claim; a bio is a claim surface too, and this one is making claims the truth file
+      cannot support on the channel where strangers form their first impression. Fix it
+      before the first real post, not after
+- [ ] Decide whether "Ex-CMO (Netflix, McDonald's)" is true. If it is, it belongs in
+      `state/truth-file.md` with a source. If it is not, it comes down immediately
 - [ ] "How did you hear about us" field added to /apply
 - [ ] `state/truth-file.md` checked line by line against what is actually published
 - [ ] `state/angle-bank.md` at sixty entries minimum
