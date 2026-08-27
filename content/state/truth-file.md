@@ -7,7 +7,48 @@ it does not claim it.
 Status column: `published` means it already appears on sevenam.com.au and is safe to
 restate. `verified` means Josh has confirmed it but it is not on the site.
 
-## The offer
+## Josh, the parent position
+
+Everything below hangs off this. Josh is not a Meta ads guy who also does other things. He
+is a **digital and AI entrepreneur who builds products and grows businesses at speed**, and
+the ventures are evidence of that, not the subject.
+
+| Claim | Status | Source |
+|---|---|---|
+| Digital and AI entrepreneur. Builds products and grows businesses at speed | verified | Josh, 27 Aug 2026 |
+| Runs multiple ventures at once, not one company | verified | Josh, 27 Aug 2026 |
+| Broad marketer and CMO. Agency side and client side | verified | Josh, 27 Aug 2026 |
+| Fifteen years in marketing, building and scaling consumer brands | published | /index, /about |
+| Fifteen years running Facebook ads in some capacity | verified | Josh, 27 Aug 2026 |
+| Worked on Netflix in APAC | verified | Josh, 27 Aug 2026 |
+| Operator carrying the P&L | verified | Josh |
+| $40m+ managed or advised | verified. Not on the site, so Josh's word rather than a published figure | Josh |
+
+**One thesis, many exhibits.** The risk in posting about several companies is looking
+scattered. What stops that is keeping the method in front and the venture behind it. "I
+build and grow fast" is the claim; Sevenam, knest.ai and the rest are how it is evidenced.
+Covering a different venture next month is then another data point, not a change of
+subject.
+
+**Do not lead with the tenure.** Fifteen years is true and it is background. Leading with
+it positions him as a long-serving specialist, which is the opposite of the actual claim.
+
+## Ventures
+
+Each venture gets its own section below. A post may draw on one, but the parent position
+above is what the audience is being asked to believe.
+
+| Venture | Status | Covered below |
+|---|---|---|
+| Sevenam | Live. Meta ads systems the client owns | Yes |
+| knest.ai | On Josh's LinkedIn header **and** listed as a case study. The relationship needs stating before either use | No — needs detail |
+| Online Model Academy | Listed as a case study | No — needs detail |
+| Others | Josh has said more will come | No |
+
+**knest.ai is an unresolved conflict.** It appears as a company on Josh's profile and as a
+client case study. Pick one framing before either is used in a post.
+
+## Venture: Sevenam — the offer
 
 | Claim | Status | Source |
 |---|---|---|
@@ -25,15 +66,12 @@ read.
 **Do not write the fee model as an absolute.** Priced to the work rather than the
 budget. Not "never a percentage of spend".
 
-## Josh
+## Josh, working inside accounts
 
 | Claim | Status | Source |
 |---|---|---|
-| Broader marketer, CMO and entrepreneur. Known both agency side and client side | verified | Josh, 27 Aug 2026 |
 | AI marketer | verified | Josh, 27 Aug 2026 |
 | Currently working inside live Meta ad accounts | verified | Josh, 27 Aug 2026 |
-| Worked on Netflix in APAC | verified | Josh, 27 Aug 2026 |
-| Operator carrying the P&L | verified | Josh |
 | Fifteen years running Facebook ads in some capacity | verified | Josh, 27 Aug 2026 |
 | Fifteen years in marketing broadly, building and scaling consumer brands | published | /index, /about |
 | $40m+ managed or advised | verified. Not on the site, so it is Josh's word rather than a published figure | Josh |

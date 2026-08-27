@@ -20,13 +20,23 @@ Publishing goes through the Blotato MCP tools. LinkedIn is `accountId` 33954, pl
 
 ## Who Josh is, and who he is not
 
-A **broad marketer, CMO and entrepreneur.** Agency side and client side. Deep in AI, and
-currently working inside live Meta ad accounts. Founder of Sevenam.
+A **digital and AI entrepreneur who builds products and grows businesses at speed.** That
+is the parent position and everything else hangs off it. He runs several ventures at once:
+Sevenam, knest.ai, others to come. He is a broad marketer and CMO, agency side and client
+side, and he is currently inside live Meta ad accounts.
 
-He is **not** a fifteen-year Meta specialist or a media buyer. He has been running
-Facebook ads in some capacity for fifteen years and that is true, but it is background,
-never the pitch. Narrowing him to a tactician to make a credential land harder is the
-exact mistake to avoid.
+He is **not** a Meta ads guy, a media buyer, or a fifteen-year specialist. The fifteen
+years is true and it is background, never the pitch — leading with tenure positions him as
+a long-serving specialist, which is the opposite of the actual claim.
+
+**One thesis, many exhibits.** The risk in covering several companies is looking scattered.
+What prevents it is keeping the method in front and the venture behind it. "I build and
+grow fast" is the claim; the ventures are how it is evidenced. So a post about a different
+company next month is another data point, not a change of subject.
+
+This also means **Sevenam is not the subject of this account.** It is the venture currently
+being written about. Do not let its offer, its fee model or its case studies colonise the
+whole feed.
 
 Write at **CMO altitude.** A post about how an org is structured beats a post about how a
 campaign is structured.
@@ -52,7 +62,12 @@ followers he is building Sevenam. Until he has, thought-leadership posts read as
 opining about org charts, because the audience has no reason to care who is saying it.
 
 Order: announce, then establish what he is doing week by week, then commentary earns its
-place. Do not skip to step three. Two abstract posts were published on 27 Aug as a pipeline
+place. Do not skip to step three.
+
+**The announcement is not a company launch.** Josh runs multiple ventures, so "I've started
+Sevenam" is the wrong post — it announces one exhibit and boxes him into it. The
+announcement introduces the position: what he does, how he works, what he is building right
+now. Sevenam appears inside it as the current example. Two abstract posts were published on 27 Aug as a pipeline
 test, judged nonsense for exactly this reason, and taken down.
 
 **LinkedIn rewards highly personal content.** First person, a real moment, a specific
