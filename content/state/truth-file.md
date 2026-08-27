@@ -33,6 +33,21 @@ budget. Not "never a percentage of spend".
 | $40m+ managed or advised | verified — **not on the site**, so it is Josh's word, not a published figure | Josh |
 | Operator carrying the P&L | verified | Josh |
 
+## Work history
+
+| Claim | Status | Source |
+|---|---|---|
+| Worked on Netflix in APAC | verified | Josh, 27 Aug 2026 |
+| Worked on McDonald's | **do not use yet** — the accurate relationship has not been stated | Josh |
+
+**Phrasing rule, and it is the point of this section.** Work history is mentioned in
+passing, in service of an observation: *"having worked on Netflix in APAC"*. It is never a
+title, never a logo list, never "Ex-CMO (Netflix, McDonald's)". That version claims a role
+Josh did not hold, and a stacked credential line reads as compensating for something.
+
+The brands are context for a point being made. If the point does not need them, leave them
+out.
+
 ## The market
 
 | Claim | Status | Source |
