@@ -194,10 +194,57 @@ products and grow b…" in the feed, so the front of it has to carry the meaning
 vanished and the percentage was sliced mid-number. Build **1200x1500 (4:5) portrait**. It
 takes the most feed height and crops least. Never put a number or a punchline near an edge.
 
-## Higgsfield is the default for images
+## Imagery strategy
 
-Josh's call, 27 Aug 2026. Generated imagery is more interesting than a branded card every
-day, and a feed of identical dark cards goes stale fast.
+Set 27 Aug 2026, after generated attempts were rejected as depressing, too colourful, too
+fake, then too weird and not looking like him.
+
+**The order of preference. Work down it, never up.**
+
+1. **A real photo of Josh.** Taken on his phone, unstyled. Beats everything else for a
+   personal brand, cannot be faked by a competitor, and is what LinkedIn rewards.
+2. **A real screenshot or artefact** — an ad in the Library, a tool mid-use, a build in
+   progress. Concrete proof, doubles as evidence.
+3. **A rendered card** (`content/cards/card.html`) — whenever the payload is exact figures.
+4. **A generated image** — last, and only when the idea genuinely cannot be photographed.
+
+The mistake to avoid is reaching for generation because it feels like the clever option. It
+is the fallback, not the default.
+
+### The five real-photo formats, in Josh's words
+
+| Format | What it is | Fits |
+|---|---|---|
+| **Thought from the car** | Phone selfie in the driver's seat, seatbelt on, daylight, unstyled | Opinion and commentary. The workhorse — any argument can be delivered this way |
+| **Authoritative** | The black-background studio portrait. Considered, still, direct | The model, the thesis, anything that needs standing |
+| **Speaking at an event** | On stage, mic, or in the room from the audience | Craft, industry, the event posts |
+| **7am** | Desk, screens, early light, the account open, coffee | The 7am decision post. Its own recurring visual signature |
+| **Human moment** | Family, home, ordinary life. Kids' faces away from camera or cropped | Personal, the concession posts, anything that needs warmth |
+
+**Build the library, do not commission it.** Three or four phone photos a week, taken as the
+week happens, is the whole system. Josh already has: a studio portrait, car selfies, a
+family shot, an event. That is most of the rotation already covered.
+
+**Rotate the formats.** The same car selfie every day becomes wallpaper the audience stops
+seeing. Cycle: car, then artefact, then 7am, then human, then studio.
+
+### Where generation still earns its place
+
+Only for what cannot be photographed: an abstract mechanism, a market-wide observation, a
+concept post with no real object behind it. Roughly one post in five, not the default.
+
+**The likeness is not there yet.** Both trained Souls were judged not to look like him, so
+**do not generate Josh's face for publication.** Either retrain from a fresh set of 5 to 20
+clear reference photos, or, better, use a real photo — which is free, instant and exactly
+right. Generated images can still carry hands, objects, rooms and screens, just not his face.
+
+**Keep it plain.** The erupting-imagery concept was judged too weird. Generated scenes
+should look like a photograph someone took, not a visual metaphor.
+
+## Generation settings, when generation is the right call
+
+When a post genuinely needs a generated image — see the imagery strategy above for when
+that is, which is not often — Higgsfield is the tool.
 
 | Need | Tool |
 |---|---|
