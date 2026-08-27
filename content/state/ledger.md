@@ -13,6 +13,8 @@ chosen, not the converted one.
 
 | 2026-08-27 | 18:42 | LinkedIn | announcement | long | founding | I spent years on the other side of this | [share:7498660748626173952](https://linkedin.com/feed/update/urn:li:share:7498660748626173952) |
 
+| 2026-08-27 | 18:47 | X | announcement | short | founding | Years of hiring performance agencies | [status/2092895537397686401](https://x.com/girlboyrobot/status/2092895537397686401) |
+
 The announcement. First post of the actual account. Carries a link to the /agency-fee
 calculator, tagged `utm_source=linkedin`.
 

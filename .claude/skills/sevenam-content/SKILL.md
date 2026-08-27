@@ -216,6 +216,11 @@ testing one of each before treating either as settled.
 
 Tag links with `utm_source=linkedin` or `utm_source=x`.
 
+**X is capped at 280 characters** on this account and Blotato rejects anything longer
+outright rather than truncating. A URL eats roughly 25 to 35 of those, so a UTM tag is
+often the thing that has to go. Write the X version to length rather than cutting a
+LinkedIn post down to fit.
+
 ## Timing
 
 All windows Australia/Sydney; `scheduledTime` goes to Blotato in **UTC**, so subtract 10
