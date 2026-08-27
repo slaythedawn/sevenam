@@ -9,6 +9,13 @@ Only 1.5+ and 0.6- mean anything. Everything between is noise.
 LinkedIn metrics are pulled by hand on Mondays. X metrics come from
 `blotato_get_post_analytics`.
 
+**Both accounts start near zero followers.** For the first stretch the index is not
+measuring the writing, it is measuring a follower count that barely exists. Treat it as
+noise and do not retire a series on it. What actually moves early is guardrail 7, the
+manual replies: twenty to forty a week on X, every LinkedIn comment inside ninety
+minutes. That is the growth engine until there is an audience for the index to mean
+anything.
+
 | date | channel | pillar | format | series | length | image | link | time | metric | index | dm/apply | note |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 

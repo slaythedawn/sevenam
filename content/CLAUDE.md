@@ -49,10 +49,16 @@ To fix, in Blotato:
 **Decided 27 Aug 2026: every LinkedIn slot goes to the personal profile.** The page stays
 connected and correct for anyone who looks Sevenam up, and carries no scheduled posts.
 
-This is settled, not a default waiting on better information. The voice spec in section 6
-is first person — Josh's own decisions, his own concessions — and that is personal-profile
-writing. Reconnecting the page does not reopen it. If it ever changes, it changes here
-first, and the week plan grows a channel column at the same time.
+Two reasons, in order. **The page has no followers**, so a post to it reaches nobody while
+costing the same to write and approve. And the voice spec in section 6 is first person —
+Josh's own decisions, his own concessions — which is personal-profile writing anyway.
+
+The first reason expires if the page ever builds an audience; the second does not.
+Reconnecting the page does not reopen this. If it ever changes, it changes here first,
+and the week plan grows a channel column at the same time.
+
+Same on X: everything goes to @girlboyrobot, the only connected account, posting as a
+person rather than as a brand.
 
 ### Before the first real post
 
