@@ -441,6 +441,21 @@ the daily Routine reminds you on Mondays.
       accurate phrasing is *having worked on Netflix in APAC*, not a CMO title. Confirm
       the equivalent for McDonald’s before using it at all. Also drop "10k+ marketers
       already learning" unless it can be sourced, and the "Commentary account" label
+- [ ] **Fix the retracted tenure claim on the live site.** Josh confirmed 27 Aug 2026 that
+      fifteen years inside Meta ad accounts is not accurate. Four places state it, and the
+      correct replacement has not been supplied yet:
+      - `about.html:56` meta description, "fifteen years inside ecommerce Meta ad accounts"
+      - `about.html:60` og:description, "Fifteen years inside Australian ecommerce ad accounts"
+      - `about.html:179` body, "Fifteen years running paid media from first sale to international scale"
+      - `check.html:143` body, "spent fifteen years inside Australian ecommerce ad accounts"
+
+      Two others are broad-marketing framing and are probably fine as they stand:
+      `index.html:465` "fifteen years building and scaling consumer brands" and
+      `about.html:194` "Fifteen years of work that had to hold at national scale".
+
+      Changing `about.html:60` changes the og:description, so **rerun `node tools/build-og.js`**
+      or the social card keeps the old wording. Run `node tools/indexnow.js /about /check`
+      after the deploy is live, never before
 - [ ] "How did you hear about us" field added to /apply
 - [ ] `state/truth-file.md` checked line by line against what is actually published
 - [ ] `state/angle-bank.md` at sixty entries minimum

@@ -29,9 +29,20 @@ budget. Not "never a percentage of spend".
 
 | Claim | Status | Source |
 |---|---|---|
-| Fifteen years inside Australian ecommerce ad accounts, running paid media from first sale to international scale | published | /about |
-| $40m+ managed or advised | verified — **not on the site**, so it is Josh's word, not a published figure | Josh |
+| Broader marketer, CMO and entrepreneur. Known both agency side and client side | verified | Josh, 27 Aug 2026 |
+| AI marketer | verified | Josh, 27 Aug 2026 |
+| Currently working inside live Meta ad accounts | verified | Josh, 27 Aug 2026 |
+| Worked on Netflix in APAC | verified | Josh, 27 Aug 2026 |
 | Operator carrying the P&L | verified | Josh |
+| ~~Fifteen years inside Meta / ecommerce ad accounts~~ | **RETRACTED 27 Aug 2026. Do not use in any form.** Josh: "15 years no". The tenure inside ad accounts is shorter and has not been stated | Josh |
+| Fifteen years in marketing broadly, building and scaling consumer brands | **unconfirmed.** Plausible and currently on the site, but not separately confirmed since the retraction above | /index, /about |
+| $40m+ managed or advised | **unconfirmed.** Not on the site. Recheck it, given the tenure correction | Josh |
+
+**The positioning is a broad marketer who is now deep in AI and in live Meta accounts.**
+Not a fifteen-year Meta specialist. Do not narrow him to a media buyer, and do not stretch
+the ad-account tenure to match the marketing tenure. They are different numbers.
+
+**Live site carries the retracted claim in four places** — see CLAUDE.md section 11.
 
 ## Work history
 
