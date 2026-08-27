@@ -311,6 +311,16 @@ resolving neatly.
 time it happened. The word someone actually used. A thought that goes nowhere. A joke
 you do not explain.
 
+**No credential stacking.** Work history appears in passing, in service of a point, never
+as a list of logos or a claim to a title. "Having worked on Netflix in APAC" is the
+register. "Ex-CMO (Netflix, McDonald’s)" is not: it claims a role Josh did not hold, and
+a stacked credential line reads as compensating. The client base is the same — the number
+of accounts on the system is not a credential and does not belong in a post. See
+`state/truth-file.md`, Work history.
+
+**Do not open by conceding your own credibility.** Concede before you argue means concede
+the opposing point, not your own standing. "Three accounts, not thirty" is flinching.
+
 ### The enemy
 
 An era, a structure, a practice, or an artefact. Never a person, never a named firm,
@@ -427,8 +437,10 @@ the daily Routine reminds you on Mondays.
       claim; a bio is a claim surface too, and this one is making claims the truth file
       cannot support on the channel where strangers form their first impression. Fix it
       before the first real post, not after
-- [ ] Decide whether "Ex-CMO (Netflix, McDonald's)" is true. If it is, it belongs in
-      `state/truth-file.md` with a source. If it is not, it comes down immediately
+- [ ] Replace "Ex-CMO (Netflix, McDonald’s)" in the X bio. Resolved 27 Aug 2026: the
+      accurate phrasing is *having worked on Netflix in APAC*, not a CMO title. Confirm
+      the equivalent for McDonald’s before using it at all. Also drop "10k+ marketers
+      already learning" unless it can be sourced, and the "Commentary account" label
 - [ ] "How did you hear about us" field added to /apply
 - [ ] `state/truth-file.md` checked line by line against what is actually published
 - [ ] `state/angle-bank.md` at sixty entries minimum
