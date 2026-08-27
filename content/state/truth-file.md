@@ -34,15 +34,17 @@ budget. Not "never a percentage of spend".
 | Currently working inside live Meta ad accounts | verified | Josh, 27 Aug 2026 |
 | Worked on Netflix in APAC | verified | Josh, 27 Aug 2026 |
 | Operator carrying the P&L | verified | Josh |
-| ~~Fifteen years inside Meta / ecommerce ad accounts~~ | **RETRACTED 27 Aug 2026. Do not use in any form.** Josh: "15 years no". The tenure inside ad accounts is shorter and has not been stated | Josh |
-| Fifteen years in marketing broadly, building and scaling consumer brands | **unconfirmed.** Plausible and currently on the site, but not separately confirmed since the retraction above | /index, /about |
-| $40m+ managed or advised | **unconfirmed.** Not on the site. Recheck it, given the tenure correction | Josh |
+| Fifteen years running Facebook ads in some capacity | verified | Josh, 27 Aug 2026 |
+| Fifteen years in marketing broadly, building and scaling consumer brands | published | /index, /about |
+| $40m+ managed or advised | verified. Not on the site, so it is Josh's word rather than a published figure | Josh |
 
-**The positioning is a broad marketer who is now deep in AI and in live Meta accounts.**
-Not a fifteen-year Meta specialist. Do not narrow him to a media buyer, and do not stretch
-the ad-account tenure to match the marketing tenure. They are different numbers.
+**The figure is true. The positioning built on it was not.** Fifteen years is accurate as
+duration, and the site copy stands. What is wrong is leading with it as though Josh were a
+fifteen-year Meta specialist. He is a broad marketer, CMO and entrepreneur who has worked
+agency side and client side, is deep in AI, and is currently inside live Meta accounts.
 
-**Live site carries the retracted claim in four places** — see CLAUDE.md section 11.
+So the tenure is available as background, never as the pitch. Do not narrow him to a media
+buyer to make the credential land harder.
 
 ## Work history
 
