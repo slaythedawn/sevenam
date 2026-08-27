@@ -83,7 +83,9 @@ At $30,000 a month on twenty per cent, the fee is $72,000 a year. Double the spe
 
 The fix isn't complicated. Price the work, not the budget. It just doesn't grow as nicely.
 
-asset: calculator screenshot, fee side only, Install price cropped out
+asset: https://sevenam.com.au/social/agency-fee-card-5fc5f43b.png — 1200x1500
+card from content/cards/card.html. Replaced a wide screenshot that LinkedIn
+cropped, losing the three year figure entirely.
 notes: No link, deliberately — the announcement carried one, so this is the
 control for whether outbound links cost reach. The figures in the body match
 the ones in the image. Names no price, so the week's single offer mention

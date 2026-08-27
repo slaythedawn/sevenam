@@ -178,22 +178,47 @@ or gives no reason to keep reading, rewrite it.
 Strong: a specific claim, a number, something the reader wants to argue with.
 Weak: a wind-up, a throat-clear, a vague promise of insight.
 
+## Design to what LinkedIn actually shows
+
+Verified from a live post on 27 Aug 2026, on mobile.
+
+**Two lines above the fold.** Not the ~200 characters usually quoted — the first line plus
+roughly one more, then "…more". So the opening pair is the unit that has to work. Line one
+carries the claim; line two earns the tap. Everything after them is invisible to anyone who
+does not choose to open it.
+
+**The headline truncates too.** Josh's shows as "Digital and AI entrepreneur. I build
+products and grow b…" in the feed, so the front of it has to carry the meaning.
+
+**Images are cropped.** A 2.4:1 landscape lost its bottom third: the three-year figure
+vanished and the percentage was sliced mid-number. Build **1200x1500 (4:5) portrait**. It
+takes the most feed height and crops least. Never put a number or a punchline near an edge.
+
+## Building a card
+
+`content/cards/card.html` renders a 1200x1500 branded card. Rows are passed as base64 JSON
+in `?d=`, so one template serves every post and nothing has to be redesigned per post:
+
+```
+d = base64({ kicker, lede, rows:[{label, fig, sub, lead}] })
+```
+
+Render it with the repo served over `127.0.0.1` and Chromium from
+`/opt/pw-browsers/chromium-1194/chrome-linux/chrome`, using
+`--headless=new --no-proxy-server --force-device-scale-factor=2 --window-size=600,750`.
+
+Prefer this to screenshotting a live page. Screenshots fight the site's responsive layout,
+come out landscape, and stacking a two-column component just buries the payload under its
+own inputs.
+
 ## Every post gets an image unless there is a reason not to
 
 Images take feed space and stop the scroll. Post without one only when deliberately doing
 the two or three short no-image posts a month the length mix calls for.
 
-**Screenshots of real things beat graphics.** The `/agency-fee` calculator renders as a
-dark card with volt figures and photographs well. To capture it: serve the repo over
-`127.0.0.1`, launch Chromium from `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`
-with `--headless=new --no-proxy-server --force-device-scale-factor=2`, and inject CSS to
-hide the header and hero so the target sits at the top of the viewport. Crop by removing
-the block from a temp copy of the HTML rather than by CSS, which over-matches on the inline
-styles this site uses. Delete the temp files before committing.
-
-**Check what the screenshot reveals.** The calculator's lower half shows the Install price.
-An educational post that carries it has quietly become an ad and has spent the week's one
-offer mention.
+**Check what the image reveals before using it.** The calculator's lower half shows the
+Install price, so an educational post carrying it has quietly become an ad and has spent the
+week's one offer mention.
 
 Blotato needs a public URL in `mediaUrls`, not a local path.
 
@@ -206,10 +231,12 @@ Three ways round it, in order of preference:
 
 1. **Josh uploads the image in Blotato's own UI** and passes back the public URL, which
    then goes straight into `mediaUrls`.
-2. **Host it on sevenam.com.au.** An image committed to the repo and deployed to `main`
-   is publicly fetchable, and Blotato's servers fetch `mediaUrls` themselves, so the block
-   does not apply to them. Costs a site deploy per image, and remember `/img/*` is served
-   immutable for a year — give every file a new name.
+2. **Host it on sevenam.com.au** — the working route, confirmed 27 Aug. Commit the image
+   under `social/` with a content-hashed name, push **that file only** to `main`, and pass
+   the URL in `mediaUrls`. Blotato fetches it server side and mirrors it to its own storage,
+   so the egress block never applies. Keep it out of `/img/`, which is served immutable for
+   a year. Push nothing else to `main`: everything there is publicly served from the
+   marketing domain, and `content/state/truth-file.md` would be fetchable.
 3. **Josh attaches it by hand** when the post is being published manually anyway.
 
 ## Voice
