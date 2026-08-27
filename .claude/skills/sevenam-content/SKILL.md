@@ -70,6 +70,21 @@ campaign is structured.
 **Never open by conceding your own credibility.** Concede before you argue means concede
 the opposing point, not your own standing.
 
+## The thesis, which is the spine of everything
+
+> AI changed the maths. Making an ad used to be expensive and running an account took a
+> specialist. Those were most of what an agency actually sold. Neither holds now, so the
+> businesses making their own ads and running their own Meta accounts win.
+
+Josh's argument, posted as judgement rather than fact. It is what makes the ventures cohere
+and what makes Sevenam make sense: if in-house wins, the useful thing to sell is the system
+and its ownership, not the capability rented back.
+
+**Aim it at the structure, not at help itself.** Percentage of spend, the agency holding
+the assets, the client who cannot leave without losing the account. Not "agencies are
+dead" — Sevenam sells daily decisions month to month, so a true absolute here forecloses
+his own managed line. Same failure the fee-vow rule guards against.
+
 ## Sequence: the announcement comes first
 
 **Nothing has been announced yet.** As of 27 Aug 2026 Josh has not told his 5,494 LinkedIn

@@ -24,6 +24,26 @@ the ventures are evidence of that, not the subject.
 | Operator carrying the P&L | verified | Josh |
 | $40m+ managed or advised | verified. Not on the site, so Josh's word rather than a published figure | Josh |
 
+## The thesis
+
+Josh's stated view, 27 Aug 2026. It is judgement, not fact, and is posted as his argument
+rather than as a verified claim.
+
+> AI changed the maths. Making an ad used to be expensive and running an account took a
+> specialist. Those two things were most of what an agency was actually selling. Neither
+> holds now, so the businesses making their own ads and running their own Meta accounts
+> are the ones that win.
+
+This is the spine. Sevenam is what the thesis implies: if in-house wins, the useful service
+is building the system and handing over ownership, not renting the capability back.
+
+**Where it needs care.** "This kills traditional agencies" is Josh's phrasing and it is an
+absolute. Sevenam still sells daily decisions month to month, which is ongoing help. Write
+the argument against the *structure* — percentage of spend, agency holds the assets, client
+cannot leave without losing the account — not against the idea of getting help at all.
+Otherwise the post forecloses his own managed line, which is the exact failure the fee-vow
+rule already guards against.
+
 **One thesis, many exhibits.** The risk in posting about several companies is looking
 scattered. What stops that is keeping the method in front and the venture behind it. "I
 build and grow fast" is the claim; Sevenam, knest.ai and the rest are how it is evidenced.
