@@ -161,6 +161,43 @@ read, and is his to make.
 
 Never invent a number. Not a spend figure, not a result, not as illustration.
 
+## The first line is the whole post
+
+On LinkedIn the first line is all anyone sees before "see more". Everything else is
+invisible until they choose to open it. So the opening line does not warm up, set context
+gently, or trail into the real point. It carries the claim.
+
+**It must stand alone.** Never open with "this", "it", "that" or "here's the bit" pointing
+at something the reader has not been told yet. "I spent years on the other side of this"
+was published on 27 Aug and the reader had no idea what *this* was until paragraph four.
+Name the subject in the first line, then tell the story.
+
+Test it by reading the first line with nothing after it. If it does not make sense alone,
+or gives no reason to keep reading, rewrite it.
+
+Strong: a specific claim, a number, something the reader wants to argue with.
+Weak: a wind-up, a throat-clear, a vague promise of insight.
+
+## Every post gets an image unless there is a reason not to
+
+Images take feed space and stop the scroll. Post without one only when deliberately doing
+the two or three short no-image posts a month the length mix calls for.
+
+**Screenshots of real things beat graphics.** The `/agency-fee` calculator renders as a
+dark card with volt figures and photographs well. To capture it: serve the repo over
+`127.0.0.1`, launch Chromium from `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`
+with `--headless=new --no-proxy-server --force-device-scale-factor=2`, and inject CSS to
+hide the header and hero so the target sits at the top of the viewport. Crop by removing
+the block from a temp copy of the HTML rather than by CSS, which over-matches on the inline
+styles this site uses. Delete the temp files before committing.
+
+**Check what the screenshot reveals.** The calculator's lower half shows the Install price.
+An educational post that carries it has quietly become an ad and has spent the week's one
+offer mention.
+
+Blotato needs a public URL in `mediaUrls`, not a local path — upload through
+`blotato_create_presigned_upload_url` first.
+
 ## Voice
 
 Australian spelling. No emoji. No em dashes. One idea per post. Short lines. Specific
