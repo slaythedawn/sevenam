@@ -259,6 +259,30 @@ product realism, infinity studio, premium, pristine*. Ask instead for:
 Same principle as the writing spec. Detail too specific and too pointless to have been
 generated is what reads as real, in a picture as much as in a sentence.
 
+**Never a blank screen.** A phone in shot always has a screen packed with actual work —
+a dense grid of small advertising images, video frames, a crowded feed. Say
+COMPLETELY FILLED and never blank, in those words, or "screen glows volt" renders as an
+empty lit rectangle. The screen content is also what erupts: the imagery tears out of the
+display as floating frames, ribbons and fragments. That is the idea of the whole account
+made literal, so it is worth getting right rather than settling for a glow.
+
+Ask for **no readable text or interface labels on the screen** — imagery yes, lettering no,
+or the model produces garbled UI.
+
+### Josh in the scene
+
+Soul `ad293cb4-b435-472a-8b66-76999ea324ec` — **"JP v2"**, ready, works only with `soul_2`
+and `soul_cinematic`. Pass it as `soul_id`. (An older "JP" exists at
+`a452d512-dfc2-49a0-9cd8-4a9750f0a1fb`; prefer v2.)
+
+**Never direct to camera.** He is in the scene, not presenting from it: head down at the
+phone, three-quarters turned away, walking past in profile, seen from the side or slightly
+behind, shoulder cropped by the frame. Write "not looking at the camera, not aware of the
+camera" into the prompt. A piece to camera turns a candid photograph into a headshot and
+undoes the whole realism direction.
+
+One Soul per generation. Two people in a shot needs `show_reference_elements` instead.
+
 Always end the prompt with: no text, no lettering, no typography, no logos, no watermarks.
 
 **Model note.** `soul_2` is the one — its tags are `ugc` and `realistic`, which is exactly
