@@ -194,6 +194,39 @@ products and grow b…" in the feed, so the front of it has to carry the meaning
 vanished and the percentage was sliced mid-number. Build **1200x1500 (4:5) portrait**. It
 takes the most feed height and crops least. Never put a number or a punchline near an edge.
 
+## Higgsfield is the default for images
+
+Josh's call, 27 Aug 2026. Generated imagery is more interesting than a branded card every
+day, and a feed of identical dark cards goes stale fast.
+
+| Need | Tool |
+|---|---|
+| Conceptual, editorial, atmospheric, anything photographic | `mcp__Higgsfield__generate_image`, model `soul_2` |
+| Legible text or a diagram inside the image | `nano_banana_pro` |
+| Product or ad-style | `marketing_studio_image` |
+| **Exact figures** | **The HTML card. Not Higgsfield.** |
+
+**The carve-out matters.** Generative models are unreliable at precise text, and when the
+image *is* the claim, a shifted digit publishes a wrong number. Guardrail 2 makes that the
+one unrecoverable mistake, so anything carrying figures gets rendered, not generated.
+
+**Four practical constraints, all verified 27 Aug:**
+
+1. **No 4:5.** `soul_2` offers 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3 — a 4:5 request is
+   silently coerced to 3:4, which is *taller* than LinkedIn's crop. Compose with everything
+   important centred, or pass the result through `mcp__Higgsfield__reframe`.
+2. **Claude cannot see the output.** The CloudFront host that serves generations is blocked
+   by this session's egress policy, so images are generated blind. **Josh reviews every
+   generated image in the widget before it goes anywhere.** Never publish one sight unseen.
+3. **Ask for no lettering.** Say so explicitly in the prompt. Stray generated text is the
+   most common way an otherwise good image becomes unusable.
+4. **Whether Blotato can fetch a CloudFront URL is untested.** If `mediaUrls` rejects one,
+   fall back to the route that is proven: save the image under `social/` and push that file
+   to `main`, as with the card.
+
+Prompt to the brand: near-black, off-white, one acid yellow-green accent, restrained and
+editorial. No emoji, no gloss, no urgency, no stock-photo optimism.
+
 ## Building a card
 
 `content/cards/card.html` renders a 1200x1500 branded card. Rows are passed as base64 JSON
