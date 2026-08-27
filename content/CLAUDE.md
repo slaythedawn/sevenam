@@ -57,18 +57,33 @@ Three routines. Only the drafting ones are scheduled, and none of them publishes
 
 **The 7am session cannot be automated.** It asks you for the day's real numbers and
 needs your approval on each post. A Routine firing at 6:40 would have nobody to ask.
-That is why the daily Routine drafts *around* the 7am slot and stops.
+That is why the daily Routine drafts *around* the 7am slot and stops. It also has no Blotato
+tools to schedule with, by design — see below.
 
 **Publishing itself is never scheduled by you.** Blotato holds the queue and fires at
 the time Claude wrote into it. There is no publishing cron to break.
 
-### What the Routines can and cannot be stopped from doing
+### The Routines physically cannot reach Blotato
 
 On a laptop the drafting run was fenced with `claude -p --allowedTools "Read,Write,Edit"`,
-so it physically could not reach Blotato. A Routine cannot be tool-restricted that way.
-The fence is now the prompt plus guardrail 1, which is weaker. If you ever find a
-Routine-fired session has scheduled something, that is a bug worth treating as serious:
-check `blotato_list_schedules` and delete it with `blotato_delete_schedule`.
+so it could not publish. The Routines keep that fence by a different route: **a Routine
+fires a session with no MCP connector tools at all.** No `mcp__Blotato__*` exists in
+those sessions. They can read, write, edit, run Bash and push, and that is the lot.
+
+So the drafting Routines cannot publish even if a prompt were mangled or a state file
+told them to. The prompts still say publish nothing, because belt and braces, but the
+guarantee is structural.
+
+Two consequences worth knowing:
+
+- A Routine cannot read X metrics either, so `blotato_get_post_analytics` is out of
+  reach on Friday. The learning loop was already yours to run, so this costs nothing.
+- If you ever want a Routine that *can* reach Blotato, it has to be created from the
+  claude.ai Routines UI rather than from a session. Do not. Guardrail 1 is the product's
+  own principle applied to itself.
+
+If you ever do find a Routine-fired session has scheduled something, treat it as
+serious: check `blotato_list_schedules` and delete it with `blotato_delete_schedule`.
 
 ---
 
@@ -297,7 +312,11 @@ their prompts are written standalone.
 | Routine | Cron (UTC) | Sydney |
 |---|---|---|
 | Sevenam daily content prep | `15 20 * * *` | 06:15 daily |
-| Sevenam weekly content plan | `0 6 * * 5` | 16:00 Friday |
+| Sevenam weekly content plan | `0 6 * * 5` | about 16:08 Friday |
+
+Trigger ids: `trig_01UgPSZgAiKsGNVVSZqggEhm` (daily),
+`trig_01Q71mbDmCDzndEWwkAHK8z7` (weekly). The Friday one fires a few minutes past the
+hour because the scheduler anchored it to the minute it was created.
 
 **Cron fires in UTC, and these are set for AEST (UTC+10).** When Sydney moves to AEDT
 in October, both drift an hour later in local terms. Shift them to `15 19 * * *` and
