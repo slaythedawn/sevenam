@@ -199,6 +199,23 @@ six matter more than the fourteen.
 "10k+ marketers already learning" under a "Commentary account" label. Every X reply sends
 strangers there. Flag it rather than working around it.
 
+## Links and CTAs
+
+Josh's call, 27 Aug 2026: point people at the `/agency-fee` calculator to see what a
+percentage fee costs at their own spend. Soft, in the body, never a hard pitch, and it does
+not replace the closing line that promises more to come.
+
+Match the CTA to what the page actually does. The calculator swaps between a percentage fee
+and a flat one under the headline "What your agency actually costs." Framing that as
+savings is fair; promising anything the page does not show is not.
+
+**Links cost reach on LinkedIn.** The platform demotes posts that send people off it. The
+usual fix is the link in the first comment instead of the body, which has to be done by
+hand — Blotato exposes `firstComment` for Facebook and Instagram but not LinkedIn. Worth
+testing one of each before treating either as settled.
+
+Tag links with `utm_source=linkedin` or `utm_source=x`.
+
 ## Timing
 
 All windows Australia/Sydney; `scheduledTime` goes to Blotato in **UTC**, so subtract 10
