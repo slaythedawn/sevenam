@@ -238,16 +238,33 @@ Optimistic, fast, premium — a modern tech brand campaign, not a moody editoria
 light, nobody present, restraint as the whole idea. Melancholy reads as depressing at
 thumbnail size, and it argues against a business whose claim is building things fast.
 
-**Reconciling this with the site.** The site is deliberately restrained: ink, paper, one
-volt accent. The feed is not the site. Keep **volt `#D8FF00` as the through-line** so the
-two are recognisably the same brand, but run it as an acid yellow-green *inside* a
-saturated palette on bright grounds, with hot magenta and electric cyan, rather than as a
-lone accent in the dark.
+**Palette: the brand palette, and nothing else.** Rejected 27 Aug: a saturated set with
+magenta and cyan — "too colourful". The frame is **monochrome — ink `#0A0A0A`, paper
+`#F7F7F5`, the greys — with volt `#D8FF00` as the only colour in it.** Volt is usually
+*emitted* rather than painted on: a screen glow, a light spill, a streak across a wall.
+One colour against grey reads as a brand; three colours reads as a stock library.
+
+**Make it look real, not rendered.** Also rejected 27 Aug: "too fake". The tell is studio
+perfection, and the words that cause it are the ones to avoid — *crisp studio flash, glossy
+product realism, infinity studio, premium, pristine*. Ask instead for:
+
+- a real place with real mess: a desk with cables and a coffee ring, a kitchen bench at
+  night, a stairwell, a car
+- available light, or a harsh direct phone flash. Never a lighting setup
+- phone-camera artefacts: grain, sensor noise, motion blur, handheld tilt, shallow focus,
+  fingerprint smudges on the glass
+- imperfect framing — off-centre, something cropped at the edge
+- explicitly: not a studio, not styled, not an advert, unposed
+
+Same principle as the writing spec. Detail too specific and too pointless to have been
+generated is what reads as real, in a picture as much as in a sentence.
 
 Always end the prompt with: no text, no lettering, no typography, no logos, no watermarks.
 
-**Model note.** `grok_image` (expressive, high-contrast, bold) suits this brief and works
-text-only. `ms_image` / **DTC Ads** scores higher still and is brand-kit aware, but it
+**Model note.** `soul_2` is the one — its tags are `ugc` and `realistic`, which is exactly
+the brief. It was blamed once for a depressing set that was actually caused by the prompt,
+so do not switch away from it for that reason again. `grok_image` is bolder and
+higher-contrast, useful when a post wants graphic punch over realism. `ms_image` / **DTC Ads** scores higher still and is brand-kit aware, but it
 *requires* a `style_id` that Josh picks first from `show_marketing_studio`
 (`type='image_style'`) — never default one silently. Building a Sevenam brand kit there
 (`type='brand_kit'`, fetched from sevenam.com.au) would fold the real logo, colours and
