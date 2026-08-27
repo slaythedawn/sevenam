@@ -272,6 +272,20 @@ outright rather than truncating. A URL eats roughly 25 to 35 of those, so a UTM 
 often the thing that has to go. Write the X version to length rather than cutting a
 LinkedIn post down to fit.
 
+## Two things Blotato cannot do, so the post goes by hand
+
+**Tagging.** LinkedIn @-mentions need structured annotation and Blotato sends plain text.
+An `@Name` publishes as literal characters: no link, no notification, no reach into their
+network. Any post whose purpose is a shout-out has to be posted by hand.
+
+**Adding media later.** LinkedIn lets you edit a published post's text but not add media to
+it. So "publish through Blotato and fix it after" recovers a tag but never recovers an
+image. If a post needs photos that are not hosted on a public URL, it is manual from the
+start.
+
+Both together are the common case for event and shout-out posts. Plan them as manual and
+write them into the week plan at `POST BY HAND` rather than discovering it at publish time.
+
 ## Timing
 
 All windows Australia/Sydney; `scheduledTime` goes to Blotato in **UTC**, so subtract 10

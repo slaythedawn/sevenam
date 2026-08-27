@@ -33,10 +33,45 @@ reply: https://sevenam.com.au/agency-fee?utm_source=x   (manual, after publicati
 
 ## Fri 28 Aug
 
+### LinkedIn · personal · medium · POST BY HAND
+status: approved
+time: Josh posts it, morning
+audience: founders and operators | feeling: recognition | job: connect
+must be posted manually, for two reasons:
+  1. It tags Tomi Grainger. LinkedIn mentions need structured annotation and
+     Blotato sends plain text, so an @ would publish as literal characters with
+     no link and no notification.
+  2. It carries two photos from the night, and LinkedIn does not allow media to
+     be added to a post after publishing. Publishing through Blotato would strand
+     it without images permanently.
+body:
+Last night was the most engaged I've ever felt at an event. I've been thinking about why.
+
+It wasn't a stage and rows of chairs. Small room, stools, drinks, everyone close to the front. Tomi hosted from the floor with a mic rather than from behind a lectern, and the panel sat on stools instead of behind a table.
+
+Sounds like set dressing. It isn't. The distance between a speaker and an audience decides whether people ask what they actually want to know or just nod along.
+
+The other half was the room. Different industries, different ages, different stages of building something. Views from all walks. The audience was as good as the panel, which almost never happens.
+
+Tomi Grainger ran it. If you get the chance to go to one of these, go.
+
+asset: two photos from the night. The wide room shot carries the argument about
+format; the close-up of Tomi supports the shout-out. Not hosted on the site
+on purpose — they show identifiable people who did not agree to appear on a
+company marketing domain.
+notes: Spelling is Tomi, not Tommy, per the screen behind him. The exact event
+name is left out because tomigrainger.com is blocked from the session and it
+could not be verified; add it if wanted. Praises by name, which the rules allow
+— it is criticism that gets anonymised, never praise.
+
+## Mon 31 Aug
+
 ### LinkedIn · the model · medium
-status: pending_approval
-proposed time: 07:12 Sydney (21:12 UTC Thu 27 Aug)
+status: SCHEDULED in Blotato
+time: 07:23 Sydney (21:23 UTC Sun 30 Aug)
 audience: founders and marketing leads | feeling: recognition | job: explain
+moved from Fri 28 Aug so the event post could take the morning after the
+announcement. A warm post and a commercial one on the same day undercut both.
 body:
 Your agency gets a pay rise every time your cost per acquisition goes up.
 
