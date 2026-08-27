@@ -241,6 +241,59 @@ right. Generated images can still carry hands, objects, rooms and screens, just 
 **Keep it plain.** The erupting-imagery concept was judged too weird. Generated scenes
 should look like a photograph someone took, not a visual metaphor.
 
+## Post formats, and which are worth using
+
+Six LinkedIn slots and ten to fourteen X slots a week is a lot of text posts. The format is
+a lever the plan should be pulling, not a default it falls into.
+
+### LinkedIn
+
+| Format | Worth it? | Notes |
+|---|---|---|
+| **Document carousel** (PDF) | **The most underused thing available.** Highest dwell time of any LinkedIn format, because swiping counts as engagement. Ideal for a teardown, a framework, a before-and-after | Manual — Blotato does not expose PDF upload |
+| **Newsletter** | **The biggest distribution lever not yet in use.** Subscribers get *notified* rather than hoping the feed serves them. With 5,494 followers this compounds | Manual. Also the natural home for the "weave articles out of the site" idea |
+| **Multi-image** | Cheap swipeable carousel, 2 to 20 images. Good for an Ad Library teardown, a build in stages | Automatable — pass several URLs in `mediaUrls` |
+| **Native video** | Strong reach, vertical, captions burned in since most watch muted. The car thought works as video as well as stills | `mediaUrls` accepts video |
+| **Text only** | Still the base. Two or three a month with no image, per the length mix | Automatable |
+| **Poll** | High reach, low-quality signal, and it reads as engagement bait. Use sparingly if at all | Not supported by Blotato |
+| **Article** | Long-form, indexed by Google, permanent. Slower than a newsletter but it ranks | Manual |
+| **Stories** | **Does not exist.** LinkedIn discontinued them in 2021 | n/a |
+| **Live** | Only if a real event justifies it | Manual |
+
+### X
+
+| Format | Worth it? | Notes |
+|---|---|---|
+| **Thread** | The long-form mechanism, and the only one available — the account is capped at 280 characters, so there is no X Premium long-form post | Automatable via `additionalPosts` |
+| **Single post** | The base unit. Ten to fourteen a week | Automatable |
+| **Image / up to 4** | Lifts reach, same portrait rule | Automatable |
+| **Native video** | Strongest format on X right now | `mediaUrls` |
+| **Quote post** | The cheapest way to enter a conversation with a point of view. Costs nothing to make | Manual |
+| **Poll** | Same verdict as LinkedIn | Not supported |
+| **Spaces** | Only when there is a reason | Manual |
+
+### Format by pillar
+
+| Pillar | Best format |
+|---|---|
+| 7am decisions | Single image, the 7am photo. Its own recurring signature |
+| The model | Text plus rendered card, or a document carousel when the argument needs steps |
+| AI and tools | Video or multi-image — show the tool running, do not describe it |
+| Creative | Multi-image or video. The work is the post |
+| Craft | Document carousel. Frameworks are what people save |
+| Personal | Single real photo |
+| Build log and SEO | Multi-image, in stages, or a newsletter when it accumulates |
+
+**Never the same format twice in a row** already applies. This gives it somewhere to go.
+
+### What this means for the Routines
+
+Blotato covers single and multi-image, video and X threads. It does **not** cover document
+carousels, newsletters, articles, polls or quote posts — those are manual and should be
+planned into the week as `POST BY HAND`, the same as tagging posts. Roughly one manual
+format a week is a reasonable target; they are the highest-value formats and the ones
+competitors skip.
+
 ## Generation settings, when generation is the right call
 
 When a post genuinely needs a generated image — see the imagery strategy above for when
