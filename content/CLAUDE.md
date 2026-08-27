@@ -20,11 +20,36 @@ Connected accounts, confirmed 27 Aug 2026:
 
 | Platform | Account | id | Note |
 |---|---|---|---|
-| LinkedIn | Josh Peacock | 33954 | Personal profile. No company page subaccount exists, so omit `pageId`. |
+| LinkedIn | Josh Peacock | 33954 | Personal profile. The Sevenam company page exists but Blotato cannot see it — see below. Omit `pageId` until it can. |
 | X | @girlboyrobot | 25005 | |
 
 Re-confirm with `blotato_list_accounts` if a post ever fails to schedule; a stale
 cached connector session shows as connected and still errors.
+
+### The LinkedIn company page is not connected
+
+Blotato returns LinkedIn company pages as `subaccounts` on the account, and it returns
+none. The page is not missing — the connection was authorised for member posting
+(`w_member_social`) without the organisation scope, so Blotato has no handle to post to
+the page with.
+
+**Every LinkedIn post goes to Josh's personal profile until this is fixed**, whatever the
+week plan says. There is no error; it simply posts to the wrong place.
+
+To fix, in Blotato:
+
+1. **Remove** the LinkedIn connection entirely. Do not use "reconnect" — a stale cached
+   session survives it, which is the failure in the troubleshooting table below.
+2. Re-add, and grant the organisation / company page permission at LinkedIn's consent
+   screen. Josh must be Super admin or Content admin on the Sevenam page for it to be
+   offered.
+3. Run `blotato_list_accounts` again. The page comes back as a subaccount with an id.
+   Record that id here, and pass it as `pageId` on posts meant for the page.
+
+Personal profile and company page are different registers. The voice spec in section 6 is
+first person, Josh's own decisions and concessions, which is personal-profile writing.
+Do not route a post to the page just because the page is available. The default stays
+personal; the page is a deliberate exception, marked in the week plan.
 
 ### Before the first real post
 
@@ -110,7 +135,10 @@ Run the 7am session.
    send, BEFORE you schedule.
 
 5. Schedule each approved post through blotato_create_post with that
-   scheduledTime, converted to UTC. Omit pageId on LinkedIn.
+   scheduledTime, converted to UTC. On LinkedIn, pass pageId only if the
+   slot is explicitly marked for the company page AND the page appears as a
+   subaccount in blotato_list_accounts. Otherwise omit it, and tell me the
+   post is going to the personal profile.
    If a post has a `reply:` field, it stays manual — see section 5.
 
 6. Append each scheduled post to state/ledger.md with date, Sydney time,
@@ -349,6 +377,7 @@ the daily Routine reminds you on Mondays.
 | OAuth error on any call | Subscription not active | Blotato Settings > API, generate a key |
 | Credential error on a connector that shows as connected | Stale cached session | Remove fully, re-add. Reconnecting does not clear it |
 | Local file path rejected | `mediaUrls` takes public URLs only | `blotato_create_presigned_upload_url` first |
+| LinkedIn post landed on the personal profile when it was meant for the page | The connection has no organisation scope, so `pageId` was unavailable | Section 1. Remove the connection fully and re-add with page permission |
 | Post published ten or eleven hours off | Sydney time sent without converting to UTC | Section 5. Both times get stated before scheduling |
 | Scheduled post never fires | Check the queue directly | `blotato_list_schedules`. Do not assume |
 | A Routine scheduled something | Guardrail 1 breach | `blotato_delete_schedule`, then fix the Routine prompt |
@@ -362,6 +391,8 @@ the daily Routine reminds you on Mondays.
 - [ ] Confirm with Blotato support that LinkedIn posting uses the official Posts API with
       `w_member_social`, not a scraped session. Non-negotiable on your main lead channel
 - [ ] Run all five tests in section 1 and delete the test posts
+- [ ] Reconnect LinkedIn in Blotato with the organisation scope, so the company page
+      appears as a subaccount. Until then everything posts to the personal profile
 - [ ] LinkedIn headline, about section, featured section and banner updated
 - [ ] X bio, pinned post and header updated. The handle is @girlboyrobot, not a Sevenam one
 - [ ] "How did you hear about us" field added to /apply
