@@ -56,6 +56,25 @@ whole feed.
 Write at **CMO altitude.** A post about how an org is structured beats a post about how a
 campaign is structured.
 
+## Josh was the buyer, and that is the whole frame
+
+He spent years client side hiring digital performance agencies, running procurement, working
+with the big networks and the independents. He concluded they were functionally the same:
+incentivised toward the wrong things, growing when the client spends more.
+
+**This is not an agency man complaining about agencies.** It is a client who ran the
+process and found the model broken. Write from that position, because it is the reason the
+criticism carries.
+
+**Never name an agency.** The enemy is the incentive structure. "Nobody sets out to be
+cynical, the model just points that way" is the register.
+
+## knest.ai is embargoed
+
+**Do not mention knest.ai in any post, on any channel, in any form, until Josh lifts it.**
+This overrides its presence in the case study list. Do not work around it by describing it
+unnamed. Instruction given 27 Aug 2026.
+
 ## Three things that are never in a post
 
 1. **The client base.** The number of accounts on the system is not a credential. "Three

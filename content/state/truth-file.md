@@ -24,6 +24,26 @@ the ventures are evidence of that, not the subject.
 | Operator carrying the P&L | verified | Josh |
 | $40m+ managed or advised | verified. Not on the site, so Josh's word rather than a published figure | Josh |
 
+## Josh's history with agencies — the origin of the thesis
+
+Verified by Josh, 27 Aug 2026. He was the **buyer**, not the seller. This is the frame that
+makes his argument land: it is not an agency man complaining about agencies, it is a client
+who ran the procurement and concluded the model was broken.
+
+| Claim | Status | Source |
+|---|---|---|
+| Spent years hiring and working with digital performance agencies, client side | verified | Josh |
+| Ran agency procurement processes | verified | Josh |
+| Worked with the big networks and with independents | verified | Josh |
+| Found them functionally the same: incentivised toward the wrong things, growing when the client spends more | verified as Josh's conclusion | Josh |
+| Went overseas for expertise at one point, not trusting the expertise available locally | verified — **confirm the exact form before publishing**, whether that was hiring an overseas agency or something else | Josh |
+
+That last line is the strongest detail available and the one most worth getting exactly
+right. Do not paraphrase it into something vaguer.
+
+**Name no agency, ever.** The criticism aims at the incentive structure. "Nobody sets out
+to be cynical, the model points that way" is the register.
+
 ## The thesis
 
 Josh's stated view, 27 Aug 2026. It is judgement, not fact, and is posted as his argument
@@ -33,6 +53,9 @@ rather than as a verified claim.
 > specialist. Those two things were most of what an agency was actually selling. Neither
 > holds now, so the businesses making their own ads and running their own Meta accounts
 > are the ones that win.
+>
+> You do not have to rely on an agency for expertise anymore. Meta is already building
+> systems that can be automated, plugged in, and informed by all the data in your business.
 
 This is the spine. Sevenam is what the thesis implies: if in-house wins, the useful service
 is building the system and handing over ownership, not renting the capability back.
@@ -61,12 +84,13 @@ above is what the audience is being asked to believe.
 | Venture | Status | Covered below |
 |---|---|---|
 | Sevenam | Live. Meta ads systems the client owns | Yes |
-| knest.ai | On Josh's LinkedIn header **and** listed as a case study. The relationship needs stating before either use | No — needs detail |
+| knest.ai | **EMBARGOED 27 Aug 2026. Do not mention in any post, on any channel, in any form, until Josh lifts it.** This overrides its presence in the case study list below | Embargoed |
 | Online Model Academy | Listed as a case study | No — needs detail |
 | Others | Josh has said more will come | No |
 
-**knest.ai is an unresolved conflict.** It appears as a company on Josh's profile and as a
-client case study. Pick one framing before either is used in a post.
+**knest.ai is embargoed.** Josh's instruction, 27 Aug 2026: do not mention it at all until
+he says otherwise. That applies everywhere, including as a case study, and it overrides the
+case results section below. Do not work around it by describing it unnamed either.
 
 ## Venture: Sevenam — the offer
 
