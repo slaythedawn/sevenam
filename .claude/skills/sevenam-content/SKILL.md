@@ -29,10 +29,25 @@ He is **not** a Meta ads guy, a media buyer, or a fifteen-year specialist. The f
 years is true and it is background, never the pitch — leading with tenure positions him as
 a long-serving specialist, which is the opposite of the actual claim.
 
-**One thesis, many exhibits.** The risk in covering several companies is looking scattered.
-What prevents it is keeping the method in front and the venture behind it. "I build and
-grow fast" is the claim; the ventures are how it is evidenced. So a post about a different
-company next month is another data point, not a change of subject.
+**One thesis, many exhibits — but the exhibits arrive one at a time.** Keep the method in
+front and the venture behind it. "I build and grow fast" is the claim; the ventures are how
+it is evidenced. A post about a different company next month is another data point, not a
+change of subject.
+
+**Never list the ventures and never state how many there are.** Josh's own read, 27 Aug
+2026: it sounds unbelievable. He is right, and the mechanism is worth understanding —
+asserted range gets discounted, inferred range gets believed. A reader told on day one that
+he runs several companies marks it down. A reader who watches three different things ship
+over six months reaches the conclusion themselves, and because it is theirs they believe it
+and repeat it.
+
+So: one project at a time, in the open, dated. The pattern does the work. If someone
+comments "how are you doing all of this at once", the strategy has succeeded and the answer
+is still not a list.
+
+**"At speed" is never asserted, only demonstrated.** It is an adjective with nothing behind
+it until there is dated, shipped work. Post the work with its dates and let the reader do
+the arithmetic. Never write that he moves fast.
 
 This also means **Sevenam is not the subject of this account.** It is the venture currently
 being written about. Do not let its offer, its fee model or its case studies colonise the
