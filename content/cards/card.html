@@ -1,0 +1,56 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sevenam social card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+  /* 4:5 social card, 1200x1500 at 2x device scale. Brand tokens from CLAUDE.md. */
+  :root{ --ink:#0A0A0A; --raised:#161613; --hair:#232320; --volt:#D8FF00;
+         --paper:#F7F7F5; --body:#C9C9C2; --muted:#B5B5AD; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:600px;height:750px;background:var(--paper);
+    font-family:'Inter Tight',Inter,-apple-system,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .card{position:absolute;inset:24px;background:var(--ink);color:var(--paper);
+    border-radius:8px;padding:44px 40px;display:flex;flex-direction:column}
+  .kicker{font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted)}
+  .lede{margin-top:18px;font-size:29px;font-weight:600;letter-spacing:-.03em;
+    line-height:1.15;max-width:20ch}
+  .rows{margin-top:24px;display:flex;flex-direction:column;gap:16px}
+  .row{border-top:1px solid var(--hair);padding-top:16px}
+  .row:first-child{border-top:0;padding-top:0}
+  .label{font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted)}
+  .fig{margin-top:8px;font-size:50px;font-weight:600;letter-spacing:-.04em;
+    line-height:1;font-variant-numeric:tabular-nums}
+  .fig.lead{color:var(--volt);font-size:66px}
+  .sub{margin-top:10px;font-size:17px;line-height:1.5;color:var(--body)}
+  .mark{margin-top:auto;padding-top:18px;display:flex;align-items:center;gap:14px}
+  .clock{background:var(--volt);color:var(--ink);font-size:15px;font-weight:700;
+    padding:5px 10px;border-radius:4px;font-variant-numeric:tabular-nums}
+  .name{font-size:21px;font-weight:600;letter-spacing:-.02em}
+</style>
+<div class="card">
+  <div class="kicker" id="kicker">At $30,000 a month on twenty per cent</div>
+  <div class="lede" id="lede">What a percentage fee actually costs you.</div>
+  <div class="rows" id="rows"></div>
+  <div class="mark"><span class="clock">07:00</span><span class="name">sevenam</span></div>
+</div>
+<script>
+  // Rows come from ?d= as base64 JSON, so one template serves every post.
+  const fallback = [
+    {label:"Their fee, this year", fig:"$72,000", sub:"$6,000 a month, on top of the media itself", lead:true},
+    {label:"If you double your spend", fig:"$144,000", sub:"$72,000 more a year, for the same work"},
+    {label:"Over three years at that spend", fig:"$216,000"}
+  ];
+  const q = new URLSearchParams(location.search);
+  let data = {};
+  try { data = q.get('d') ? JSON.parse(atob(q.get('d'))) : {}; } catch (e) { data = {}; }
+  if (data.kicker) document.getElementById('kicker').textContent = data.kicker;
+  if (data.lede) document.getElementById('lede').textContent = data.lede;
+  document.getElementById('rows').innerHTML = (data.rows || fallback).map(r =>
+    '<div class="row"><div class="label">' + r.label + '</div>' +
+    '<div class="fig' + (r.lead ? ' lead' : '') + '">' + r.fig + '</div>' +
+    (r.sub ? '<div class="sub">' + r.sub + '</div>' : '') + '</div>'
+  ).join('');
+</script>
