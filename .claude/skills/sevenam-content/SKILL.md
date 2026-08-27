@@ -45,6 +45,23 @@ campaign is structured.
 **Never open by conceding your own credibility.** Concede before you argue means concede
 the opposing point, not your own standing.
 
+## Sequence: the announcement comes first
+
+**Nothing has been announced yet.** As of 27 Aug 2026 Josh has not told his 5,494 LinkedIn
+followers he is building Sevenam. Until he has, thought-leadership posts read as a stranger
+opining about org charts, because the audience has no reason to care who is saying it.
+
+Order: announce, then establish what he is doing week by week, then commentary earns its
+place. Do not skip to step three. Two abstract posts were published on 27 Aug as a pipeline
+test, judged nonsense for exactly this reason, and taken down.
+
+**LinkedIn rewards highly personal content.** First person, a real moment, a specific
+detail, something that costs a little to say. Not a thesis. The mechanism explainer is a
+format for later, once people know whose mechanism it is.
+
+This does not contradict the no-credential-stacking rule or the client-base rule. Personal
+means the story and the reasoning, not a list of logos or a headcount of accounts.
+
 ## Strategy: report from inside, do not comment from outside
 
 Commentary on the latest model release is the most crowded space on LinkedIn. It decays in
