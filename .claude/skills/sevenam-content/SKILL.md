@@ -195,8 +195,22 @@ styles this site uses. Delete the temp files before committing.
 An educational post that carries it has quietly become an ad and has spent the week's one
 offer mention.
 
-Blotato needs a public URL in `mediaUrls`, not a local path — upload through
-`blotato_create_presigned_upload_url` first.
+Blotato needs a public URL in `mediaUrls`, not a local path.
+
+**Uploading from a Claude Code session is blocked.**
+`blotato_create_presigned_upload_url` returns a working presigned URL, but the PUT to
+`database.blotato.io` is refused by the egress policy with a 403 on CONNECT. That is an
+organisation policy denial, so it is reported rather than retried or routed around.
+
+Three ways round it, in order of preference:
+
+1. **Josh uploads the image in Blotato's own UI** and passes back the public URL, which
+   then goes straight into `mediaUrls`.
+2. **Host it on sevenam.com.au.** An image committed to the repo and deployed to `main`
+   is publicly fetchable, and Blotato's servers fetch `mediaUrls` themselves, so the block
+   does not apply to them. Costs a site deploy per image, and remember `/img/*` is served
+   immutable for a year — give every file a new name.
+3. **Josh attaches it by hand** when the post is being published manually anyway.
 
 ## Voice
 
