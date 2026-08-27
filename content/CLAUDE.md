@@ -44,12 +44,15 @@ To fix, in Blotato:
    screen. Josh must be Super admin or Content admin on the Sevenam page for it to be
    offered.
 3. Run `blotato_list_accounts` again. The page comes back as a subaccount with an id.
-   Record that id here, and pass it as `pageId` on posts meant for the page.
+   Record that id here. Nothing routes to it yet — see the decision below.
 
-Personal profile and company page are different registers. The voice spec in section 6 is
-first person, Josh's own decisions and concessions, which is personal-profile writing.
-Do not route a post to the page just because the page is available. The default stays
-personal; the page is a deliberate exception, marked in the week plan.
+**Decided 27 Aug 2026: every LinkedIn slot goes to the personal profile.** The page stays
+connected and correct for anyone who looks Sevenam up, and carries no scheduled posts.
+
+This is settled, not a default waiting on better information. The voice spec in section 6
+is first person — Josh's own decisions, his own concessions — and that is personal-profile
+writing. Reconnecting the page does not reopen it. If it ever changes, it changes here
+first, and the week plan grows a channel column at the same time.
 
 ### Before the first real post
 
