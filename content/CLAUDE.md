@@ -269,8 +269,19 @@ is no reply-to-post-id parameter, so a `reply:` link four minutes after the pare
 or post it by hand. Prefer by hand: you are in the app replying anyway, and guardrail 7
 says replies stay manual.
 
-**Cadence varies too.** Some weeks five LinkedIn posts, some weeks seven. Some days two,
-most days one, occasionally none. An account that never skips is the tell.
+**OVERRIDE, 28 Aug 2026: never skip a day, on either channel.** Josh's instruction. It
+replaces the rule that used to sit here — that cadence should vary, some days none, and that
+an account which never skips is the tell. Both channels now post every day, weekends
+included.
+
+Two consequences to manage rather than ignore. Seven LinkedIn posts a week is above the six
+slots the pillar caps assume, so watch that "the model" does not quietly exceed three in any
+nine. And fourteen posts a week makes `state/angle-bank.md` the binding constraint on
+quality — the schedule is no longer the limit, the material is.
+
+**Weekend windows are not defined** in the table above, which was built for weekdays. Later
+morning, roughly 09:30 to 10:30 Sydney, is the working assumption for LinkedIn until there
+is data to say otherwise.
 
 ---
 

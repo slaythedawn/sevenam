@@ -529,6 +529,10 @@ All windows Australia/Sydney; `scheduledTime` goes to Blotato in **UTC**, so sub
 hours in AEST or 11 in AEDT. Every morning slot converts to the previous UTC day. State
 both times before scheduling.
 
+**Never skip a day on either channel** (Josh, 28 Aug 2026 — this overrides the older rule
+that cadence should vary). Weekends included. Weekend windows are undefined; later morning,
+about 09:30 to 10:30 Sydney, is the working assumption for LinkedIn.
+
 Never a round minute. Never a minute used in the last fourteen days. Three hours minimum
 between posts on the same platform, eight minutes minimum from the other platform.
 Full windows and the randomisation rules are in `content/CLAUDE.md` section 5.
