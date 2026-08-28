@@ -585,6 +585,16 @@ start.
 Both together are the common case for event and shout-out posts. Plan them as manual and
 write them into the week plan at `POST BY HAND` rather than discovering it at publish time.
 
+**A manual post is a liability until it is chased.** On 28 Aug an event post sat at
+`POST BY HAND` and simply never went out — flagged, then forgotten, and LinkedIn went two
+days with nothing while the no-skip rule was in force.
+
+So: **every `POST BY HAND` entry needs a same-session check that it actually published**,
+and if it has not, either chase Josh for it or publish something else into that slot. Never
+count a manual post as covering a day until it is live. When in doubt, prefer a format that
+can be published automatically — a manual post that never happens is worse than a slightly
+weaker one that does.
+
 ## Check the day word when a post slips
 
 "Last night", "yesterday", "this morning" are correct on the day they are written and wrong
