@@ -287,6 +287,24 @@ If a carousel is genuinely wanted, design *pages* for it — cards, frameworks, 
 resampling does not matter. **Never put photographs through it.** A real photo set is either
 one strong image published natively, or posted by hand.
 
+### Which tool for which platform
+
+Checked across the whole connected tool surface, 28 Aug 2026.
+
+| Platform | Tool | Notes |
+|---|---|---|
+| LinkedIn | **Blotato only.** Nothing else connected can post to it | One image per post. Multi-image becomes a degraded PDF |
+| X | Blotato | Threads via `additionalPosts`, 280 char cap |
+| Instagram | **Pipeboard** (`publish_instagram_media`) | True native carousels, 2 to 10 items, from public HTTPS URLs. No PDF conversion, no quality loss |
+
+Pipedrive is a CRM and is not connected. Pipeboard is a Meta ads tool. Ahrefs has social
+tools but they are read-only — listing posts, channels and metrics, no publishing.
+
+**This changes where photo sets go.** Instagram handles real multi-image properly and
+LinkedIn does not. A set of photographs belongs on Instagram as a carousel, with LinkedIn
+taking the single strongest frame. Plan them that way rather than forcing a photo set
+through LinkedIn.
+
 ## Imagery strategy
 
 Set 27 Aug 2026, after generated attempts were rejected as depressing, too colourful, too
