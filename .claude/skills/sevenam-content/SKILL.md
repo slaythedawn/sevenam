@@ -586,15 +586,30 @@ Both together are the common case for event and shout-out posts. Plan them as ma
 write them into the week plan at `POST BY HAND` rather than discovering it at publish time.
 
 **Photos Josh sends in chat cannot be published by Claude.** Attachments do not reliably
-persist to the filesystem — the Tomi event photos never did — and with no file bytes there
-is nothing to host on the site or hand to Blotato, whose own uploader is blocked by the
-egress policy.
+persist to the filesystem — the Tomi event photos never did — so there are no bytes to host.
 
-This collides head-on with the imagery strategy. Real photos are the best imagery available
-and the ones Claude cannot post. Until there is a route for getting Josh's photos into a
-place Claude can read — a folder in the repo, or Google Drive, which this session can reach
-— **every post built on his own photography is manual.** Say so when planning, and weigh a
-publishable format against a better one that may never go out.
+**The photo pipeline, which solves this.** Verified 28 Aug 2026:
+
+1. Josh puts the photo in **Google Drive**. This session can read his Drive:
+   `mcp__Google_Drive__search_files` to find it, `download_file_content` for base64 bytes.
+2. Decode, normalise to 1200x1500 if needed, commit under `social/` with a content-hashed
+   name, push **that file only** to `main`.
+3. **Confirm it is live** with `web_fetch_vercel_url` before referencing it.
+4. Pass the `sevenam.com.au` URL in `mediaUrls`. Blotato fetches server-side, so the egress
+   block never applies.
+
+This makes "real photos first" executable rather than aspirational. Chat attachments are
+still not a route — ask for Drive.
+
+**What this is not.** Blotato is not the blocker here. It posts images, multi-image and
+video fine, fetching every `mediaUrls` itself. What failed on 28 Aug was image *ingress*:
+getting Josh's phone photos to any public URL. Switching posting tools would not have fixed
+that.
+
+**What Blotato genuinely cannot do**, and the only real case for replacing it: LinkedIn
+@mentions, document carousels, newsletters, articles, polls, quote posts. If those formats
+become central — and the carousel and newsletter are the two biggest unused levers — it is
+worth evaluating a tool with LinkedIn document and mention support. Not before.
 
 **A manual post is a liability until it is chased.** On 28 Aug an event post sat at
 `POST BY HAND` and simply never went out — flagged, then forgotten, and LinkedIn went two
