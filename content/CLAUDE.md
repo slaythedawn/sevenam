@@ -66,6 +66,7 @@ Same on X: everything goes to @girlboyrobot, posting as a person rather than as 
 |---|---|---|
 | LinkedIn, Josh Peacock | 5,494 | 500+ connections, 197 profile views. The main lead channel |
 | X, @girlboyrobot | 530 | Following 1,900. The ratio is worth fixing |
+| Instagram, 7am account | new | Added to the mix 28 Aug 2026. **Not yet connected** |
 | LinkedIn, Sevenam page | ~0 | Not connected to Blotato, carries no posts |
 
 LinkedIn is roughly ten times X and is where the buyers are. Weight effort accordingly:
@@ -269,10 +270,15 @@ is no reply-to-post-id parameter, so a `reply:` link four minutes after the pare
 or post it by hand. Prefer by hand: you are in the app replying anyway, and guardrail 7
 says replies stay manual.
 
-**OVERRIDE, 28 Aug 2026: never skip a day, on either channel.** Josh's instruction. It
+**OVERRIDE, 28 Aug 2026: never skip a day, in any channel.** Josh's instruction. It
 replaces the rule that used to sit here — that cadence should vary, some days none, and that
-an account which never skips is the tell. Both channels now post every day, weekends
+an account which never skips is the tell. Every channel now posts every day, weekends
 included.
+
+**Instagram inherits this rule once it is connected**, since Josh's wording was "any
+channel". Flag before it starts that daily on three channels is 21 posts a week, all of
+which now need real imagery, against an angle bank that is still empty. Raise it as a
+question about the material, never as a reason to quietly skip a day.
 
 Two consequences to manage rather than ignore. Seven LinkedIn posts a week is above the six
 slots the pillar caps assume, so watch that "the model" does not quietly exceed three in any

@@ -1,11 +1,11 @@
 ---
 name: sevenam-content
-description: Write, review or schedule LinkedIn and X posts for Josh Peacock / Sevenam. Use whenever drafting a post, thread or carousel for LinkedIn or X, running the 7am session or the Friday planning session, checking whether a draft is on brand, or deciding what to post next. Carries the positioning, the voice spec, the claim rules and the approval gate.
+description: Write, review or schedule LinkedIn, X and Instagram posts for Josh Peacock / Sevenam. Use whenever drafting a post, thread or carousel for any of those channels, choosing which platform a piece belongs on, running the 7am session or the Friday planning session, checking whether a draft is on brand, or deciding what to post next. Carries the positioning, the voice spec, the claim rules, the platform routing rules and the approval gate.
 ---
 
 # Sevenam content
 
-Operating rules for Josh's LinkedIn and X presence. The full system lives in
+Operating rules for Josh's LinkedIn, X and Instagram presence. The full system lives in
 `content/CLAUDE.md`; the state files it reads are in `content/state/`. This skill is the
 part you need in your head before writing a word.
 
@@ -305,6 +305,63 @@ LinkedIn does not. A set of photographs belongs on Instagram as a carousel, with
 taking the single strongest frame. Plan them that way rather than forcing a photo set
 through LinkedIn.
 
+### The 7am Instagram account
+
+Connected Instagram accounts as of 28 Aug 2026 are `onlinemodelacademy` (67753) and
+`summerofjosh` (67754). **The 7am account is not connected yet** — until it is, nothing can
+be scheduled to it. Two things have to happen first, in order:
+
+1. It must be a **Business or Creator** account linked to a Facebook Page. Instagram's
+   publishing API refuses personal accounts, so no tool can reach it.
+2. Connect it in Blotato, then confirm with `blotato_list_accounts` before drafting for it.
+
+**Instagram is image-only.** Josh's call, 28 Aug 2026. No reels, no stories, no video —
+single images and carousels only, so `mediaType` is never set. That is what keeps it a feed
+post.
+
+## Route the format to the platform that renders it natively
+
+The rule: **never publish into a downgrade.** Pick the platform from what the piece is, not
+from whose turn it is in the schedule. When a format only renders properly on one channel,
+that is where it goes — and the other channels get a *different piece*, not a degraded copy
+of the same one.
+
+What each platform actually renders, verified 28 Aug 2026:
+
+| | LinkedIn | X | Instagram |
+|---|---|---|---|
+| Text, no image | Native | Native | **Impossible.** Media is mandatory |
+| One image | Native, full quality | Native | Native |
+| Image set | **Degrades to a PDF** | Native grid, max 4 | **Native carousel, 2 to 10.** The home for photo sets |
+| Video | Native | Native | Not used — image-only by choice |
+| Long form | Native, ~3000 chars | **280 cap.** Thread instead | Caption runs long, but the image carries it |
+| Working link | Costs reach, but works | Works, eats ~30 chars | **Dead in the caption.** First comment only |
+| Real @mention | **Not via Blotato** — publishes as plain text | Native | Not via Blotato |
+
+### The downgrades, and what to do instead
+
+Each of these has either already happened or is one careless call away:
+
+| Downgrade | What the reader gets | Instead |
+|---|---|---|
+| Several `mediaUrls` to LinkedIn | "Media Attachment · N pages", photos resampled and recoloured | One image on LinkedIn, the set as an Instagram carousel |
+| Off-ratio image, any platform | Centre-cropped — numbers and punchlines sliced off | Crop to spec first with `social-image-prep` |
+| A LinkedIn post cut down to fit X | A truncated thought with the payoff missing | Write X to 280 from scratch, or build a thread |
+| Text-only to Instagram | Nothing. The call fails | Never schedule text-only to Instagram |
+| A link in an Instagram caption | Flat text nobody can tap | `firstComment` |
+| Tagging someone via Blotato on LinkedIn | Plain text. The person is never notified | `POST BY HAND` when the tag is the point |
+| The same copy on all three | Three weak posts instead of one strong one | One idea, three native executions |
+
+### One idea, three executions
+
+The event post is the worked example. The photo set is an **Instagram carousel**, the only
+channel that renders it properly. LinkedIn gets the **single strongest frame** with the
+write-up, because that is what LinkedIn does well. X gets the **one-line observation** that
+stands alone, because 280 characters is a different craft, not a shorter version of the same
+craft.
+
+Same material, three native pieces. Never one piece pushed through three doors.
+
 ## Imagery strategy
 
 Set 27 Aug 2026, after generated attempts were rejected as depressing, too colourful, too
@@ -384,7 +441,7 @@ a lever the plan should be pulling, not a default it falls into.
 |---|---|---|
 | **Document carousel** (PDF) | **The most underused thing available.** Highest dwell time of any LinkedIn format, because swiping counts as engagement. Ideal for a teardown, a framework, a before-and-after | Manual — Blotato does not expose PDF upload |
 | **Newsletter** | **The biggest distribution lever not yet in use.** Subscribers get *notified* rather than hoping the feed serves them. With 5,494 followers this compounds | Manual. Also the natural home for the "weave articles out of the site" idea |
-| **Multi-image** | Cheap swipeable carousel, 2 to 20 images. Good for an Ad Library teardown, a build in stages | Automatable — pass several URLs in `mediaUrls` |
+| **Multi-image** | **Do not use.** There is no native multi-image post here — several `mediaUrls` become a resampled PDF. The set goes to Instagram instead | Downgrade. See the routing table |
 | **Native video** | Strong reach, vertical, captions burned in since most watch muted. The car thought works as video as well as stills | `mediaUrls` accepts video |
 | **Text only** | Still the base. Two or three a month with no image, per the length mix | Automatable |
 | **Poll** | High reach, low-quality signal, and it reads as engagement bait. Use sparingly if at all | Not supported by Blotato |
@@ -431,23 +488,38 @@ can be one good post, make it one good post.
 | **Poll** | Same verdict as LinkedIn | Not supported |
 | **Spaces** | Only when there is a reason | Manual |
 
+### Instagram
+
+Image-only by decision. Every post needs media — there is no text-only option — so the
+imagery rules are not a preference here, they are the format.
+
+| Format | Worth it? | Notes |
+|---|---|---|
+| **Carousel, 2 to 10** | **The reason Instagram is in the mix.** The only native home for a photo set, and the natural fit for the "show the artefact" format | Pipeboard `publish_instagram_media` is verified native. Blotato claims carousel support too, but its LinkedIn claim was wrong — test once before trusting it |
+| **Single image** | The base unit. 1080 x 1350 | Blotato, `mediaType` omitted |
+| **Reel / Story / video** | **Not used.** Josh's call, 28 Aug 2026 | n/a |
+
+Links go in `firstComment`, never the caption. Alt text on every image.
+
 ### Format by pillar
 
-| Pillar | Best format |
-|---|---|
-| 7am decisions | Single image, the 7am photo. Its own recurring signature |
-| The model | Text plus rendered card, or a document carousel when the argument needs steps |
-| AI and tools | Video or multi-image — show the tool running, do not describe it |
-| Creative | Multi-image or video. The work is the post |
-| Craft | Document carousel. Frameworks are what people save |
-| Personal | Single real photo |
-| Build log and SEO | Multi-image, in stages, or a newsletter when it accumulates |
+| Pillar | Best format | Where it belongs |
+|---|---|---|
+| 7am decisions | Single image, the 7am photo. Its own recurring signature | All three |
+| The model | Text plus rendered card, or a document carousel when the argument needs steps | LinkedIn. X as a thread |
+| AI and tools | Show the tool running, do not describe it | LinkedIn single frame, Instagram carousel |
+| Creative | The work is the post | Instagram carousel, LinkedIn takes the best frame |
+| Craft | Frameworks are what people save | LinkedIn document carousel by hand, Instagram carousel |
+| Personal | Single real photo | LinkedIn and Instagram |
+| Build log and SEO | In stages | Instagram carousel, LinkedIn newsletter once it accumulates |
 
 **Never the same format twice in a row** already applies. This gives it somewhere to go.
 
 ### What this means for the Routines
 
-Blotato covers single and multi-image, video and X threads. It does **not** cover document
+Blotato covers single images, video and X threads, and Pipeboard covers Instagram
+carousels. Nothing covers a **native LinkedIn image set**, because LinkedIn has none — that
+routes to Instagram. Blotato does **not** cover document
 carousels, newsletters, articles, polls or quote posts — those are manual and should be
 planned into the week as `POST BY HAND`, the same as tagging posts. Roughly one manual
 format a week is a reasonable target; they are the highest-value formats and the ones
@@ -626,15 +698,22 @@ criticism carries a replacement or it is complaining.
 |---|---|---|
 | LinkedIn, Josh Peacock | 5,494 | The lead channel. Weight effort here |
 | X, @girlboyrobot | 530 | Roughly a tenth of LinkedIn |
+| Instagram, 7am account | new | **Not connected yet.** Image-only: single images and carousels |
 | LinkedIn, Sevenam page | ~0 | Settled: carries no posts |
 
 Everything posts as a person, not as a brand. **Never cross-post the same text** — write
 each channel its own angle. Six LinkedIn slots and ten to fourteen X slots a week, and the
 six matter more than the fourteen.
 
-**The X profile is a blocker.** The bio still claims "Ex-CMO (Netflix, McDonald's)" and
-"10k+ marketers already learning" under a "Commentary account" label. Every X reply sends
-strangers there. Flag it rather than working around it.
+**The X profile is a blocker.** Confirmed live 28 Aug 2026: the bio still reads "Building
+the smartest AI marketing community | Ex-CMO (Netflix, McDonald's) sharing daily strategies
+| 10k+ marketers already learning". That is credential stacking, it names McDonald's, and
+the 10k figure is unverifiable. Every X reply sends strangers there.
+
+No connected tool can edit it — Blotato publishes posts only, so this is manual. The
+replacement Josh was given, 75 characters: **"Digital and AI entrepreneur. I build products
+and grow businesses at speed."** Display name should be Josh Peacock, website
+`sevenam.com.au`. Flag it rather than working around it.
 
 ## Links and CTAs
 
@@ -649,7 +728,11 @@ savings is fair; promising anything the page does not show is not.
 **Links cost reach on LinkedIn.** The platform demotes posts that send people off it. The
 usual fix is the link in the first comment instead of the body, which has to be done by
 hand — Blotato exposes `firstComment` for Facebook and Instagram but not LinkedIn. Worth
-testing one of each before treating either as settled.
+testing one before treating it as settled.
+
+**On Instagram the first comment is not an optimisation, it is the only option.** Captions
+do not render tappable links at all. Every Instagram post that points anywhere puts the URL
+in `firstComment`.
 
 Tag links with `utm_source=linkedin` or `utm_source=x`.
 
@@ -720,8 +803,9 @@ persist to the filesystem — the Tomi event photos never did — so there are n
 This makes "real photos first" executable rather than aspirational. Chat attachments are
 still not a route — ask for Drive.
 
-**What this is not.** Blotato is not the blocker here. It posts images, multi-image and
-video fine, fetching every `mediaUrls` itself. What failed on 28 Aug was image *ingress*:
+**What this is not.** Blotato is not the blocker here. It posts single images and video
+fine, fetching every `mediaUrls` itself — the multi-image caveat is a LinkedIn limitation,
+not a Blotato one. What failed on 28 Aug was image *ingress*:
 getting Josh's phone photos to any public URL. Switching posting tools would not have fixed
 that.
 
