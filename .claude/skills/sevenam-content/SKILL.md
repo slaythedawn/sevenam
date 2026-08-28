@@ -281,6 +281,33 @@ a lever the plan should be pulling, not a default it falls into.
 | **Stories** | **Does not exist.** LinkedIn discontinued them in 2021 | n/a |
 | **Live** | Only if a real event justifies it | Manual |
 
+### How to build an X thread
+
+Judged 28 Aug 2026 after a published thread was a list chopped into tweets. The rules that
+came out of it:
+
+**Every post has to stand alone.** Posts in a thread get seen on their own — quoted,
+screenshotted, surfaced without the parent. A post that means nothing without the one above
+it is a fragment, not a post. "The ad account." is a line. It is not a post.
+
+**Never break a list across posts.** A list belongs in one. Splitting it adds no information
+and hands the reader four chances to leave.
+
+**Each break must be earned** by new information, a turn, or a concrete detail. If a post
+only continues the previous sentence, merge them.
+
+**Escalate.** Post one is a complete claim. Everything after raises the stakes, goes more
+specific, or shows the cost. Four items of equal weight in a row reads flat and gets
+abandoned.
+
+**Post one is the whole thread** for most readers. It must contain a complete, surprising
+thought with its own payoff — not a set-up whose punchline is four posts away.
+
+**Fewer, denser posts win.** Three or four substantial posts beat six thin ones. If a thread
+can be one good post, make it one good post.
+
+**Land, do not summarise.** The last post ends on a consequence or an action, never a recap.
+
 ### X
 
 | Format | Worth it? | Notes |
