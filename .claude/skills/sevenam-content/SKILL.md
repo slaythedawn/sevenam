@@ -267,6 +267,26 @@ Two mistakes already made and fixed:
 
 Never put a number or a punchline near an edge.
 
+**Crop to spec before publishing, always.** Never hand an off-ratio image to the platform
+and let it decide. Crop with Chromium: render the image in a container sized to spec with
+`object-fit:cover`, screenshot at `--force-device-scale-factor=2`. This only works on images
+held locally — Chromium cannot reach Drive or sevenam.com.au from this session, so an image
+that lives only at a remote URL cannot be cropped here.
+
+### Multiple images on LinkedIn become a PDF, and it wrecks them
+
+Verified 28 Aug 2026. Passing several `mediaUrls` to LinkedIn does **not** create a native
+multi-image post. Blotato renders them as a **document carousel** — the post shows
+"Media Attachment · N pages" — and the PDF conversion resamples the pixels and shifts the
+colour. Photographs come out visibly compressed and recoloured. Josh's words: never again.
+
+**So: one image per LinkedIn post.** A single `mediaUrls` entry publishes natively at full
+quality, no conversion.
+
+If a carousel is genuinely wanted, design *pages* for it — cards, frameworks, type — where
+resampling does not matter. **Never put photographs through it.** A real photo set is either
+one strong image published natively, or posted by hand.
+
 ## Imagery strategy
 
 Set 27 Aug 2026, after generated attempts were rejected as depressing, too colourful, too
