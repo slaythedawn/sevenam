@@ -161,6 +161,64 @@ read, and is his to make.
 
 Never invent a number. Not a spend figure, not a result, not as illustration.
 
+## The performance playbook
+
+Researched 28 Aug 2026 against published data on what actually performs. Sources are listed
+at the end. Where this contradicts instinct, follow this.
+
+### The numbers that should change behaviour
+
+| Finding | What it means here |
+|---|---|
+| **Document carousels are the highest-engagement LinkedIn format**, ~7% average and rising | The one format not being used is the best one. Build one a week |
+| **Comments are weighted ~15x likes**, and long comments count far more | Write posts that make people disagree in a paragraph, not tap a button |
+| **The first 60 to 90 minutes decide ~70% of reach** | Guardrail 7 is not just principle, it is timing-critical. Being present for an hour after a post matters more than the post |
+| **Contrarian hooks run ~3x average engagement** | Lead with the claim someone wants to argue with. "Your agency gets a pay rise when your ads get worse" is the right shape |
+| **Text posts should be 60 to 70% of a founder's mix** | Do not over-rotate into graphics. Text is still the base; the image is support |
+| **X: threads with two or more charts or video clips see ~3.5x the engagement of text-only** | Every thread carries visuals. No exceptions |
+| **X: bookmarks and replies drive distribution more than likes** | Write things worth saving. A framework beats a hot take for reach |
+| **Native, unpolished, real-person creative outperforms produced work** | Confirms the imagery direction: real photos, phone-shot, unstyled |
+
+### What this says about the posts published so far
+
+Honest read: the argument is right and the packaging is weak.
+
+- The contrarian hooks are working as designed. Keep them.
+- **Nothing published is saveable.** No framework, no checklist, no teardown — nothing a
+  reader would bookmark. That is the single biggest gap, because saves drive distribution
+  on both platforms.
+- **No document carousels**, the best-performing format available.
+- **Posts are being published and left alone.** If 70% of reach is decided in 90 minutes,
+  publishing into an empty room and walking away wastes most of it.
+
+### The topic mix that earns saves
+
+Rank topics by whether someone would send them to a colleague:
+
+1. **Teardowns of public artefacts** — a real ad from the Meta Ad Library, dismantled. Free,
+   infinite, unfakeable, and highly saveable.
+2. **Frameworks with a number** — "the four questions before you sign an agency", "the five
+   things you keep when you leave". Carousel-shaped by nature.
+3. **The 7am decision** — proprietary, daily, and the only thing here nobody else can post.
+4. **Hands-on tool verdicts** — ran it, here is what happened.
+5. **A real number with a story around it** — the calculator card is one; there should be more.
+
+Below the line: opinions with nothing behind them, industry commentary, reaction posts.
+
+### Every post gets an image
+
+Josh's instruction, 28 Aug 2026, and the data supports it: **no post ships without a
+visual**, text-only posts included. Options in order of preference — a real photo, a real
+screenshot or artefact, a rendered card, a Higgsfield generation, or animated text rendered
+as a short video. Anything is better than nothing.
+
+Sources: [AuthoredUp](https://authoredup.com/blog/best-performing-content-on-linkedin) ·
+[Grow with Ghost](https://www.growwithghost.io/blog/linkedin-post-formats-ranked-text-vs-carousel-vs-video-vs-polls-2026/) ·
+[Windmill Growth](https://windmillgrowth.com/blogseo/linkedin-content-formats-that-drive-revenue-2026) ·
+[Teract](https://www.teract.ai/resources/twitter-algorithm-2026) ·
+[Tweet Archivist](https://www.tweetarchivist.com/how-to-write-viral-twitter-threads) ·
+[Verde Media](https://verdemedia.com/blog/the-guide-to-meta-ads-creative-2026)
+
 ## The first line is the whole post
 
 On LinkedIn the first line is all anyone sees before "see more". Everything else is
