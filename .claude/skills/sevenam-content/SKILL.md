@@ -248,9 +248,24 @@ does not choose to open it.
 **The headline truncates too.** Josh's shows as "Digital and AI entrepreneur. I build
 products and grow b…" in the feed, so the front of it has to carry the meaning.
 
-**Images are cropped.** A 2.4:1 landscape lost its bottom third: the three-year figure
-vanished and the percentage was sliced mid-number. Build **1200x1500 (4:5) portrait**. It
-takes the most feed height and crops least. Never put a number or a punchline near an edge.
+**Image specs, verified against LinkedIn's own targets 28 Aug 2026.** Supported feed ratios
+are 4:5, 1:1 and 1.91:1 — anything else gets cropped or letterboxed.
+
+| Use | Size |
+|---|---|
+| **Portrait — the default** | **1080 x 1350** (4:5). Most feed height, highest engagement |
+| Square | 1080 x 1080 |
+| Landscape | 1200 x 627 (1.91:1) |
+
+Two mistakes already made and fixed:
+
+- A **2.4:1 landscape** lost its bottom third — the three-year figure vanished and the
+  percentage was sliced mid-number.
+- A card built at **1200x1500 with a light border around a dark panel**. The ratio was right
+  but the inset read as ugly padding in the feed. **Cards must be full bleed**: the ink
+  fills the canvas edge to edge, no paper margin.
+
+Never put a number or a punchline near an edge.
 
 ## Imagery strategy
 
