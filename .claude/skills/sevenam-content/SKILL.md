@@ -295,10 +295,17 @@ Checked across the whole connected tool surface, 28 Aug 2026.
 |---|---|---|
 | LinkedIn | **Blotato only.** Nothing else connected can post to it | One image per post. Multi-image becomes a degraded PDF |
 | X | Blotato | Threads via `additionalPosts`, 280 char cap |
-| Instagram | **Pipeboard** (`publish_instagram_media`) | True native carousels, 2 to 10 items, from public HTTPS URLs. No PDF conversion, no quality loss |
+| Instagram | **Blotato primary.** Pipeboard as fallback | Blotato covers image, carousel, Reel and Story. Pipeboard's `publish_instagram_media` is the official Meta API and the higher-confidence route for carousels — but it only sees Instagram accounts linked to a Meta **ad** account. Verified 28 Aug 2026: it sees `onlinemodelacademy` and nothing else |
 
 Pipedrive is a CRM and is not connected. Pipeboard is a Meta ads tool. Ahrefs has social
-tools but they are read-only — listing posts, channels and metrics, no publishing.
+tools but they are read-only — listing posts, channels and metrics, no publishing. Higgsfield
+generates video and can publish to **TikTok** only.
+
+**There is no better publishing tool to move to.** The MCP connector registry was searched
+28 Aug 2026 across social publishing, Instagram scheduling, LinkedIn publishing, Buffer,
+Hootsuite, post scheduler and content calendar. It returned nothing in the category. Blotato
+is not a compromise pick, it is the only one — so the gaps below are constraints to plan
+around, not reasons to go shopping.
 
 **This changes where photo sets go.** Instagram handles real multi-image properly and
 LinkedIn does not. A set of photographs belongs on Instagram as a carousel, with LinkedIn
@@ -315,9 +322,19 @@ be scheduled to it. Two things have to happen first, in order:
    publishing API refuses personal accounts, so no tool can reach it.
 2. Connect it in Blotato, then confirm with `blotato_list_accounts` before drafting for it.
 
-**Instagram is image-only.** Josh's call, 28 Aug 2026. No reels, no stories, no video —
-single images and carousels only, so `mediaType` is never set. That is what keeps it a feed
-post.
+**Instagram runs the full format range.** Josh's call, 28 Aug 2026, revising the
+image-only decision made earlier the same day: images, carousels, Reels and Stories are all
+in the mix. The earlier limit was never a tool constraint — Blotato has exposed
+`mediaType: reel|story` all along.
+
+Set `mediaType` for a Reel or Story; omit it for a feed post. `shareToFeed` puts a Reel in
+the grid as well. `trial` shows a Reel to non-followers first, but needs 1,000+ followers,
+so it is not available on a new account.
+
+**Reels are produced, not found.** The pipeline is the same media-hosting trick the images
+use: generate with Higgsfield (the `higgsfield-reels` skill carries the prompt craft),
+commit the file to `social/` on `main`, let Vercel serve it, then pass that URL in
+`mediaUrls`. Blotato fetches server-side, so the egress block never applies.
 
 ## Route the format to the platform that renders it natively
 
@@ -333,7 +350,7 @@ What each platform actually renders, verified 28 Aug 2026:
 | Text, no image | Native | Native | **Impossible.** Media is mandatory |
 | One image | Native, full quality | Native | Native |
 | Image set | **Degrades to a PDF** | Native grid, max 4 | **Native carousel, 2 to 10.** The home for photo sets |
-| Video | Native | Native | Not used — image-only by choice |
+| Video | Native | Native | **Native** — Reels and Stories |
 | Long form | Native, ~3000 chars | **280 cap.** Thread instead | Caption runs long, but the image carries it |
 | Working link | Costs reach, but works | Works, eats ~30 chars | **Dead in the caption.** First comment only |
 | Real @mention | **Not via Blotato** — publishes as plain text | Native | Not via Blotato |
@@ -490,14 +507,15 @@ can be one good post, make it one good post.
 
 ### Instagram
 
-Image-only by decision. Every post needs media — there is no text-only option — so the
-imagery rules are not a preference here, they are the format.
+Every post needs media — there is no text-only option — so the imagery rules are not a
+preference here, they are the format.
 
 | Format | Worth it? | Notes |
 |---|---|---|
 | **Carousel, 2 to 10** | **The reason Instagram is in the mix.** The only native home for a photo set, and the natural fit for the "show the artefact" format | Pipeboard `publish_instagram_media` is verified native. Blotato claims carousel support too, but its LinkedIn claim was wrong — test once before trusting it |
 | **Single image** | The base unit. 1080 x 1350 | Blotato, `mediaType` omitted |
-| **Reel / Story / video** | **Not used.** Josh's call, 28 Aug 2026 | n/a |
+| **Reel** | The reach format. Vertical 1080 x 1920, captions burned in — most watch muted | Blotato, `mediaType: reel`. `shareToFeed` for the grid too |
+| **Story** | Low stakes, 24 hours, good for the 7am moment and behind-the-scenes | Blotato, `mediaType: story`. No `firstComment` on stories |
 
 Links go in `firstComment`, never the caption. Alt text on every image.
 

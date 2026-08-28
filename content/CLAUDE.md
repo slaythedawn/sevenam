@@ -66,7 +66,7 @@ Same on X: everything goes to @girlboyrobot, posting as a person rather than as 
 |---|---|---|
 | LinkedIn, Josh Peacock | 5,494 | 500+ connections, 197 profile views. The main lead channel |
 | X, @girlboyrobot | 530 | Following 1,900. The ratio is worth fixing |
-| Instagram, 7am account | new | Added to the mix 28 Aug 2026. **Not yet connected** |
+| Instagram, 7am account | new | Added to the mix 28 Aug 2026. **Not yet connected.** Images, carousels, Reels and Stories |
 | LinkedIn, Sevenam page | ~0 | Not connected to Blotato, carries no posts |
 
 LinkedIn is roughly ten times X and is where the buyers are. Weight effort accordingly:
