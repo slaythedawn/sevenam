@@ -211,6 +211,27 @@ fake, then too weird and not looking like him.
 The mistake to avoid is reaching for generation because it feels like the clever option. It
 is the fallback, not the default.
 
+### Two formats worth stealing
+
+From a reference Josh flagged, 28 Aug 2026:
+
+**Frames from one continuous video.** Shoot one unbroken phone video walking through the
+actual thing — the account, the tool, the build — then cut it into stills and put one bold
+line of text on each. It carries a narrative across frames, it is obviously real because it
+is one continuous take, and it works as a story sequence, a carousel or a video. Highest
+effort-to-payoff format available and it needs no generated imagery at all.
+
+**The napkin drawing as its own post.** A mechanism drawn by hand, photographed. Low
+fidelity is the point: it cannot be faked, it reads as thinking rather than marketing, and a
+diagram explains a structure faster than three paragraphs.
+
+**The caveat that matters.** The reference shows a live Ads Manager with spend and ROAS on
+screen. Josh must not copy that part. Guardrail 2 forbids unapproved figures, guardrail 3
+forbids anything that identifies a client, and guardrail 6 forbids claiming a media result
+on a brand he did not buy for. Any screen recording of a real account needs the client
+unidentifiable and every visible figure signed off, or it does not go out. The format is
+worth stealing; the disclosure is not.
+
 ### The five real-photo formats, in Josh's words
 
 | Format | What it is | Fits |
@@ -498,6 +519,30 @@ Tag links with `utm_source=linkedin` or `utm_source=x`.
 outright rather than truncating. A URL eats roughly 25 to 35 of those, so a UTM tag is
 often the thing that has to go. Write the X version to length rather than cutting a
 LinkedIn post down to fit.
+
+## Verify after publishing. Every time.
+
+**Scheduling a post is not the same as publishing one.** Confirm it, and if it failed, fix
+it and try again rather than waiting to be told.
+
+After any publish or schedule:
+
+1. `blotato_get_post_status` with the `postSubmissionId`, or `blotato_list_posts` with
+   `status: ["failed"]`, which is the fastest way to catch anything broken.
+2. A post that has left `blotato_list_schedules` has fired — that says nothing about whether
+   it succeeded. Check the status, not the queue.
+3. On a failure: read the `errorMessage`, fix the cause, delete the schedule and recreate it
+   so the post revalidates. Do not assume a failed entry will heal itself at fire time.
+
+**Media 404 is the failure that has actually happened.** On 28 Aug a LinkedIn carousel
+failed with `Failed to fetch media URL: 404 Not Found`, because the images were referenced
+seconds after being pushed to `main` and Vercel had not finished deploying. Blotato
+validates media at creation time, not at fire time.
+
+**So always confirm the image is live before referencing it** — `web_fetch_vercel_url` on
+the exact URL, checking for a PNG rather than a 404 page. The site is blocked from this
+session directly, so the Vercel tool is the only way to see it. Never schedule against a
+URL pushed in the same breath.
 
 ## Two things Blotato cannot do, so the post goes by hand
 
