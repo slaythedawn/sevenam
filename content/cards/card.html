@@ -16,6 +16,9 @@
     color:var(--muted)}
   .lede{margin-top:18px;font-size:29px;font-weight:600;letter-spacing:-.03em;
     line-height:1.15;max-width:20ch}
+  /* statement mode: no rows, so the lede carries the card on its own */
+  .card.statement .lede{margin-top:auto;font-size:62px;line-height:1.08;max-width:14ch}
+  .card.statement .rows{display:none}
   .rows{margin-top:24px;display:flex;flex-direction:column;gap:16px}
   .row{border-top:1px solid var(--hair);padding-top:16px}
   .row:first-child{border-top:0;padding-top:0}
@@ -48,7 +51,9 @@
   try { data = q.get('d') ? JSON.parse(atob(q.get('d'))) : {}; } catch (e) { data = {}; }
   if (data.kicker) document.getElementById('kicker').textContent = data.kicker;
   if (data.lede) document.getElementById('lede').textContent = data.lede;
-  document.getElementById('rows').innerHTML = (data.rows || fallback).map(r =>
+  const rows = data.rows || (data.statement ? [] : fallback);
+  if (!rows.length) document.querySelector('.card').classList.add('statement');
+  document.getElementById('rows').innerHTML = rows.map(r =>
     '<div class="row"><div class="label">' + r.label + '</div>' +
     '<div class="fig' + (r.lead ? ' lead' : '') + '">' + r.fig + '</div>' +
     (r.sub ? '<div class="sub">' + r.sub + '</div>' : '') + '</div>'
