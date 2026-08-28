@@ -585,6 +585,17 @@ start.
 Both together are the common case for event and shout-out posts. Plan them as manual and
 write them into the week plan at `POST BY HAND` rather than discovering it at publish time.
 
+**Photos Josh sends in chat cannot be published by Claude.** Attachments do not reliably
+persist to the filesystem — the Tomi event photos never did — and with no file bytes there
+is nothing to host on the site or hand to Blotato, whose own uploader is blocked by the
+egress policy.
+
+This collides head-on with the imagery strategy. Real photos are the best imagery available
+and the ones Claude cannot post. Until there is a route for getting Josh's photos into a
+place Claude can read — a folder in the repo, or Google Drive, which this session can reach
+— **every post built on his own photography is manual.** Say so when planning, and weigh a
+publishable format against a better one that may never go out.
+
 **A manual post is a liability until it is chased.** On 28 Aug an event post sat at
 `POST BY HAND` and simply never went out — flagged, then forgotten, and LinkedIn went two
 days with nothing while the no-skip rule was in force.
