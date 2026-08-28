@@ -95,6 +95,52 @@ control for whether outbound links cost reach. The figures in the body match
 the ones in the image. Names no price, so the week's single offer mention
 stays unspent.
 
-### X · Fri 28 Aug
-status: none planned. X carried the announcement on the 27th and the cadence is
-meant to vary. Add one only if the day produces something.
+### X · the model · short · Mon 31 Aug
+status: SCHEDULED — 11:58 Sydney (01:58 UTC Mon 31)
+body: Percentage-of-spend billing has a quiet property nobody puts in the deck...
+
+---
+
+## The binding constraint
+
+Seven days x two channels is fourteen posts a week. Everything above was written
+from `truth-file.md` directly because `angle-bank.md` is empty, and that source is
+close to exhausted — it covers the offer, the thesis and Josh's history, and
+little else. Beyond Monday the choice is either Josh supplying real material (a
+7am decision with real numbers, a hands-on tool verdict, a photo) or filling the
+angle bank from the site's 65 pages. Without one of those, daily posting starts
+repeating itself, which costs more than a skipped day would have.
+
+### X · thread · Fri 28 Aug
+status: SCHEDULED in Blotato
+time: 13:19 Sydney (03:19 UTC Fri 28)
+format: thread, five posts. First use of the format.
+body:
+Before you sign with an agency, ask one question.
+When this ends, what do I keep?
+→ the ad account, the pixel and its history, the audiences, the creative files
+→ if any answer is theirs, you are renting your own marketing back
+
+## Sat 29 Aug
+
+### LinkedIn · craft · short · text only
+status: SCHEDULED — 09:38 Sydney (23:38 UTC Fri 28)
+format: text only, no image. One of the two or three a month the length mix calls for.
+body: Nobody can pick the winning ad up front...
+
+### X · craft · short
+status: SCHEDULED — 12:52 Sydney (02:52 UTC Sat 29)
+body: The deck can't tell you which ad wins...
+
+## Sun 30 Aug
+
+### LinkedIn · craft · medium · MULTI-IMAGE
+status: SCHEDULED — 10:07 Sydney (00:07 UTC Sun 30)
+format: two-card carousel, first use of multi-image. Cards built in statement
+mode from content/cards/card.html.
+assets: /social/report-9ad97e89.png and /social/read-95a9a6eb.png
+body: Every agency review I sat through told me what had already happened...
+
+### X · craft · short
+status: SCHEDULED — 17:34 Sydney (07:34 UTC Sun 30)
+body: A report tells you what happened...
