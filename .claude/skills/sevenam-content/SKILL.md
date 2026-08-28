@@ -513,6 +513,16 @@ start.
 Both together are the common case for event and shout-out posts. Plan them as manual and
 write them into the week plan at `POST BY HAND` rather than discovering it at publish time.
 
+## Check the day word when a post slips
+
+"Last night", "yesterday", "this morning" are correct on the day they are written and wrong
+the moment a post moves. An event post drafted Thursday for Friday said "last night" about
+a Wednesday event, which was two days out by the time it would have published.
+
+Before publishing anything that references a day, recompute it against the actual posting
+date. Prefer a named day — "Wednesday night" — over a relative one. It survives a slip, and
+naming the day is more specific, which the voice spec wants anyway.
+
 ## Timing
 
 All windows Australia/Sydney; `scheduledTime` goes to Blotato in **UTC**, so subtract 10

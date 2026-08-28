@@ -45,7 +45,7 @@ must be posted manually, for two reasons:
      be added to a post after publishing. Publishing through Blotato would strand
      it without images permanently.
 body:
-Last night was the most engaged I've ever felt at an event. I've been thinking about why.
+Wednesday night was the most engaged I've ever felt at an event. I've been thinking about why.
 
 It wasn't a stage and rows of chairs. Small room, stools, drinks, everyone close to the front. Tomi hosted from the floor with a mic rather than from behind a lectern, and the panel sat on stools instead of behind a table.
 
@@ -59,7 +59,11 @@ asset: two photos from the night. The wide room shot carries the argument about
 format; the close-up of Tomi supports the shout-out. Not hosted on the site
 on purpose — they show identifiable people who did not agree to appear on a
 company marketing domain.
-notes: Spelling is Tomi, not Tommy, per the screen behind him. The exact event
+notes: Opening was "Last night" when drafted on Thursday for a Friday morning
+post. The event was Wednesday, so by Friday that was two days wrong. Changed to
+"Wednesday night", which is also more specific and reads more human. **Check the
+day word against the actual posting date every time a post slips.**
+Spelling is Tomi, not Tommy, per the screen behind him. The exact event
 name is left out because tomigrainger.com is blocked from the session and it
 could not be verified; add it if wanted. Praises by name, which the rules allow
 — it is criticism that gets anonymised, never praise.
