@@ -590,8 +590,16 @@ persist to the filesystem — the Tomi event photos never did — so there are n
 
 **The photo pipeline, which solves this.** Verified 28 Aug 2026:
 
-1. Josh puts the photo in **Google Drive**. This session can read his Drive:
-   `mcp__Google_Drive__search_files` to find it, `download_file_content` for base64 bytes.
+1. Josh puts the photo in **Google Drive**, in `sevenam-social-photos`
+   (id `1U8iqnZSvPPAIuN2Hlh6k2pYls5omjPkm`,
+   https://drive.google.com/drive/folders/1U8iqnZSvPPAIuN2Hlh6k2pYls5omjPkm).
+   Find it with `search_files` using `parentId = '1U8iqnZSvPPAIuN2Hlh6k2pYls5omjPkm'`, then
+   `download_file_content` for base64 bytes.
+
+   **Claude cannot put photos there.** An image visible in the conversation is a rendering,
+   not a file — there is no way to write those pixels to disk, and chat attachments only
+   sometimes persist. Getting an original into Drive is always Josh's step. Everything after
+   it is Claude's.
 2. Decode, normalise to 1200x1500 if needed, commit under `social/` with a content-hashed
    name, push **that file only** to `main`.
 3. **Confirm it is live** with `web_fetch_vercel_url` before referencing it.
