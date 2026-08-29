@@ -1,88 +1,5 @@
 {
   "A": {
-    "kicker": "At $3,000 a month in media",
-    "lede": "The minimum fee is what you're actually paying.",
-    "rows": [
-      {
-        "label": "A $500 minimum",
-        "fig": "17%",
-        "sub": "of your media spend, before a single ad is made",
-        "lead": true
-      },
-      {
-        "label": "A $1,000 minimum",
-        "fig": "33%",
-        "sub": "the percentage never comes into it at all"
-      }
-    ]
-  },
-  "B1": {
-    "statement": true,
-    "kicker": "How agencies price Meta",
-    "lede": "Three models. One charges you for your own growth."
-  },
-  "B2": {
-    "kicker": "Model one",
-    "lede": "Percentage of ad spend.",
-    "rows": [
-      {
-        "label": "Typical range",
-        "fig": "10-20%",
-        "sub": "of monthly media, most common at higher budgets",
-        "lead": true
-      },
-      {
-        "label": "The failure mode",
-        "fig": "Growth",
-        "sub": "double the budget and the invoice doubles, for work that didn't"
-      }
-    ]
-  },
-  "B3": {
-    "kicker": "Model two",
-    "lede": "Flat monthly retainer.",
-    "rows": [
-      {
-        "label": "Typical range for SMEs",
-        "fig": "$800-$5,000",
-        "sub": "a month and beyond, depending on scope",
-        "lead": true
-      },
-      {
-        "label": "The failure mode",
-        "fig": "Drift",
-        "sub": "stable until scope and spend come apart"
-      }
-    ]
-  },
-  "B4": {
-    "kicker": "Model three",
-    "lede": "Base fee plus a share of results.",
-    "rows": [
-      {
-        "label": "The share",
-        "fig": "10-30%",
-        "sub": "of verified revenue, profit or leads above a baseline",
-        "lead": true
-      },
-      {
-        "label": "The failure mode",
-        "fig": "Baseline",
-        "sub": "it all rests on how that is set, and who verifies it"
-      }
-    ]
-  },
-  "B5": {
-    "statement": true,
-    "kicker": "Before you sign anything",
-    "lede": "Ask what this fee does at double my spend."
-  },
-  "C": {
-    "statement": true,
-    "kicker": "Reading the Meta Ad Library",
-    "lede": "A competitor's ad is evidence of a decision, not a result."
-  },
-  "D": {
     "kicker": "Working out what you actually pay",
     "lede": "The fee you're quoted isn't the fee you pay.",
     "rows": [
@@ -93,18 +10,18 @@
         "lead": true
       },
       {
-        "label": "Then divide by media spend",
+        "label": "Divide by media spend",
         "fig": "= your real %",
-        "sub": "almost always higher than the headline number"
+        "sub": "almost always higher than the headline"
       }
     ]
   },
-  "D1": {
+  "A1": {
     "statement": true,
-    "kicker": "Comparing two providers",
+    "kicker": "Two minutes with a calculator",
     "lede": "The fee you're quoted isn't the fee you pay."
   },
-  "D2": {
+  "A2": {
     "kicker": "Step one",
     "lede": "Add everything that leaves your account.",
     "rows": [
@@ -121,7 +38,7 @@
       }
     ]
   },
-  "D3": {
+  "A3": {
     "kicker": "Step two",
     "lede": "Divide the total by your media spend.",
     "rows": [
@@ -134,119 +51,74 @@
       {
         "label": "Why it matters",
         "fig": "Half a job",
-        "sub": "a fee excluding creative is paying for half of it"
+        "sub": "a fee that excludes creative quotes you for half of it"
       }
     ]
   },
-  "D4": {
+  "A4": {
     "statement": true,
-    "kicker": "The two questions",
-    "lede": "What happens at double my spend, and what do I own at the end."
+    "kicker": "Two questions before signing",
+    "lede": "What happens at double my spend, and is creative in or out."
   },
-  "E": {
+  "B1": {
     "statement": true,
-    "kicker": "Ad Library",
-    "lede": "Sort by how long an ad has been live, not by how many there are."
+    "kicker": "Briefing for concepts",
+    "lede": "A brief that asks for three headlines gets three headlines."
   },
-  "F": {
-    "statement": true,
-    "kicker": "Advantage+",
-    "lede": "Automation amplifies whatever it is given."
-  },
-  "F1": {
-    "statement": true,
-    "kicker": "Advantage+",
-    "lede": "It automates the part that used to be the job."
-  },
-  "F2": {
-    "kicker": "What it takes over",
-    "lede": "All of this, at no extra cost.",
+  "B2": {
+    "kicker": "What it has to contain",
+    "lede": "The person who recognises themselves in the first second.",
     "rows": [
       {
-        "label": "Handled by the platform",
-        "fig": "4 things",
-        "sub": "audience discovery, placement, budget distribution, iteration speed",
-        "lead": true
-      },
-      {
-        "label": "What that was",
-        "fig": "The fee",
-        "sub": "a large share of what a percentage was justified by"
-      }
-    ]
-  },
-  "F3": {
-    "kicker": "What it cannot do",
-    "lede": "The part that actually decides the account.",
-    "rows": [
-      {
-        "label": "Still entirely yours",
-        "fig": "Creative",
-        "sub": "it cannot make your ads, only choose between them",
+        "label": "Because",
+        "fig": "Generic",
+        "sub": "openings are skipped by everyone equally",
         "lead": true
       },
       {
         "label": "And",
-        "fig": "Judgement",
-        "sub": "broken tracking, what a customer is worth, when a winner went stale"
+        "fig": "One thing",
+        "sub": "that has to land if nothing else does"
       }
     ]
   },
-  "F4": {
-    "statement": true,
-    "kicker": "The honest version",
-    "lede": "It raised the floor and moved the constraint. It didn't remove it."
-  },
-  "G": {
-    "kicker": "Creative testing",
-    "lede": "Most testing concludes nothing because it tests the wrong thing.",
+  "B3": {
+    "kicker": "What else goes in",
+    "lede": "The objection this ad exists to handle.",
     "rows": [
       {
-        "label": "What usually gets tested",
-        "fig": "Variants",
-        "sub": "same idea, new headline, new background, new button",
+        "label": "Plus",
+        "fig": "The losers",
+        "sub": "what you already know does not work",
         "lead": true
       },
       {
-        "label": "What actually moves it",
-        "fig": "Angles",
-        "sub": "a different reason to care, a different opening three seconds"
+        "label": "Real constraints",
+        "fig": "3 seconds",
+        "sub": "vertical, sound off, enough to stop a thumb"
       }
     ]
   },
-  "G1": {
+  "B4": {
     "statement": true,
-    "kicker": "Creative testing",
-    "lede": "Test angles against each other, not variants."
+    "kicker": "The test of a brief",
+    "lede": "Could two people read it and come back with different work."
   },
-  "G2": {
-    "statement": true,
-    "kicker": "Rule two",
-    "lede": "Ship new concepts weekly, not in one monthly batch."
-  },
-  "G3": {
-    "statement": true,
-    "kicker": "Rule three",
-    "lede": "Let a test leave the learning phase before you conclude anything."
-  },
-  "G4": {
-    "statement": true,
-    "kicker": "Rule four",
-    "lede": "Judge on cost per result. Click-through rate flatters bad ads."
-  },
-  "G5": {
-    "statement": true,
-    "kicker": "Rule five",
-    "lede": "Document the losers. The pattern in them is the real output."
-  },
-  "H": {
-    "statement": true,
-    "kicker": "When performance drops",
-    "lede": "When frequency climbs, the creative is the problem."
-  },
-  "I": {
-    "statement": true,
-    "kicker": "Who owns the account",
-    "lede": "Theirs has to be renewed. Yours has to be earned."
+  "C": {
+    "kicker": "What a buyer opens first",
+    "lede": "They check the account before they check the ROAS.",
+    "rows": [
+      {
+        "label": "First question",
+        "fig": "Whose BM",
+        "sub": "an account inside a provider's does not transfer cleanly",
+        "lead": true
+      },
+      {
+        "label": "Then",
+        "fig": "Pixel history",
+        "sub": "the one part nobody can recreate after the fact"
+      }
+    ]
   }
 }
