@@ -105,24 +105,78 @@ occasionally LinkedIn.
 
 ---
 
-## The weekly rhythm
+## Not a roster. A palette.
 
-A default to vary from, not a cage. Series rotate so no two consecutive days share a mode.
+**Corrected 29 Aug 2026, an hour after the first version.** Josh: *"Social media should be
+messy, not so predictable."* He is right, and the first draft of this file was a timetable —
+Monday is always The Position, Tuesday is always Inside the Account. That is a content
+calendar, and it reads like one from the outside.
 
-| Day | LinkedIn | X | Instagram |
-|---|---|---|---|
-| Mon | The Position | One Thing | The Position |
-| Tue | Inside the Account | One Thing | Inside the Account |
-| Wed | The Method | Method thread | The Method, carousel |
-| Thu | 7am | 7am | 7am |
-| Fri | The Teardown | One Thing | The Teardown, carousel |
-| Sat | Off Duty | One Thing | The Mission |
-| Sun | The Position | One Thing | Off Duty |
+**What recurs is the treatment, not the timing.** Someone who has seen three Teardowns knows
+what a marked-up frame means before they read a word. That recognition is the whole benefit
+of having series, and it survives completely without a schedule. Nothing is gained by
+Tuesday always being the same shape, and something real is lost: an account that posts the
+same shape every Tuesday was obviously planned by somebody, and it reads that way.
 
-**When there is no 7am number**, Thursday takes an extra Inside the Account or Teardown. It
-never takes an invented figure.
+**So the eight series are a palette to draw from, never a rota to work through.**
 
----
+### The mess rules
+
+1. **Draw by what is true today, not by whose turn it is.** If the account did something
+   interesting this morning, that is the post. The plan is a list of options, not a list of
+   slots.
+2. **Let reality interrupt.** Anything that actually happened outranks anything planned.
+   Bin the plan without ceremony.
+3. **Run in bursts.** Three posts on one idea across two days, then leave that thread alone
+   for a fortnight. Real interest is lumpy. Even distribution is the tell.
+4. **Vary the finish, hard.** Roughly one post in four should look like it took four
+   minutes, because it did. A phone photo, one line, no card, no crop. A feed where every
+   post is produced to the same standard looks like a campaign.
+5. **Vary length past the point of comfort.** Nine words next to three hundred. The
+   published length mix is a floor, not a rhythm.
+6. **Do not centre the window.** The timing windows exist for reach, but posting at the same
+   point inside them every day is the same signature as a fixed minute.
+7. **Leave things unresolved.** A thought that goes nowhere. An observation with no lesson
+   attached. Not everything needs a landing.
+8. **React, do not only publish.** Quote posts, replies, a screenshot of something someone
+   else said. Cheap, fast, and the most human thing on the account.
+9. **Break a series on purpose** every few weeks. A post that fits none of the eight.
+
+### The thing that stays disciplined
+
+**Mess in what and when. Discipline in how it looks.** The volt treatments, the palette, the
+claim rules and the approval gate never loosen. An unpredictable account with a consistent
+hand reads as a person. An unpredictable account with an inconsistent hand reads as
+abandoned.
+
+### The remaining predictable element, flagged not argued
+
+The no-skip-a-day rule is itself a metronome: one post per channel per day, forever, is a
+pattern visible from orbit. Josh overrode the old vary-the-cadence rule deliberately on
+28 Aug and that stands. Worth knowing that it is now the largest regular signal in the
+system, and that the mess has to come from format, length, finish and order instead.
+
+### What a real fortnight looks like
+
+Uneven on purpose. Series recur without a pattern, some days carry two posts on a channel,
+one day gets hijacked, one post is deliberately throwaway.
+
+| Day | Roughly |
+|---|---|
+| 1 | Teardown, long. X gets two, hours apart |
+| 2 | Off Duty, one line and a bad photo. Nothing else |
+| 3 | Inside the Account, filmed screen. Then a follow-up that afternoon because a reply asked |
+| 4 | The Method, the week's produced piece |
+| 5 | Quiet. One short One Thing on each channel |
+| 6 | The Mission |
+| 7 | 7am, because the numbers were interesting |
+| 8 | Nothing planned survives: something happened, post that |
+| 9 | The Position |
+| 10 | Second Teardown in ten days, because the first one landed |
+| 11 | Off Duty. A throwaway |
+| 12 | Inside the Account, then One Thing four hours later |
+| 13 | The Method as a carousel |
+| 14 | A post that fits none of the series |
 
 ## Video, and why it is now in the mix
 

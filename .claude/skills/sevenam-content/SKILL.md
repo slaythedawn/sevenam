@@ -620,9 +620,24 @@ Written 29 Aug 2026 on Josh's instruction to develop content themes that repeat 
 schedule across four modes: aspiration, informative, lifestyle, education.
 
 Eight named series carry those modes: **7am**, **Inside the Account**, **The Teardown**,
-**The Method**, **One Thing**, **The Position**, **The Mission**, **Off Duty**. A feed works
-when the viewer recognises what they are looking at before they read it, and that needs
-recurrence, not a stream of one-offs.
+**The Method**, **One Thing**, **The Position**, **The Mission**, **Off Duty**.
+
+**They are a palette, never a rota.** Josh, 29 Aug 2026: *"Social media should be messy, not
+so predictable."* The first version of the strategy was a timetable, Monday always The
+Position, and that reads like a content calendar from the outside. **What recurs is the
+treatment, not the timing** — someone who has seen three Teardowns recognises a marked-up
+frame before reading a word, and that works with no schedule at all.
+
+So: draw by what is true today rather than whose turn it is. Let anything real outrank
+anything planned. Run in bursts and then leave a thread alone for a fortnight. **Make roughly
+one post in four look like it took four minutes**, because a feed produced to a uniform
+standard looks like a campaign. Vary length past comfort. Do not sit in the middle of the
+timing window every day. Leave things unresolved. React as well as publish. Break a series on
+purpose every few weeks.
+
+**Mess in what and when. Discipline in how it looks.** The treatments, the palette, the claim
+rules and the approval gate never loosen. Unpredictable with a consistent hand reads as a
+person; unpredictable with an inconsistent hand reads as abandoned.
 
 ### Inside the Account, and the rule that makes it publishable
 
