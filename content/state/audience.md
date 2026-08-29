@@ -75,6 +75,74 @@ Researched rather than assumed:
 - **The fee compounds with their own growth**, which is the site's existing argument and now
   has somewhere to land.
 
+---
+
+# Segment two: marketers inside companies
+
+Added 29 Aug 2026 on Josh's instruction. The founder above is one audience. The other is
+**marketing and brand people inside corporations and larger brands**: performance leads,
+brand managers, ecommerce managers, heads of marketing, CMOs who do not own the company.
+
+## What actually drives them
+
+They do not carry the P&L. They carry **a number and a relationship with the people above
+them**. What moves them is whether the quarter goes well, whether they are seen as the
+person who is across it, and whether a decision they made survives being questioned.
+Josh's framing: the career, the result, the bonus.
+
+## Never write that literally
+
+**No "get promoted". No "impress your CFO". No "be the hero of the meeting". Ever.**
+
+Writing about someone's career ambition to their face is patronising, and anyone senior
+enough to actually buy will read it as manipulation. The motivation is real and it is
+served by giving them the thing, never by naming the thing.
+
+**Serve it by making them the best-informed person in their next meeting.** A framework that
+survives scrutiny. A number their CFO will ask about, before they get asked. A question to
+put to their agency they would not otherwise have known to ask. The value delivered is that
+they knew it first, and that is felt rather than stated.
+
+**The test.** Would this person forward it to their boss, or quote it in a meeting on
+Thursday? Interesting is not enough. It has to be **usable**.
+
+## Where the two segments diverge, and it changes the writing
+
+**The founder can change the fee model. The corporate marketer usually cannot.** They may
+have chosen the incumbent agency themselves, and often sat on the panel that appointed them.
+
+So the argument against the structure must never corner them. Aim at the model, never at the
+decision they made, and always leave a move they can make inside a constrained role: how they
+brief, how they judge a test before it leaves the learning phase, what they insist appears in
+a report, which question goes in the next QBR. A post that only works if the reader can fire
+their agency excludes half the audience.
+
+This sharpens the rule that already exists. The enemy is an incentive structure, and it is
+now also true that **the enemy is never the reader's past decision.**
+
+## Where they converge, which is most of the time
+
+Both segments want the same artefacts for different reasons:
+
+| Artefact | The founder reads it as | The marketer reads it as |
+|---|---|---|
+| Effective fee percentage framework | My margin | Analysis that makes me look rigorous |
+| What a buyer checks in an ad account | Diligence preparation | Evidence I am across the whole picture |
+| Creative velocity as the real constraint | A growth lever I control | A reason my results are not my fault, and a fix |
+| Ownership of the account and pixel | An asset on my balance sheet | Continuity risk I can raise before it bites |
+
+**So this is not two content streams.** It is one stream held to a higher bar: every post has
+to be usable by someone who does not own the company. That single constraint keeps both
+audiences served without splitting the calendar or diluting either.
+
+## Channel weighting
+
+These people live on LinkedIn, which reinforces it as the lead channel and the place the
+careful, forwardable posts go. Instagram skews founder and entrepreneur, and carries more of
+the ambition and the personal thread.
+
+---
+
 ## How this changes the writing
 
 **Every post starts where they are going, not where the market is broken.** Diagnosis is one

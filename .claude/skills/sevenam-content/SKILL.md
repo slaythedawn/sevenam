@@ -135,10 +135,31 @@ educated, but it's about how we can get them to where they want to get to. The m
 should be aligned to that, and teasing ways that we do that, how we do things differently,
 is the how."*
 
-**The audience is entrepreneurs and brand owners who are trying to get somewhere.** Not
-marketers, not peers, not people looking for commentary. They are trying to move their
-business from where it is to where they want it, and every post either helps with that or
-is decoration.
+**There are two audiences and they are served by one stream.** Full detail in
+`content/state/audience.md`; read it before planning a week.
+
+1. **Founders and brand owners** trying to move their business from where it is to where they
+   want it. They carry the P&L and can change anything.
+2. **Marketers inside companies** — performance leads, brand managers, heads of marketing.
+   Added 29 Aug 2026. They carry a number and a relationship with the people above them.
+   What drives them is the career, the result, the bonus.
+
+**Never write the second one literally.** No "get promoted", no "impress your CFO", no "be
+the hero of the meeting". Naming someone's career ambition to their face is patronising and
+reads as manipulation to exactly the senior people who could buy. Serve it instead by making
+them the best-informed person in their next meeting: a framework that survives scrutiny, the
+number their CFO will ask about before they are asked, the question to put to their agency
+they did not know to ask. The test is whether they would forward it or quote it on Thursday.
+Interesting is not enough; it has to be usable.
+
+**The constraint this adds, and it is the useful one:** the founder can fire their agency and
+the corporate marketer usually cannot, having often appointed them. So never corner the
+reader. The enemy is the incentive structure and **never the reader's own past decision**, and
+every post leaves a move available inside a constrained role — how they brief, how they judge
+a test, what they insist is in the report. A post that only works if the reader owns the
+company excludes half the audience.
+
+Neither audience is peers, and neither is looking for commentary.
 
 **The failure this corrects.** The first full week drafted, 29 Aug, was about ninety per
 cent diagnosis and ten per cent destination. It explained what is wrong with percentage
