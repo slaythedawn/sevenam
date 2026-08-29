@@ -700,9 +700,32 @@ images as reference each time when briefing higgsfield."* The two existing Souls
 "JP") are both dead ends — neither looked like him, and neither is to be used again. Do not
 propose training a third.
 
-**Instead, pass his reference photos on every generation.** They live as Higgsfield
-`media_id`s, uploaded through `media_upload_widget`, and go in `medias` with role
+**Instead, pass his reference photos on every generation.** They go in `medias` with role
 `image_references`.
+
+**Getting them there, once, so they are reusable forever.** Josh's question, 29 Aug 2026.
+The answer is Drive, because it is the only route that also yields the original photographs
+for the slots that want a real photo rather than a generation:
+
+1. Josh drops the photos in `sevenam-social-photos`
+   (id `1U8iqnZSvPPAIuN2Hlh6k2pYls5omjPkm`). This is the only step he does.
+2. `search_files` with that `parentId`, then `download_file_content` for the bytes.
+3. Normalise, commit under `social/` with content-hashed names, push **that file only** to
+   `main`. Confirm each URL is live with `web_fetch_vercel_url` before using it.
+4. `mcp__Higgsfield__media_import_url` on each public URL returns a durable `media_id`.
+5. **Record the ids in the table below.** They outlive the container, so every future
+   session passes the same set without Josh uploading anything again.
+
+`media_upload_widget` does the same job in one step and is the fallback if Drive is
+unavailable, but it delivers only to Higgsfield, so the real-photo slots stay unfilled.
+
+| Photo | Higgsfield `media_id` | Site URL |
+|---|---|---|
+| Car, black tee, rain on the glass | _pending_ | _pending_ |
+| Car, white long sleeve, daylight | _pending_ | _pending_ |
+| Profile, sunglasses, water behind | _pending_ | _pending_ |
+| Human moment, holding his daughter | _pending_ | _pending_ |
+| Shopping centre, glasses | _pending_ | _pending_ |
 
 **This changes the model.** `nano_banana_pro` is now the one for any scene with Josh in it,
 for two reasons verified 29 Aug 2026:
