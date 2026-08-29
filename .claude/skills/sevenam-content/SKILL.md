@@ -126,6 +126,55 @@ format for later, once people know whose mechanism it is.
 This does not contradict the no-credential-stacking rule or the client-base rule. Personal
 means the story and the reasoning, not a list of logos or a headcount of accounts.
 
+## Who this is for, and it is not about Josh
+
+**Corrected 29 Aug 2026, and it outranks most of what follows.** Josh's words: *"People
+following want to get to somewhere, so we're targeting entrepreneurs and brand owners. It's
+about them, the audience, not about me and what I offer. Yes, they want to learn and get
+educated, but it's about how we can get them to where they want to get to. The messaging
+should be aligned to that, and teasing ways that we do that, how we do things differently,
+is the how."*
+
+**The audience is entrepreneurs and brand owners who are trying to get somewhere.** Not
+marketers, not peers, not people looking for commentary. They are trying to move their
+business from where it is to where they want it, and every post either helps with that or
+is decoration.
+
+**The failure this corrects.** The first full week drafted, 29 Aug, was about ninety per
+cent diagnosis and ten per cent destination. It explained what is wrong with percentage
+fees, how the Ad Library works, why creative testing concludes nothing. All true, all
+sourced, and all of it stopping at the problem. The posts that were not diagnosis were
+autobiography, which is worse: a story about Josh with no job to do for the reader.
+
+**The shape of a post, in order:**
+
+1. **The destination.** Where they are trying to get to, stated concretely.
+2. **The obstacle.** What is actually in the way. This is where the diagnosis lives, and it
+   is one part of a post rather than the whole of it.
+3. **The how, teased not withheld.** How Sevenam does this differently. Enough that the
+   method is visible and credible, not so much that there is nothing left to talk about.
+   Teasing is not coyness. Give something real away every time.
+
+**Test every post: whose problem is the first line about?** If the subject of the sentence
+is Josh, his history, or his opinion, rewrite it so the subject is the reader and their
+outcome. Josh's experience is evidence in service of their decision, never the topic.
+
+Worked example. *"An arrangement where the provider owns the asset has to be renewed"* is a
+thesis. *"In two years you will either own an ad account that is worth something, or you
+will be renting one, and that is decided in your first week"* is the same fact aimed at
+where they are going.
+
+**This does not license hype.** Destination writing fails when it promises an outcome, and
+guardrail 2 still forbids inventing a number or a result. Describe the position they end up
+holding, which is a structural claim and true, not the money they will make, which is not
+ours to promise.
+
+**It changes the imagery too.** Aspirational images are legitimate when they read as the
+reader's destination and dishonest when they read as a claim about Josh's possessions. A
+villa captioned as his Tuesday is a claim. Ambition, scale and standard as the thing the
+reader is moving toward is the brief. Do not strip the ambition out to be safe, which was
+the over-correction made the same day.
+
 ## Strategy: report from inside, do not comment from outside
 
 Commentary on the latest model release is the most crowded space on LinkedIn. It decays in
