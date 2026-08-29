@@ -390,14 +390,35 @@ Same material, three native pieces. Never one piece pushed through three doors.
 Set 27 Aug 2026, after generated attempts were rejected as depressing, too colourful, too
 fake, then too weird and not looking like him.
 
-**The order of preference. Work down it, never up.**
+**Corrected 29 Aug 2026, after a full week was drafted with 26 typographic cards.** Josh's
+words: *"Wrong style. Occasionally design-led posts, mostly UGC-style mockups using me or
+whoever."* A card set is a design system, not a feed. Cards are the exception now, not the
+base.
+
+**The mix, and it is a mix rather than a ranking.** Roughly four in five posts are a person
+in a real situation. Roughly one in five is design-led — a card, a diagram, a typographic
+statement — used when the payload really is exact figures, or when the week needs a change
+of texture.
+
+**"Or whoever" is the important half of that instruction.** The subject does not have to be
+Josh. That matters because his likeness is the one thing generation cannot currently do:
+both trained Souls were rejected as not looking like him. An anonymous person at a kitchen
+bench at eleven at night, hands on a phone, a laptop on a car bonnet — all of that is
+generatable today, in the house style, with no likeness problem. Use it.
+
+**The order of preference within the UGC lane. Work down it, never up.**
 
 1. **A real photo of Josh.** Taken on his phone, unstyled. Beats everything else for a
    personal brand, cannot be faked by a competitor, and is what LinkedIn rewards.
-2. **A real screenshot or artefact** — an ad in the Library, a tool mid-use, a build in
+2. **A UGC-style generated scene, someone other than Josh** — or him from behind, in
+   profile, hands only, cropped. This is the workhorse for the days there is no real photo.
+3. **A real screenshot or artefact** — an ad in the Library, a tool mid-use, a build in
    progress. Concrete proof, doubles as evidence.
-3. **A rendered card** (`content/cards/card.html`) — whenever the payload is exact figures.
-4. **A generated image** — last, and only when the idea genuinely cannot be photographed.
+4. **A rendered card** (`content/cards/card.html`) — the design-led one in five, whenever
+   the payload is exact figures.
+
+**Never a week of cards again.** If a plan is reaching for a card on most days, the plan has
+run out of ideas for imagery, not out of reasons to use one.
 
 The mistake to avoid is reaching for generation because it feels like the clever option. It
 is the fallback, not the default.
