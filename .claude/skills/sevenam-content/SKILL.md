@@ -577,7 +577,8 @@ that is, which is not often — Higgsfield is the tool.
 
 | Need | Tool |
 |---|---|
-| Conceptual, editorial, atmospheric, anything photographic | `mcp__Higgsfield__generate_image`, model `soul_2` |
+| **Any scene with Josh in it** | `nano_banana_pro` + his reference photos as `image_references`, `aspect_ratio: "4:5"` |
+| UGC scene with no Josh in it | `soul_2`. No reference needed, but there is no 4:5 |
 | Legible text or a diagram inside the image | `nano_banana_pro` |
 | Product or ad-style | `marketing_studio_image` |
 | **Exact figures** | **The HTML card. Not Higgsfield.** |
@@ -588,12 +589,18 @@ one unrecoverable mistake, so anything carrying figures gets rendered, not gener
 
 **Four practical constraints, all verified 27 Aug:**
 
-1. **No 4:5.** `soul_2` offers 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3 — a 4:5 request is
-   silently coerced to 3:4, which is *taller* than LinkedIn's crop. Compose with everything
-   important centred, or pass the result through `mcp__Higgsfield__reframe`.
-2. **Claude cannot see the output.** The CloudFront host that serves generations is blocked
-   by this session's egress policy, so images are generated blind. **Josh reviews every
-   generated image in the widget before it goes anywhere.** Never publish one sight unseen.
+1. **`soul_2` has no 4:5.** It offers 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3 — a 4:5 request
+   is silently coerced to 3:4, which is *taller* than LinkedIn's crop. `nano_banana_pro`
+   does offer 4:5, which is the main reason to prefer it. If a shot has to come out of
+   `soul_2`, compose everything important centred, or pass the result through
+   `mcp__Higgsfield__reframe`.
+2. **Claude can see the output after all, through the Higgsfield sandbox.** The CloudFront
+   host is blocked from this session directly, but `mcp__Higgsfield__sandbox_exec` runs on
+   Higgsfield's own infrastructure with unrestricted internet. So: `curl` the generation URL
+   inside the sandbox, downscale it with ffmpeg or Pillow, base64 it to stdout, decode
+   locally and read it. Keep the payload under about 19,000 characters or the MCP result is
+   truncated mid-string. Josh still reviews every generated image before publication, but
+   Claude no longer has to generate blind, and should look before showing him a dud.
 3. **Ask for no lettering.** Say so explicitly in the prompt. Stray generated text is the
    most common way an otherwise good image becomes unusable.
 4. **Whether Blotato can fetch a CloudFront URL is untested.** If `mediaUrls` rejects one,
@@ -647,9 +654,32 @@ or the model produces garbled UI.
 
 ### Josh in the scene
 
-Soul `ad293cb4-b435-472a-8b66-76999ea324ec` — **"JP v2"**, ready, works only with `soul_2`
-and `soul_cinematic`. Pass it as `soul_id`. (An older "JP" exists at
-`a452d512-dfc2-49a0-9cd8-4a9750f0a1fb`; prefer v2.)
+**Do not train or use a Soul.** Josh's call, 29 Aug 2026: *"Don't use soul. Just use those
+images as reference each time when briefing higgsfield."* The two existing Souls
+(`ad293cb4-b435-472a-8b66-76999ea324ec` "JP v2" and `a452d512-dfc2-49a0-9cd8-4a9750f0a1fb`
+"JP") are both dead ends — neither looked like him, and neither is to be used again. Do not
+propose training a third.
+
+**Instead, pass his reference photos on every generation.** They live as Higgsfield
+`media_id`s, uploaded through `media_upload_widget`, and go in `medias` with role
+`image_references`.
+
+**This changes the model.** `nano_banana_pro` is now the one for any scene with Josh in it,
+for two reasons verified 29 Aug 2026:
+
+| | `nano_banana_pro` | `soul_2` |
+|---|---|---|
+| Reference images | **`image_references`, no stated cap** | `image`, **max 1** |
+| 4:5 portrait | **Native** | **Not offered.** Silently coerced to 3:4 |
+
+So the model that was recorded as "the one" is the wrong tool for this brief on both counts.
+`soul_2` keeps its place for UGC scenes with **no Josh in them**, where no reference is
+needed and 1:1 or 3:4 is acceptable.
+
+The reference set, five photos as of 29 Aug 2026: two car selfies (black tee in rain, white
+long-sleeve in daylight), a sunglasses profile at the water, a human moment holding his
+daughter, and a shopping-centre selfie in glasses. Pass as many as the model accepts rather
+than picking one — identity holds better across a set.
 
 **Never direct to camera.** He is in the scene, not presenting from it: head down at the
 phone, three-quarters turned away, walking past in profile, seen from the side or slightly
