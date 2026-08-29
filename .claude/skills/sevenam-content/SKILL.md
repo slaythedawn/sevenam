@@ -613,6 +613,48 @@ theatre. What works is the register used everywhere else: one specific, small, f
 pointless detail. The time on the clock. What was playing. That he did not want to go. Never
 a motivational line, and never a lesson stated at the end.
 
+## The series, and the schedule they run on
+
+**Full strategy in `content/state/content-strategy.md`. Read it before planning a week.**
+Written 29 Aug 2026 on Josh's instruction to develop content themes that repeat on a
+schedule across four modes: aspiration, informative, lifestyle, education.
+
+Eight named series carry those modes: **7am**, **Inside the Account**, **The Teardown**,
+**The Method**, **One Thing**, **The Position**, **The Mission**, **Off Duty**. A feed works
+when the viewer recognises what they are looking at before they read it, and that needs
+recurrence, not a stream of one-offs.
+
+### Inside the Account, and the rule that makes it publishable
+
+The format Josh flagged from a competitor: a phone filming a real Ads Manager screen, big
+plain text overlay, each frame advancing one claim. It is the strongest proof format there
+is, because filming a screen off a phone reads as unfakeable in a way a clean screenshot
+never does.
+
+**That reference publishes live ROAS, spend and revenue. Sevenam cannot.** Guardrail 2
+forbids an unapproved figure and guardrail 3 forbids anything identifying a client. So the
+format is rebuilt rather than copied:
+
+> **Film the system, redact the money. Volt bars over every spend figure, ROAS, revenue
+> number and client name. No exceptions, and never "it is only a small number".**
+
+The redaction is the design. It says real account, numbers withheld, which is true and more
+interesting than the figure. It also matches the mark-up signature, so the two informative
+series share a visual language.
+
+### The volt treatments, which are the actual signature
+
+Applied **in code**, not asked of the generator, so the brand colour is exact and it repeats
+perfectly:
+
+- **Volt mark-up** — a high contrast black and white photograph with a precise volt
+  annotation over it: a circle, an arrow, a rule under one detail. It says someone looked at
+  this and made a call, which is literally the product.
+- **Volt redaction** — bars over figures on a filmed screen.
+
+**Monochrome plus volt everywhere, except The Mission**, which drops volt entirely so the
+training thread reads apart from the work at grid level.
+
 ## Post formats, and which are worth using
 
 Six LinkedIn slots and ten to fourteen X slots a week is a lot of text posts. The format is
