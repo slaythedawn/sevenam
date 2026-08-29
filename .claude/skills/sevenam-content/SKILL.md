@@ -164,6 +164,36 @@ thesis. *"In two years you will either own an ad account that is worth something
 will be renting one, and that is decided in your first week"* is the same fact aimed at
 where they are going.
 
+**The destination, researched 29 Aug 2026 and written up in `content/state/audience.md`.**
+Read that file before planning a week. The short version: these founders are building toward
+a business that is **sellable**, and in 2026 the market pays on EBITDA margin and clean unit
+economics rather than growth. That makes the fee model a **valuation** question, not just a
+cost one, because a percentage of spend is an EBITDA line item and EBITDA is what the
+multiple is applied to. An agency-owned ad account is separately a diligence problem, since
+the buyer is purchasing an acquisition engine the brand does not actually hold. Nobody in
+this market writes about it this way, and both arguments are already on the site.
+
+Their destination in one line: **an account they own, margin that survives their own growth,
+and a business somebody else could run or buy without it falling over.**
+
+**Decision on how much to give away, made 29 Aug 2026: publish the whole method.** The what
+and the how, in full. Withhold only client specifics, which guardrail 3 forbids anyway.
+
+The reasoning, since this looks like a commercial risk and is not one. Sevenam does not sell
+information, it sells the daily execution of a method and the ownership of the asset that
+results. Neither is copyable from a post. The research on high-ticket services is consistent:
+free content filters out the people who were never going to buy, and buyers convert *more*
+readily once they can see how much work is actually involved. The over-giving failure mode is
+real for information products and does not apply here.
+
+It is also already the brand's own position. The site tells a reader spending under three
+thousand a month to run it themselves. Publishing the method is the same posture applied to
+content, and the 7am decision post is the proof: showing exactly what a day's decisions look
+like is the single most persuasive argument for having someone else make them.
+
+So there is no withheld step, no "DM me for the framework", no gated PDF. Teasing means the
+post shows the method working, not that it stops before the useful part.
+
 **This does not license hype.** Destination writing fails when it promises an outcome, and
 guardrail 2 still forbids inventing a number or a result. Describe the position they end up
 holding, which is a structural claim and true, not the money they will make, which is not
