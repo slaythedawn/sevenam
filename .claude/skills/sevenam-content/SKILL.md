@@ -314,13 +314,19 @@ through LinkedIn.
 
 ### The 7am Instagram account
 
-Connected Instagram accounts as of 28 Aug 2026 are `onlinemodelacademy` (67753) and
-`summerofjosh` (67754). **The 7am account is not connected yet** — until it is, nothing can
-be scheduled to it. Two things have to happen first, in order:
+**The 7am account is `sevenam.ai`, Blotato account id `67966`.** Connected and verified
+29 Aug 2026. It is a professional account linked to a Facebook Page — Instagram's publishing
+API refuses personal accounts, so that link is what makes it reachable at all.
 
-1. It must be a **Business or Creator** account linked to a Facebook Page. Instagram's
-   publishing API refuses personal accounts, so no tool can reach it.
-2. Connect it in Blotato, then confirm with `blotato_list_accounts` before drafting for it.
+The other connected Instagram accounts are `onlinemodelacademy` (67753) and `summerofjosh`
+(67754). Neither is part of this system: OMA has its own skill and its own brand. **Check the
+account id before every Instagram call** — posting Sevenam content to OMA would be
+unrecoverable.
+
+**Pipeboard cannot reach `sevenam.ai`.** Re-checked 29 Aug 2026: Pipeboard only sees
+Instagram accounts attached to a Meta *ad* account, and it still returns `onlinemodelacademy`
+alone. So for this account Blotato is the only route, and the carousel fallback does not
+exist. Test the first carousel and look at it before trusting the format.
 
 **Instagram runs the full format range.** Josh's call, 28 Aug 2026, revising the
 image-only decision made earlier the same day: images, carousels, Reels and Stories are all
@@ -716,7 +722,7 @@ criticism carries a replacement or it is complaining.
 |---|---|---|
 | LinkedIn, Josh Peacock | 5,494 | The lead channel. Weight effort here |
 | X, @girlboyrobot | 530 | Roughly a tenth of LinkedIn |
-| Instagram, 7am account | new | **Not connected yet.** Image-only: single images and carousels |
+| Instagram, `sevenam.ai` | new | Connected 29 Aug 2026, id `67966`. Images, carousels, Reels, Stories |
 | LinkedIn, Sevenam page | ~0 | Settled: carries no posts |
 
 Everything posts as a person, not as a brand. **Never cross-post the same text** — write
