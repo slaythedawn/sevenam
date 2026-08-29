@@ -619,8 +619,18 @@ a motivational line, and never a lesson stated at the end.
 Written 29 Aug 2026 on Josh's instruction to develop content themes that repeat on a
 schedule across four modes: aspiration, informative, lifestyle, education.
 
-Eight named series carry those modes: **7am**, **Inside the Account**, **The Teardown**,
-**The Method**, **One Thing**, **The Position**, **The Mission**, **Off Duty**.
+Eleven named series carry those modes: **The Build**, **7am**, **Inside the Account**,
+**The Teardown**, **The Method**, **One Thing**, **The Position**, **In the Room**,
+**The Tool**, **The Mission**, **Off Duty**.
+
+**The Build is the most important and it was missing from the first draft.** Both style
+references Josh has given are this format: the GYG *Nacho Average Application* (seven videos,
+one hour, fifty dollars, instead of a CV) and the Isabella film (a finished campaign, then
+the reveal that the model never existed). **Make something, absurdly fast and cheap, show the
+receipt.** The time and the cost are the payload because they prove the thesis without
+asserting it — "I build at speed" is a claim, seven videos in an hour for fifty dollars is
+evidence. Publish his own numbers freely: time, cost, tools, method. Those are not client
+figures and no guardrail touches them.
 
 **They are a palette, never a rota.** Josh, 29 Aug 2026: *"Social media should be messy, not
 so predictable."* The first version of the strategy was a timetable, Monday always The

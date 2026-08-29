@@ -61,6 +61,53 @@ no client account at all.
 under the thing that matters. **Cadence.** One a week. **Channels.** LinkedIn and Instagram
 carousel.
 
+### 3b. The Build — *aspiration and informative, and the most important one here*
+
+**Added 29 Aug 2026 after Josh pointed out it was missing.** It should have been first. Both
+style references he gave are this format and nothing else:
+
+- **Nacho Average Application.** He did not send a CV for the GYG marketing role. He made a
+  seven video campaign instead. **One hour. Fifty dollars.** Written up with the method.
+- **The Isabella film.** A finished cinematic campaign shared, then the reveal that the model
+  never existed and all of it was generated.
+
+**The shape: make something, absurdly fast and cheap, and show the receipt.** The time and
+the cost are the whole payload, because they are the proof of the thesis. Nobody argues with
+a thing that exists.
+
+This is the format that carries the entire positioning without ever stating it. "I build
+products and grow businesses at speed" is an assertion. Seven videos in an hour for fifty
+dollars is evidence, and the reader does the arithmetic themselves. It also serves both
+audiences at once: a founder sees what is now possible, a marketer sees something they can
+take into a meeting.
+
+**Treatment.** The work itself is the post. Frames from the thing, or the thing in full.
+**Cadence.** One a fortnight, ideally. It is the highest-effort series and the highest value.
+**Channels.** All three, natively per the routing rules.
+
+**The rule.** Always publish the method and the numbers that are *his own* — time, cost,
+tools, how it was made. Those are not client figures and no guardrail touches them. That is
+what makes it a Build rather than a showreel.
+
+### 3c. In the Room — *lifestyle and informative*
+
+Events, rooms, people, the industry in person. The Tomi Grainger event post that was drafted
+and never went out is the template, and its failure is the lesson: **it needed a tag, tagging
+cannot be automated, so it sat at POST BY HAND and died.**
+
+**Treatment.** Real photographs, unstyled. Instagram carousel for a set, LinkedIn takes the
+single strongest frame. **Cadence.** Whenever it actually happens, never manufactured.
+**Channels.** All three. **Plan it as manual from the start** when it names anyone.
+
+### 3d. The Tool — *education*
+
+A thing the reader can use, published as a post. The `/agency-fee` calculator is one and it
+is currently the only one. A calculator, a checklist, a template, a spreadsheet.
+
+**Treatment.** Screen recording of it being used, or a card carrying the method with the tool
+in the first comment. **Cadence.** Rare, because they have to be built.
+**Channels.** LinkedIn and Instagram, link in first comment.
+
 ### 4. The Method — *education*
 
 How the work is actually done, published in full. No withheld step, no gated framework.
@@ -141,6 +188,21 @@ same shape every Tuesday was obviously planned by somebody, and it reads that wa
 8. **React, do not only publish.** Quote posts, replies, a screenshot of something someone
    else said. Cheap, fast, and the most human thing on the account.
 9. **Break a series on purpose** every few weeks. A post that fits none of the eight.
+
+### Two devices worth stealing, both from references Josh sent
+
+**The recurring line.** Davie Fogarty burns the same phrase onto every frame, every post.
+"Vision first, everything follows." It is why his posts are recognisable in half a second,
+and it costs nothing. Sevenam should have one line that appears on the work, in the same
+place, in the same type, indefinitely. **Not a tagline written for an ad** — a sentence he
+would actually say, that gets repeated until it belongs to him. Do not invent one in a
+hurry; it has to be right, because the value is entirely in the repetition.
+
+**Frames from one continuous video.** Josh's own instruction, 28 Aug: shoot one unbroken
+phone take walking through the actual thing, then cut it into stills with one bold line on
+each. It carries a narrative across frames, it is obviously real because it is one take, and
+the same footage yields a Reel, a Story sequence and a carousel. Highest effort-to-payoff
+format available, and it needs no generated imagery at all.
 
 ### The thing that stays disciplined
 
