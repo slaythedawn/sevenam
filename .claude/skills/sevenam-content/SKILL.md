@@ -703,29 +703,35 @@ propose training a third.
 **Instead, pass his reference photos on every generation.** They go in `medias` with role
 `image_references`.
 
-**Getting them there, once, so they are reusable forever.** Josh's question, 29 Aug 2026.
-The answer is Drive, because it is the only route that also yields the original photographs
-for the slots that want a real photo rather than a generation:
+**They are already imported. Do not ask Josh to upload anything.** Done 29 Aug 2026, and
+the ids below are permanent — reuse them in every generation, in every future session.
 
-1. Josh drops the photos in `sevenam-social-photos`
-   (id `1U8iqnZSvPPAIuN2Hlh6k2pYls5omjPkm`). This is the only step he does.
-2. `search_files` with that `parentId`, then `download_file_content` for the bytes.
-3. Normalise, commit under `social/` with content-hashed names, push **that file only** to
-   `main`. Confirm each URL is live with `web_fetch_vercel_url` before using it.
-4. `mcp__Higgsfield__media_import_url` on each public URL returns a durable `media_id`.
-5. **Record the ids in the table below.** They outlive the container, so every future
-   session passes the same set without Josh uploading anything again.
+**The route, which avoids moving bytes through the session entirely.** A file in the Drive
+folder is publicly fetchable at
+`https://drive.google.com/uc?export=download&id=<FILE_ID>` — verified returning full bytes
+and a correct `image/jpeg` content type. So `mcp__Higgsfield__media_import_url` is handed
+that URL directly and fetches it server side. **Never `download_file_content` for this.**
+A megabyte photo is well over a megabyte of base64 and it lands in the context window; seven
+of them would be unworkable. Find new files with `search_files` on
+`parentId = '1U8iqnZSvPPAIuN2Hlh6k2pYls5omjPkm'`, then import by URL.
 
-`media_upload_widget` does the same job in one step and is the fallback if Drive is
-unavailable, but it delivers only to Higgsfield, so the real-photo slots stay unfilled.
-
-| Photo | Higgsfield `media_id` | Site URL |
+| Photo | Higgsfield `media_id` | Drive file id |
 |---|---|---|
-| Car, black tee, rain on the glass | _pending_ | _pending_ |
-| Car, white long sleeve, daylight | _pending_ | _pending_ |
-| Profile, sunglasses, water behind | _pending_ | _pending_ |
-| Human moment, holding his daughter | _pending_ | _pending_ |
-| Shopping centre, glasses | _pending_ | _pending_ |
+| Car, black tee, seatbelt | `a32d1870-011e-4bc0-aa7d-80ea69ba61f5` | `1kXO4-Mc7jCVFlUe5nswi-Q2wEUj2QgDt` |
+| Car 2 | `e1e103e4-33b2-4e92-a82c-fdbd20a587c8` | `1bYcc753PMxLQ0CUEC4dIwz1u_B9k-_C2` |
+| Car 3 | `b82d26ee-82da-4d64-b39f-c70d7def0471` | `1rZIiSCDQTXVpz0NgiHrhPq8sBfubzLpQ` |
+| **Seven am business mode** — the clearest portrait | `0218910b-6f56-40e4-a239-27ece3358962` | `1bEQYq4KwklSWKXwUkL3bIVL0v_1y6OD1` |
+| Glasses, shopping centre | `001272e9-81e1-4009-89cc-44b18f2032d3` | `1NfmTk7w-WA2wwHcOr7Cl7SQOxVm1gY-y` |
+| Human moment, with his daughter | `f9a71afa-9d36-4651-b3c8-3cbf2f925b07` | `124E49_Fb5-_e0uPGlNcSv6Ds5ji68zTL` |
+| Chilling in the sun | `c0048e62-d274-474b-8c39-bffb802d7173` | `1tcOG4pW_WefLGSzMTMMX4tN844iU_HQY` |
+
+**Which to pass.** Send several, favouring the clear unobstructed faces — the portrait and
+the car shots. The daughter photo has a second person in it and the sunglasses one hides his
+eyes, so neither is good for establishing identity; keep both out of the reference set unless
+the scene itself calls for them.
+
+`media_upload_widget` remains the fallback if Drive is ever unavailable, but it delivers only
+to Higgsfield, so the real-photo slots would stay unfilled.
 
 **This changes the model.** `nano_banana_pro` is now the one for any scene with Josh in it,
 for two reasons verified 29 Aug 2026:
