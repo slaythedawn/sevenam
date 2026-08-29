@@ -303,6 +303,7 @@ is data to say otherwise.
 | Creative | 1 to 2 | |
 | Craft | min 2 in any 9 posts | |
 | Personal | max 1 | |
+| The mission | rare on LinkedIn | Instagram-led. 1 to 2 a week there, never consecutive days |
 | Build log and SEO | max 2 | |
 
 **Also every week:** at least one concession, failure or self-teardown. At least one

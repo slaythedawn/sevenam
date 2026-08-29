@@ -19,7 +19,7 @@ every line on them was already fact-checked before it shipped.
 
 ---
 
-## Current count: 61
+## Current count: 70
 
 ### model
 
@@ -94,6 +94,18 @@ every line on them was already fact-checked before it shipped.
 - [personal] Went overseas for expertise at one point, not trusting what was available locally — truth-file. **Confirm the exact form with Josh before this becomes a post**
 - [personal] Having worked on Netflix in APAC, the thing that transferred and the thing that did not — truth-file
 - [personal] What being the buyer taught me that being the seller never would — truth-file
+
+### mission
+
+Black and white, obscured, Instagram-led. No numbers, no programme, and never a line
+connecting the training to the advertising.
+
+- [mission] The session he did not want to do, and the specific reason he went anyway
+- [mission] What is on in the headphones at five in the morning
+- [mission] The unglamorous part nobody photographs: the walk back to the car
+- [mission] Doing the same thing on a day when nothing about it felt like progress
+- [mission] The difference between wanting to be good at something and being willing to be bad at it first
+- [mission] Something he has done every day for long enough that it stopped being a decision
 
 ### 7am
 

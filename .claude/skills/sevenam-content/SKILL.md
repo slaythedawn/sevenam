@@ -474,6 +474,45 @@ right. Generated images can still carry hands, objects, rooms and screens, just 
 **Keep it plain.** The erupting-imagery concept was judged too weird. Generated scenes
 should look like a photograph someone took, not a visual metaphor.
 
+## The mission: training, and the personal growth thread
+
+Added 29 Aug 2026. Josh's words: *"We want to show workout images too, more black and white
+and obscured for Instagram. Showing how I'm kind of on a mission to be the best I can be, so
+it's like personal growth alongside the brand stuff."*
+
+**It is a second thread, not a second account.** Instagram-led, one or two a week, never on
+consecutive days. It reaches LinkedIn rarely and only when the post is genuinely about how he
+works rather than how he trains.
+
+**Its own visual lane, and the separation is the point.** Brand content is ink with volt in
+it. This is black and white with **no volt at all**. Both monochrome, so the grid still reads
+as one system, but a viewer can tell at a glance which thread a post belongs to. Volt is what
+marks a post as being about the work.
+
+**"Obscured" is the operative word and it does two jobs.** Backlit, silhouette, motion blur,
+cropped at the shoulder, shot from behind, steam or chalk in the air, hard side light,
+contrast pushed until the shadows crush. It reads as private rather than performed, which is
+the entire difference between this and a fitness account.
+
+It also removes the likeness problem. A face half in shadow, turned away or blurred does not
+have to be an exact match, so **this is the one lane where generation is unconstrained** —
+no reference photo strictly needed, though passing them still helps the build and posture.
+
+**Never draw the analogy.** No post connects the training to the advertising. Not
+"discipline in the gym, discipline in the account", not reps and iterations, not one per
+cent better. The two threads sit beside each other and the reader connects them or does not.
+Writing the bridge out loud is the fastest way to make this cringe, and it would cost the
+credibility of both threads at once.
+
+**No numbers, no programme, no transformation.** Guardrail 2 already forbids inventing a
+figure and this is where the temptation is highest: weights, times, body composition, week
+counts. None of it unless it is true and Josh has said it. There is no before and after.
+
+**Tone.** Hustle writing is the obvious failure mode and the voice spec already bans urgency
+theatre. What works is the register used everywhere else: one specific, small, faintly
+pointless detail. The time on the clock. What was playing. That he did not want to go. Never
+a motivational line, and never a lesson stated at the end.
+
 ## Post formats, and which are worth using
 
 Six LinkedIn slots and ten to fourteen X slots a week is a lot of text posts. The format is
@@ -556,6 +595,7 @@ Links go in `firstComment`, never the caption. Alt text on every image.
 | Creative | The work is the post | Instagram carousel, LinkedIn takes the best frame |
 | Craft | Frameworks are what people save | LinkedIn document carousel by hand, Instagram carousel |
 | Personal | Single real photo | LinkedIn and Instagram |
+| The mission | Black and white, obscured. Single image or a tight carousel | Instagram. Rare on LinkedIn |
 | Build log and SEO | In stages | Instagram carousel, LinkedIn newsletter once it accumulates |
 
 **Never the same format twice in a row** already applies. This gives it somewhere to go.
