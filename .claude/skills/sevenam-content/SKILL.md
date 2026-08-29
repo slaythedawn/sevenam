@@ -660,7 +660,25 @@ d = base64({ kicker, lede, rows:[{label, fig, sub, lead}] })
 
 Render it with the repo served over `127.0.0.1` and Chromium from
 `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`, using
-`--headless=new --no-proxy-server --force-device-scale-factor=2 --window-size=600,750`.
+`--headless=new --no-proxy-server --hide-scrollbars --force-device-scale-factor=2
+--window-size=540,900`, then **crop the result to `(0, 0, 1080, 1350)`**.
+
+**Why the window is taller than the card, and why the crop is not optional.** Chromium's
+`--screenshot` captures the *full page*, not the viewport, and the viewport is shorter than
+the body. Rendering at `--window-size=540,675` produced a 1080x1350 image in which the card
+itself was only 1175px tall, so `margin-top:auto` anchored the `07:00 sevenam` mark 175px
+early and left a dead band under it. `100vh` has the same fault for the same reason. The
+card is now a fixed `540x675`, the window is given slack, and the capture is cropped down.
+Verified 29 Aug 2026: card occupies rows 0 to 1349, mark bottom lands at 1245.
+
+**Check the mark is present on every card before publishing.** Too much content silently
+pushes it off the bottom, which is how a three-row card renders as an unfinished one. Two
+rows plus a lede is the comfortable maximum; sample the volt badge in the 1140 to 1260 band
+to confirm.
+
+Card payloads for a week are kept as JSON next to the template, e.g.
+`content/cards/week-2026-08-31.json`, so a set can be re-rendered after the container is
+recycled rather than rewritten from the plan.
 
 Prefer this to screenshotting a live page. Screenshots fight the site's responsive layout,
 come out landscape, and stacking a two-column component just buries the payload under its
