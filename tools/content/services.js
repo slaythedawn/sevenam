@@ -376,7 +376,7 @@ const PAGES = [
   },
   {
     slug: 'social-media-advertising-agency',
-    title: 'Social Media Advertising Agency (Australia) — What to Buy Instead | Sevenam',
+    title: 'Social Media Advertising Agency Australia | Sevenam',
     description: 'Most social media advertising agencies bundle paid, organic and content into one retainer. Here is how to separate what works from what fills the invoice.',
     eyebrow: 'SOCIAL MEDIA ADVERTISING', h1: 'Social Media Advertising Agency',
     lead: 'The bundle is what makes the invoice hard to argue with.',
@@ -468,7 +468,7 @@ const PAGES = [
   },
   {
     slug: 'digital-marketing-agency',
-    title: 'Digital Marketing Agency (Australia) — When to Specialise Instead | Sevenam',
+    title: 'Digital Marketing Agency Australia — Or Specialise | Sevenam',
     description: 'Full-service digital agencies run Meta as one line item among many. Here is when that costs you more than it saves, and what the alternative looks like.',
     eyebrow: 'DIGITAL MARKETING', h1: 'Digital Marketing Agency',
     lead: 'Full service is a staffing model, not a performance advantage.',
@@ -957,7 +957,7 @@ const PAGES = [
        answers the hiring question directly, including the key-person risk that
        comes with hiring one person, which is the honest case against it. */
     slug: 'facebook-ads-expert',
-    title: 'Facebook Ads Expert (Australia) — Hire a Person or Install a System | Sevenam',
+    title: 'Facebook Ads Expert Australia — Hire, or Install a System | Sevenam',
     description: 'Hiring a Facebook ads expert puts the knowledge in one person’s head. What the alternative looks like, and when hiring the person is still the right call.',
     eyebrow: 'FACEBOOK ADS EXPERT', h1: 'Facebook Ads Expert',
     lead: 'The knowledge should end up in your business, not in somebody’s head.',

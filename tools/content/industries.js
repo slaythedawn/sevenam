@@ -8,7 +8,7 @@ const INDUSTRIES = [
     eyebrow: 'HEALTHCARE AND ALLIED HEALTH',
     h1: 'Facebook Ads for Healthcare',
     lead: 'Compliance decides what you can say, so creative volume decides how well it works.',
-    title: 'Facebook Ads for Healthcare — Compliant Creative, Real Enquiries | Sevenam',
+    title: 'Facebook Ads for Healthcare — Compliant Creative | Sevenam',
     description: 'Meta advertising for Australian healthcare and allied health providers. Compliant creative, decisions at 7am, on your own ad account for a fixed fee.',
     s1: {
       h2: 'Compliance is the constraint, not the audience.',
