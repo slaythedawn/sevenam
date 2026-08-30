@@ -105,7 +105,7 @@ completed one.
 | `Enquiry started — <email>` | `/apply` captured an email; they are still going |
 | `Abandoned — Question 3 — …` | They left mid-quiz, at the named question |
 | `Application — <business>` | `/apply` completed |
-| `Pricing call — <business>` | `/pricing-call` request |
+| `Pricing call — <email>` | `/pricing-call` request |
 | `Onboarding (unfinished)` | `/onboard` partial, via "finish later" |
 | `Onboarding abandoned at section N` | Client stalled, at the named section |
 | `Onboarding — <business>` | `/onboard` completed |
