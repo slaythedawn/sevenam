@@ -1133,6 +1133,7 @@
         (dark ? "#B5B5AD" : "#55554F") + ";";
 
       head.appendChild(left); head.appendChild(sign);
+      var rows = Array.prototype.slice.call(left.children);
 
       /* The clip wrapper is what shortens the card. The panel inside keeps its
          own layout, so nothing reflows when the clip height changes. */
@@ -1171,7 +1172,7 @@
          land in the wrong parent. */
       var cta = document.createElement("a");
       cta.href = "/apply";
-      cta.textContent = "Book the call";
+      cta.textContent = "Apply";
       cta.className = "scp0";
       cta.style.cssText = "background:#D8FF00; color:#0A0A0A; font-size:15px; font-weight:600;" +
         "padding:13px 22px; border-radius:999px; align-self:flex-start; text-decoration:none;";
@@ -1182,7 +1183,7 @@
 
       card.appendChild(head); card.appendChild(clip); card.appendChild(foot);
       parts.push({ card: card, head: head, sign: sign, clip: clip, panel: panel,
-                   fade: fade, more: more, open: false });
+                   fade: fade, more: more, rows: rows, open: false });
     });
 
     /* One state for all four on desktop. Expanding a single column left the
@@ -1237,8 +1238,31 @@
          reading as a set. Equalising the header block puts the boundary — and
          the first spec row under it — on one line across all four. Desktop only:
          stacked, it would just be dead space. */
-      parts.forEach(function (p) { p.head.style.minHeight = "0px"; });
+      parts.forEach(function (p) {
+        p.head.style.minHeight = "0px";
+        p.rows.forEach(function (r) { r.style.minHeight = "0px"; });
+      });
       if (!stacked) {
+        /* Equalising the header as a whole only lines up its bottom edge. The
+           lines inside still drifted, because "The daily decisions." is one line
+           where the other three headings are two — so that card's price sat 45px
+           above its neighbours, and the subtitle and summary under it followed.
+           The four cards share a row structure (eyebrow, heading, price,
+           qualifier, summary), so each row is levelled against the tallest of
+           its own index. Measured rather than hard-coded, so it survives a
+           rewrite or a rewrap. */
+        var depth = 0;
+        parts.forEach(function (p) { depth = Math.max(depth, p.rows.length); });
+        for (var k = 0; k < depth; k++) {
+          var tallestRow = 0;
+          parts.forEach(function (p) {
+            if (p.rows[k]) tallestRow = Math.max(tallestRow, p.rows[k].getBoundingClientRect().height);
+          });
+          parts.forEach(function (p) {
+            if (p.rows[k]) p.rows[k].style.minHeight = tallestRow.toFixed(2) + "px";
+          });
+        }
+
         /* getBoundingClientRect, not offsetHeight: offsetHeight rounds to whole
            pixels, which left one card's spec list starting 4px below the other
            three — visible as a broken line across the row. */
@@ -1286,6 +1310,89 @@
     if (STACK.addEventListener) STACK.addEventListener("change", paint);
     else if (STACK.addListener) STACK.addListener(paint);
     window.addEventListener("resize", paint);
+  }
+
+  /* ------------------------------------------------- ad library search */
+
+  /* The guide used to describe the Ad Library and then leave the reader to go
+     and find it. This builds the real prefilled URL, because the two things
+     that make a search fail are both in the query string: no country (it
+     defaults to the viewer's, so an AU advertiser searched from elsewhere looks
+     dormant) and no active filter (so you read ads that stopped a year ago).
+
+     It opens Meta, so nothing here is submitted anywhere and nothing is stored.
+     The link is a real anchor, not a window.open, so it survives a popup
+     blocker and can be middle-clicked like any other link. */
+  function setupAdLibrary() {
+    var root = q("#adlib-root");
+    if (!root) return;
+
+    var COUNTRIES = [["AU", "Australia"], ["NZ", "New Zealand"], ["GB", "United Kingdom"],
+      ["US", "United States"], ["CA", "Canada"], ["IE", "Ireland"], ["SG", "Singapore"], ["ALL", "All countries"]];
+    var S = { brand: "", country: "AU" };
+
+    function url() {
+      return "https://www.facebook.com/ads/library/?" + [
+        "active_status=active", "ad_type=all", "media_type=all",
+        "country=" + encodeURIComponent(S.country),
+        "search_type=keyword_unordered",
+        "q=" + encodeURIComponent(S.brand.trim())
+      ].join("&");
+    }
+
+    var INPUT = "background:#0A0A0A; border:1px solid #232320; border-radius:4px; color:#F7F7F5;" +
+      "font-family:inherit; font-size:17px; padding:15px 16px; width:100%; min-width:0; box-sizing:border-box;";
+    var LABEL = "font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#B5B5AD;";
+
+    function render() {
+      var ready = S.brand.trim().length > 0;
+      root.innerHTML =
+        '<span style="' + LABEL + '">Open it prefilled</span>' +
+        '<div style="margin-top:18px; display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end;">' +
+        '<label style="display:flex; flex-direction:column; gap:8px; flex:2 1 260px; min-width:0;">' +
+        '<span style="' + LABEL + '">Competitor</span>' +
+        '<input type="text" data-adlib="brand" value="' + esc(S.brand) + '" placeholder="Their business name" style="' + INPUT + '">' +
+        '</label>' +
+        '<label style="display:flex; flex-direction:column; gap:8px; flex:1 1 180px; min-width:0;">' +
+        '<span style="' + LABEL + '">Country</span>' +
+        '<select data-adlib="country" style="' + INPUT + '">' +
+        COUNTRIES.map(function (c) {
+          return '<option value="' + c[0] + '"' + (S.country === c[0] ? " selected" : "") + '>' + esc(c[1]) + '</option>';
+        }).join("") + '</select>' +
+        '</label>' +
+        '<a data-adlib-go href="' + esc(url()) + '" target="_blank" rel="noopener nofollow"' +
+        ' style="background:' + (ready ? VOLT : "#232320") + '; color:' + (ready ? "#0A0A0A" : "#8A8A82") + ';' +
+        'font-size:17px; font-weight:600; padding:16px 26px; border-radius:4px; text-decoration:none;' +
+        'white-space:nowrap;' + (ready ? "" : " pointer-events:none;") + '">Search the Ad Library</a>' +
+        '</div>' +
+        '<p style="margin:16px 0 0; max-width:62ch; font-size:14px; line-height:1.65; color:#B5B5AD;">' +
+        (ready
+          ? "Opens Meta in a new tab, filtered to ads running now."
+          : "Type a business name to build the link. It opens Meta — nothing is sent to us.") +
+        '</p>';
+      qa("[data-adlib]", root).forEach(function (el) {
+        el.addEventListener("input", function () { S[el.dataset.adlib] = el.value; sync(); });
+        el.addEventListener("change", function () { S[el.dataset.adlib] = el.value; sync(); });
+      });
+    }
+
+    /* Update the href in place rather than re-rendering: rebuilding the markup
+       on every keystroke would take the focus out of the field being typed in. */
+    function sync() {
+      var go = q("[data-adlib-go]", root);
+      var ready = S.brand.trim().length > 0;
+      if (!go) return;
+      go.href = url();
+      go.style.background = ready ? VOLT : "#232320";
+      go.style.color = ready ? "#0A0A0A" : "#8A8A82";
+      go.style.pointerEvents = ready ? "" : "none";
+      var note = q("p", root);
+      if (note) note.textContent = ready
+        ? "Opens Meta in a new tab, filtered to ads running now."
+        : "Type a business name to build the link. It opens Meta — nothing is sent to us.";
+    }
+
+    render();
   }
 
   /* ------------------------------------------------- short lead capture */
@@ -1355,7 +1462,7 @@
         ' style="background:' + VOLT + '; color:#0A0A0A; border:none; font-family:inherit;' +
         'font-size:17px; font-weight:600; padding:16px 28px; border-radius:4px; cursor:' +
         (S.sending ? "default" : "pointer") + ';">' +
-        (S.sending ? "Sending…" : S.failed ? "Try again" : "Book the call") + '</button>' +
+        (S.sending ? "Sending…" : S.failed ? "Try again" : "Apply") + '</button>' +
         '<span style="font-size:14px; line-height:1.6; color:#B5B5AD;">Takes about twenty seconds.</span>' +
         '</div>' +
         '<p style="margin:16px 0 0; max-width:56ch; font-size:14px; line-height:1.6; color:' +
@@ -1463,6 +1570,7 @@
     setupApply();
     setupProducts();
     setupPricingCall();
+    setupAdLibrary();
   }
 
   if (document.readyState === "loading") {

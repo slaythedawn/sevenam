@@ -374,6 +374,74 @@ function steps(st) {
   </section>`;
 }
 
+/* A how-to page that never shows the thing, and never links to it, is a dead
+   end — /meta-ad-library explained what the Ad Library is worth and then left
+   the reader to go and find it. This renders the actual steps beside a labelled
+   diagram of the three controls that matter, and every step carries a real
+   prefilled link, so the page ends with the reader inside the tool rather than
+   agreeing with us about it.
+
+   The diagram is drawn from our own tokens rather than screenshotted. Meta
+   moves that interface every few months, and a stale screenshot of somebody
+   else's product is worse than a schematic that stays true to the shape. */
+function walkthrough(w) {
+  if (!w) return '';
+  const steps = w.steps.map((it, i) =>
+    `<li style="list-style: none; margin: 0px; padding: 22px 0px; border-top: 1px solid ${HAIRLINE_DARK}; display: grid; grid-template-columns: 34px 1fr; gap: 18px;">
+          <span aria-hidden="true" style="font-size: 13px; font-weight: 600; color: ${VOLT}; font-variant-numeric: tabular-nums; padding-top: 2px;">0${i + 1}</span>
+          <span>
+            <span style="display: block; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(247, 247, 245);">${esc(it.t)}</span>
+            <span style="display: block; margin-top: 6px; font-size: 15px; line-height: 1.65; color: ${INK_TEXT};">${esc(it.p)}</span>
+          </span>
+        </li>`).join('\n        ');
+
+  const controls = w.controls.map((c, i) =>
+    `<div style="display: grid; grid-template-columns: 26px 1fr; gap: 14px; align-items: center; padding: 14px 16px; border-bottom: 1px solid ${HAIRLINE_DARK};">
+            <span aria-hidden="true" style="font-size: 11px; font-weight: 600; color: rgb(10, 10, 10); background: ${VOLT}; border-radius: 100px; text-align: center; padding: 3px 0px; font-variant-numeric: tabular-nums;">0${i + 1}</span>
+            <span style="min-width: 0px;">
+              <span style="display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(181, 181, 173);">${esc(c.label)}</span>
+              <span style="display: block; margin-top: 3px; font-size: 15px; font-weight: 500; color: rgb(247, 247, 245);">${esc(c.value)}</span>
+            </span>
+          </div>`).join('\n          ');
+
+  return `<section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 104px 32px; border-bottom: 1px solid ${HAIRLINE_DARK};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT};">${esc(w.label)}</span>
+      <h2 style="margin: 18px 0px 0px; max-width: 20ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(w.h2)}</h2>
+      <p style="margin: 22px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: ${INK_TEXT};">${esc(w.p)}</p>
+
+      <div style="margin-top: 56px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 56px; align-items: start;">
+        <ol style="margin: 0px; padding: 0px;">
+        ${steps}
+        </ol>
+
+        <figure style="margin: 0px;">
+          <div style="border: 1px solid ${HAIRLINE_DARK}; border-radius: 8px; overflow: hidden; background: rgb(22, 22, 19);">
+            <div aria-hidden="true" style="display: flex; align-items: center; gap: 7px; padding: 13px 16px; border-bottom: 1px solid ${HAIRLINE_DARK};">
+              <span style="width: 8px; height: 8px; border-radius: 100px; background: rgb(35, 35, 32);"></span>
+              <span style="width: 8px; height: 8px; border-radius: 100px; background: rgb(35, 35, 32);"></span>
+              <span style="width: 8px; height: 8px; border-radius: 100px; background: rgb(35, 35, 32);"></span>
+              <span style="margin-left: 10px; font-size: 12px; color: rgb(181, 181, 173);">facebook.com/ads/library</span>
+            </div>
+          ${controls}
+            <div style="padding: 18px 16px;">
+              <span style="display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(181, 181, 173);">${esc(w.result.label)}</span>
+              <div style="margin-top: 12px; border: 1px solid ${VOLT}; border-radius: 6px; padding: 14px 16px;">
+                <span style="display: block; font-size: 15px; font-weight: 600; color: ${VOLT};">${esc(w.result.line)}</span>
+                <span style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: ${INK_TEXT};">${esc(w.result.note)}</span>
+              </div>
+            </div>
+          </div>
+          <figcaption style="margin: 14px 0px 0px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">${esc(w.figcaption)}</figcaption>
+        </figure>
+      </div>
+
+      <div id="adlib-root" style="margin-top: 56px; padding-top: 40px; border-top: 1px solid ${HAIRLINE_DARK};"></div>
+      <noscript><p style="margin: 24px 0px 0px; font-size: 16px; line-height: 1.7; color: ${INK_TEXT};">Search it directly at <a href="${esc(w.fallbackHref)}" rel="noopener nofollow" target="_blank" style="color: ${VOLT}; border-bottom: 1px solid ${VOLT};">the Meta Ad Library</a>.</p></noscript>
+    </div>
+  </section>`;
+}
+
 /* The models the line is built on, named in type rather than borrowed marks.
    Sits with the closing links so the page ends on what it runs on. */
 function toolstrip(t) {
@@ -422,6 +490,7 @@ function page(p) {
     ...(p.tables || []).map(dataTable),
     gantt(p.gantt),
     steps(p.steps),
+    walkthrough(p.walkthrough),
     callForm(p.callForm),
     p.faqs && p.faqs.length ? faqSection(p.faqs, p.faqHeading) : '',
     p.pills ? pills(p.pills.label, p.pills.links) : '',

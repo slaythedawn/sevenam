@@ -548,8 +548,31 @@ const PAGES = [
         'Check your own library too: it is what your customers see.',
       ],
     },
+    walkthrough: {
+      label: 'DO IT NOW',
+      h2: 'Three fields, then every ad they are running.',
+      p: 'No login, no tool, no trial. Set the country first \u2014 the Library defaults to whoever is looking, so an Australian advertiser searched from a US session returns almost nothing and reads as if they are not advertising at all.',
+      steps: [
+        { t: 'Set the country to Australia', p: 'Top left. This is the field people miss, and it is the one that makes the search look empty when it is not.' },
+        { t: 'Leave the category on All ads', p: '"Issues, elections or politics" is a different index with different rules. For a competitor you want All ads.' },
+        { t: 'Search the brand, not the domain', p: 'It matches page names, so type the business as it appears on Facebook. Pick the page from the dropdown rather than pressing enter, or you get keyword matches instead of that advertiser.' },
+        { t: 'Sort your attention by start date', p: 'Every result carries "Started running on". Anything live for months is paying its way \u2014 an advertiser turns off what loses money. Last week\u2019s batch tells you nothing yet.' },
+      ],
+      controls: [
+        { label: 'Country', value: 'Australia' },
+        { label: 'Ad category', value: 'All ads' },
+        { label: 'Search', value: 'the competitor\u2019s page name' },
+      ],
+      result: {
+        label: 'On every result',
+        line: 'Started running on 4 Mar 2026',
+        note: 'The only public evidence of a result you get for a commercial ad. Spend and reach are published for political and social issue ads only.',
+      },
+      figcaption: 'The three controls that decide whether the search works, and the one line on each result worth reading. Drawn rather than screenshotted \u2014 Meta moves this interface, and a stale screenshot ages worse than the shape of it.',
+      fallbackHref: 'https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=AU&media_type=all',
+    },
     faqs: [
-      { q: 'Is the Meta Ad Library free?', a: "Yes, and it needs no login for basic searching. It is at facebook.com/ads/library." },
+      { q: 'Is the Meta Ad Library free?', a: "Yes, and it needs no login for basic searching. It is at facebook.com/ads/library, and the search on this page opens it prefilled for Australia." },
       { q: 'Can I see how much a competitor spends?', a: "Not for ordinary commercial advertising. Spend and reach ranges are published only for political and social issue ads." },
       { q: 'Can competitors see our ads?', a: "Yes, all of them, while they are running. That is worth remembering before you put an aggressive offer in an ad rather than behind a click." },
       { q: 'Should we copy ads that have run a long time?', a: "Copy the mechanism, not the ad. Running a close imitation puts you in a worse position than the original — same idea, less credibility, and no idea which part actually did the work." },
@@ -917,6 +940,9 @@ function build() {
     /* Only the CPM benchmark page sets this. Undefined elsewhere, so the other
        16 guides render exactly as before. */
     tables: p.tables,
+    /* Only /meta-ad-library sets this. Undefined elsewhere, so the other
+       16 guides render exactly as before. */
+    walkthrough: p.walkthrough,
     faqs: p.faqs,
     related: p.related,
     closing: p.closing,

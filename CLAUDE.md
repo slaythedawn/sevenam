@@ -156,6 +156,18 @@ design — but it also means **breaking that file breaks all 42**.
   There is still no direct calendar booking anywhere, on purpose: capture the email
   first, then Josh replies with a time.
 
+`tools/layout.js`'s `walkthrough()` renders the one on `/meta-ad-library`: numbered
+steps beside a labelled diagram of the Ad Library's three controls, plus
+`#adlib-root`, which `site.js` fills with a search that builds a real prefilled
+`facebook.com/ads/library` URL. The two things that make an Ad Library search fail
+are both in the query string — no `country` (it defaults to the viewer's, so an
+Australian advertiser searched from elsewhere looks dormant) and no
+`active_status=active` — so the link sets both. The diagram is **drawn from our
+tokens, not screenshotted**: Meta moves that interface, and a stale screenshot of
+someone else's product ages worse than the shape of it. The block is opt-in — only
+pages that set `walkthrough` render it, and `tools/content/guides.js` has to pass the
+key through `build()` or it is silently dropped.
+
 ## Icons and social cards
 
 `img/favicon.svg` is the source — volt square, ink 7. The PNGs beside it
