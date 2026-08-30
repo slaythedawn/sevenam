@@ -317,8 +317,10 @@ On desktop each card is clipped to 132px of its spec list — enough for the fir
 two rows — with a **See more** pinned to the bottom of every card so the four
 controls sit on one line. Fully expanded the cards were 787px, which is more than
 anyone reads before deciding which column they are in; collapsed they are 520px.
-Expanding is per card and never closes a neighbour: closing one to open another
-would defeat the comparison the layout exists for.
+Expanding is **all four together** on desktop, from one shared state. Expanding a
+single column padded the other three out to match it and made a comparison you
+could only read one column of at a time. On a phone they stay independent — that
+is an accordion, and opening all four is the height problem again.
 
 The clip fades rather than cutting — a hard edge reads as a bug. The fade colour
 comes from the card's **computed** background, not its inline style: one card has

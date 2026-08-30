@@ -1157,6 +1157,12 @@
                    fade: fade, more: more, open: false });
     });
 
+    /* One state for all four on desktop. Expanding a single column left the
+       other three padded out to match it, and made a comparison you could only
+       read one column of at a time. On a phone they stay independent — that is
+       an accordion, and opening all four is the height problem again. */
+    var shared = false;
+
     function paint() {
       var stacked = STACK.matches;
       list.style.display = stacked ? "flex" : "grid";
@@ -1185,11 +1191,11 @@
           /* The cut is at the end of the summary, before the spec list starts —
              a card showing two of four spec rows is still too tall to scan, and
              half a list reads as truncation rather than a summary. */
-          p.clip.style.height = p.open ? p.panel.scrollHeight + "px" : "0px";
+          p.clip.style.height = shared ? p.panel.scrollHeight + "px" : "0px";
           p.fade.style.display = "none";
           p.more.style.display = "";
-          p.more.textContent = p.open ? "See less" : "See more";
-          p.more.setAttribute("aria-expanded", p.open ? "true" : "false");
+          p.more.textContent = shared ? "See less" : "See more";
+          p.more.setAttribute("aria-expanded", shared ? "true" : "false");
           p.sign.style.display = "none";
           p.head.style.cursor = "default";
           p.head.style.paddingBottom = "0";
@@ -1245,7 +1251,7 @@
         p.open = !p.open;
         paint();
       });
-      p.more.addEventListener("click", function () { p.open = !p.open; paint(); });
+      p.more.addEventListener("click", function () { shared = !shared; paint(); });
     });
 
     paint();
