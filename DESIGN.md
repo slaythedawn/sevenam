@@ -154,6 +154,18 @@ attribute-substring selectors against their inline styles — which is also why 
 lives in one file rather than across 68. It is additive: delete the block and the
 site renders flat and correct.
 
+**The nav is a floating capsule.** On desktop the header is `fixed` and
+transparent, and the inner row becomes a near-solid dark pill that blurs what is
+behind it, so it reads over the hero image and over Paper sections alike. It is
+`fixed` rather than `sticky` because a transparent sticky header stays in flow
+and lets the page background show above the hero — the pill then floats over a
+white strip. The fill is `rgba(10,10,10,.92)`, near-solid: at `.72` it went muddy
+grey over Paper and the links lost contrast.
+
+Below 640px it reverts to an in-flow sticky bar. The nav wraps to more than one
+line on a phone, so a fixed header of unknown height cannot be cleared by a fixed
+padding, and the `h1` ended up underneath it.
+
 **Ink sections float.** Below the hero, every dark band is inset 24px from the
 page edge with a 36px radius, over a Volt mesh painted in a `::before`, plus a
 fine grain in an `::after` — a flat gradient across a large dark panel bands on
