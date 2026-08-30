@@ -501,10 +501,13 @@ statement — used when the payload really is exact figures, or when the week ne
 of texture.
 
 **"Or whoever" is the important half of that instruction.** The subject does not have to be
-Josh. That matters because his likeness is the one thing generation cannot currently do:
-both trained Souls were rejected as not looking like him. An anonymous person at a kitchen
-bench at eleven at night, hands on a phone, a laptop on a car bonnet — all of that is
-generatable today, in the house style, with no likeness problem. Use it.
+Josh, and a feed of nothing but one face gets tiring. An anonymous person at a kitchen bench
+at eleven at night, hands on a phone, someone walking out of a lift — all of it is in the
+house style with no likeness risk at all.
+
+His likeness *is* now generatable, with `nano_banana_pro` and the reference photos — see
+`.claude/skills/sevenam-imagery/SKILL.md`. But it is the part most likely to fail, so check
+every frame with his face in it before it goes anywhere near him.
 
 **The order of preference within the UGC lane. Work down it, never up.**
 
@@ -566,10 +569,10 @@ seeing. Cycle: car, then artefact, then 7am, then human, then studio.
 Only for what cannot be photographed: an abstract mechanism, a market-wide observation, a
 concept post with no real object behind it. Roughly one post in five, not the default.
 
-**The likeness is not there yet.** Both trained Souls were judged not to look like him, so
-**do not generate Josh's face for publication.** Either retrain from a fresh set of 5 to 20
-clear reference photos, or, better, use a real photo — which is free, instant and exactly
-right. Generated images can still carry hands, objects, rooms and screens, just not his face.
+**His face can now be generated**, using `nano_banana_pro` with his reference photos passed
+on every call. That reverses the 27 Aug rule, which was written when the only route was a
+Soul and both Souls failed. **`.claude/skills/sevenam-imagery/SKILL.md` carries how**, and
+it is not optional reading before a generation.
 
 **Keep it plain.** The erupting-imagery concept was judged too weird. Generated scenes
 should look like a photograph someone took, not a visual metaphor.
@@ -777,164 +780,22 @@ planned into the week as `POST BY HAND`, the same as tagging posts. Roughly one 
 format a week is a reasonable target; they are the highest-value formats and the ones
 competitors skip.
 
-## Generation settings, when generation is the right call
+## Generation settings — see the imagery skill
 
-When a post genuinely needs a generated image — see the imagery strategy above for when
-that is, which is not often — Higgsfield is the tool.
+**Read `.claude/skills/sevenam-imagery/SKILL.md` before any Higgsfield call.** It is the
+authority on model choice, the reference photo ids, the selfie geometry rule, the banned
+prompt vocabulary and the full list of directions already rejected. It exists because each
+of those rules cost a batch of credits to learn, and the guidance that used to sit here
+contradicted several of them.
 
-| Need | Tool |
-|---|---|
-| **Any scene with Josh in it** | `nano_banana_pro` + his reference photos as `image_references`, `aspect_ratio: "4:5"` |
-| UGC scene with no Josh in it | `soul_2`. No reference needed, but there is no 4:5 |
-| Legible text or a diagram inside the image | `nano_banana_pro` |
-| Product or ad-style | `marketing_studio_image` |
-| **Exact figures** | **The HTML card. Not Higgsfield.** |
+Three things from it that change decisions made in this file:
 
-**The carve-out matters.** Generative models are unreliable at precise text, and when the
-image *is* the claim, a shifted digit publishes a wrong number. Guardrail 2 makes that the
-one unrecoverable mistake, so anything carrying figures gets rendered, not generated.
-
-**Four practical constraints, all verified 27 Aug:**
-
-1. **`soul_2` has no 4:5.** It offers 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3 — a 4:5 request
-   is silently coerced to 3:4, which is *taller* than LinkedIn's crop. `nano_banana_pro`
-   does offer 4:5, which is the main reason to prefer it. If a shot has to come out of
-   `soul_2`, compose everything important centred, or pass the result through
-   `mcp__Higgsfield__reframe`.
-2. **Claude can see the output after all, through the Higgsfield sandbox.** The CloudFront
-   host is blocked from this session directly, but `mcp__Higgsfield__sandbox_exec` runs on
-   Higgsfield's own infrastructure with unrestricted internet. So: `curl` the generation URL
-   inside the sandbox, downscale it with ffmpeg or Pillow, base64 it to stdout, decode
-   locally and read it. Keep the payload under about 19,000 characters or the MCP result is
-   truncated mid-string. Josh still reviews every generated image before publication, but
-   Claude no longer has to generate blind, and should look before showing him a dud.
-3. **Ask for no lettering.** Say so explicitly in the prompt. Stray generated text is the
-   most common way an otherwise good image becomes unusable.
-4. **Whether Blotato can fetch a CloudFront URL is untested.** If `mediaUrls` rejects one,
-   fall back to the route that is proven: save the image under `social/` and push that file
-   to `main`, as with the card.
-
-### The house visual direction
-
-Set by Josh, 27 Aug 2026, after a first attempt was rejected as **depressing**. His words:
-*"Just creative. It should feel like advertising. It should feel like creativity exploding
-out of phones and devices. It should feel like high tech and automation."*
-
-So: **bright, saturated, kinetic, expensive.** Colour and imagery bursting out of screens.
-Clean white or high-key grounds, not dark rooms. Glossy studio-flash product realism.
-Optimistic, fast, premium — a modern tech brand campaign, not a moody editorial.
-
-**What was wrong the first time, so it is not repeated:** dark empty rooms, a single cold
-light, nobody present, restraint as the whole idea. Melancholy reads as depressing at
-thumbnail size, and it argues against a business whose claim is building things fast.
-
-**Palette: the brand palette, and nothing else.** Rejected 27 Aug: a saturated set with
-magenta and cyan — "too colourful". The frame is **monochrome — ink `#0A0A0A`, paper
-`#F7F7F5`, the greys — with volt `#D8FF00` as the only colour in it.** Volt is usually
-*emitted* rather than painted on: a screen glow, a light spill, a streak across a wall.
-One colour against grey reads as a brand; three colours reads as a stock library.
-
-**Make it look real, not rendered.** Also rejected 27 Aug: "too fake". The tell is studio
-perfection, and the words that cause it are the ones to avoid — *crisp studio flash, glossy
-product realism, infinity studio, premium, pristine*. Ask instead for:
-
-- a real place with real mess: a desk with cables and a coffee ring, a kitchen bench at
-  night, a stairwell, a car
-- available light, or a harsh direct phone flash. Never a lighting setup
-- phone-camera artefacts: grain, sensor noise, motion blur, handheld tilt, shallow focus,
-  fingerprint smudges on the glass
-- imperfect framing — off-centre, something cropped at the edge
-- explicitly: not a studio, not styled, not an advert, unposed
-
-Same principle as the writing spec. Detail too specific and too pointless to have been
-generated is what reads as real, in a picture as much as in a sentence.
-
-**Never a blank screen.** A phone in shot always has a screen packed with actual work —
-a dense grid of small advertising images, video frames, a crowded feed. Say
-COMPLETELY FILLED and never blank, in those words, or "screen glows volt" renders as an
-empty lit rectangle. The screen content is also what erupts: the imagery tears out of the
-display as floating frames, ribbons and fragments. That is the idea of the whole account
-made literal, so it is worth getting right rather than settling for a glow.
-
-Ask for **no readable text or interface labels on the screen** — imagery yes, lettering no,
-or the model produces garbled UI.
-
-### Josh in the scene
-
-**Do not train or use a Soul.** Josh's call, 29 Aug 2026: *"Don't use soul. Just use those
-images as reference each time when briefing higgsfield."* The two existing Souls
-(`ad293cb4-b435-472a-8b66-76999ea324ec` "JP v2" and `a452d512-dfc2-49a0-9cd8-4a9750f0a1fb`
-"JP") are both dead ends — neither looked like him, and neither is to be used again. Do not
-propose training a third.
-
-**Instead, pass his reference photos on every generation.** They go in `medias` with role
-`image_references`.
-
-**They are already imported. Do not ask Josh to upload anything.** Done 29 Aug 2026, and
-the ids below are permanent — reuse them in every generation, in every future session.
-
-**The route, which avoids moving bytes through the session entirely.** A file in the Drive
-folder is publicly fetchable at
-`https://drive.google.com/uc?export=download&id=<FILE_ID>` — verified returning full bytes
-and a correct `image/jpeg` content type. So `mcp__Higgsfield__media_import_url` is handed
-that URL directly and fetches it server side. **Never `download_file_content` for this.**
-A megabyte photo is well over a megabyte of base64 and it lands in the context window; seven
-of them would be unworkable. Find new files with `search_files` on
-`parentId = '1U8iqnZSvPPAIuN2Hlh6k2pYls5omjPkm'`, then import by URL.
-
-| Photo | Higgsfield `media_id` | Drive file id |
-|---|---|---|
-| Car, black tee, seatbelt | `a32d1870-011e-4bc0-aa7d-80ea69ba61f5` | `1kXO4-Mc7jCVFlUe5nswi-Q2wEUj2QgDt` |
-| Car 2 | `e1e103e4-33b2-4e92-a82c-fdbd20a587c8` | `1bYcc753PMxLQ0CUEC4dIwz1u_B9k-_C2` |
-| Car 3 | `b82d26ee-82da-4d64-b39f-c70d7def0471` | `1rZIiSCDQTXVpz0NgiHrhPq8sBfubzLpQ` |
-| **Seven am business mode** — the clearest portrait | `0218910b-6f56-40e4-a239-27ece3358962` | `1bEQYq4KwklSWKXwUkL3bIVL0v_1y6OD1` |
-| Glasses, shopping centre | `001272e9-81e1-4009-89cc-44b18f2032d3` | `1NfmTk7w-WA2wwHcOr7Cl7SQOxVm1gY-y` |
-| Human moment, with his daughter | `f9a71afa-9d36-4651-b3c8-3cbf2f925b07` | `124E49_Fb5-_e0uPGlNcSv6Ds5ji68zTL` |
-| Chilling in the sun | `c0048e62-d274-474b-8c39-bffb802d7173` | `1tcOG4pW_WefLGSzMTMMX4tN844iU_HQY` |
-
-**Which to pass.** Send several, favouring the clear unobstructed faces — the portrait and
-the car shots. The daughter photo has a second person in it and the sunglasses one hides his
-eyes, so neither is good for establishing identity; keep both out of the reference set unless
-the scene itself calls for them.
-
-`media_upload_widget` remains the fallback if Drive is ever unavailable, but it delivers only
-to Higgsfield, so the real-photo slots would stay unfilled.
-
-**This changes the model.** `nano_banana_pro` is now the one for any scene with Josh in it,
-for two reasons verified 29 Aug 2026:
-
-| | `nano_banana_pro` | `soul_2` |
-|---|---|---|
-| Reference images | **`image_references`, no stated cap** | `image`, **max 1** |
-| 4:5 portrait | **Native** | **Not offered.** Silently coerced to 3:4 |
-
-So the model that was recorded as "the one" is the wrong tool for this brief on both counts.
-`soul_2` keeps its place for UGC scenes with **no Josh in them**, where no reference is
-needed and 1:1 or 3:4 is acceptable.
-
-The reference set, five photos as of 29 Aug 2026: two car selfies (black tee in rain, white
-long-sleeve in daylight), a sunglasses profile at the water, a human moment holding his
-daughter, and a shopping-centre selfie in glasses. Pass as many as the model accepts rather
-than picking one — identity holds better across a set.
-
-**Never direct to camera.** He is in the scene, not presenting from it: head down at the
-phone, three-quarters turned away, walking past in profile, seen from the side or slightly
-behind, shoulder cropped by the frame. Write "not looking at the camera, not aware of the
-camera" into the prompt. A piece to camera turns a candid photograph into a headshot and
-undoes the whole realism direction.
-
-One Soul per generation. Two people in a shot needs `show_reference_elements` instead.
-
-Always end the prompt with: no text, no lettering, no typography, no logos, no watermarks.
-
-**Model note.** `soul_2` is the one — its tags are `ugc` and `realistic`, which is exactly
-the brief. It was blamed once for a depressing set that was actually caused by the prompt,
-so do not switch away from it for that reason again. `grok_image` is bolder and
-higher-contrast, useful when a post wants graphic punch over realism. `ms_image` / **DTC Ads** scores higher still and is brand-kit aware, but it
-*requires* a `style_id` that Josh picks first from `show_marketing_studio`
-(`type='image_style'`) — never default one silently. Building a Sevenam brand kit there
-(`type='brand_kit'`, fetched from sevenam.com.au) would fold the real logo, colours and
-fonts into every generation and is the better long-term route.
+1. **`nano_banana_pro`, not `soul_2`**, for anything with Josh in it — multiple references
+   and native 4:5. No Soul, ever.
+2. **A screen in shot is screenshotted, never generated.** Asking a generator for a phone
+   screen full of ads produces a meaningless mosaic every time.
+3. **Exact figures go on a rendered card, never into a generated image.** Guardrail 2 makes
+   a shifted digit the one unrecoverable mistake.
 
 ## Building a card
 
