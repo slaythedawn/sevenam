@@ -45,7 +45,15 @@ const COLOURS = new Set([
   'rgb(55, 55, 50)', 'rgb(107, 107, 99)', 'rgb(138, 138, 130)',
 ]);
 
-function checkDesign(file, html, fail) {
+function checkDesign(file, html, fullHtml) {
+  return checkDesignInner(file, html, fullHtml);
+}
+
+function checkDesignInner(file, html, fail) {
+  /* The injected theme block IS the system — it defines the elevation and glass
+     layer that DESIGN.md documents, so checking it against the scale would have
+     it fail its own rules. Everything outside it is still policed. */
+  html = html.replace(/<style id="sv-theme">[\s\S]*?<\/style>/, '');
   for (const [, px] of html.matchAll(/font-size: (\d+)px/g)) {
     if (!SIZES.includes(Number(px))) {
       fail(file, `off-scale font-size ${px}px — see DESIGN.md`);

@@ -148,15 +148,52 @@ renders as a lozenge. Match the radius to the height.
 
 ### Elevation
 
-**There is none.** Separation comes from the Ink/Paper alternation and from
-hairline borders, never from height. This is the fastest way to tell a Sevenam
+Elevation is carried entirely by `tools/theme.js`, injected into every page as
+one `<style id="sv-theme">` block. The pages have no classes, so it hooks on
+attribute-substring selectors against their inline styles — which is also why it
+lives in one file rather than across 68. It is additive: delete the block and the
+site renders flat and correct.
+
+**Glass, on Ink.** Cards on a dark ground take a gradient fill, a blurred
+backdrop and a 1px inset highlight along the top edge. The highlight does more
+work than the blur — it is what gives the tile a front surface.
+
+```
+background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018));
+backdrop-filter: blur(16px) saturate(135%);
+border: 1px solid rgba(255,255,255,.085);
+box-shadow: inset 0 1px 0 rgba(255,255,255,.075), 0 18px 40px -22px rgba(0,0,0,.9);
+```
+
+**Depth, on Paper.** Two shadows, never one: a 1px contact shadow to keep the
+edge crisp, and a wide soft one for the lift. A single blurred shadow reads as a
+sticker.
+
+```
+box-shadow: 0 1px 2px rgba(10,10,10,.045), 0 10px 28px -14px rgba(10,10,10,.16);
+```
+
+**Atmosphere.** Ink sections carry a faint Volt bloom off the top-right in a
+`::before`, so a dark band reads as lit rather than as fill.
+
+**Hover.** Cards lift 3px and their border warms toward Volt. The Volt CTA takes
+a coloured bloom rather than a grey shadow, which would go muddy under a
+saturated fill. Pills take a shadow only — a moving pill nudges its neighbours in
+a wrapped row.
+
+**Under `prefers-reduced-motion: reduce` the surfaces keep their depth and lose
+every transform and transition.** The glass is a look, not an animation.
+
+Outside that block: separation comes from the Ink/Paper alternation and from
+hairline borders, never from ad-hoc height. This is the fastest way to tell a Sevenam
 section from a generic SaaS section — if you are reaching for a shadow, you want
 a hairline or a tone change instead.
 
-The one permitted `box-shadow` is a **zero-blur spread**, which is a ring rather
-than a shadow: `0 0 0 3px rgba(216, 255, 0, 0.22)` draws the Volt halo on the
-7px status dot, and it is the only way to paint an outline that does not affect
-layout. Any non-zero blur is elevation and is a bug.
+Inline `box-shadow` in page markup is still a bug — elevation belongs in the
+theme layer, so it stays consistent. The one exception is a **zero-blur spread**,
+which is a ring rather than a shadow: `0 0 0 3px rgba(216, 255, 0, 0.22)` draws
+the Volt halo on the 7px status dot, and it is the only way to paint an outline
+that does not affect layout.
 
 ---
 
@@ -210,7 +247,7 @@ introducing one to signal an error is how a second accent gets in.
 
 ## Don't
 
-- Don't add a blurred shadow. The system has no elevation, and one lifted surface makes every flat one beside it look unfinished. Zero-blur spread rings are not shadows and are fine.
+- Don't hand-roll elevation in a page's inline styles. Depth comes from `tools/theme.js` so every surface lifts the same amount; a one-off shadow is what makes the rest look unfinished.
 - Don't invent a ninth display ramp. Eight cover 30px to 84px.
 - Don't use weight 700.
 - Don't put `#9A9A92` or `#8A8A82` on Paper as body text — 2.64:1 and 3.24:1 both fail AA. Use `#6B6B63` or darker.

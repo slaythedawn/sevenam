@@ -7,6 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 const { page, ORIGIN, siteJsSrc, SITE_JS_TAG } = require('./layout');
+const { THEME } = require('./theme');
 
 const ROOT = path.join(__dirname, '..');
 const GENERATED = [].concat(
@@ -38,6 +39,23 @@ function write() {
    is not enough — a hash that only lands on generated pages leaves exactly the
    stale-cache hole this is here to close. Restamp every page from the current
    file, hand-authored included. */
+/* The depth layer, injected into every page including the 18 hand-authored
+   ones. Replaced wholesale each build, so editing tools/theme.js and rebuilding
+   is the only way it changes. */
+function stampTheme() {
+  let changed = 0;
+  const block = '<style id="sv-theme">' + THEME + '</style>';
+  for (const f of fs.readdirSync(ROOT).filter(f => f.endsWith('.html'))) {
+    const file = path.join(ROOT, f);
+    const html = fs.readFileSync(file, 'utf8');
+    const next = html.includes('<style id="sv-theme">')
+      ? html.replace(/<style id="sv-theme">[\s\S]*?<\/style>/, block)
+      : html.replace('</head>', block + '\n</head>');
+    if (next !== html) { fs.writeFileSync(file, next); changed++; }
+  }
+  return changed;
+}
+
 function stampSiteJs() {
   const src = siteJsSrc();
   let changed = 0;
@@ -79,6 +97,7 @@ function pruneRedirects(paths) {
 }
 
 const written = write();
+const themed = stampTheme();
 const stamped = stampSiteJs();
 const paths = allPages();
 writeSitemap(paths);
@@ -88,3 +107,4 @@ console.log(`generated ${written.length} pages`);
 console.log(`site now has ${paths.length} pages`);
 console.log(`removed ${pruned} placeholder redirects`);
 console.log(`site.js stamped ${stamped.src} — ${stamped.changed} page(s) updated`);
+console.log(`theme injected into ${themed} page(s)`);
