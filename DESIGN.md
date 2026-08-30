@@ -154,8 +154,16 @@ attribute-substring selectors against their inline styles — which is also why 
 lives in one file rather than across 68. It is additive: delete the block and the
 site renders flat and correct.
 
-**Ink sections float.** Below the hero, every dark band is inset 20px from the
-page edge with a 32px radius, over a Volt mesh painted in a `::before`. The mesh
+**Ink sections float.** Below the hero, every dark band is inset 24px from the
+page edge with a 36px radius, over a Volt mesh painted in a `::before`, plus a
+fine grain in an `::after` — a flat gradient across a large dark panel bands on
+cheap screens and reads as digital; noise breaks the ramp and gives it material.
+
+**A run of adjacent Ink sections is one panel.** Three sections in a row each
+rounding separately makes the internal seams look like a rendering bug, so the
+inside edges square and only the outer corners round. The hero is full bleed, and
+anything continuing straight out of it stays full bleed too — a full-width band
+flowing into an inset panel is the same defect in reverse. The mesh
 matters more than it looks: glass needs something behind it to refract, and a
 flat `#0A0A0A` gives it nothing. Full bleed returns below 640px, where there is
 no room for an inset panel.

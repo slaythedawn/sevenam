@@ -107,19 +107,41 @@
    The hero keeps its full bleed; only the sections below float. */
 main section[style*="background: rgb(10, 10, 10)"] {
   position: relative; isolation: isolate;
-  border-radius: 32px;
-  margin: 0 20px;
+  border-radius: 36px;
+  margin: 0 24px;
   overflow: hidden;
 }
-main section[style*="background: rgb(10, 10, 10)"]:first-of-type {
-  border-radius: 0; margin: 0;
+/* A run of adjacent Ink sections is one panel, not a stack of them. Without
+   this, three sections in a row each round separately and the internal seams
+   read as a rendering bug. Square the inside edges; keep the outer corners. */
+main > section[style*="background: rgb(10, 10, 10)"] + section[style*="background: rgb(10, 10, 10)"] {
+  border-top-left-radius: 0; border-top-right-radius: 0;
+}
+main > section[style*="background: rgb(10, 10, 10)"]:has(+ section[style*="background: rgb(10, 10, 10)"]) {
+  border-bottom-left-radius: 0; border-bottom-right-radius: 0;
+}
+
+/* The hero is full bleed. Anything continuing straight out of it has to be too,
+   or a full-width band flows into an inset panel and the corners look broken. */
+main > section[style*="background: rgb(10, 10, 10)"]:first-of-type,
+main > section[style*="background: rgb(10, 10, 10)"]:first-of-type + section[style*="background: rgb(10, 10, 10)"] {
+  border-radius: 0 !important; margin: 0;
 }
 main section[style*="background: rgb(10, 10, 10)"]::before {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:
-    radial-gradient(900px 520px at 82% -8%,  rgba(216, 255, 0, 0.15), transparent 60%),
-    radial-gradient(700px 460px at 12% 104%, rgba(216, 255, 0, 0.09), transparent 62%),
-    radial-gradient(600px 400px at 50% 40%,  rgba(255, 255, 255, 0.045), transparent 70%);
+    radial-gradient(880px 520px at 84% -10%, rgba(216, 255, 0, 0.22), transparent 58%),
+    radial-gradient(720px 480px at 10% 106%, rgba(216, 255, 0, 0.13), transparent 60%),
+    radial-gradient(1100px 700px at 50% 50%, rgba(255, 255, 255, 0.07), transparent 72%);
+}
+
+/* Grain. A flat gradient on a large dark panel bands on cheap screens and reads
+   as digital; a little noise breaks the ramp and gives the surface a material.
+   Generated inline so it costs no request. */
+main section[style*="background: rgb(10, 10, 10)"]::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  opacity: 0.24; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ============================================================ glass tiles ==
@@ -227,7 +249,8 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
     box-shadow: none !important;
   }
   main section[style*="background: rgb(10, 10, 10)"] { margin: 0; border-radius: 0; }
-  main section[style*="background: rgb(10, 10, 10)"]::before { display: none; }
+  main section[style*="background: rgb(10, 10, 10)"]::before,
+  main section[style*="background: rgb(10, 10, 10)"]::after { display: none; }
 }
 </style>
 </head>
