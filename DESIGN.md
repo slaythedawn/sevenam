@@ -154,23 +154,40 @@ attribute-substring selectors against their inline styles — which is also why 
 lives in one file rather than across 68. It is additive: delete the block and the
 site renders flat and correct.
 
+**Ink sections float.** Below the hero, every dark band is inset 20px from the
+page edge with a 32px radius, over a Volt mesh painted in a `::before`. The mesh
+matters more than it looks: glass needs something behind it to refract, and a
+flat `#0A0A0A` gives it nothing. Full bleed returns below 640px, where there is
+no room for an inset panel.
+
+**Corners carry the era.** Cards are 16px, buttons are full pills. 4–6px corners
+are the single strongest signal that a layout is utilitarian, and moving them was
+a bigger visual change than any amount of shadow. Cards also take
+`overflow: hidden` so images clip to the corner rather than punching through it.
+
 **Glass, on Ink.** Cards on a dark ground take a gradient fill, a blurred
 backdrop and a 1px inset highlight along the top edge. The highlight does more
 work than the blur — it is what gives the tile a front surface.
 
 ```
-background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018));
-backdrop-filter: blur(16px) saturate(135%);
-border: 1px solid rgba(255,255,255,.085);
-box-shadow: inset 0 1px 0 rgba(255,255,255,.075), 0 18px 40px -22px rgba(0,0,0,.9);
+background: linear-gradient(160deg, rgba(255,255,255,.13), rgba(255,255,255,.04) 55%);
+backdrop-filter: blur(22px) saturate(150%);
+border: 1px solid rgba(255,255,255,.17);
+box-shadow: inset 0 1px 0 rgba(255,255,255,.24),
+            inset 0 -1px 0 rgba(0,0,0,.35),
+            0 28px 60px -24px rgba(0,0,0,.95);
 ```
+
+These alphas are deliberately high. A first pass at .055 over near-black was
+invisible on a real screen — on a dark ground, restraint reads as nothing at
+all.
 
 **Depth, on Paper.** Two shadows, never one: a 1px contact shadow to keep the
 edge crisp, and a wide soft one for the lift. A single blurred shadow reads as a
 sticker.
 
 ```
-box-shadow: 0 1px 2px rgba(10,10,10,.045), 0 10px 28px -14px rgba(10,10,10,.16);
+box-shadow: 0 2px 4px rgba(10,10,10,.05), 0 18px 44px -18px rgba(10,10,10,.24);
 ```
 
 **Atmosphere.** Ink sections carry a faint Volt bloom off the top-right in a
