@@ -151,12 +151,11 @@ function confirmationFor(lead, canReply) {
 
   const subject = call ? 'Your pricing call — Sevenam' : 'We have your application — Sevenam';
   const body = call
-    ? 'Thanks for asking about a pricing call.\n\n' +
-      'Josh has your email and will reply within a business day with a time, and the numbers ready. ' +
-      'Fifteen minutes, no proposal attached.' + reply
-    : 'Thanks for the application.\n\n' +
-      'Josh reads each one himself and will reply within a business day — either with a straight read ' +
-      'on which product fits your account, or with a note saying none of them do.' + reply;
+    ? 'Thanks — we have your email.\n\n' +
+      'Josh will reply within a business day with a time, and the numbers ready.' + reply
+    : 'Thanks — we have your application.\n\n' +
+      'Josh reads each one himself and will reply within a business day with a straight read ' +
+      'on which product fits your account.' + reply;
 
   return { subject, body: body + '\n\n— Sevenam' };
 }

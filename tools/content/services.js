@@ -26,28 +26,28 @@ const PAGES = [
   {
     slug: 'pricing-call',
     title: 'Book a 15-Minute Pricing Call | Sevenam',
-    description: 'Fifteen minutes, straight numbers on what running your Meta account would cost. No deck, no sequence, no obligation. Leave an email and Josh replies with a time.',
+    description: 'Fifteen minutes, straight numbers on what running your Meta account would cost. Leave an email and Josh replies with a time.',
     eyebrow: 'PRICING CALL', h1: 'Fifteen minutes, straight numbers.',
-    lead: 'What it would cost to run your account, said out loud, without a proposal attached.',
+    lead: 'What it would cost to run your account, said out loud.',
     skipOwnership: true,
     s1: {
       h2: 'What the fifteen minutes covers.',
       paras: [
-        "The setup fee is fixed and published, so that part needs no call. What does need one is everything priced to the account rather than to a rate card: what the daily decisions would cost at your number of accounts and markets, what creative runs to at the volume you would actually order, and whether the end-to-end option is cheaper than hiring for it.",
-        "You get those figures on the call, not in a follow-up afterwards. If the honest answer is that nothing here is worth buying yet, you get that instead, and it takes about four minutes.",
+        "The setup fee is fixed and published, so that part needs no call. The rest is priced to your account: what the daily decisions cost at your number of accounts and markets, what creative runs to at the volume you would order, and whether the end-to-end option beats hiring for it.",
+        "You get those figures on the call. If nothing here is worth buying yet, you get that instead.",
       ],
       items: [
-        'What the monthly would be for your account, as a number.',
-        'What creative costs at the volume you would actually order.',
+        'The monthly for your account, as a number.',
+        'What creative costs at the volume you would order.',
         'Whether the setup on its own is the better purchase.',
-        'The two or three things we would fix first, whether or not you buy anything.',
+        'The two or three things we would fix first.',
       ],
     },
     s2: {
-      h2: 'Why there is no price list to send you.',
+      h2: 'How the pricing works.',
       paras: [
-        "The setup is published because it is a fixed scope: $19,500, four weeks, the same number whatever you spend. Everything else is priced to the work, and the work genuinely differs \u2014 one account in one market is not four accounts across three, and quoting a number before reading the account would be quoting a made-up number.",
-        "That is also why there are no tiers. There are four things you can buy and you can take any of them on their own, so there is nothing to bundle. The call is simply where the ones priced to the work get a figure against them.",
+        "The setup is $19,500 \u2014 fixed scope, four weeks, the same number whatever you spend. Everything else is priced to the account, because one account in one market is not four accounts across three.",
+        "There are no tiers. Four things you can buy, any of them on their own. The call is where the ones priced to the work get a figure against them.",
       ],
       items: [
         'The setup is fixed and published: $19,500.',
@@ -65,16 +65,16 @@ const PAGES = [
     callForm: {
       label: 'One field',
       h2: 'Leave an email. Josh replies with a time.',
-      p: 'No questionnaire, no calendar to wrestle with, no sequence afterwards. One reply from a person, within a business day.',
+      p: 'One reply from a person, within a business day.',
     },
     faqs: [
-      { q: 'Is this a sales call?', a: "It is a pricing call. You asked what it costs, so you get told what it costs. If it is not a fit we say so on the call rather than putting you into a follow-up sequence." },
-      { q: 'Do I need to prepare anything?', a: "No. Knowing roughly what you spend a month on media helps, but if you do not know it off the top of your head that is fine too." },
-      { q: 'Why not just publish all the prices?', a: "The setup is published \u2014 $19,500, fixed, on the pricing page. The rest depends on the account: accounts, markets and feeds change the work, and a number quoted before reading the account would be a made-up number." },
-      { q: 'Do you sell packages or tiers?', a: "No. There are four things you can buy and any of them can be taken on its own, which is why there is nothing to put in a tier. The call is where the ones priced to the work get a number against them." },
-      { q: 'What if I would rather answer the questions?', a: "Start at Get started instead \u2014 five questions and a straight read on which product fits, or whether none of them do. The call is the shorter path when the only thing you want is the price." },
+      { q: 'Is this a sales call?', a: "It is a pricing call. You asked what it costs, so you get told what it costs. If it is not a fit, we say so on the call." },
+      { q: 'Do I need to prepare anything?', a: "No. Knowing roughly what you spend a month helps, but it is not required." },
+      { q: 'What happens after the call?', a: "You get the figures in writing the same day. If you want to go ahead, we agree a start date. If not, nothing follows." },
+      { q: 'Do you sell packages or tiers?', a: "No. Four things you can buy, any of them on their own." },
+      { q: 'What if I would rather answer the questions?', a: "Start at Get started instead \u2014 five questions, and a straight read on which product fits. The call is the shorter path if you only want the price." },
     ],
-    closing: { h2: 'Prefer to answer five questions instead?', p: "The application takes a couple of minutes and comes back with a straight read on which product fits your account \u2014 or whether none of them do." },
+    closing: { h2: 'Prefer to answer five questions instead?', p: "The application takes a couple of minutes and comes back with a straight read on which product fits your account." },
     related: [
       { href: '/pricing', title: 'How buying works', note: 'Four ways, no tiers.' },
       { href: '/install', title: 'The setup', note: 'Four weeks, fixed price.' },
