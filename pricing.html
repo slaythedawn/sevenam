@@ -70,7 +70,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam buys Meta ads and produces ad creative for Australian ecommerce brands, on their own ad accounts, for fixed fees.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"Service","name":"Meta advertising system installation, creative production and daily decision approval","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"Australia","description":"A one-time setup that installs the system on your own Meta ad account, then creative ordered on demand, and a daily decision list you work through and we action."},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which prices are published?","acceptedAnswer":{"@type":"Answer","text":"The setup price is, because the scope is fixed and the same number is honest for every account. What the account needs each month, and what the creative costs, depend on the account, so we put those in writing once we have read it — including what we would charge and what we would not sell you."}},{"@type":"Question","name":"Do you charge a percentage of ad spend?","acceptedAnswer":{"@type":"Answer","text":"Our fees are priced to the work — installing the system, running the decisions, producing the creative. None of that gets harder because you spent more, so none of it costs more."}},{"@type":"Question","name":"Is there a lock-in contract?","acceptedAnswer":{"@type":"Answer","text":"No. Setup is a fixed-scope project. Creative is ordered when you want it, priced per concept, with no minimum and no subscription. Anything monthly stops at the end of any month with no notice period."}},{"@type":"Question","name":"What happens on the consultation call?","acceptedAnswer":{"@type":"Answer","text":"Fifteen minutes. We look at your spend, your creative pipeline and who runs the account, then tell you which option fits and what it costs. If none of it fits, we say that."}}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam buys Meta ads and produces ad creative for Australian ecommerce brands, on their own ad accounts, for fixed fees.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"Service","name":"Meta advertising system installation, creative production and daily decision approval","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"Australia","description":"A one-time setup that installs the system on your own Meta ad account, then creative ordered on demand, and a daily decision list you work through and we action."},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the price fixed before we start?","acceptedAnswer":{"@type":"Answer","text":"Yes. The setup is a fixed scope, so it is one number rather than a range, and it does not move once agreed. What the account needs each month, and what the creative costs, depend on the account, so we put those in writing once we have read it — including what we would charge and what we would not sell you."}},{"@type":"Question","name":"Do you charge a percentage of ad spend?","acceptedAnswer":{"@type":"Answer","text":"Our fees are priced to the work — installing the system, running the decisions, producing the creative. None of that gets harder because you spent more, so none of it costs more."}},{"@type":"Question","name":"Is there a lock-in contract?","acceptedAnswer":{"@type":"Answer","text":"No. Setup is a fixed-scope project. Creative is ordered when you want it, priced per concept, with no minimum and no subscription. Anything monthly stops at the end of any month with no notice period."}},{"@type":"Question","name":"What happens on the consultation call?","acceptedAnswer":{"@type":"Answer","text":"Fifteen minutes. We look at your spend, your creative pipeline and who runs the account, then tell you which option fits and what it costs. If none of it fits, we say that."}}]}]}</script>
 <style>
   html, body { margin:0; padding:0; }
   body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
@@ -183,6 +183,20 @@ main > section[style*="background: rgb(10, 10, 10)"] + section[style*="backgroun
 }
 main > section[style*="background: rgb(10, 10, 10)"]:has(+ section[style*="background: rgb(10, 10, 10)"]) {
   border-bottom-left-radius: 0; border-bottom-right-radius: 0;
+}
+
+/* The footer is full-bleed Ink and sits outside main, so a floating last section
+   left a 24px notch either side of it — visible on 63 of 68 pages. The last Ink
+   section merges into the footer instead: full width, with the shoulder rounded
+   where it rises out of a Paper section above. Closing CTA and footer then read
+   as one dark base rather than a panel dropped onto a bar. */
+main > section[style*="background: rgb(10, 10, 10)"]:last-child {
+  margin: 0;
+  border-radius: 36px 36px 0 0;
+}
+/* Unless it continues a run of Ink, in which case there is no shoulder to round. */
+main > section[style*="background: rgb(10, 10, 10)"] + section[style*="background: rgb(10, 10, 10)"]:last-child {
+  border-radius: 0;
 }
 
 /* The hero is full bleed. Anything continuing straight out of it has to be too,
@@ -354,7 +368,7 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
         <h1 style="margin: 26px 0px 0px; max-width: 20ch; font-size: clamp(40px, 6vw, 84px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; color: rgb(255, 255, 255); text-wrap: balance;">What it costs, and what it depends on.</h1>
         <p style="margin: 32px 0px 0px; max-width: 56ch; font-size: 20px; font-weight: 500; line-height: 1.55; color: rgb(247, 247, 245);">The setup is a fixed scope, so it carries a fixed price and that price is below. What the account needs after that depends on the account, and we put every figure in writing once we've read it — whether you go ahead or not.</p>
         <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px;">
-          <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 28px; border-radius: 4px;">Get started</a>
+          <a href="/pricing-call" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 28px; border-radius: 4px;">Get the numbers</a>
         </div>
         <p style="margin: 24px 0px 0px; font-size: 15px; line-height: 1.7; color: rgb(85, 85, 79);">Prefer to talk it through? · <a href="/apply" class="scp2" style="color: rgb(181, 181, 173); border-bottom: 1px solid rgb(35, 35, 32);">Five questions, then Josh replies with a time</a></p>
       </div>
@@ -381,7 +395,7 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
         <div style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 8px; padding: 40px 34px; display: flex; flex-direction: column; gap: 18px;">
           <span style="font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(85, 85, 79); font-weight: 600;">01 · Buy once</span>
           <h3 style="margin: 0px; min-height: 64px; font-size: 26px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.15;">The setup. Then you own it.</h3>
-          <p style="margin: 0px; min-height: 84px; font-size: 17px; line-height: 1.55; letter-spacing: -0.01em; color: rgb(10, 10, 10);">Four weeks inside your own Business Manager, and at the end of it the system is yours. $19,500, fixed — the same number whatever you spend.</p>
+          <p style="margin: 0px; min-height: 84px; font-size: 17px; line-height: 1.55; letter-spacing: -0.01em; color: rgb(10, 10, 10);">Four weeks inside your own Business Manager, and at the end of it the system is yours. One fixed price, the same whatever you spend.</p>
           <div style="display: flex; flex-direction: column;">
             <div style="border-top: 1px solid rgb(227, 227, 221); padding: 13px 0px; display: grid; grid-template-columns: 88px 1fr; gap: 14px; align-items: baseline;"><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(85, 85, 79);">Week 1–2</span><span style="font-size: 16px; line-height: 1.5; color: rgb(85, 85, 79);">Account rebuilt, tracking fixed</span></div>
             <div style="border-top: 1px solid rgb(227, 227, 221); padding: 13px 0px; display: grid; grid-template-columns: 88px 1fr; gap: 14px; align-items: baseline;"><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(85, 85, 79);">Week 3</span><span style="font-size: 16px; line-height: 1.5; color: rgb(85, 85, 79);">Creative process stood up</span></div>
@@ -439,8 +453,8 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
   <section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 120px 32px;">
     <div style="max-width: 1240px; margin: 0px auto; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 64px; align-items: start;">
       <div>
-        <h2 style="margin: 0px; max-width: 20ch; font-size: clamp(32px, 4vw, 56px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05;">What's published, and what we quote.</h2>
-        <p style="margin: 28px 0px 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173);">The setup is four weeks of fixed scope, so one number is honest for everyone and it is published. What an account needs each month, and how much creative it consumes, genuinely differs between a brand at $30k a month and one running four accounts — so those we quote after reading the account rather than guess at here.</p>
+        <h2 style="margin: 0px; max-width: 20ch; font-size: clamp(32px, 4vw, 56px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05;">What's fixed, and what we quote.</h2>
+        <p style="margin: 28px 0px 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173);">The setup is four weeks of fixed scope, so it is one number rather than a range — quoted on the call, and it does not move afterwards. What an account needs each month, and how much creative it consumes, genuinely differs between a brand at $30k a month and one running four accounts — so those we quote after reading the account rather than guess at here.</p>
         <p style="margin: 24px 0px 0px; max-width: 56ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">The rest works the opposite way to a proposal process: one short conversation where every remaining figure is stated plainly, in writing, including the ones that tell you not to buy. No sequence, no scarcity, no discount if you sign this week.</p>
       </div>
       <div>
@@ -482,8 +496,8 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
       <h2 style="margin: 0px 0px 40px; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Questions people actually ask.</h2>
       <div style="display: flex; flex-direction: column; max-width: 840px;">
         <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
-          <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Which prices are published?</h3>
-          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">The setup price is, because the scope is fixed and the same number is honest for every account. What the account needs each month, and what the creative costs, depend on the account, so we put those in writing once we have read it — including what we would charge and what we would not sell you.</p>
+          <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Is the price fixed before we start?</h3>
+          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Yes. The setup is a fixed scope, so it is one number rather than a range, and it does not move once agreed. What the account needs each month, and what the creative costs, depend on the account, so we put those in writing once we have read it — including what we would charge and what we would not sell you.</p>
         </div>
         <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
           <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Do you charge a percentage of ad spend?</h3>

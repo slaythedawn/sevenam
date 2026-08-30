@@ -187,6 +187,20 @@ main > section[style*="background: rgb(10, 10, 10)"]:has(+ section[style*="backg
   border-bottom-left-radius: 0; border-bottom-right-radius: 0;
 }
 
+/* The footer is full-bleed Ink and sits outside main, so a floating last section
+   left a 24px notch either side of it — visible on 63 of 68 pages. The last Ink
+   section merges into the footer instead: full width, with the shoulder rounded
+   where it rises out of a Paper section above. Closing CTA and footer then read
+   as one dark base rather than a panel dropped onto a bar. */
+main > section[style*="background: rgb(10, 10, 10)"]:last-child {
+  margin: 0;
+  border-radius: 36px 36px 0 0;
+}
+/* Unless it continues a run of Ink, in which case there is no shoulder to round. */
+main > section[style*="background: rgb(10, 10, 10)"] + section[style*="background: rgb(10, 10, 10)"]:last-child {
+  border-radius: 0;
+}
+
 /* The hero is full bleed. Anything continuing straight out of it has to be too,
    or a full-width band flows into an inset panel and the corners look broken. */
 main > section[style*="background: rgb(10, 10, 10)"]:first-of-type,
@@ -368,7 +382,7 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
       <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Why spend-based pricing breaks at scale.</h2>
       <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">The work of running a $40k-a-month account and a $200k-a-month account is close to identical: the same structure, the same weekly creative cadence, the same daily decisions. What changes is the invoice, because the fee is pegged to your media rather than to the work.</p>
       <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Worse, it prices your growth. Every month you scale, the fee scales with you, so the agency's incentive is more spend rather than better spend. That's tolerable at $10k a month and indefensible at $150k.</p>
-      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Our fee is fixed and published. Scale from $50k to $250k a month and it does not move — the decisions gets more valuable, not more expensive.</p>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Our fee is fixed and agreed before we start. Scale from $50k to $250k a month and it does not move — the decisions gets more valuable, not more expensive.</p>
       <div style="margin-top: 36px; display: flex; flex-direction: column; max-width: 860px;">
         <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;">A 12% fee on $100k a month is $12,000 — for roughly twenty hours of actual decisions.</div>
         <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;">Fixed fees make the cheapest month and the biggest month cost the same to run.</div>

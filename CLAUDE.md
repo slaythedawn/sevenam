@@ -77,12 +77,16 @@ design — but it also means **breaking that file breaks all 42**.
 - Copy on the money pages is written against search terms. **Do not rewrite it for tone.**
 - Never state a precise time for the overnight run — "Before you're up", never "02:00".
 - No pricing on the homepage, and no pricing in any CTA button label.
-- One Sevenam figure is published and must stay consistent wherever it appears: the
-  Install at **$19,500** (`/pricing`, `/agency-fee`, `/install`, `/pricing-call`). Creative is sold per
-  concept and `/pricing` says so, but the per-concept figure is deliberately **not**
-  published — do not add one back. Everything else — the monthly, managed scope, deal
-  terms — is quoted in writing after the account is read. Market rates on the cost pages
-  are other agencies' typical ranges, never ours.
+- **No Sevenam price appears anywhere on the site.** Not the Install, not the monthly,
+  not per concept. The setup fee, the monthly and the creative rate are all quoted on
+  the 15-minute call and confirmed in writing; a visitor who wants a number books the
+  call. `$19,500` was published on `/pricing`, `/install`, `/agency-fee` and
+  `/pricing-call`, and `$890` a month on `/system` — all removed. Do not reintroduce
+  one, and do not write "published" of our own pricing; the promise is that the fee is
+  **fixed and agreed before we start**, not that it is on the site.
+- Market rates on the cost pages are other agencies' typical ranges, attributed to the
+  business that published them, and are **not** covered by the rule above — those stay.
+  So do client spend ranges like "$30k–$500k a month".
 - **Do not write the fee model as a vow.** "Never a percentage of spend" was removed from
   ~140 places; fees are **"priced to the work"** — full stop, no "rather than your budget"
   clause, which was itself cut from 30 places for defining us against other agencies. Absolutes foreclose
@@ -95,9 +99,12 @@ design — but it also means **breaking that file breaks all 42**.
 - No emoji, no "AI-powered" filler, no urgency theatre.
 - Exactly one hero CTA and one closing CTA per SEO page. A mid-page CTA block was
   deliberately removed from 34 pages; do not reintroduce it.
-- Every CTA routes to `/apply`, with one deliberate exception: `/pricing-call`'s hero
+- Every CTA routes to `/apply`, with two deliberate exceptions. `/pricing-call`'s hero
   CTA points at its own `#pricing-call` form, because the page exists to remove the
-  five-question application for somebody who searched for a price. Its closing CTA is
+  five-question application for somebody who searched for a price. And `/pricing`'s hero
+  CTA points at `/pricing-call` — now that no number is published, the call is where a
+  number comes from, so sending a price-shopper to a five-question application is the
+  wrong door. Both closing CTAs are still `/apply`. Its closing CTA is
   still `/apply`. The `ctaHref` / `ctaLabel` overrides in `tools/layout.js` default to
   `/apply` / "Get started", so no other generated page is affected — keep it that way.
   There is still no direct calendar booking anywhere, on purpose: capture the email

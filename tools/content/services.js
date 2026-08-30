@@ -33,7 +33,7 @@ const PAGES = [
     s1: {
       h2: 'What the fifteen minutes covers.',
       paras: [
-        "The setup fee is fixed and published, so that part needs no call. The rest is priced to your account: what the daily decisions cost at your number of accounts and markets, what creative runs to at the volume you would order, and whether the end-to-end option beats hiring for it.",
+        "The setup is a fixed scope, so it is one number rather than a range. The rest is priced to your account: what the daily decisions cost at your number of accounts and markets, what creative runs to at the volume you would order, and whether the end-to-end option beats hiring for it.",
         "You get those figures on the call. If nothing here is worth buying yet, you get that instead.",
       ],
       items: [
@@ -46,11 +46,11 @@ const PAGES = [
     s2: {
       h2: 'How the pricing works.',
       paras: [
-        "The setup is $19,500 \u2014 fixed scope, four weeks, the same number whatever you spend. Everything else is priced to the account, because one account in one market is not four accounts across three.",
+        "The setup is a fixed scope \u2014 four weeks, one number, the same whatever you spend. Everything else is priced to the account, because one account in one market is not four accounts across three.",
         "There are no tiers. Four things you can buy, any of them on their own. The call is where the ones priced to the work get a figure against them.",
       ],
       items: [
-        'The setup is fixed and published: $19,500.',
+        'The setup is one fixed number, agreed before anything starts.',
         'The monthly is priced by accounts, markets and feeds \u2014 not by media spend.',
         'Creative is per concept, ordered when the account needs it.',
         'No tiers, no packages, no minimum term.',

@@ -187,6 +187,20 @@ main > section[style*="background: rgb(10, 10, 10)"]:has(+ section[style*="backg
   border-bottom-left-radius: 0; border-bottom-right-radius: 0;
 }
 
+/* The footer is full-bleed Ink and sits outside main, so a floating last section
+   left a 24px notch either side of it — visible on 63 of 68 pages. The last Ink
+   section merges into the footer instead: full width, with the shoulder rounded
+   where it rises out of a Paper section above. Closing CTA and footer then read
+   as one dark base rather than a panel dropped onto a bar. */
+main > section[style*="background: rgb(10, 10, 10)"]:last-child {
+  margin: 0;
+  border-radius: 36px 36px 0 0;
+}
+/* Unless it continues a run of Ink, in which case there is no shoulder to round. */
+main > section[style*="background: rgb(10, 10, 10)"] + section[style*="background: rgb(10, 10, 10)"]:last-child {
+  border-radius: 0;
+}
+
 /* The hero is full bleed. Anything continuing straight out of it has to be too,
    or a full-width band flows into an inset panel and the corners look broken. */
 main > section[style*="background: rgb(10, 10, 10)"]:first-of-type,
@@ -411,7 +425,7 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
           <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(216, 255, 0);">The system model</span>
           <span style="font-size: 23px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.2; max-width: 20ch; text-wrap: balance; color: rgb(255, 255, 255);">Software on your account, decisions every morning</span>
           <div style="display: flex; flex-direction: column;">
-            <span style="border-top: 1px solid rgb(35, 35, 32); padding: 14px 0px; font-size: 16px; line-height: 1.6; color: rgb(181, 181, 173);">Fixed fee, published, unchanged when your budget triples</span>
+            <span style="border-top: 1px solid rgb(35, 35, 32); padding: 14px 0px; font-size: 16px; line-height: 1.6; color: rgb(181, 181, 173);">Fixed fee, agreed up front, unchanged when your budget triples</span>
             <span style="border-top: 1px solid rgb(35, 35, 32); padding: 14px 0px; font-size: 16px; line-height: 1.6; color: rgb(181, 181, 173);">A decision at 7am daily, settled with you and actioned in your account</span>
             <span style="border-top: 1px solid rgb(35, 35, 32); padding: 14px 0px; font-size: 16px; line-height: 1.6; color: rgb(181, 181, 173);">Creative on demand from our own AI line, delivered in days</span>
             <span style="border-top: 1px solid rgb(35, 35, 32); padding: 14px 0px; font-size: 16px; line-height: 1.6; color: rgb(181, 181, 173);">No notice period, and everything lives in your Business Manager</span>
@@ -427,9 +441,9 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
       <div>
         <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">How to compare us to the agency you're talking to.</h2>
         <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Ask three questions. What happens to your fee when your spend doubles? Who owns the account, the pixel and the creative at the end? And what, specifically, does the platform now do that they're still charging for?</p>
-        <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Then ask for the fee in writing, as a dollar figure rather than a percentage. Ours is a published one-time setup fee and a fixed monthly, and neither moves when your budget does.</p>
+        <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Then ask for the fee in writing, as a dollar figure rather than a percentage. Ours is a one-time setup fee and a fixed monthly, and neither moves when your budget does.</p>
         <div style="margin-top: 36px; display: flex; flex-direction: column; max-width: 820px;">
-          <div style="display: grid; grid-template-columns: 1fr; border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px;"><span style="font-size: 17px; line-height: 1.6;">Priced on: a percentage of your media, versus fixed and published.</span></div>
+          <div style="display: grid; grid-template-columns: 1fr; border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px;"><span style="font-size: 17px; line-height: 1.6;">Priced on: a percentage of your media, versus one fixed fee.</span></div>
           <div style="display: grid; grid-template-columns: 1fr; border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px;"><span style="font-size: 17px; line-height: 1.6;">Cadence: a weekly meeting, versus 07:00, daily, automated.</span></div>
           <div style="display: grid; grid-template-columns: 1fr; border-top: 1px solid rgb(227, 227, 221); border-bottom: 1px solid rgb(227, 227, 221); padding: 20px 0px;"><span style="font-size: 17px; line-height: 1.6;">Ends in: dependency, versus capability you keep.</span></div>
         </div>

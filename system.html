@@ -193,6 +193,20 @@ main > section[style*="background: rgb(10, 10, 10)"]:has(+ section[style*="backg
   border-bottom-left-radius: 0; border-bottom-right-radius: 0;
 }
 
+/* The footer is full-bleed Ink and sits outside main, so a floating last section
+   left a 24px notch either side of it — visible on 63 of 68 pages. The last Ink
+   section merges into the footer instead: full width, with the shoulder rounded
+   where it rises out of a Paper section above. Closing CTA and footer then read
+   as one dark base rather than a panel dropped onto a bar. */
+main > section[style*="background: rgb(10, 10, 10)"]:last-child {
+  margin: 0;
+  border-radius: 36px 36px 0 0;
+}
+/* Unless it continues a run of Ink, in which case there is no shoulder to round. */
+main > section[style*="background: rgb(10, 10, 10)"] + section[style*="background: rgb(10, 10, 10)"]:last-child {
+  border-radius: 0;
+}
+
 /* The hero is full bleed. Anything continuing straight out of it has to be too,
    or a full-width band flows into an inset panel and the corners look broken. */
 main > section[style*="background: rgb(10, 10, 10)"]:first-of-type,
@@ -359,7 +373,7 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: rgb(85, 85, 79);">HOW IT WORKS</span>
       <h1 style="margin: 28px 0px 0px; max-width: 22ch; font-size: clamp(40px, 6vw, 84px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; text-wrap: balance;">Your account, decided before you've had coffee.</h1>
-      <p style="margin: 36px 0px 0px; max-width: 64ch; font-size: 19px; line-height: 1.65; color: rgb(85, 85, 79);">Sevenam reads your account first thing every morning and writes you a brief. It arrives at 7am, every morning, whether or not anyone is thinking about the account. It costs $890 a month and it never books a meeting.</p>
+      <p style="margin: 36px 0px 0px; max-width: 64ch; font-size: 19px; line-height: 1.65; color: rgb(85, 85, 79);">Sevenam reads your account first thing every morning and writes you a brief. It arrives at 7am, every morning, whether or not anyone is thinking about the account. It costs a flat monthly fee and it never books a meeting.</p>
       <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 44px;">
         <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Get started</a>
         <a href="/pricing" class="scp1" style="border: 1px solid rgb(10, 10, 10); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 15px 26px; border-radius: 4px;">See what it costs</a>

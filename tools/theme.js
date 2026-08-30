@@ -99,6 +99,20 @@ main > section[style*="background: rgb(10, 10, 10)"]:has(+ section[style*="backg
   border-bottom-left-radius: 0; border-bottom-right-radius: 0;
 }
 
+/* The footer is full-bleed Ink and sits outside main, so a floating last section
+   left a 24px notch either side of it — visible on 63 of 68 pages. The last Ink
+   section merges into the footer instead: full width, with the shoulder rounded
+   where it rises out of a Paper section above. Closing CTA and footer then read
+   as one dark base rather than a panel dropped onto a bar. */
+main > section[style*="background: rgb(10, 10, 10)"]:last-child {
+  margin: 0;
+  border-radius: 36px 36px 0 0;
+}
+/* Unless it continues a run of Ink, in which case there is no shoulder to round. */
+main > section[style*="background: rgb(10, 10, 10)"] + section[style*="background: rgb(10, 10, 10)"]:last-child {
+  border-radius: 0;
+}
+
 /* The hero is full bleed. Anything continuing straight out of it has to be too,
    or a full-width band flows into an inset panel and the corners look broken. */
 main > section[style*="background: rgb(10, 10, 10)"]:first-of-type,
