@@ -49,10 +49,14 @@ LEAD_FROM = Sevenam <hello@sevenam.com.au>
 Format matters: `Name <address>`, angle brackets included. A bare address sends
 fine but displays as raw text in most inboxes.
 
-`sevenam.com.au` is already verified in Resend, so this will work the moment you
-set it. And it is a *sending identity*, not a mailbox — no inbox needs to exist
-behind it, and nothing on the site ever displays it, so it does not conflict
-with the rule that no email address appears anywhere on the site.
+This requires `sevenam.com.au` to be a **verified domain** in Resend first
+(resend.com → Domains → Add Domain, then add the DNS records it gives you).
+Setting `LEAD_FROM` to an unverified domain makes every send fail. Check the
+Domains page reads *Verified* before you set it.
+
+It is a *sending identity*, not a mailbox — no inbox needs to exist behind it,
+and nothing on the site ever displays it, so it does not conflict with the rule
+that no email address appears anywhere on the site.
 
 ## Optional: send somewhere other than email
 
