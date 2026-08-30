@@ -398,7 +398,7 @@
     function tabStyle(btn, active) {
       btn.style.background = active ? VOLT : "transparent";
       btn.style.color = active ? "#0A0A0A" : "#B5B5AD";
-      btn.style.border = "1px solid " + (active ? VOLT : "#232320");
+      btn.style.border = "1px solid " + (active ? VOLT : "#6B6B63");
       btn.setAttribute("aria-pressed", active ? "true" : "false");
     }
 

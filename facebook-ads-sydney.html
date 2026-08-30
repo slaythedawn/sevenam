@@ -422,6 +422,14 @@ a[style*="border: 1px solid rgb(85, 85, 79)"][style*="color: rgb(255, 255, 255)"
    #757575 — 4.3:1 on Ink and 3.9:1 on the raised surface, both under AA. The
    forms are the whole conversion path; the hint text in them has to be readable. */
 input::placeholder, textarea::placeholder { color: #B5B5AD; opacity: 1; }
+
+/* The fee calculator's percentage/retainer toggle. The active tab is filled
+   Volt and unmistakable; the inactive one is transparent with muted text, so
+   its outline is the only thing saying it is a control — and the glass rule
+   above was repainting that edge to rgba(255,255,255,0.17), 1.58:1 on Ink.
+   Keyed on aria-pressed, which site.js already maintains. */
+button[data-tab][aria-pressed="false"] { border-color: #6B6B63 !important; }
+button[data-tab][aria-pressed="true"] { border-color: #D8FF00 !important; }
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #B5B5AD; opacity: 1; }
 </style>
 </head>
@@ -638,6 +646,6 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
       <span>Your growth system for Meta. It runs at seven.</span>
     </div>
   </div></footer></div></div>
-<script src="/site.js?v=10aa1798" defer></script>
+<script src="/site.js?v=a30f6409" defer></script>
 </body>
 </html>
