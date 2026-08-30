@@ -359,6 +359,36 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
   main section[style*="background: rgb(10, 10, 10)"]::before,
   main section[style*="background: rgb(10, 10, 10)"]::after { display: none; }
 }
+
+/* ====================================================== legible muted text ==
+   #55554F is the "body on paper" token. On Paper it is 7.2:1; on Ink it is
+   2.64:1, which is illegible and fails AA outright — and it had leaked onto
+   dark surfaces on all 68 pages, most visibly in the footer and inside the
+   dark cards. The page HTML is inline styles with no classes, so the colour
+   cannot be corrected per element without knowing which surface each one
+   actually sits on.
+
+   A custom property solves it the way a descendant selector cannot: it
+   inherits, so the *nearest* background-setting ancestor wins. A dark card
+   inside a paper section resolves dark, and a white card inside an ink section
+   resolves light, with no ordering games and no :not() chains. */
+:root { --sv-muted: #55554F; --sv-faint: #6B6B63; }
+
+[style*="background: rgb(10, 10, 10)"],
+[style*="background: rgb(17, 17, 16)"],
+[style*="background: rgb(22, 22, 19)"],
+[style*="background: rgb(35, 35, 32)"],
+[style*="background:#0A0A0A"],
+[style*="background:#161613"] { --sv-muted: #B5B5AD; --sv-faint: #9A9A92; }
+
+[style*="background: rgb(255, 255, 255)"],
+[style*="background: rgb(250, 250, 248)"],
+[style*="background: rgb(247, 247, 245)"],
+[style*="background: rgb(227, 227, 221)"],
+[style*="background: rgb(216, 255, 0)"] { --sv-muted: #55554F; --sv-faint: #6B6B63; }
+
+[style*="color: rgb(85, 85, 79)"] { color: var(--sv-muted) !important; }
+[style*="color: rgb(154, 154, 146)"] { color: var(--sv-faint) !important; }
 </style>
 </head>
 <body>
@@ -403,7 +433,7 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
       <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Why spend-based pricing breaks at scale.</h2>
       <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">The work of running a $40k-a-month account and a $200k-a-month account is close to identical: the same structure, the same weekly creative cadence, the same daily decisions. What changes is the invoice, because the fee is pegged to your media rather than to the work.</p>
       <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Worse, it prices your growth. Every month you scale, the fee scales with you, so the agency's incentive is more spend rather than better spend. That's tolerable at $10k a month and indefensible at $150k.</p>
-      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Our fee is fixed and agreed before we start. Scale from $50k to $250k a month and it does not move — the decisions gets more valuable, not more expensive.</p>
+      <p style="margin: 28px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Our fee is published and fixed. Scale from $50k to $250k a month and it does not move — the decisions gets more valuable, not more expensive.</p>
       <div style="margin-top: 36px; display: flex; flex-direction: column; max-width: 860px;">
         <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;">A 12% fee on $100k a month is $12,000 — for roughly twenty hours of actual decisions.</div>
         <div style="border-top: 1px solid rgb(227, 227, 221); padding: 20px 0px; font-size: 17px; line-height: 1.6;">Fixed fees make the cheapest month and the biggest month cost the same to run.</div>
@@ -564,6 +594,6 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
       <span>Your growth system for Meta. It runs at seven.</span>
     </div>
   </div></footer></div></div>
-<script src="/site.js?v=51b68f50" defer></script>
+<script src="/site.js?v=5c9c40c0" defer></script>
 </body>
 </html>

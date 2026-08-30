@@ -51,6 +51,15 @@ text needs, not by how the swatch looks in isolation.
 | `#8A8A82` | 3.24:1 | **5.69:1** | Large text only on Paper. Body on Ink |
 | `#9A9A92` | 2.64:1 | **6.99:1** | Ink only. Never on Paper |
 
+The two muted greys are surface-dependent, so the theme layer resolves them
+through inherited custom properties rather than by hand: `--sv-muted` is
+`#55554F` on Paper and `#B5B5AD` on Ink, `--sv-faint` is `#6B6B63` on Paper and
+`#9A9A92` on Ink. A custom property inherits, so the *nearest* ancestor that
+sets a background decides — a white card inside an ink section resolves light
+and a dark card inside a paper section resolves dark, which a descendant
+selector cannot do. Write `#55554F` in the markup as before; the layer corrects
+it wherever the surface says otherwise.
+
 Large text means 24px, or 19px at weight 600 and above. Below `#8A8A82` on
 Paper is a bug, and `#9A9A92` on Paper is the one that keeps recurring.
 

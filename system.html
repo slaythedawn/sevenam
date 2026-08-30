@@ -69,7 +69,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0A0A0A">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/system","name":"How It Works — Daily Meta Ads Decisions At 7am | Sevenam","description":"Your account is read first thing each morning through the Meta API, analysed against thresholds written for it, and by 7am you have a written brief: what to change today, what to leave alone, and why.","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"Service","name":"Daily Meta ads decision reporting","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"Australia","serviceType":"Advertising analytics and reporting"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/system","name":"How It Works — Daily Meta Ads Decisions At 7am | Sevenam","description":"Your account is read first thing each morning through the Meta API, analysed against thresholds written for it, and by 7am you have a written brief: what to change today, what to leave alone, and why.","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"Service","name":"Daily Meta ads decision reporting","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"Australia","serviceType":"Advertising analytics and reporting","offers":{"@type":"Offer","price":"2500","priceCurrency":"AUD","eligibleDuration":{"@type":"QuantitativeValue","value":1,"unitCode":"MON"}}}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -365,6 +365,36 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
   main section[style*="background: rgb(10, 10, 10)"]::before,
   main section[style*="background: rgb(10, 10, 10)"]::after { display: none; }
 }
+
+/* ====================================================== legible muted text ==
+   #55554F is the "body on paper" token. On Paper it is 7.2:1; on Ink it is
+   2.64:1, which is illegible and fails AA outright — and it had leaked onto
+   dark surfaces on all 68 pages, most visibly in the footer and inside the
+   dark cards. The page HTML is inline styles with no classes, so the colour
+   cannot be corrected per element without knowing which surface each one
+   actually sits on.
+
+   A custom property solves it the way a descendant selector cannot: it
+   inherits, so the *nearest* background-setting ancestor wins. A dark card
+   inside a paper section resolves dark, and a white card inside an ink section
+   resolves light, with no ordering games and no :not() chains. */
+:root { --sv-muted: #55554F; --sv-faint: #6B6B63; }
+
+[style*="background: rgb(10, 10, 10)"],
+[style*="background: rgb(17, 17, 16)"],
+[style*="background: rgb(22, 22, 19)"],
+[style*="background: rgb(35, 35, 32)"],
+[style*="background:#0A0A0A"],
+[style*="background:#161613"] { --sv-muted: #B5B5AD; --sv-faint: #9A9A92; }
+
+[style*="background: rgb(255, 255, 255)"],
+[style*="background: rgb(250, 250, 248)"],
+[style*="background: rgb(247, 247, 245)"],
+[style*="background: rgb(227, 227, 221)"],
+[style*="background: rgb(216, 255, 0)"] { --sv-muted: #55554F; --sv-faint: #6B6B63; }
+
+[style*="color: rgb(85, 85, 79)"] { color: var(--sv-muted) !important; }
+[style*="color: rgb(154, 154, 146)"] { color: var(--sv-faint) !important; }
 </style>
 </head>
 <body>
@@ -394,7 +424,7 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: rgb(85, 85, 79);">HOW IT WORKS</span>
       <h1 style="margin: 28px 0px 0px; max-width: 22ch; font-size: clamp(40px, 6vw, 84px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; text-wrap: balance;">Your account, decided before you've had coffee.</h1>
-      <p style="margin: 36px 0px 0px; max-width: 64ch; font-size: 19px; line-height: 1.65; color: rgb(85, 85, 79);">Sevenam reads your account first thing every morning and writes you a brief. It arrives at 7am, every morning, whether or not anyone is thinking about the account. It costs a flat monthly fee and it never books a meeting.</p>
+      <p style="margin: 36px 0px 0px; max-width: 64ch; font-size: 19px; line-height: 1.65; color: rgb(85, 85, 79);">Sevenam reads your account first thing every morning and writes you a brief. It arrives at 7am, every morning, whether or not anyone is thinking about the account. It costs $2,500 a month and it never books a meeting.</p>
       <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 44px;">
         <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Get started</a>
         <a href="/pricing" class="scp1" style="border: 1px solid rgb(10, 10, 10); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 15px 26px; border-radius: 4px;">See what it costs</a>
@@ -611,6 +641,6 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
       <span>Your growth system for Meta. It runs at seven.</span>
     </div>
   </div></footer></div></div>
-<script src="/site.js?v=51b68f50" defer></script>
+<script src="/site.js?v=5c9c40c0" defer></script>
 </body>
 </html>

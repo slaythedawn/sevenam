@@ -235,11 +235,11 @@
             tick.style.transform = "scale(1.12)";
             hLater(function () { tick.style.transform = "scale(1)"; }, 220);
           }
-          if (state) { state.textContent = "Actioned"; state.style.color = "#55554F"; }
+          if (state) { state.textContent = "Actioned"; state.style.color = "#8A8A82"; }
         }, 220 + i * 320);
       });
       hLater(function () {
-        if (badge) { badge.textContent = "Done · 07:04"; badge.style.color = "#55554F"; }
+        if (badge) { badge.textContent = "Done · 07:04"; badge.style.color = "#8A8A82"; }
         if (foot) {
           foot.textContent = "All three changes are live in your account. Nothing else to do today.";
           foot.style.color = "#B5B5AD";
@@ -693,7 +693,7 @@
     function chrome(stepLabel, stepCount, pct) {
       return '<div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:14px;">' +
         '<span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:' + VOLT + ';">' + esc(stepLabel) + '</span>' +
-        '<span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#55554F; font-variant-numeric:tabular-nums;">' + esc(stepCount) + '</span>' +
+        '<span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#B5B5AD; font-variant-numeric:tabular-nums;">' + esc(stepCount) + '</span>' +
         '</div>' +
         '<div style="height:3px; background:#161613; border-radius:2px; overflow:hidden; margin-bottom:56px;">' +
         '<div style="height:3px; background:' + VOLT + '; border-radius:2px; transition:width 0.45s ' + EASE + '; width:' + pct + ';"></div>' +
@@ -715,7 +715,7 @@
       if (onEmail) {
         html = chrome("Get started", "Step 1 of " + TOTAL, Math.round((1 / TOTAL) * 100) + "%");
         html += '<div style="' + STEP_IN + '">' +
-          '<h1 style="' + H1 + ' max-width:20ch;">Give us your email and we\'ll get started.</h1>' +
+          '<h2 style="' + H1 + ' max-width:20ch;">Give us your email and we\'ll get started.</h2>' +
           '<p style="margin:20px 0 0; max-width:56ch; font-size:17px; line-height:1.7; color:#B5B5AD;">' +
           'That\'s all we need \u2014 you\'re through. Five optional questions after this get you a straight ' +
           'read on which product fits, or whether none of them do.</p>' +
@@ -729,7 +729,7 @@
           'font-weight:600; padding:18px 28px; border-radius:4px; cursor:pointer;">Start</button>' +
           '</div>' +
           '<p style="margin:22px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:' +
-          (S.emailTried && !emailOk ? "#D8FF00" : "#55554F") + ';">' +
+          (S.emailTried && !emailOk ? "#D8FF00" : "#B5B5AD") + ';">' +
           (S.emailTried && !emailOk
             ? "That email address does not look right \u2014 we have no other way to reply."
             : "One reply from a person. No list, no sequence, no sharing.") +
@@ -739,7 +739,7 @@
         html = chrome(question.label, "Step " + (S.step + 2) + " of " + TOTAL,
           Math.round(((S.step + 1) / TOTAL) * 100) + "%");
         html += '<div style="' + STEP_IN + '">' +
-          '<h1 style="' + H1 + '">' + esc(question.q) + '</h1>' +
+          '<h2 style="' + H1 + '">' + esc(question.q) + '</h2>' +
           '<p style="margin:20px 0 0; max-width:56ch; font-size:17px; line-height:1.7; color:#B5B5AD;">' + esc(question.helper) + '</p>' +
           '<div style="margin-top:44px; display:flex; flex-direction:column; gap:10px;">';
         question.options.forEach(function (o, i) {
@@ -768,7 +768,7 @@
         html = chrome("Your details", "Step " + (S.step + 2) + " of " + TOTAL,
           Math.round(((S.step + 1) / TOTAL) * 100) + "%");
         html += '<div style="' + STEP_IN + '">' +
-          '<h1 style="' + H1 + ' max-width:22ch;">Where do we send the answer?</h1>' +
+          '<h2 style="' + H1 + ' max-width:22ch;">Where do we send the answer?</h2>' +
           '<p style="margin:20px 0 0; max-width:56ch; font-size:17px; line-height:1.7; color:#B5B5AD;">One reply within a business day, from a person, with a straight read on whether this fits. No sequence, no newsletter, no call booked without asking.</p>' +
           '<div style="margin-top:44px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;">' +
           field("site", "Website", "text", "yourstore.com.au") +
@@ -779,7 +779,7 @@
           '</div>' +
           HONEYPOT +
           '<label style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">' +
-          '<span style="' + LABEL + '">Anything we should know <span style="color:#55554F; font-weight:500; letter-spacing:0; text-transform:none;">optional</span></span>' +
+          '<span style="' + LABEL + '">Anything we should know <span style="color:#B5B5AD; font-weight:500; letter-spacing:0; text-transform:none;">optional</span></span>' +
           '<textarea rows="4" data-field="note" placeholder="Contract dates, who else is involved, what you\'ve already tried." ' +
           'style="' + INPUT + ' line-height:1.6; resize:vertical;">' + esc(S.note) + '</textarea>' +
           '</label>' +
@@ -795,7 +795,7 @@
           '<button type="button" data-back style="' + LINK_BTN + '">Back</button>' +
           '</div>' +
           '<p style="margin:22px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:' +
-          '#55554F;">' +
+          '#B5B5AD;">' +
           "All optional — we already have your email. Anything you add here just means a sharper reply." +
           '</p></div>';
 
@@ -807,7 +807,7 @@
            this is a confirmation, not a result. */
         html = chrome("You're in", "Complete", "100%");
         html += '<div style="' + (reduced ? "" : "animation:stepIn 0.5s " + EASE + " both;") + '">' +
-          '<h1 style="' + H1 + ' max-width:22ch;">That\'s you through.</h1>' +
+          '<h2 style="' + H1 + ' max-width:22ch;">That\'s you through.</h2>' +
           '<p style="margin:24px 0 0; max-width:58ch; font-size:19px; line-height:1.65; color:#F7F7F5;">' +
           'Josh has your email and reads every one himself. Expect a reply within a business day.</p>' +
           '<p style="margin:20px 0 0; max-width:58ch; font-size:17px; line-height:1.7; color:#B5B5AD;">' +
@@ -817,7 +817,7 @@
           '<button type="button" data-unskip style="background:' + VOLT + '; color:#0A0A0A; font-size:17px;' +
           'font-family:inherit; font-weight:600; padding:18px 28px; border-radius:4px; border:none; cursor:pointer;">' +
           'Answer them anyway</button>' +
-          '<a href="/learn" style="border:1px solid #55554F; color:#F7F7F5; font-size:17px;' +
+          '<a href="/learn" style="border:1px solid #8A8A82; color:#F7F7F5; font-size:17px;' +
           'font-weight:600; padding:17px 28px; border-radius:4px;">Read something useful instead</a>' +
           '</div></div>';
 
@@ -827,7 +827,7 @@
         html += '<div style="' + (reduced ? "" : "animation:stepIn 0.5s " + EASE + " both;") + '">' +
           '<span data-verdict style="display:inline-flex; align-items:center; gap:10px; background:' + VOLT + '; color:#0A0A0A;' +
           'font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:7px 11px; border-radius:3px;">' + esc(v.tag) + '</span>' +
-          '<h1 style="' + H1 + ' margin:26px 0 0; max-width:22ch;">' + esc(v.title) + '</h1>' +
+          '<h2 style="' + H1 + ' margin:26px 0 0; max-width:22ch;">' + esc(v.title) + '</h2>' +
           '<p style="margin:24px 0 0; max-width:58ch; font-size:19px; line-height:1.65; color:#F7F7F5;">' + esc(v.body) + '</p>' +
           '<p style="margin:20px 0 0; max-width:58ch; font-size:17px; line-height:1.7; color:#B5B5AD;">' + esc(v.why) + '</p>' +
           '<div style="margin-top:44px; border:1px solid #232320; border-radius:6px; padding:28px; background:#161613;">' +
@@ -846,10 +846,10 @@
           'font-weight:600; padding:18px 28px; border-radius:4px; border:none; cursor:' +
           (S.sent || S.sending ? 'default' : 'pointer') + ';">' +
           (S.sent ? "Sent — thank you" : S.sending ? "Sending…" : S.failed ? "Try again" : "Send this to Josh") + '</button>' +
-          '<a href="' + esc(v.ctaHref) + '" style="border:1px solid #55554F; color:#F7F7F5; font-size:17px;' +
+          '<a href="' + esc(v.ctaHref) + '" style="border:1px solid #8A8A82; color:#F7F7F5; font-size:17px;' +
           'font-weight:600; padding:17px 28px; border-radius:4px;">' + esc(v.ctaLabel) + '</a>' +
           '</div>' +
-          '<p style="margin:24px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:#55554F;">' +
+          '<p style="margin:24px 0 0; max-width:58ch; font-size:14px; line-height:1.6; color:#B5B5AD;">' +
           (S.sent
             ? "Your answers are with Josh. He reads every one himself and replies within a business day with a time to talk — or a straight no."
             : S.failed
@@ -865,7 +865,7 @@
     function field(key, label, type, placeholder, optional) {
       return '<label style="display:flex; flex-direction:column; gap:10px;">' +
         '<span style="' + LABEL + '">' + esc(label) +
-        (optional ? ' <span style="color:#55554F; font-weight:500; letter-spacing:0; text-transform:none;">optional</span>' : "") +
+        (optional ? ' <span style="color:#B5B5AD; font-weight:500; letter-spacing:0; text-transform:none;">optional</span>' : "") +
         '</span>' +
         '<input type="' + type + '" data-field="' + key + '" value="' + esc(S[key]) + '" placeholder="' + esc(placeholder) + '" style="' + INPUT + '">' +
         '</label>';
@@ -1111,7 +1111,13 @@
 
       var head = document.createElement("button");
       head.type = "button";
+      /* color:inherit is load-bearing. A <button> does not inherit colour from
+         its parent — the UA sheet gives it buttontext, i.e. black — so anything
+         moved into this head that carries no colour of its own renders black on
+         a black card. That is exactly how the $5,000 on the dark tier shipped
+         invisible at 1.06:1. */
       head.style.cssText = "width:100%; background:none; border:0; font-family:inherit; text-align:left;" +
+        "color:inherit;" +
         "padding:28px 30px 0; display:grid; grid-template-columns:1fr auto; gap:10px 18px; align-items:start;";
 
       var left = document.createElement("span");
@@ -1164,8 +1170,8 @@
          content in the wrong place twice on this file. createElement cannot
          land in the wrong parent. */
       var cta = document.createElement("a");
-      cta.href = "/pricing-call";
-      cta.textContent = "Get the numbers";
+      cta.href = "/apply";
+      cta.textContent = "Book the call";
       cta.className = "scp0";
       cta.style.cssText = "background:#D8FF00; color:#0A0A0A; font-size:15px; font-weight:600;" +
         "padding:13px 22px; border-radius:999px; align-self:flex-start; text-decoration:none;";
@@ -1282,37 +1288,80 @@
     window.addEventListener("resize", paint);
   }
 
-  function setupPricingCall() {
-    var root = q("#pricing-call-root");
+  /* ------------------------------------------------- short lead capture */
+
+  /* The five-question quiz at /apply is the considered door. This is the quick
+     one: email, website, budget, and which product they're after. Four fields
+     on one screen, no steps, no progress bar. It exists because the numbers are
+     published now — somebody who has read the price and wants a time should not
+     have to answer five questions to ask for one.
+
+     Same endpoint, same honeypot, same first-touch as the long form, so a lead
+     from here is indistinguishable downstream except by `source`. */
+  function setupShortForm(root, source) {
     if (!root) return;
 
-    var S = { email: "", hp: "", tried: false, sending: false, sent: false, failed: false };
+    var SPENDS = ["Under $3,000", "$3,000 – $10,000", "$10,000 – $30,000",
+      "$30,000 – $100,000", "Over $100,000"];
+    var WANTS = ["Not sure yet — talk it through", "The setup, $19,500",
+      "The daily decisions, $2,500 a month", "Creative packages, from $5,000",
+      "Custom, end to end"];
+
+    var S = { email: "", website: "", spend: "", want: "", hp: "",
+      tried: false, sending: false, sent: false, failed: false };
+
+    /* Two columns of four fields is comfortable on a laptop and cramped on a
+       phone, so the grid collapses rather than shrinking the inputs. */
+    var ONE_COL = window.matchMedia("(max-width: 620px)");
+
     var INPUT = "background:#161613; border:1px solid #232320; border-radius:4px; color:#F7F7F5;" +
-      "font-family:inherit; font-size:17px; padding:15px 16px; flex:1 1 260px; min-width:0;";
+      "font-family:inherit; font-size:17px; padding:15px 16px; width:100%; min-width:0;" +
+      "box-sizing:border-box;";
+    var LABEL = "font-size:12px; font-weight:600; letter-spacing:0.08em;" +
+      "text-transform:uppercase; color:#B5B5AD;";
+
+    function field(label, inner) {
+      return '<div style="display:flex; flex-direction:column; gap:8px; min-width:0;">' +
+        '<span style="' + LABEL + '">' + esc(label) + '</span>' + inner + '</div>';
+    }
+    function select(key, placeholder, list) {
+      return '<select data-call-field="' + key + '" style="' + INPUT + '">' +
+        '<option value="">' + esc(placeholder) + '</option>' +
+        list.map(function (o) {
+          return '<option' + (S[key] === o ? ' selected' : '') + '>' + esc(o) + '</option>';
+        }).join("") + '</select>';
+    }
 
     function render() {
       if (S.sent) {
         root.innerHTML = '<p style="margin:0; max-width:52ch; font-size:19px; line-height:1.6; color:#F7F7F5;">' +
-          'Got it. Josh replies within a business day with a time \u2014 and the numbers ready.</p>';
+          'Got it. Josh replies within a business day with a time.</p>';
         return;
       }
       var ok = /.+@.+\..+/.test(S.email);
       root.innerHTML =
-        '<div style="display:flex; flex-wrap:wrap; gap:12px; align-items:stretch;">' +
-        '<input type="email" data-call-field="email" value="' + esc(S.email) + '" ' +
-        'placeholder="you@yourbusiness.com.au" autocomplete="email" style="' + INPUT + '">' +
+        '<div style="display:grid; grid-template-columns:repeat(' + (ONE_COL.matches ? 1 : 2) + ',minmax(0,1fr)); gap:18px;">' +
+        field("Work email", '<input type="email" data-call-field="email" value="' + esc(S.email) +
+          '" placeholder="you@yourbusiness.com.au" autocomplete="email" style="' + INPUT + '">') +
+        field("Website", '<input type="text" data-call-field="website" value="' + esc(S.website) +
+          '" placeholder="yourbusiness.com.au" autocomplete="url" style="' + INPUT + '">') +
+        field("Monthly ad spend", select("spend", "Choose a range", SPENDS)) +
+        field("What you're after", select("want", "Choose one", WANTS)) +
+        '</div>' +
+        '<div aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;">' +
+        '<input type="text" tabindex="-1" autocomplete="off" data-call-field="hp" name="hp-no-autofill"></div>' +
+        '<div style="margin-top:24px; display:flex; flex-wrap:wrap; gap:16px; align-items:center;">' +
         '<button type="button" data-call-send' + (S.sending ? " disabled" : "") +
         ' style="background:' + VOLT + '; color:#0A0A0A; border:none; font-family:inherit;' +
         'font-size:17px; font-weight:600; padding:16px 28px; border-radius:4px; cursor:' +
         (S.sending ? "default" : "pointer") + ';">' +
-        (S.sending ? "Sending\u2026" : S.failed ? "Try again" : "Request a call") + '</button>' +
+        (S.sending ? "Sending…" : S.failed ? "Try again" : "Book the call") + '</button>' +
+        '<span style="font-size:14px; line-height:1.6; color:#B5B5AD;">Takes about twenty seconds.</span>' +
         '</div>' +
-        '<div aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;">' +
-        '<input type="text" tabindex="-1" autocomplete="off" data-call-field="hp" name="hp-no-autofill"></div>' +
-        '<p style="margin:16px 0 0; max-width:52ch; font-size:14px; line-height:1.6; color:' +
-        (S.tried && !ok ? "#D8FF00" : S.failed ? "#FF6B5A" : "#9A9A92") + ';">' +
+        '<p style="margin:16px 0 0; max-width:56ch; font-size:14px; line-height:1.6; color:' +
+        (S.tried && !ok ? "#D8FF00" : S.failed ? "#FF6B5A" : "#B5B5AD") + ';">' +
         (S.tried && !ok
-          ? "That email address does not look right \u2014 it is the only way we can reply."
+          ? "That email address does not look right — it is the only way we can reply."
           : S.failed
             ? "That did not go through. Try again in a moment."
             : "One reply from a person. No sequence, no newsletter, no calendar to wrestle with.") +
@@ -1333,7 +1382,8 @@
         if (!/.+@.+\..+/.test(S.email)) return render();
         S.sending = true; S.failed = false; render();
         var body = new URLSearchParams({
-          email: S.email, source: "pricing-call", partial: "no",
+          email: S.email, website: S.website, spend: S.spend, want: S.want,
+          source: source, partial: "no",
           page: location.href,
           landing: firstTouch().landing || "",
           referrer: firstTouch().referrer || "",
@@ -1352,6 +1402,12 @@
     }
 
     render();
+    if (ONE_COL.addEventListener) ONE_COL.addEventListener("change", function () { if (!S.sent) render(); });
+  }
+
+  function setupPricingCall() {
+    setupShortForm(q("#pricing-call-root"), "pricing-call");
+    setupShortForm(q("#book-root"), "book");
   }
 
   /* --------------------------------------------------------- first touch */

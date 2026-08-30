@@ -6,6 +6,7 @@
    are never touched by this script. Run it from the repo root:  node tools/build-pages.js */
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 const { page, ORIGIN, siteJsSrc, SITE_JS_TAG } = require('./layout');
 const { THEME } = require('./theme');
 
@@ -76,10 +77,39 @@ function allPages() {
     .sort();
 }
 
+/* lastmod, from git rather than mtime: every generated page is rewritten on
+   every build, so mtime would tell search engines all 68 pages changed each
+   time we touch one — which is exactly the signal that gets lastmod ignored.
+   A file with uncommitted edits is dated today, since it is about to ship. */
+function lastmodFor(file) {
+  const today = new Date().toISOString().slice(0, 10);
+  try {
+    const diff = execFileSync('git', ['diff', 'HEAD', '-U0', '--', file],
+      { cwd: ROOT, encoding: 'utf8' });
+    /* A site.js edit re-stamps the cache-busting query on all 68 pages. Those
+       bytes did change, but dating every page "today" every time one script
+       moves is the exact signal that gets lastmod discounted — so a page whose
+       only change is the stamp keeps the date of its last real edit. */
+    const real = diff.split('\n').filter(l =>
+      (l.startsWith('+') || l.startsWith('-')) &&
+      !l.startsWith('+++') && !l.startsWith('---') &&
+      !l.includes('/site.js?v='));
+    if (real.length) return today;
+    const d = execFileSync('git', ['log', '-1', '--format=%cs', '--', file],
+      { cwd: ROOT, encoding: 'utf8' }).trim();
+    return /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : today;
+  } catch (e) {
+    return today;
+  }
+}
+
 function writeSitemap(paths) {
-  const rows = paths.map(u =>
-    `  <url><loc>${ORIGIN}${u === '/' ? '/' : u}</loc><priority>${PRIORITY[u] || '0.7'}</priority></url>`
-  ).join('\n');
+  const rows = paths.map(u => {
+    const file = u === '/' ? 'index.html' : u.slice(1) + '.html';
+    return `  <url><loc>${ORIGIN}${u === '/' ? '/' : u}</loc>` +
+      `<lastmod>${lastmodFor(file)}</lastmod>` +
+      `<priority>${PRIORITY[u] || '0.7'}</priority></url>`;
+  }).join('\n');
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'),
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + rows + '\n</urlset>\n');

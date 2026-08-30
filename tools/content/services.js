@@ -26,18 +26,18 @@ const PAGES = [
   {
     slug: 'pricing-call',
     title: 'Book a 15-Minute Pricing Call | Sevenam',
-    description: 'Fifteen minutes, straight numbers on what running your Meta account would cost. Leave an email and Josh replies with a time.',
+    description: 'The setup is $19,500, the daily decisions $2,500 a month, creative packages from $5,000. Fifteen minutes to size those to your account.',
     eyebrow: 'PRICING CALL', h1: 'Fifteen minutes, straight numbers.',
-    lead: 'What it would cost to run your account, said out loud.',
+    lead: 'The prices are published. The call is where they get sized to your account.',
     skipOwnership: true,
     s1: {
       h2: 'What the fifteen minutes covers.',
       paras: [
-        "The setup is a fixed scope, so it is one number rather than a range. The rest is priced to your account: what the daily decisions cost at your number of accounts and markets, what creative runs to at the volume you would order, and whether the end-to-end option beats hiring for it.",
-        "You get those figures on the call. If nothing here is worth buying yet, you get that instead.",
+        "The numbers are already on the site: $19,500 for the setup, $2,500 a month for the daily decisions, creative packages from $5,000. What the call adds is which of them your account actually needs, how much creative it would consume, and whether the end-to-end option beats hiring for it.",
+        "You get that in fifteen minutes. If nothing here is worth buying yet, you get that instead.",
       ],
       items: [
-        'The monthly for your account, as a number.',
+        'Which of the four your account actually needs.',
         'What creative costs at the volume you would order.',
         'Whether the setup on its own is the better purchase.',
         'The two or three things we would fix first.',
@@ -46,13 +46,13 @@ const PAGES = [
     s2: {
       h2: 'How the pricing works.',
       paras: [
-        "The setup is a fixed scope \u2014 four weeks, one number, the same whatever you spend. Everything else is priced to the account, because one account in one market is not four accounts across three.",
-        "There are no tiers. Four things you can buy, any of them on their own. The call is where the ones priced to the work get a figure against them.",
+        "The setup is $19,500 \u2014 four weeks of fixed scope, the same number whatever you spend. The daily decisions are $2,500 a month once it is live. Creative packages start at $5,000, and how far past that you go depends on what the account consumes.",
+        "There are no tiers. Four things you can buy, any of them on their own, and the end-to-end option is the only one quoted after we read the account.",
       ],
       items: [
-        'The setup is one fixed number, agreed before anything starts.',
-        'The monthly is priced by accounts, markets and feeds \u2014 not by media spend.',
-        'Creative is per concept, ordered when the account needs it.',
+        'The setup is $19,500, agreed before anything starts.',
+        'The daily decisions are $2,500 a month, whatever you spend.',
+        'Creative packages start at $5,000, ordered when the account needs it.',
         'No tiers, no packages, no minimum term.',
       ],
     },
@@ -63,12 +63,12 @@ const PAGES = [
     ctaHref: '#pricing-call',
     ctaLabel: 'Request a call',
     callForm: {
-      label: 'One field',
-      h2: 'Leave an email. Josh replies with a time.',
-      p: 'One reply from a person, within a business day.',
+      label: 'Twenty seconds',
+      h2: 'Four things, then a time.',
+      p: 'Where to reply, what you run, and what you are after. One reply from a person, within a business day.',
     },
     faqs: [
-      { q: 'Is this a sales call?', a: "It is a pricing call. You asked what it costs, so you get told what it costs. If it is not a fit, we say so on the call." },
+      { q: 'Is this a sales call?', a: "It is a pricing call. The headline numbers are already published, so the fifteen minutes goes on what your account needs. If it is not a fit, we say so on the call." },
       { q: 'Do I need to prepare anything?', a: "No. Knowing roughly what you spend a month helps, but it is not required." },
       { q: 'What happens after the call?', a: "You get the figures in writing the same day. If you want to go ahead, we agree a start date. If not, nothing follows." },
       { q: 'Do you sell packages or tiers?', a: "No. Four things you can buy, any of them on their own." },
@@ -96,7 +96,7 @@ const PAGES = [
     },
     title: 'AI Ad Creative for Ecommerce Brands | Sevenam',
     description: 'Ad creative produced end to end on an AI line: concepts, hooks, cuts and statics, ordered on demand and delivered in days rather than weeks.',
-    eyebrow: 'AD CREATIVE', h1: 'Ad Creative, Without the Shoot',
+    eyebrow: 'AD CREATIVE', h1: 'Ad creative, without waiting on a shoot.',
     lead: 'Order what the account needs. It comes back in days, priced per concept.',
     s1: {
       h2: 'Creative volume is the constraint now.',

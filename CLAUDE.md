@@ -59,6 +59,18 @@ design — but it also means **breaking that file breaks all 42**.
 - **`/img/*` is served `immutable` for a year.** Replacing an image in place is
   invisible to anyone who has already loaded the page. Give the new file a new name —
   the two homepage images carry a content hash for exactly this reason.
+- **A `<button>` does not inherit `color`.** The UA sheet gives it `buttontext`,
+  i.e. black. `setupProducts()` wraps each pricing card's head in one, so anything
+  moved inside that carries no colour of its own renders black — which is how
+  "From $5,000" shipped invisible at 1.06:1 on the dark tier. The head now sets
+  `color:inherit`; don't remove it.
+- **`#55554F` is the Paper body token and fails on Ink at 2.64:1.** It had leaked
+  onto dark surfaces on all 68 pages. The theme layer now resolves both muted greys
+  through inherited custom properties (`--sv-muted`, `--sv-faint`) set by whichever
+  background-setting ancestor is nearest, so a white card inside an ink section and a
+  dark card inside a paper section both come out right. That only reaches inline
+  styles written as `color: rgb(85, 85, 79)` — colours built in `site.js` are hex and
+  bypass it, so pick the correct one there by hand.
 - **`data-` attributes are behaviour hooks**, not styling: `data-reveal`,
   `data-faq-item` / `data-faq-toggle` / `data-faq-sign` / `data-faq-answer`,
   `data-clock`, `data-approve`, `data-act`, `data-ad-drift`, `data-parallax`,
@@ -81,18 +93,23 @@ design — but it also means **breaking that file breaks all 42**.
 
 - Copy on the money pages is written against search terms. **Do not rewrite it for tone.**
 - Never state a precise time for the overnight run — "Before you're up", never "02:00".
-- No pricing on the homepage, and no pricing in any CTA button label.
-- **No Sevenam price appears anywhere on the site.** Not the Install, not the monthly,
-  not per concept. The setup fee, the monthly and the creative rate are all quoted on
-  the 15-minute call and confirmed in writing; a visitor who wants a number books the
-  call. `$19,500` was published on `/pricing`, `/install`, `/agency-fee` and
-  `/pricing-call`, and `$890` a month on `/system` — all removed. Do not reintroduce
-  one, and do not write "published" of our own pricing; the promise is that the fee is
-  **fixed and agreed before we start**, not that it is on the site.
-- **One deliberate exception: `/agency-fee`.** The calculator exists to set a climbing
-  percentage against a flat fee, and with our side blank there is nothing to compare —
-  so the twelve-month total stays there, and only there. It is the single page on the
-  site where a Sevenam figure appears. If that stops being wanted, it is one line.
+- **Three published prices, and they must agree everywhere.** The setup is
+  **$19,500** one-off, the daily decisions are **$2,500 a month** once it is live, and
+  creative **packages start at $5,000**. The end-to-end option is the only one still
+  quoted after we read the account. These were removed site-wide and then deliberately
+  put back — if you change one, change all of: `/pricing` (four cards plus the section
+  copy and the FAQ answer, which also lives in the page's `FAQPage` JSON-LD),
+  `/install` (the display figure and its `offers` block), `/system` (the sentence and
+  its `offers` block), `/pricing-call` (in `tools/content/services.js`, not the HTML),
+  and `/agency-fee`. `check.js` catches a JSON-LD answer that no longer matches the
+  visible one; it cannot catch a stale number, so grep.
+- **`/agency-fee` carries a derived total.** `$49,500` is the Install once ($19,500)
+  plus twelve months of daily decisions ($30,000). The calculator in `site.js` computes
+  only the *other* agency's side, so this figure is baked into the HTML — change the
+  monthly and you must redo the arithmetic there by hand.
+- No price belongs on the homepage, or in any CTA button label. "Get the numbers" was
+  the CTA while nothing was published; it is now **"Book the call"**, because the
+  numbers are on the page above it.
 - Market rates on the cost pages are other agencies' typical ranges, attributed to the
   business that published them, and are **not** covered by the rule above — those stay.
   So do client spend ranges like "$30k–$500k a month".
@@ -121,14 +138,21 @@ design — but it also means **breaking that file breaks all 42**.
   one. They are built in `setupProducts()` with `createElement`, never inserted into
   `pricing.html` — placing an element before a card's closing tag needs a regex tag
   walk that has now put content in the wrong place twice on this file.
-- Every CTA routes to `/apply`, with two deliberate exceptions. `/pricing-call`'s hero
-  CTA points at its own `#pricing-call` form, because the page exists to remove the
-  five-question application for somebody who searched for a price. And `/pricing`'s hero
-  CTA — plus its four card CTAs — point at `/pricing-call`: now that no number is
-  published, the call is where a number comes from, so sending a price-shopper to a
-  five-question application is the wrong door. Both closing CTAs are still `/apply`.
-  The `ctaHref` / `ctaLabel` overrides in `tools/layout.js` default to
-  `/apply` / "Get started", so no other generated page is affected — keep it that way.
+- **`/apply` is the short form now, not the quiz.** Four fields on one screen — work
+  email, website, monthly spend, which product — built by `setupShortForm()` in
+  `site.js` and mounted on `#book-root`. The five-question quiz still exists,
+  unchanged, folded into a `<details>` below it on the same page; that is why the
+  quiz's screens render `<h2>` rather than `<h1>` (the short form owns the page's one
+  `<h1>`, and the quiz is on the page at the same time). `/pricing-call` mounts the
+  same form on `#pricing-call-root` with `source: "pricing-call"`, so the two are
+  identical downstream apart from that field. Do not put the quiz's `<h1>` back.
+- **Every CTA routes to `/apply`, and now there is only one exception.**
+  `/pricing-call`'s hero CTA points at its own `#pricing-call` form, because that page
+  exists to answer a price query in place. Everything else — including `/pricing`'s
+  hero CTA and its four card CTAs — goes to `/apply`, which is no longer the
+  five-question application it was when those exceptions were written. The
+  `ctaHref` / `ctaLabel` overrides in `tools/layout.js` default to `/apply` /
+  "Get started"; keep it that way.
   There is still no direct calendar booking anywhere, on purpose: capture the email
   first, then Josh replies with a time.
 
@@ -146,6 +170,12 @@ Playwright, it is not part of `check.js`, and the cards live in `og/` rather tha
 
 `check.js` fails a page with no `og:image` or one pointing at a file that is not
 there — a card that 404s renders as a blank box, which is worse than none.
+
+`sitemap.xml` carries a `<lastmod>` per URL, derived in `build-pages.js` from git
+rather than mtime — every generated page is rewritten on every build, so mtime would
+claim all 68 changed each time one did. A page whose only diff is the `/site.js?v=`
+cache-busting stamp keeps the date of its last real edit, for the same reason: dating
+everything "today" whenever one script moves is what gets `lastmod` discounted.
 
 ## Telling search engines a page changed
 

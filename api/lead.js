@@ -57,6 +57,9 @@ function parse(req, raw) {
 const FIELDS = [
   ['name', 'Name'], ['company', 'Company'], ['email', 'Email'], ['phone', 'Phone'],
   ['website', 'Website'], ['spend', 'Monthly spend'], ['who', 'Who runs it'],
+  /* The short form at /apply asks which product they are after; the quiz does
+     not, so this is only ever set on a short-form lead. */
+  ['want', 'Interested in'],
   ['problems', 'Problems'], ['operator', 'Operator'], ['category', 'Business type'],
   ['verdict', 'Recommendation shown'], ['notes', 'Notes'], ['partial', 'Partial'],
   ['abandoned', 'Abandoned'], ['step_reached', 'Step reached'], ['step_label', 'Stopped at'],
