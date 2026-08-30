@@ -303,6 +303,24 @@ introducing one to signal an error is how a second accent gets in.
 
 ---
 
+## Product tiers
+
+The four products on `/pricing` are one component with two modes, because the two
+jobs are different. Above 900px the job is **comparison**: four equal columns,
+everything visible, headings on one line and footers on another — the last child
+of each takes `margin-top: auto` so the links land together, which is most of
+what makes a row of cards read as a set of plans rather than four unrelated
+boxes. Below 900px the job is **getting past it**: four tall cards were 3,634px
+of one section, so they collapse to an accordion with one open at a time.
+
+Both structures come from one pass over the DOM in `setupProducts()`; the mode is
+a `matchMedia` switch, not a rebuild. On desktop the header is not a button —
+`tabindex="-1"`, default cursor, clicks ignored — because a tier that collapses
+when you click its title is a surprise, not a feature.
+
+No prices, so there is no price row. The tier is sold on scope, and the link out
+of each card is what carries someone to the call.
+
 ## Adding anything new
 
 1. Pick the closest existing component above and copy its values.

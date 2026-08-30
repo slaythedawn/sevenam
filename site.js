@@ -1056,40 +1056,46 @@
      each has a different fill; restructuring them with a regex broke the nesting
      twice. This reads the existing DOM and rearranges it, so without JS the page
      still renders as the four cards it always was. */
+  /* The four products on /pricing behave differently by width, because the two
+     jobs are different. On a phone four tall cards were 3,634px of one section
+     and a page 13 screens deep, so they collapse to an accordion. On a desktop
+     the job is comparison — four equal tiers side by side, everything visible,
+     footers on the same line, the way anyone reads a set of plans.
+
+     Both structures come out of one pass over the existing DOM, and the mode is
+     switched by a media query rather than rebuilt. Without JS the page still
+     renders as the four cards it has always been; the only markup change is a
+     data-product hook. */
   function setupProducts() {
     var list = q("[data-product-list]");
     if (!list) return;
     var cards = qa("[data-product]", list);
     if (!cards.length) return;
 
-    list.style.display = "flex";
-    list.style.flexDirection = "column";
-    list.style.gap = "12px";
+    var STACK = window.matchMedia("(max-width: 900px)");
+    var parts = [];
 
     cards.forEach(function (card, i) {
       var kids = Array.prototype.slice.call(card.children);
       var summary = kids.filter(function (el) { return el.tagName === "P"; })[0];
       if (!summary) return;
       var cut = kids.indexOf(summary) + 1;
-      var head = kids.slice(0, cut);
       var rest = kids.slice(cut);
       if (!rest.length) return;
 
       var dark = /rgb\(10, 10, 10\)/.test(card.getAttribute("style") || "");
       card.style.padding = "0";
+      card.style.display = "flex";
+      card.style.flexDirection = "column";
 
       var btn = document.createElement("button");
       btn.type = "button";
-      btn.setAttribute("aria-expanded", i === 0 ? "true" : "false");
       btn.style.cssText = "width:100%; background:none; border:0; font-family:inherit; text-align:left;" +
-        "cursor:pointer; padding:26px 30px; display:grid; grid-template-columns:1fr auto;" +
-        "gap:10px 20px; align-items:start;";
+        "padding:28px 30px 0; display:grid; grid-template-columns:1fr auto; gap:10px 18px; align-items:start;";
 
       var left = document.createElement("span");
-      left.style.cssText = "display:flex; flex-direction:column; gap:9px; min-width:0;";
-      head.forEach(function (el) {
-        /* min-height on the heading and summary existed to line four cards up
-           as columns. Stacked, it is just dead space. */
+      left.style.cssText = "display:flex; flex-direction:column; gap:10px; min-width:0;";
+      kids.slice(0, cut).forEach(function (el) {
         el.style.minHeight = "0";
         el.style.margin = "0";
         left.appendChild(el);
@@ -1097,7 +1103,6 @@
 
       var sign = document.createElement("span");
       sign.setAttribute("aria-hidden", "true");
-      sign.textContent = i === 0 ? "\u2212" : "+";
       sign.style.cssText = "font-size:26px; font-weight:500; line-height:1.2; color:" +
         (dark ? "#B5B5AD" : "#55554F") + ";";
 
@@ -1106,35 +1111,54 @@
 
       var panel = document.createElement("div");
       panel.id = "product-" + i;
-      panel.style.cssText = "padding:0 30px 30px;";
+      panel.style.cssText = "padding:20px 30px 30px; display:flex; flex-direction:column; flex:1 1 auto;";
       rest.forEach(function (el) { panel.appendChild(el); });
       btn.setAttribute("aria-controls", panel.id);
 
+      /* The last child of a tier is its link out. Pushing it down makes all four
+         footers land on one line, which is most of what makes a row of cards
+         read as a set of plans rather than four unrelated boxes. */
+      var tail = panel.lastElementChild;
+      if (tail) tail.style.marginTop = "auto";
+
       card.appendChild(btn);
       card.appendChild(panel);
+      parts.push({ card: card, btn: btn, sign: sign, panel: panel, open: i === 0 });
+    });
 
-      var open = i === 0;
-      function paint() {
-        panel.style.display = open ? "" : "none";
-        sign.textContent = open ? "\u2212" : "+";
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
-      }
-      paint();
-      btn.addEventListener("click", function () {
-        if (!open) {
-          cards.forEach(function (other) {
-            if (other === card) return;
-            var op = q("[id^='product-']", other), os = q("button [aria-hidden]", other),
-                ob = q("button", other);
-            if (op) op.style.display = "none";
-            if (os) os.textContent = "+";
-            if (ob) ob.setAttribute("aria-expanded", "false");
-          });
-        }
-        open = !open;
+    function paint() {
+      var stacked = STACK.matches;
+      list.style.display = stacked ? "flex" : "grid";
+      list.style.flexDirection = stacked ? "column" : "";
+      list.style.gridTemplateColumns = stacked ? "" : "repeat(4, minmax(0, 1fr))";
+      list.style.alignItems = stacked ? "" : "stretch";
+      list.style.gap = stacked ? "12px" : "18px";
+
+      parts.forEach(function (p) {
+        var shown = stacked ? p.open : true;
+        p.panel.style.display = shown ? "flex" : "none";
+        p.sign.style.display = stacked ? "" : "none";
+        p.sign.textContent = p.open ? "−" : "+";
+        p.btn.style.cursor = stacked ? "pointer" : "default";
+        p.btn.style.paddingBottom = stacked ? "26px" : "0";
+        p.btn.setAttribute("aria-expanded", shown ? "true" : "false");
+        if (!stacked) p.btn.setAttribute("tabindex", "-1");
+        else p.btn.removeAttribute("tabindex");
+      });
+    }
+
+    parts.forEach(function (p) {
+      p.btn.addEventListener("click", function () {
+        if (!STACK.matches) return;          /* a tier is not a toggle on desktop */
+        if (!p.open) parts.forEach(function (o) { if (o !== p) o.open = false; });
+        p.open = !p.open;
         paint();
       });
     });
+
+    paint();
+    if (STACK.addEventListener) STACK.addEventListener("change", paint);
+    else if (STACK.addListener) STACK.addListener(paint);
   }
 
   function setupPricingCall() {
