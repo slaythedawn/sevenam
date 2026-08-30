@@ -8,6 +8,23 @@ const ROOT = path.join(__dirname, '..');
 const SHELL_SOURCE = path.join(ROOT, 'facebook-ads-sydney.html');
 const ORIGIN = 'https://sevenam.com.au';
 
+/* site.js is served with max-age=3600, so for an hour after a deploy a returning
+   visitor runs the previous file against the new HTML. That shipped once:
+   /pricing-call rendered its heading (HTML) with no email field (JS), and looked
+   simply broken. Stamping the file's own content hash into the URL means a
+   changed site.js is a changed URL, so the browser cannot serve a stale one.
+   Unchanged, the URL is identical and the cache still does its job. */
+const SITE_JS = 'site.js';
+function siteJsSrc() {
+  const hash = require('crypto')
+    .createHash('sha256').update(fs.readFileSync(path.join(ROOT, SITE_JS))).digest('hex').slice(0, 8);
+  return `/${SITE_JS}?v=${hash}`;
+}
+
+/* Matches the tag with or without a version stamp — do not add the closing
+   quote back, or lifting the shell silently breaks every generated page. */
+const SITE_JS_TAG = '<script src="/site.js';
+
 const INK = 'rgb(10, 10, 10)';
 const PAPER_TEXT = 'rgb(85, 85, 79)';
 const INK_TEXT = 'rgb(181, 181, 173)';
@@ -30,7 +47,7 @@ function shell() {
     '<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">',
   ].join('\n');
   const header = h.slice(h.indexOf('<body>') + 6, h.indexOf('<main')).trim();
-  const footer = h.slice(h.indexOf('</main>') + 7, h.indexOf('<script src="/site.js"')).trim();
+  const footer = h.slice(h.indexOf('</main>') + 7, h.indexOf(SITE_JS_TAG)).trim();
   return { styles, fonts, header, footer };
 }
 
@@ -326,7 +343,7 @@ function callForm(c) {
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT};">${esc(c.label)}</span>
       <h2 style="margin: 20px 0px 0px; max-width: 20ch; font-size: clamp(30px, 3.6vw, 46px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(c.h2)}</h2>
       <p style="margin: 22px 0px 0px; max-width: 58ch; font-size: 18px; line-height: 1.65; color: ${INK_TEXT};">${esc(c.p)}</p>
-      <div id="pricing-call-root" data-call-form style="margin-top: 40px; max-width: 560px;"></div>
+      <div id="pricing-call-root" data-call-form style="margin-top: 40px; max-width: 560px;"><noscript><p style="margin: 0px; max-width: 52ch; font-size: 17px; line-height: 1.7; color: ${INK_TEXT};">This form needs JavaScript. <a href="/apply" style="color: ${VOLT}; border-bottom: 1px solid rgb(85, 85, 79);">Use the application instead</a> — it takes a couple of minutes and reaches the same inbox.</p></noscript></div>
     </div>
   </section>`;
 }
@@ -380,10 +397,10 @@ ${SHELL.header}<main style="background: rgb(247, 247, 245); color: rgb(10, 10, 1
   ${main}
   </main>
 ${SHELL.footer}
-<script src="/site.js" defer></script>
+<script src="${siteJsSrc()}" defer></script>
 </body>
 </html>
 `;
 }
 
-module.exports = { page, ORIGIN };
+module.exports = { page, ORIGIN, siteJsSrc, SITE_JS_TAG };

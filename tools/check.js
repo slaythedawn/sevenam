@@ -12,6 +12,8 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
+const SITE_JS_HASH = require('crypto')
+  .createHash('sha256').update(fs.readFileSync(path.join(ROOT, 'site.js'))).digest('hex').slice(0, 8);
 const ORIGIN = 'https://sevenam.com.au';
 
 const problems = [];
@@ -111,8 +113,23 @@ for (const file of htmlFiles) {
       fail(file, `link to ${href}, which is not a page`);
     }
   }
-  for (const [, src] of html.matchAll(/src="(\/[^"?]*)"/g)) {
-    if (!fs.existsSync(path.join(ROOT, src.slice(1)))) fail(file, `missing asset ${src}`);
+  /* Query strings are cache-busting stamps, not part of the path — strip one
+     before resolving, or a stamped src silently stops being checked at all. */
+  for (const [, src] of html.matchAll(/src="(\/[^"]*)"/g)) {
+    const rel = src.split('?')[0];
+    if (!fs.existsSync(path.join(ROOT, rel.slice(1)))) fail(file, `missing asset ${rel}`);
+  }
+
+  /* The site.js stamp must match the file actually on disk. A page carrying a
+     stale hash is the bug this whole mechanism exists to prevent: the browser
+     keeps serving an old site.js against new HTML, and a JS-rendered block —
+     the /pricing-call email field, the /apply form — renders as an empty box
+     with no error anywhere. Editing site.js without rerunning build-pages.js
+     fails here rather than on the live site. */
+  const stamp = html.match(/<script src="\/site\.js\?v=([a-f0-9]+)"/);
+  if (!stamp) fail(file, 'site.js script tag missing or unstamped — run node tools/build-pages.js');
+  else if (stamp[1] !== SITE_JS_HASH) {
+    fail(file, `stale site.js stamp ${stamp[1]}, site.js is now ${SITE_JS_HASH} — run node tools/build-pages.js`);
   }
 }
 

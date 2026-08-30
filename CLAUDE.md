@@ -11,8 +11,10 @@ the finished application. It has no dependencies either — no `package.json`, g
 ## Before you commit, always
 
 ```bash
-node tools/check.js
+node tools/build-pages.js && node tools/check.js
 ```
+
+If you edited `site.js`, the build step is not optional — see below.
 
 Takes about a second, needs nothing installed. It verifies every internal link and
 asset resolves, `sitemap.xml` matches the pages that exist, no redirect shadows a
@@ -41,6 +43,16 @@ design — but it also means **breaking that file breaks all 42**.
 
 ## Things that will silently break the site
 
+- **A `site.js` edit without rerunning `node tools/build-pages.js`.** `site.js` is
+  served `max-age=3600`, so for an hour after a deploy a returning visitor runs the
+  *previous* file against the new HTML. Anything JS-rendered then shows as an empty
+  box with no error: this shipped once, and `/pricing-call` went live as a heading
+  with no email field under it. Every page therefore carries `/site.js?v=<hash>`,
+  stamped from the file's own content by `build-pages.js` — including the 18
+  hand-authored pages, which is why the build step matters even when you changed no
+  content. `check.js` fails on a stale stamp. The tag is matched on the prefix
+  `<script src="/site.js` with no closing quote (`SITE_JS_TAG`); adding the quote
+  back breaks the shell lift in `layout.js` and with it all 49 generated pages.
 - **`"framework": null` in `vercel.json`.** The Vercel project's preset is Next.js.
   Without this override, every deploy runs `next build`, finds no `package.json`, and
   fails. Do not remove it.

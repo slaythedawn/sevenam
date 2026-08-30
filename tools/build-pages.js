@@ -6,7 +6,7 @@
    are never touched by this script. Run it from the repo root:  node tools/build-pages.js */
 const fs = require('fs');
 const path = require('path');
-const { page, ORIGIN } = require('./layout');
+const { page, ORIGIN, siteJsSrc, SITE_JS_TAG } = require('./layout');
 
 const ROOT = path.join(__dirname, '..');
 const GENERATED = [].concat(
@@ -32,6 +32,23 @@ function write() {
     written.push({ path: p.path, bytes: fs.statSync(file).size });
   }
   return written;
+}
+
+/* The 18 hand-authored pages carry their own script tag, so generating the 49
+   is not enough — a hash that only lands on generated pages leaves exactly the
+   stale-cache hole this is here to close. Restamp every page from the current
+   file, hand-authored included. */
+function stampSiteJs() {
+  const src = siteJsSrc();
+  let changed = 0;
+  for (const f of fs.readdirSync(ROOT).filter(f => f.endsWith('.html'))) {
+    const file = path.join(ROOT, f);
+    const html = fs.readFileSync(file, 'utf8');
+    const next = html.replace(/<script src="\/site\.js(?:\?v=[a-f0-9]+)?" defer><\/script>/g,
+      `<script src="${src}" defer></script>`);
+    if (next !== html) { fs.writeFileSync(file, next); changed++; }
+  }
+  return { src, changed };
 }
 
 function allPages() {
@@ -62,6 +79,7 @@ function pruneRedirects(paths) {
 }
 
 const written = write();
+const stamped = stampSiteJs();
 const paths = allPages();
 writeSitemap(paths);
 const pruned = pruneRedirects(paths);
@@ -69,3 +87,4 @@ const pruned = pruneRedirects(paths);
 console.log(`generated ${written.length} pages`);
 console.log(`site now has ${paths.length} pages`);
 console.log(`removed ${pruned} placeholder redirects`);
+console.log(`site.js stamped ${stamped.src} — ${stamped.changed} page(s) updated`);
