@@ -344,12 +344,18 @@
   function setupFaq() {
     var items = qa("[data-faq-item]");
     if (!items.length) return;
+    /* Scoped by parent so several accordions can share these hooks without
+       fighting: opening a pricing product must not close an FAQ row further
+       down the page. Items in one list still close each other. */
+    function siblings(item) {
+      return items.filter(function (o) { return o.parentElement === item.parentElement; });
+    }
     items.forEach(function (item, i) {
       var btn = q("[data-faq-toggle]", item);
       var sign = q("[data-faq-sign]", item);
       var answer = q("[data-faq-answer]", item);
       if (!btn || !answer) return;
-      var open = i === 0;
+      var open = siblings(item)[0] === item;
       var id = "faq-a-" + i;
       answer.id = id;
       btn.setAttribute("aria-expanded", open ? "true" : "false");
@@ -362,7 +368,7 @@
       paint();
       btn.addEventListener("click", function () {
         if (!open) {
-          items.forEach(function (other) {
+          siblings(item).forEach(function (other) {
             if (other === item) return;
             var oa = q("[data-faq-answer]", other), os = q("[data-faq-sign]", other),
                 ob = q("[data-faq-toggle]", other);
@@ -1041,6 +1047,96 @@
      five-question survey, and the fastest honest route to a price is a person
      replying. Same endpoint and same honeypot as /apply; `source` is what keeps
      the two apart in the inbox. */
+  /* The four products on /pricing were four tall cards side by side: 3,634px of
+     one section on a phone, and a page 13 screens deep. They are now a stacked
+     accordion — eyebrow, name and one-line summary always visible, the detail
+     behind a toggle, one open at a time.
+
+     Built here rather than in the markup because the cards are hand-authored and
+     each has a different fill; restructuring them with a regex broke the nesting
+     twice. This reads the existing DOM and rearranges it, so without JS the page
+     still renders as the four cards it always was. */
+  function setupProducts() {
+    var list = q("[data-product-list]");
+    if (!list) return;
+    var cards = qa("[data-product]", list);
+    if (!cards.length) return;
+
+    list.style.display = "flex";
+    list.style.flexDirection = "column";
+    list.style.gap = "12px";
+
+    cards.forEach(function (card, i) {
+      var kids = Array.prototype.slice.call(card.children);
+      var summary = kids.filter(function (el) { return el.tagName === "P"; })[0];
+      if (!summary) return;
+      var cut = kids.indexOf(summary) + 1;
+      var head = kids.slice(0, cut);
+      var rest = kids.slice(cut);
+      if (!rest.length) return;
+
+      var dark = /rgb\(10, 10, 10\)/.test(card.getAttribute("style") || "");
+      card.style.padding = "0";
+
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.setAttribute("aria-expanded", i === 0 ? "true" : "false");
+      btn.style.cssText = "width:100%; background:none; border:0; font-family:inherit; text-align:left;" +
+        "cursor:pointer; padding:26px 30px; display:grid; grid-template-columns:1fr auto;" +
+        "gap:10px 20px; align-items:start;";
+
+      var left = document.createElement("span");
+      left.style.cssText = "display:flex; flex-direction:column; gap:9px; min-width:0;";
+      head.forEach(function (el) {
+        /* min-height on the heading and summary existed to line four cards up
+           as columns. Stacked, it is just dead space. */
+        el.style.minHeight = "0";
+        el.style.margin = "0";
+        left.appendChild(el);
+      });
+
+      var sign = document.createElement("span");
+      sign.setAttribute("aria-hidden", "true");
+      sign.textContent = i === 0 ? "\u2212" : "+";
+      sign.style.cssText = "font-size:26px; font-weight:500; line-height:1.2; color:" +
+        (dark ? "#B5B5AD" : "#55554F") + ";";
+
+      btn.appendChild(left);
+      btn.appendChild(sign);
+
+      var panel = document.createElement("div");
+      panel.id = "product-" + i;
+      panel.style.cssText = "padding:0 30px 30px;";
+      rest.forEach(function (el) { panel.appendChild(el); });
+      btn.setAttribute("aria-controls", panel.id);
+
+      card.appendChild(btn);
+      card.appendChild(panel);
+
+      var open = i === 0;
+      function paint() {
+        panel.style.display = open ? "" : "none";
+        sign.textContent = open ? "\u2212" : "+";
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+      paint();
+      btn.addEventListener("click", function () {
+        if (!open) {
+          cards.forEach(function (other) {
+            if (other === card) return;
+            var op = q("[id^='product-']", other), os = q("button [aria-hidden]", other),
+                ob = q("button", other);
+            if (op) op.style.display = "none";
+            if (os) os.textContent = "+";
+            if (ob) ob.setAttribute("aria-expanded", "false");
+          });
+        }
+        open = !open;
+        paint();
+      });
+    });
+  }
+
   function setupPricingCall() {
     var root = q("#pricing-call-root");
     if (!root) return;
@@ -1164,6 +1260,7 @@
     setupCalculator();
     setupCreativeCost();
     setupApply();
+    setupProducts();
     setupPricingCall();
   }
 
