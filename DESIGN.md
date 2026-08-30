@@ -313,6 +313,18 @@ what makes a row of cards read as a set of plans rather than four unrelated
 boxes. Below 900px the job is **getting past it**: four tall cards were 3,634px
 of one section, so they collapse to an accordion with one open at a time.
 
+On desktop each card is clipped to 132px of its spec list — enough for the first
+two rows — with a **See more** pinned to the bottom of every card so the four
+controls sit on one line. Fully expanded the cards were 787px, which is more than
+anyone reads before deciding which column they are in; collapsed they are 520px.
+Expanding is per card and never closes a neighbour: closing one to open another
+would defeat the comparison the layout exists for.
+
+The clip fades rather than cutting — a hard edge reads as a bug. The fade colour
+comes from the card's **computed** background, not its inline style: one card has
+a black border on a white fill, and matching `rgb(10,10,10)` in the style string
+called it dark and faded it to black across white.
+
 Both structures come from one pass over the DOM in `setupProducts()`; the mode is
 a `matchMedia` switch, not a rebuild. On desktop the header is not a button —
 `tabindex="-1"`, default cursor, clicks ignored — because a tier that collapses

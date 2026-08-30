@@ -1066,6 +1066,21 @@
      switched by a media query rather than rebuilt. Without JS the page still
      renders as the four cards it has always been; the only markup change is a
      data-product hook. */
+  /* The four products on /pricing are one component with two modes.
+
+     Above 900px the job is comparison: four equal columns, headings aligned,
+     each card showing its name, its summary and the top of its spec list, with
+     "See more" pinned to the bottom of every card so the four controls sit on
+     one line. Fully expanded they were 787px tall, which is more than anyone
+     reads before deciding which column they are in. Expanding is per card and
+     does not close the others — that is the whole point of a comparison.
+
+     Below 900px the job is getting past it: four cards were 3,634px of one
+     section, so the header becomes the toggle and one opens at a time.
+
+     Both come from a single pass over the existing DOM; the mode is a matchMedia
+     switch, not a rebuild. Without JS the page renders as the four cards it has
+     always been. */
   function setupProducts() {
     var list = q("[data-product-list]");
     if (!list) return;
@@ -1073,6 +1088,7 @@
     if (!cards.length) return;
 
     var STACK = window.matchMedia("(max-width: 900px)");
+    var PEEK = 132;                       /* enough for the first two spec rows */
     var parts = [];
 
     cards.forEach(function (card, i) {
@@ -1083,21 +1099,26 @@
       var rest = kids.slice(cut);
       if (!rest.length) return;
 
-      var dark = /rgb\(10, 10, 10\)/.test(card.getAttribute("style") || "");
+      /* Read the painted background, not the style string. Card four has a black
+         BORDER on a white fill, so matching rgb(10,10,10) anywhere in the inline
+         style called it dark and faded it to black over white — a hard grey band
+         across the card. */
+      var face = getComputedStyle(card).backgroundColor;
+      var rgb = (face.match(/\d+/g) || [255, 255, 255]).map(Number);
+      var dark = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000 < 128;
       card.style.padding = "0";
       card.style.display = "flex";
       card.style.flexDirection = "column";
 
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.style.cssText = "width:100%; background:none; border:0; font-family:inherit; text-align:left;" +
+      var head = document.createElement("button");
+      head.type = "button";
+      head.style.cssText = "width:100%; background:none; border:0; font-family:inherit; text-align:left;" +
         "padding:28px 30px 0; display:grid; grid-template-columns:1fr auto; gap:10px 18px; align-items:start;";
 
       var left = document.createElement("span");
       left.style.cssText = "display:flex; flex-direction:column; gap:10px; min-width:0;";
       kids.slice(0, cut).forEach(function (el) {
-        el.style.minHeight = "0";
-        el.style.margin = "0";
+        el.style.minHeight = "0"; el.style.margin = "0";
         left.appendChild(el);
       });
 
@@ -1106,24 +1127,35 @@
       sign.style.cssText = "font-size:26px; font-weight:500; line-height:1.2; color:" +
         (dark ? "#B5B5AD" : "#55554F") + ";";
 
-      btn.appendChild(left);
-      btn.appendChild(sign);
+      head.appendChild(left); head.appendChild(sign);
 
+      /* The clip wrapper is what shortens the card. The panel inside keeps its
+         own layout, so nothing reflows when the clip height changes. */
+      var clip = document.createElement("div");
+      clip.style.cssText = "position:relative; overflow:hidden; flex:0 0 auto;";
       var panel = document.createElement("div");
       panel.id = "product-" + i;
-      panel.style.cssText = "padding:20px 30px 30px; display:flex; flex-direction:column; flex:1 1 auto;";
+      panel.style.cssText = "padding:20px 30px 8px;";
       rest.forEach(function (el) { panel.appendChild(el); });
-      btn.setAttribute("aria-controls", panel.id);
+      clip.appendChild(panel);
 
-      /* The last child of a tier is its link out. Pushing it down makes all four
-         footers land on one line, which is most of what makes a row of cards
-         read as a set of plans rather than four unrelated boxes. */
-      var tail = panel.lastElementChild;
-      if (tail) tail.style.marginTop = "auto";
+      /* A hard cut looks like a bug; a fade reads as "there is more". */
+      var fade = document.createElement("span");
+      fade.setAttribute("aria-hidden", "true");
+      fade.style.cssText = "position:absolute; left:0; right:0; bottom:0; height:56px;" +
+        "pointer-events:none; background:linear-gradient(to bottom, rgba(0,0,0,0), " + face + ");";
+      clip.appendChild(fade);
 
-      card.appendChild(btn);
-      card.appendChild(panel);
-      parts.push({ card: card, btn: btn, sign: sign, panel: panel, open: i === 0 });
+      var more = document.createElement("button");
+      more.type = "button";
+      more.setAttribute("aria-controls", panel.id);
+      more.style.cssText = "margin-top:auto; align-self:flex-start; background:none; border:0;" +
+        "font-family:inherit; font-size:15px; font-weight:600; cursor:pointer; padding:16px 30px 26px;" +
+        "color:" + (dark ? "#D8FF00" : "#0A0A0A") + ";";
+
+      card.appendChild(head); card.appendChild(clip); card.appendChild(more);
+      parts.push({ card: card, head: head, sign: sign, clip: clip, panel: panel,
+                   fade: fade, more: more, open: false });
     });
 
     function paint() {
@@ -1134,31 +1166,51 @@
       list.style.alignItems = stacked ? "" : "stretch";
       list.style.gap = stacked ? "12px" : "18px";
 
-      parts.forEach(function (p) {
-        var shown = stacked ? p.open : true;
-        p.panel.style.display = shown ? "flex" : "none";
-        p.sign.style.display = stacked ? "" : "none";
-        p.sign.textContent = p.open ? "−" : "+";
-        p.btn.style.cursor = stacked ? "pointer" : "default";
-        p.btn.style.paddingBottom = stacked ? "26px" : "0";
-        p.btn.setAttribute("aria-expanded", shown ? "true" : "false");
-        if (!stacked) p.btn.setAttribute("tabindex", "-1");
-        else p.btn.removeAttribute("tabindex");
+      parts.forEach(function (p, i) {
+        if (stacked) {
+          p.clip.style.height = p.open ? "auto" : "0px";
+          p.fade.style.display = "none";
+          p.more.style.display = "none";
+          p.sign.style.display = "";
+          p.sign.textContent = p.open ? "−" : "+";
+          p.head.style.cursor = "pointer";
+          p.head.style.paddingBottom = "26px";
+          p.head.removeAttribute("tabindex");
+          p.head.setAttribute("aria-expanded", p.open ? "true" : "false");
+        } else {
+          var full = p.panel.scrollHeight;
+          var short = Math.min(PEEK, full);
+          p.clip.style.height = p.open ? full + "px" : short + "px";
+          p.fade.style.display = p.open || full <= short ? "none" : "";
+          p.more.style.display = full <= short ? "none" : "";
+          p.more.textContent = p.open ? "See less" : "See more";
+          p.more.setAttribute("aria-expanded", p.open ? "true" : "false");
+          p.sign.style.display = "none";
+          p.head.style.cursor = "default";
+          p.head.style.paddingBottom = "0";
+          p.head.setAttribute("tabindex", "-1");
+          p.head.removeAttribute("aria-expanded");
+        }
       });
     }
 
     parts.forEach(function (p) {
-      p.btn.addEventListener("click", function () {
-        if (!STACK.matches) return;          /* a tier is not a toggle on desktop */
+      /* On a phone the header is the toggle and one opens at a time. On desktop
+         the header is inert and each card expands on its own — closing a
+         neighbour would defeat the comparison. */
+      p.head.addEventListener("click", function () {
+        if (!STACK.matches) return;
         if (!p.open) parts.forEach(function (o) { if (o !== p) o.open = false; });
         p.open = !p.open;
         paint();
       });
+      p.more.addEventListener("click", function () { p.open = !p.open; paint(); });
     });
 
     paint();
     if (STACK.addEventListener) STACK.addEventListener("change", paint);
     else if (STACK.addListener) STACK.addListener(paint);
+    window.addEventListener("resize", paint);
   }
 
   function setupPricingCall() {
