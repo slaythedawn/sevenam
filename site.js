@@ -1152,7 +1152,29 @@
         "font-family:inherit; font-size:15px; font-weight:600; cursor:pointer; padding:16px 30px 26px;" +
         "color:" + (dark ? "#D8FF00" : "#0A0A0A") + ";";
 
-      card.appendChild(head); card.appendChild(clip); card.appendChild(more);
+      /* The CTA lives in the card's own footer, outside the collapsible panel,
+         so every tier carries an action whether it is open or shut. Grouping it
+         with See more in one row and pushing that row down keeps all four
+         actions on the same line across the set. */
+      var foot = document.createElement("div");
+      foot.style.cssText = "margin-top:auto; display:flex; flex-direction:column;" +
+        "align-items:flex-start; gap:2px; padding:4px 30px 26px;";
+      /* Built here rather than authored into the markup: inserting an element
+         before each card's closing tag needs the tag walk that has now put
+         content in the wrong place twice on this file. createElement cannot
+         land in the wrong parent. */
+      var cta = document.createElement("a");
+      cta.href = "/pricing-call";
+      cta.textContent = "Get the numbers";
+      cta.className = "scp0";
+      cta.style.cssText = "background:#D8FF00; color:#0A0A0A; font-size:15px; font-weight:600;" +
+        "padding:13px 22px; border-radius:999px; align-self:flex-start; text-decoration:none;";
+      more.style.marginTop = "0";
+      more.style.padding = "10px 0 12px";
+      foot.appendChild(more);
+      foot.appendChild(cta);
+
+      card.appendChild(head); card.appendChild(clip); card.appendChild(foot);
       parts.push({ card: card, head: head, sign: sign, clip: clip, panel: panel,
                    fade: fade, more: more, open: false });
     });

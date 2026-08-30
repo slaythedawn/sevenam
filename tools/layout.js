@@ -57,7 +57,7 @@ const SHELL = shell();
 /* ------------------------------------------------------------------ blocks */
 
 function hero(p) {
-  const trust = (p.trust || ['No retainer', 'No lock-in', 'No fee that climbs with your budget'])
+  const trust = (p.trust || ['No retainer', 'No lock-in', 'Priced to the work'])
     .map(t => '<span>' + esc(t) + '</span>').join('<span>·</span>');
   return `<section style="background: ${INK}; color: rgb(247, 247, 245); padding: 110px 32px 120px;">
     <div style="max-width: 1240px; margin: 0px auto;">

@@ -71,6 +71,11 @@ design — but it also means **breaking that file breaks all 42**.
   update those baked-in numbers too, or the page flashes stale values.
 - **FAQ answers must be in the HTML**, collapsed client-side rather than omitted.
   Structured data has to reflect what a visitor can see.
+- **A price can survive in JSON-LD after the copy is changed.** `/install` still carried
+  `"price": "19500"` and `/check` `"price": "1000"` in an `offers` block long after both
+  numbers were taken out of the visible page. Grep the `<script type="application/ld+json">`
+  line, not just the body. The only `price` values left are `"0"` on the two free
+  calculators, which are true.
 
 ## Content rules — these are load-bearing
 
@@ -96,20 +101,33 @@ design — but it also means **breaking that file breaks all 42**.
   clause, which was itself cut from 30 places for defining us against other agencies. Absolutes foreclose
   the managed line. Grep loosely before declaring it clean — three separate sweeps missed
   phrasings like "never a share of your spend" and "your fee will never take a cut".
+  Describing what *other* agencies charge is not the vow and stays — the quiz option
+  "An agency on a percentage of spend", the cost-page ranges and the FAQ questions
+  written in a prospect's words are all about them, not us.
+- **No form on the site may discard what someone types.** `/check` carried five fields
+  and a "Continue to payment" button with no `action` and no handler behind it — it
+  looked live and went nowhere. It is now a panel that routes to `/apply`. The only
+  real forms are built in `site.js` (`#apply-root`, `#pricing-call`) and POST to
+  `/api/lead`; there is no `<form>` element in any `.html` file, and that is the check.
 - Case studies: SRW, knest.ai, Online Model Academy only. Never a client's revenue.
 - Sydney-based, working wherever the auction runs. Australian-based, not Australian-only:
   the AU-targeted pages keep their local copy because that is the ranking strategy, but the
   global positioning lines must not read as a limit. No phone number in body copy.
 - No emoji, no "AI-powered" filler, no urgency theatre.
 - Exactly one hero CTA and one closing CTA per SEO page. A mid-page CTA block was
-  deliberately removed from 34 pages; do not reintroduce it.
+  deliberately removed from 34 pages; do not reintroduce it. `/pricing` is the one
+  exception: each of the four product cards carries its own "Get the numbers" pill,
+  because a card that describes a product and shows no price is a dead end without
+  one. They are built in `setupProducts()` with `createElement`, never inserted into
+  `pricing.html` — placing an element before a card's closing tag needs a regex tag
+  walk that has now put content in the wrong place twice on this file.
 - Every CTA routes to `/apply`, with two deliberate exceptions. `/pricing-call`'s hero
   CTA points at its own `#pricing-call` form, because the page exists to remove the
   five-question application for somebody who searched for a price. And `/pricing`'s hero
-  CTA points at `/pricing-call` — now that no number is published, the call is where a
-  number comes from, so sending a price-shopper to a five-question application is the
-  wrong door. Both closing CTAs are still `/apply`. Its closing CTA is
-  still `/apply`. The `ctaHref` / `ctaLabel` overrides in `tools/layout.js` default to
+  CTA — plus its four card CTAs — point at `/pricing-call`: now that no number is
+  published, the call is where a number comes from, so sending a price-shopper to a
+  five-question application is the wrong door. Both closing CTAs are still `/apply`.
+  The `ctaHref` / `ctaLabel` overrides in `tools/layout.js` default to
   `/apply` / "Get started", so no other generated page is affected — keep it that way.
   There is still no direct calendar booking anywhere, on purpose: capture the email
   first, then Josh replies with a time.
