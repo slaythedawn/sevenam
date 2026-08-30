@@ -1,7 +1,7 @@
 /* Guides and tools pages. These carry Article schema rather than Service, and
    their job is to be genuinely useful whether or not the reader ever buys. */
 
-const SUPPORT = "Sevenam installs a Meta advertising system on your own ad account and runs the technology that operates it — written decisions at 7am every morning telling you exactly what to do that day. One fixed setup fee, a fixed monthly, priced to the work rather than your media budget.";
+const SUPPORT = "Sevenam installs a Meta advertising system on your own ad account and runs the technology that operates it — written decisions at 7am every morning telling you exactly what to do that day. One fixed setup fee, a fixed monthly, priced to the work.";
 
 const PAGES = [
   {

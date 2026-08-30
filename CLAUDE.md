@@ -84,7 +84,8 @@ design — but it also means **breaking that file breaks all 42**.
   terms — is quoted in writing after the account is read. Market rates on the cost pages
   are other agencies' typical ranges, never ours.
 - **Do not write the fee model as a vow.** "Never a percentage of spend" was removed from
-  ~140 places; fees are "priced to the work rather than your budget". Absolutes foreclose
+  ~140 places; fees are **"priced to the work"** — full stop, no "rather than your budget"
+  clause, which was itself cut from 30 places for defining us against other agencies. Absolutes foreclose
   the managed line. Grep loosely before declaring it clean — three separate sweeps missed
   phrasings like "never a share of your spend" and "your fee will never take a cut".
 - Case studies: SRW, knest.ai, Online Model Academy only. Never a client's revenue.

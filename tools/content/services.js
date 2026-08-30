@@ -6,7 +6,7 @@
    after the account is read. Market rates quoted on the cost pages are described
    as typical industry ranges, never as ours. */
 
-const SUPPORT = "Sevenam installs a Meta advertising system on your own ad account and runs the technology that operates it — written decisions at 7am every morning telling you exactly what to do that day. One fixed setup fee, a fixed monthly, priced to the work rather than your media budget.";
+const SUPPORT = "Sevenam installs a Meta advertising system on your own ad account and runs the technology that operates it — written decisions at 7am every morning telling you exactly what to do that day. One fixed setup fee, a fixed monthly, priced to the work.";
 
 const OWNERSHIP = {
   h2: 'What you own at the end of it.',
@@ -16,7 +16,7 @@ const OWNERSHIP = {
   ],
   items: [
     'Your ad account, your pixel, your creative library. Always.',
-    'A fixed setup fee and a fixed monthly, priced to the work rather than your budget.',
+    'A fixed setup fee and a fixed monthly, priced to the work.',
     'Month to month, with no notice period.',
     'Every decision written down, with the numbers behind it.',
   ],
@@ -635,7 +635,7 @@ const PAGES = [
         'A setup bought once, owned permanently.',
         'Creative on demand, priced by what you order.',
         'An end-to-end option quoted after the account is read.',
-        'Fixed fees, quoted in writing, priced to the work rather than your budget.',
+        'Fixed fees, quoted in writing, priced to the work.',
       ],
     },
     faqs: [
@@ -689,7 +689,7 @@ const PAGES = [
     faqs: [
       { q: 'Is ten to twenty per cent of spend reasonable?', a: "It depends entirely on your spend. At five thousand a month it is a modest fee for real work, and the minimum monthly fee most agencies apply probably matters more than the percentage. At a hundred thousand a month the same percentage is a very large number for work that has not changed much — put both into the fee calculator and the difference is stark." },
       { q: 'What about performance or hybrid pricing?', a: "A lower base fee plus a share of results above an agreed baseline — commonly ten to thirty per cent of verified revenue, profit or qualified leads. It can align incentives well, and the whole thing rests on how the baseline is set and who verifies the numbers. Agree both in writing before you start." },
-      { q: 'What do you charge?', a: "A fixed setup fee and a fixed monthly, quoted in writing after we have read your account, priced to the work rather than your media budget. The figure depends on how much creative the account consumes and how much execution you want us doing." },
+      { q: 'What do you charge?', a: "A fixed setup fee and a fixed monthly, quoted in writing after we have read your account, priced to the work. The figure depends on how much creative the account consumes and how much execution you want us doing." },
       { q: 'Should creative be included in the management fee?', a: "It rarely is, and you should confirm it explicitly. Creative volume is the single biggest driver of performance, so a management fee that excludes it is only paying for half the job." },
       { q: 'Is there a standard setup or onboarding fee?', a: "Many agencies charge one, often equivalent to a month or two of retainer. What matters more is what you own at the end of it — an onboarding that builds the account in the agency's Business Manager is worth considerably less to you." },
       { q: 'How do we work out what we are really paying?', a: "Add the management fee, the creative cost and any platform or reporting fees, then divide by media spend. That effective percentage is the number to compare, and it is usually higher than the headline." },
@@ -874,7 +874,7 @@ const PAGES = [
       h2: 'What the monthly covers here.',
       paras: [
         "The account is read overnight and a written decision arrives before you are up — what to turn off, what to scale, what to replace, each with the numbers behind it. You spend about a minute on it. Nothing is actioned that you have not agreed to, and every decision stays on the record.",
-        "Alongside that, creative is produced continuously rather than in quarterly batches, and the measurement is checked rather than assumed. The fee is a fixed monthly, priced to the work rather than your media budget, quoted in writing once the account has been read.",
+        "Alongside that, creative is produced continuously rather than in quarterly batches, and the measurement is checked rather than assumed. The fee is a fixed monthly, priced to the work, quoted in writing once the account has been read.",
       ],
       items: [
         'A written decision every morning, with the reasoning attached.',
@@ -887,7 +887,7 @@ const PAGES = [
       { q: 'What do you actually do each day?', a: "The account is read overnight and the day's decisions are written up before you are up: which ad sets to retire, which to scale, which creative has fatigued and what replaces it, each with the numbers that led to it. You approve what you agree with — it takes about a minute — and we action that. Nothing moves without your say-so." },
       { q: 'How much of our time does it take?', a: "About a minute a day for whoever approves the decisions — usually a founder, a marketing coordinator or an ecommerce manager. If nobody has that minute reliably, the decisions arrive and nothing happens, and we would rather quote the end-to-end option where we do the execution ourselves." },
       { q: 'Is there a lock-in or notice period?', a: "No. It runs month to month and stops at the end of any month, with no notice period and no exit call. The account, the pixel and the creative library are yours already, so nothing has to be handed back." },
-      { q: 'What does it cost?', a: "A fixed setup fee and a fixed monthly, priced to the work rather than your media budget, and quoted in writing after the account has been read. Triple your spend and the invoice does not move. The setup fee is published on the pricing page; the monthly depends on what the account actually needs." },
+      { q: 'What does it cost?', a: "A fixed setup fee and a fixed monthly, priced to the work, and quoted in writing after the account has been read. Triple your spend and the invoice does not move. The setup fee is published on the pricing page; the monthly depends on what the account actually needs." },
       { q: 'Can we do this ourselves?', a: "Some brands do, and we would rather they did than pay for something they do not need. The guides, the glossary and the calculators on this site are free and describe the same process. If you can run it from those, that is a good outcome." },
     ],
     related: [
@@ -1036,7 +1036,7 @@ const PAGES = [
         'Meta only — Facebook and Instagram, one auction.',
         'Creative produced for the surfaces it actually runs on.',
         'We say when the next dollar belongs somewhere else.',
-        'A fixed fee, priced to the work rather than your media budget.',
+        'A fixed fee, priced to the work.',
       ],
     },
     faqs: [
@@ -1045,7 +1045,7 @@ const PAGES = [
       { q: 'Should we be on more than one platform?', a: "Once Meta is genuinely saturated — you are fed with creative, measurement is clean, and additional spend is producing worse returns rather than the same ones — then yes, a second channel is the right move. Before that point, a second channel is usually a way of avoiding the harder problem on the first." },
       { q: 'What about LinkedIn?', a: "Different buyer, different economics, and rarely the right first channel for consumer ecommerce. For considered-purchase B2B it can be, and we are not the right people for it." },
       { q: 'Is Meta still worth it in 2026?', a: "For Australian ecommerce, generally yes — the audience is the largest available and the measurement is the most mature. What has changed is what the work consists of: the platform now does the targeting and bidding, so results are decided by creative volume and decision speed rather than by account structure." },
-      { q: 'How is this priced?', a: "A fixed setup fee and a fixed monthly, priced to the work rather than your media budget and quoted in writing once the account has been read. Triple your spend and the invoice does not move." },
+      { q: 'How is this priced?', a: "A fixed setup fee and a fixed monthly, priced to the work and quoted in writing once the account has been read. Triple your spend and the invoice does not move." },
     ],
     related: [
       { href: '/social-media-advertising-agency', title: 'Social media advertising agency', note: 'What to buy instead.' },
