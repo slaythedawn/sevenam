@@ -1088,7 +1088,6 @@
     if (!cards.length) return;
 
     var STACK = window.matchMedia("(max-width: 900px)");
-    var PEEK = 132;                       /* enough for the first two spec rows */
     var parts = [];
 
     cards.forEach(function (card, i) {
@@ -1163,6 +1162,11 @@
       list.style.display = stacked ? "flex" : "grid";
       list.style.flexDirection = stacked ? "column" : "";
       list.style.gridTemplateColumns = stacked ? "" : "repeat(4, minmax(0, 1fr))";
+      /* stretch. start left the collapsed row ragged — 380/380/388/380 — and the
+         four See more controls off one line, which breaks the default view. That
+         view matters more than the dead space in the other three cards when one
+         is expanded, which is a deliberate act and reads as a spacious card
+         rather than a broken one. */
       list.style.alignItems = stacked ? "" : "stretch";
       list.style.gap = stacked ? "12px" : "18px";
 
@@ -1178,11 +1182,12 @@
           p.head.removeAttribute("tabindex");
           p.head.setAttribute("aria-expanded", p.open ? "true" : "false");
         } else {
-          var full = p.panel.scrollHeight;
-          var short = Math.min(PEEK, full);
-          p.clip.style.height = p.open ? full + "px" : short + "px";
-          p.fade.style.display = p.open || full <= short ? "none" : "";
-          p.more.style.display = full <= short ? "none" : "";
+          /* The cut is at the end of the summary, before the spec list starts —
+             a card showing two of four spec rows is still too tall to scan, and
+             half a list reads as truncation rather than a summary. */
+          p.clip.style.height = p.open ? p.panel.scrollHeight + "px" : "0px";
+          p.fade.style.display = "none";
+          p.more.style.display = "";
           p.more.textContent = p.open ? "See less" : "See more";
           p.more.setAttribute("aria-expanded", p.open ? "true" : "false");
           p.sign.style.display = "none";
@@ -1192,6 +1197,42 @@
           p.head.removeAttribute("aria-expanded");
         }
       });
+
+      /* Summaries wrap to three, four or five lines, so without this the spec
+         list starts at a different height in every card and the row stops
+         reading as a set. Equalising the header block puts the boundary — and
+         the first spec row under it — on one line across all four. Desktop only:
+         stacked, it would just be dead space. */
+      parts.forEach(function (p) { p.head.style.minHeight = "0px"; });
+      if (!stacked) {
+        /* getBoundingClientRect, not offsetHeight: offsetHeight rounds to whole
+           pixels, which left one card's spec list starting 4px below the other
+           three — visible as a broken line across the row. */
+        var tallest = 0;
+        parts.forEach(function (p) {
+          tallest = Math.max(tallest, p.head.getBoundingClientRect().height);
+        });
+        parts.forEach(function (p) { p.head.style.minHeight = tallest.toFixed(2) + "px"; });
+
+        /* Equal headers get the boundary onto one line, but the first spec row
+           still landed a few pixels low in one card — the rows sit inside a
+           wrapper whose own box differs slightly per card. Rather than chase it
+           through the nesting, measure where each first row actually lands and
+           pad the short ones down to match. Measured, so it holds at any width
+           and however the copy rewraps. */
+        parts.forEach(function (p) { p.panel.style.paddingTop = "20px"; });
+        var lowest = 0, tops = [];
+        parts.forEach(function (p) {
+          var row = p.panel.firstElementChild;
+          var top = row ? row.getBoundingClientRect().top : 0;
+          tops.push(top);
+          lowest = Math.max(lowest, top);
+        });
+        parts.forEach(function (p, n) {
+          var pad = 20 + (lowest - tops[n]);
+          if (pad > 20.05) p.panel.style.paddingTop = pad.toFixed(2) + "px";
+        });
+      }
     }
 
     parts.forEach(function (p) {
