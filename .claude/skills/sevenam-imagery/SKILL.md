@@ -1,6 +1,6 @@
 ---
 name: sevenam-imagery
-description: Generate or choose imagery for a Sevenam post — Instagram, LinkedIn or X. Use before every Higgsfield call, before briefing any scene with Josh in it, before generating anything containing a phone or a screen, and whenever an image has been rejected and needs rebriefing. Carries the model choice, the selfie geometry rule, the banned prompt vocabulary, and the full catalogue of what has already been rejected and why. Read it before spending a credit, not after.
+description: Generate or choose imagery for a Sevenam post — Instagram, LinkedIn or X. Use before every Higgsfield call, before briefing any scene with Josh in it, before generating anything containing a phone or a screen, and whenever an image has been rejected and needs rebriefing. Carries the model choice, the camera-position rule, the banned prompt vocabulary, and the full catalogue of what has already been rejected and why. Read it before spending a credit, not after.
 ---
 
 # Sevenam imagery
@@ -94,29 +94,42 @@ New photos: `search_files` on `parentId = '1U8iqnZSvPPAIuN2Hlh6k2pYls5omjPkm'`, 
 is publicly fetchable and returns full bytes. **Never `download_file_content` for a photo**
 — a one-megabyte photo is more than a megabyte of base64 landing in the context window.
 
-## Selfie geometry — the rule that took three attempts
+## Where the camera goes — no direct to camera, ever
 
-Rejected 30 Aug 2026: *"Selfie shots aren't working because you're showing him taking a
-selfie rather than looking at the camera. The camera should be the phone. The perspective
-needs to be correct."* The generator was rendering him **holding a phone, shot from a third
-position** — which is a photograph of someone taking a selfie, not a selfie.
+**Dropped 30 Aug 2026, and it is closed.** Josh: *"Any of these images where it's direct to
+camera, like the selfie ones, just don't work because they look fake. They clearly don't
+look like me when you're seeing that... let's drop this direction."*
 
-**The working fragment. Use it close to verbatim:**
+This overrides the arm's-length selfie geometry that was written earlier the same day. That
+rule made the *perspective* correct and the likeness got worse, not better — a face filling
+the frame at close range is where the generator's small errors are most visible, and there
+is nowhere for them to hide. Do not rebrief it, do not "try once more with better
+references". **The frontal close-up lane is shut.**
 
-> Front facing phone camera photograph. The camera IS the phone, held at arm's length by
-> the man in the reference photographs, so **no phone is visible anywhere in the picture**.
-> His face is close to the lens and fills the upper two thirds of the frame, with the mild
-> wide angle distortion a front facing phone camera gives. The top of his outstretched arm
-> enters the very bottom corner of the frame.
+**The four camera positions that replace it.** Every scene with Josh in it uses one:
 
-Three parts, all load-bearing: no phone in shot, face fills the upper two thirds, arm clips
-the bottom corner. Drop any one and it reverts to third-person.
+| Position | What it is |
+|---|---|
+| **Over the shoulder** | Behind him and slightly to one side, looking at what he is looking at. His head and shoulder frame one edge; the subject is what's in front of him. The house default |
+| **Isometric / high angle** | Looking down on the scene from above and off to a corner. Him, the surface, the objects, all as one arrangement |
+| **From a distance** | Him small in a big frame — across a room, down a beach, from the other side of the street. The place does the work |
+| **Mirror** | The gym mirror shot, and its relatives. Phone visible, that is the point |
 
-**In a selfie he looks at the camera.** That is the one exception to the older
-"never direct to camera" rule, which applies to observed candid scenes, not to selfies.
+**Why these work and the close-up did not.** Likeness only has to survive at the scale it is
+rendered. At the back of a frame, three-quarters turned, or reflected in a mirror, a small
+error is not perceptible. Filling the frame with his face, it is the whole picture.
 
-**Mirror selfies are the other exception — there the phone should be visible.** The gym
-mirror shot worked and is the proven template for that lane.
+**The gym shots are the proven template.** Josh: *"The gym ones work, so maybe more stuff
+like that."* Look at what they have in common before briefing a new lifestyle shot — a
+mirror or a distance, a real room, body language rather than a face doing an expression.
+
+**Lifestyle is now shown a different way.** Not by putting him at the front of the frame
+looking at the lens, but by the place, the activity and the scale of the shot. Water sports,
+gym, travel, eating out all still hold as themes; they get an over-the-shoulder, an
+isometric or a distance shot instead of a selfie.
+
+**Faces looking at the lens are the failure signature.** If a brief would put his face
+frontal and close, it is the wrong brief — change the camera position, not the wording.
 
 ## Banned vocabulary
 
@@ -202,9 +215,12 @@ in it at all.
 
 The proven lanes, from the sets Josh approved:
 
-- **The corrected selfie** — beach car park, restaurant, in the car, after a swim, after a
-  set at the gym. Geometry per the rule above.
-- **The gym mirror selfie**, phone visible.
+- **The gym mirror shot**, phone visible. The strongest lane there is — build out from it.
+- **Over the shoulder at the thing he is looking at** — the screen, the water, the road, the
+  room. The house default for anything with him in it.
+- **Isometric down onto a scene** — the surface and what is on it, him in it rather than
+  presenting it.
+- **Him at a distance** in a place worth being in.
 - **Aspirational but real** — a genuinely good apartment, villa, resort or car. Josh, 29
   Aug: *"I want these to feel like I'm a total baller doing this: luxury apartments, villas,
   resorts, expensive cars, not Mazdas."* But shot on a phone in flat daylight, not lit like
@@ -218,9 +234,10 @@ The proven lanes, from the sets Josh approved:
   handheld tilt. Detail too specific and too pointless to have been invented is what reads
   as real, in a picture as in a sentence.
 
-**Where possible, shots that look self-shot.** Josh, 30 Aug: *"Where possible, do images
-that look like I've shot them myself. I'm showing something, or it's a selfie."* First
-person is the house perspective.
+**Self-shot, but not a selfie.** Josh's *"do images that look like I've shot them myself,
+I'm showing something"* still holds — it is the **showing** half that survives. A phone held
+out over what he is looking at, an arm reaching into frame, a hand on the object. First
+person is the house perspective; a face at the front of it is not.
 
 **Fisheye or wide-angle when showing a phone in hand** is allowed but rationed — *"Don't
 want too many of those. They feel fake."*
