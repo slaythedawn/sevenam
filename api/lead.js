@@ -18,6 +18,10 @@
                       route — there is no default, because a default would mean
                       a real address sitting in a public repository.
      LEAD_WEBHOOK     POST the lead as JSON to a webhook (Zapier, Make, Slack).
+     LEAD_REPLY_TO    where a reply to the applicant's confirmation goes. Unset,
+                      the confirmation omits both the reply-to header and the
+                      line inviting a reply — sevenam.com.au has no MX record,
+                      so a reply to it bounces.
      LEAD_FROM        the from address. Must be on a Resend-verified domain;
                       until sevenam.com.au is verified there, Resend's own
                       onboarding@resend.dev works and can only send to the
@@ -121,6 +125,86 @@ async function sendEmail(lead) {
   if (!res.ok) throw new Error('resend ' + res.status + ' ' + (await res.text()).slice(0, 200));
 }
 
+/* ------------------------------------------------ confirmation to the lead */
+
+/* An acknowledgement to the person who just submitted, so they know it arrived
+   and are not left wondering whether the form worked.
+
+   Deliberately NOT sent for a partial capture or an abandonment. Those are
+   internal signals: somebody who typed an email into the first step of /apply
+   and is still answering questions has not submitted anything, and telling them
+   "we have your application" is both untrue and, if they then finish, a second
+   near-identical email inside two minutes.
+
+   No booking link. Josh qualifies the enquiry first and sends a time himself —
+   which is the same reason there is no calendar embedded anywhere on the site.
+
+   NOTHING THE SUBMITTER TYPED IS ECHOED BACK. This function will send to any
+   address posted to it, so anything reflected into the body would make it a way
+   to deliver attacker-chosen text to a third party over our domain. A fixed body
+   is worth more than a personalised greeting. */
+function confirmationFor(lead, canReply) {
+  const call = lead.source === 'pricing-call';
+  const reply = canReply
+    ? '\n\nIf you want to add anything first — what you spend a month, what you sell, what is not working — just reply to this email.'
+    : '';
+
+  const subject = call ? 'Your pricing call — Sevenam' : 'We have your application — Sevenam';
+  const body = call
+    ? 'Thanks for asking about a pricing call.\n\n' +
+      'Josh has your email and will reply within a business day with a time, and the numbers ready. ' +
+      'Fifteen minutes, no proposal attached.' + reply
+    : 'Thanks for the application.\n\n' +
+      'Josh reads each one himself and will reply within a business day — either with a straight read ' +
+      'on which product fits your account, or with a note saying none of them do.' + reply;
+
+  return { subject, body: body + '\n\n— Sevenam' };
+}
+
+/* Best-effort, and never allowed to fail the request. The lead itself is already
+   delivered by the time this runs; if the acknowledgement bounces, the applicant
+   seeing "Try again" would cost a real lead and produce a duplicate on resubmit.
+   A failure here is logged and nothing more. */
+async function sendConfirmation(lead) {
+  /* Resend's shared onboarding@resend.dev sender only delivers to the address
+     that owns the Resend account, so from there this would never reach the
+     applicant — it would fail, or worse, look like it worked. Requiring
+     LEAD_FROM means confirmations switch on only once a verified domain exists. */
+  const from = process.env.LEAD_FROM;
+  if (!from) {
+    console.log('lead: confirmation skipped, LEAD_FROM unset (needs a Resend-verified domain)');
+    return;
+  }
+  if (lead.partial === 'yes' || lead.abandoned === 'yes') return;
+
+  const replyTo = process.env.LEAD_REPLY_TO;
+  const { subject, body } = confirmationFor(lead, Boolean(replyTo));
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + process.env.RESEND_API_KEY,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from,
+      to: [lead.email],
+      /* Without a mailbox to receive them, "just reply to this email" is a lie
+         and a reply bounces — hence both the variable and the conditional line
+         in confirmationFor. sevenam.com.au has never had an MX record. */
+      reply_to: replyTo || undefined,
+      subject,
+      text: body,
+      html: '<div style="font-family:ui-sans-serif,system-ui,sans-serif;font-size:15px;line-height:1.65;color:#0A0A0A">' +
+        body.split('\n\n').map((para) =>
+          '<p style="margin:0 0 14px">' + escapeHtml(para) + '</p>').join('') +
+        '</div>',
+    }),
+  });
+
+  if (!res.ok) throw new Error('resend ' + res.status + ' ' + (await res.text()).slice(0, 200));
+}
+
 async function sendWebhook(lead) {
   const res = await fetch(process.env.LEAD_WEBHOOK, {
     method: 'POST',
@@ -193,6 +277,16 @@ module.exports = async (req, res) => {
   } catch (err) {
     console.error('lead delivery failed:', err && err.message);
     return res.status(502).json({ ok: false, error: 'delivery_failed' });
+  }
+
+  /* Deliberately outside the block above, and with its own catch. The lead is
+     delivered at this point and the request has succeeded; a failed
+     acknowledgement must not turn that into a 502, because the applicant would
+     see "Try again", resubmit, and Josh would get the same lead twice. */
+  try {
+    await sendConfirmation(lead);
+  } catch (err) {
+    console.error('lead confirmation failed (lead itself delivered):', err && err.message);
   }
 
   return res.status(200).json({ ok: true });

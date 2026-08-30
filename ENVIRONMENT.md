@@ -25,38 +25,55 @@ Paste these values exactly.
 | `RESEND_API_KEY` | your Resend key, starts `re_` | Yes |
 | `LEAD_TO` | `joshuapcck@gmail.com` | Yes — `/apply` breaks without it |
 | `ONBOARD_TO` | `joshuapcck@gmail.com` | Yes — `/onboard` breaks without it |
-| `LEAD_FROM` | *leave unset for now* | No — see below |
+| `LEAD_FROM` | *see "Turning on confirmations" below* | Only for auto-confirmations |
+| `LEAD_REPLY_TO` | `joshuapcck@gmail.com` | Only for auto-confirmations |
 
 There is deliberately **no default recipient in the code**. A default would mean
 a real address sitting in a public repository, so the functions return 503
 rather than guess.
 
-### Why `LEAD_FROM` is left unset
+### What `LEAD_FROM` changes
 
 Unset, both functions send from Resend's shared sender, `onboarding@resend.dev`.
 That sender can **only deliver to the address that owns the Resend account** —
-`joshuapcck@gmail.com`. That is why both `_TO` variables above are that address.
+`joshuapcck@gmail.com`. That is why both `_TO` variables above are that address,
+and it works fine for leads reaching you.
 
-It works, and it is fine while you are the only recipient.
+It is also why auto-confirmations to the applicant stay off until `LEAD_FROM` is
+set, and why leads cannot yet go to a team address, a client, or a CRM. All of
+those need a verified sending domain — see below.
 
-**The day you want leads going anywhere else** — a team address, a CRM, a client
-— set:
+## Turning on the auto-confirmation
 
-```
-LEAD_FROM = Sevenam <hello@sevenam.com.au>
-```
+When somebody submits `/apply` or `/pricing-call` they get an automated
+acknowledgement, so they know it arrived. **This is off until `LEAD_FROM` is
+set**, and it is gated on purpose: from Resend's shared `onboarding@resend.dev`
+sender, mail to anyone other than the Resend account owner does not get
+delivered, so a confirmation would fail — or look like it worked and never
+arrive. Rather than send into that, the function skips it and logs
+`confirmation skipped, LEAD_FROM unset`.
 
-Format matters: `Name <address>`, angle brackets included. A bare address sends
-fine but displays as raw text in most inboxes.
+To switch it on:
 
-This requires `sevenam.com.au` to be a **verified domain** in Resend first
-(resend.com → Domains → Add Domain, then add the DNS records it gives you).
-Setting `LEAD_FROM` to an unverified domain makes every send fail. Check the
-Domains page reads *Verified* before you set it.
+1. **resend.com → Domains → Add Domain** → `sevenam.com.au`
+2. Add the DNS records Resend gives you at your registrar
+3. Wait for the Domains page to read **Verified** — not "Pending"
+4. Set `LEAD_FROM` = `Sevenam <hello@sevenam.com.au>` (angle brackets included)
+5. Set `LEAD_REPLY_TO` = `joshuapcck@gmail.com`
+6. Redeploy, then submit the form once with a *different* address than your own
+   and confirm the acknowledgement lands
 
-It is a *sending identity*, not a mailbox — no inbox needs to exist behind it,
-and nothing on the site ever displays it, so it does not conflict with the rule
-that no email address appears anywhere on the site.
+`LEAD_REPLY_TO` matters because `sevenam.com.au` has no MX record — a reply to
+`hello@` bounces. With it set, replies to the confirmation reach your Gmail and
+the email invites one. Leave it unset and the confirmation still sends, but drops
+both the reply-to header and the line offering a reply, rather than inviting one
+that bounces.
+
+**Who gets a confirmation:** a completed `/apply` application, and a
+`/pricing-call` request. **Not** a partial capture or an abandonment — those are
+internal signals, and somebody still mid-quiz has not submitted anything.
+
+It contains no booking link. It says Josh will reply with a time.
 
 ## Optional: send somewhere other than email
 
@@ -109,6 +126,13 @@ completed one.
 | `Onboarding (unfinished)` | `/onboard` partial, via "finish later" |
 | `Onboarding abandoned at section N` | Client stalled, at the named section |
 | `Onboarding — <business>` | `/onboard` completed |
+
+And what the submitter gets, once `LEAD_FROM` is set:
+
+| Subject | Sent when |
+|---|---|
+| `Your pricing call — Sevenam` | `/pricing-call` request |
+| `We have your application — Sevenam` | `/apply` completed |
 
 ## If something is wrong
 

@@ -185,6 +185,17 @@ Only a 200 counts as delivered. On 503 or 502 the result screen says plainly tha
 did not go through and opens the `mailto:` in `LEAD_EMAIL` with the answers already
 written out. That address is the failure path only; nothing on the page invites it.
 
+A completed `/apply` and a `/pricing-call` request also send the submitter an
+automated acknowledgement. It is gated on `LEAD_FROM`: from Resend's shared
+`onboarding@resend.dev` sender, mail to anyone but the account owner is not
+delivered, so without a verified domain the function skips it and logs why. It is
+deliberately **not** sent for a partial capture or an abandonment — those are
+internal signals, and someone still mid-quiz has submitted nothing. It carries
+**no booking link**; Josh qualifies first and sends a time himself. And it echoes
+**nothing the submitter typed** — the function will mail any address posted to
+it, so reflected content would make it a way to deliver attacker-chosen text to a
+third party over our domain. Keep the body fixed.
+
 **No email address appears anywhere on the site or in `site.js`, on purpose.**
 `hello@sevenam.com.au` never had an MX record — the domain has no mail server, so it
 always bounced — and rather than stand up a mailbox, contact routes through `/apply`
