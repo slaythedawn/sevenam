@@ -48,7 +48,7 @@ function hero(p) {
       <p style="margin: 32px 0px 0px; max-width: 60ch; font-size: 21px; font-weight: 500; line-height: 1.5; letter-spacing: -0.01em; color: rgb(247, 247, 245);">${esc(p.lead)}</p>
       <p style="margin: 24px 0px 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: ${INK_TEXT};">${esc(p.support)}</p>
       <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 44px;">
-        <a href="/apply" class="scp0" style="background: ${VOLT}; color: ${INK}; font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Get started</a>
+        <a href="${esc(p.ctaHref || '/apply')}" class="scp0" style="background: ${VOLT}; color: ${INK}; font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">${esc(p.ctaLabel || 'Get started')}</a>
         <a href="${esc(p.secondaryHref || '/system')}" class="scp1" style="border: 1px solid rgb(85, 85, 79); color: rgb(247, 247, 245); font-size: 16px; font-weight: 600; padding: 15px 26px; border-radius: 4px;">${esc(p.secondaryLabel || 'See how it works')}</a>
       </div>
       <div style="display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 32px; font-size: 14px; font-weight: 500; color: ${INK_TEXT};">${trust}</div>
@@ -315,6 +315,22 @@ function toolstrip(t) {
   </section>`;
 }
 
+/* A container site.js fills, the same pattern as #apply-root on /apply. The
+   markup for a form does not belong in a static generator, and the behaviour
+   has to live beside the other lead capture anyway. Optional: pages without a
+   callForm render exactly as before. */
+function callForm(c) {
+  if (!c) return '';
+  return `<section id="pricing-call" style="padding: 112px 32px; background: rgb(10, 10, 10); color: rgb(247, 247, 245); border-bottom: 1px solid ${HAIRLINE_DARK};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT};">${esc(c.label)}</span>
+      <h2 style="margin: 20px 0px 0px; max-width: 20ch; font-size: clamp(30px, 3.6vw, 46px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(c.h2)}</h2>
+      <p style="margin: 22px 0px 0px; max-width: 58ch; font-size: 18px; line-height: 1.65; color: ${INK_TEXT};">${esc(c.p)}</p>
+      <div id="pricing-call-root" data-call-form style="margin-top: 40px; max-width: 560px;"></div>
+    </div>
+  </section>`;
+}
+
 function page(p) {
   const url = ORIGIN + p.path;
   const main = [
@@ -323,6 +339,7 @@ function page(p) {
     ...(p.sections || []).map(prose),
     gantt(p.gantt),
     steps(p.steps),
+    callForm(p.callForm),
     p.faqs && p.faqs.length ? faqSection(p.faqs, p.faqHeading) : '',
     p.pills ? pills(p.pills.label, p.pills.links) : '',
     related(p.related),

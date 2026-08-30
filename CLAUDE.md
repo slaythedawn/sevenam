@@ -66,7 +66,7 @@ design — but it also means **breaking that file breaks all 42**.
 - Never state a precise time for the overnight run — "Before you're up", never "02:00".
 - No pricing on the homepage, and no pricing in any CTA button label.
 - One Sevenam figure is published and must stay consistent wherever it appears: the
-  Install at **$19,500** (`/pricing`, `/agency-fee`, `/install`). Creative is sold per
+  Install at **$19,500** (`/pricing`, `/agency-fee`, `/install`, `/pricing-call`). Creative is sold per
   concept and `/pricing` says so, but the per-concept figure is deliberately **not**
   published — do not add one back. Everything else — the monthly, managed scope, deal
   terms — is quoted in writing after the account is read. Market rates on the cost pages
@@ -82,8 +82,13 @@ design — but it also means **breaking that file breaks all 42**.
 - No emoji, no "AI-powered" filler, no urgency theatre.
 - Exactly one hero CTA and one closing CTA per SEO page. A mid-page CTA block was
   deliberately removed from 34 pages; do not reintroduce it.
-- Every CTA routes to `/apply`. There is no direct calendar booking anywhere, on
-  purpose: qualify and capture first, then Josh replies with a time.
+- Every CTA routes to `/apply`, with one deliberate exception: `/pricing-call`'s hero
+  CTA points at its own `#pricing-call` form, because the page exists to remove the
+  five-question application for somebody who searched for a price. Its closing CTA is
+  still `/apply`. The `ctaHref` / `ctaLabel` overrides in `tools/layout.js` default to
+  `/apply` / "Get started", so no other generated page is affected — keep it that way.
+  There is still no direct calendar booking anywhere, on purpose: capture the email
+  first, then Josh replies with a time.
 
 ## Icons and social cards
 

@@ -1034,6 +1034,85 @@
     render();
   }
 
+  /* --------------------------------------------------- pricing call form */
+
+  /* One field, because the whole point of this page is that it is not /apply.
+     Somebody searching "facebook advertising packages" wants a price, not a
+     five-question survey, and the fastest honest route to a price is a person
+     replying. Same endpoint and same honeypot as /apply; `source` is what keeps
+     the two apart in the inbox. */
+  function setupPricingCall() {
+    var root = q("#pricing-call-root");
+    if (!root) return;
+
+    var S = { email: "", hp: "", tried: false, sending: false, sent: false, failed: false };
+    var INPUT = "background:#161613; border:1px solid #232320; border-radius:4px; color:#F7F7F5;" +
+      "font-family:inherit; font-size:17px; padding:15px 16px; flex:1 1 260px; min-width:0;";
+
+    function render() {
+      if (S.sent) {
+        root.innerHTML = '<p style="margin:0; max-width:52ch; font-size:19px; line-height:1.6; color:#F7F7F5;">' +
+          'Got it. Josh replies within a business day with a time \u2014 and the numbers ready.</p>';
+        return;
+      }
+      var ok = /.+@.+\..+/.test(S.email);
+      root.innerHTML =
+        '<div style="display:flex; flex-wrap:wrap; gap:12px; align-items:stretch;">' +
+        '<input type="email" data-call-field="email" value="' + esc(S.email) + '" ' +
+        'placeholder="you@yourbusiness.com.au" autocomplete="email" style="' + INPUT + '">' +
+        '<button type="button" data-call-send' + (S.sending ? " disabled" : "") +
+        ' style="background:' + VOLT + '; color:#0A0A0A; border:none; font-family:inherit;' +
+        'font-size:17px; font-weight:600; padding:16px 28px; border-radius:4px; cursor:' +
+        (S.sending ? "default" : "pointer") + ';">' +
+        (S.sending ? "Sending\u2026" : S.failed ? "Try again" : "Request a call") + '</button>' +
+        '</div>' +
+        '<div aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;">' +
+        '<input type="text" tabindex="-1" autocomplete="off" data-call-field="hp" name="hp-no-autofill"></div>' +
+        '<p style="margin:16px 0 0; max-width:52ch; font-size:14px; line-height:1.6; color:' +
+        (S.tried && !ok ? "#D8FF00" : S.failed ? "#FF6B5A" : "#9A9A92") + ';">' +
+        (S.tried && !ok
+          ? "That email address does not look right \u2014 it is the only way we can reply."
+          : S.failed
+            ? "That did not go through. Try again in a moment."
+            : "One reply from a person. No sequence, no newsletter, no calendar to wrestle with.") +
+        '</p>';
+      wire();
+    }
+
+    function wire() {
+      qa("[data-call-field]", root).forEach(function (el) {
+        if (el.value && !S[el.dataset.callField]) S[el.dataset.callField] = el.value;
+        el.addEventListener("input", function () { S[el.dataset.callField] = el.value; });
+        el.addEventListener("change", function () { S[el.dataset.callField] = el.value; });
+      });
+      var btn = q("[data-call-send]", root);
+      if (btn) btn.addEventListener("click", function () {
+        qa("[data-call-field]", root).forEach(function (el) { S[el.dataset.callField] = el.value; });
+        S.tried = true;
+        if (!/.+@.+\..+/.test(S.email)) return render();
+        S.sending = true; S.failed = false; render();
+        var body = new URLSearchParams({
+          email: S.email, source: "pricing-call", partial: "no",
+          page: location.href,
+          landing: firstTouch().landing || "",
+          referrer: firstTouch().referrer || "",
+          utm: firstTouch().utm || "",
+          company_url: S.hp
+        });
+        fetch(LEAD_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: body.toString()
+        }).then(function (res) {
+          if (!res.ok) { S.sending = false; S.failed = true; return render(); }
+          S.sending = false; S.sent = true; render();
+        }).catch(function () { S.sending = false; S.failed = true; render(); });
+      });
+    }
+
+    render();
+  }
+
   /* --------------------------------------------------------- first touch */
 
   /* A lead used to arrive saying "Submitted from: /apply", because that is where
@@ -1085,6 +1164,7 @@
     setupCalculator();
     setupCreativeCost();
     setupApply();
+    setupPricingCall();
   }
 
   if (document.readyState === "loading") {

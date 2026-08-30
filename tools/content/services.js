@@ -24,6 +24,64 @@ const OWNERSHIP = {
 
 const PAGES = [
   {
+    slug: 'pricing-call',
+    title: 'Book a 15-Minute Pricing Call | Sevenam',
+    description: 'Fifteen minutes, straight numbers on what running your Meta account would cost. No deck, no sequence, no obligation. Leave an email and Josh replies with a time.',
+    eyebrow: 'PRICING CALL', h1: 'Fifteen minutes, straight numbers.',
+    lead: 'What it would cost to run your account, said out loud, without a proposal attached.',
+    skipOwnership: true,
+    s1: {
+      h2: 'What the fifteen minutes covers.',
+      paras: [
+        "The setup fee is fixed and published, so that part needs no call. What does need one is everything priced to the account rather than to a rate card: what the daily decisions would cost at your number of accounts and markets, what creative runs to at the volume you would actually order, and whether the end-to-end option is cheaper than hiring for it.",
+        "You get those figures on the call, not in a follow-up afterwards. If the honest answer is that nothing here is worth buying yet, you get that instead, and it takes about four minutes.",
+      ],
+      items: [
+        'What the monthly would be for your account, as a number.',
+        'What creative costs at the volume you would actually order.',
+        'Whether the setup on its own is the better purchase.',
+        'The two or three things we would fix first, whether or not you buy anything.',
+      ],
+    },
+    s2: {
+      h2: 'Why there is no price list to send you.',
+      paras: [
+        "The setup is published because it is a fixed scope: $19,500, four weeks, the same number whatever you spend. Everything else is priced to the work, and the work genuinely differs \u2014 one account in one market is not four accounts across three, and quoting a number before reading the account would be quoting a made-up number.",
+        "That is also why there are no tiers. There are four things you can buy and you can take any of them on their own, so there is nothing to bundle. The call is simply where the ones priced to the work get a figure against them.",
+      ],
+      items: [
+        'The setup is fixed and published: $19,500.',
+        'The monthly is priced by accounts, markets and feeds \u2014 not by media spend.',
+        'Creative is per concept, ordered when the account needs it.',
+        'No tiers, no packages, no minimum term.',
+      ],
+    },
+    /* The hero CTA is the form on this page, not /apply. Somebody who searched
+       for a price and landed here should reach the one field without being
+       handed the five-question application first; the closing CTA still offers
+       it for anyone who would rather answer the questions. */
+    ctaHref: '#pricing-call',
+    ctaLabel: 'Request a call',
+    callForm: {
+      label: 'One field',
+      h2: 'Leave an email. Josh replies with a time.',
+      p: 'No questionnaire, no calendar to wrestle with, no sequence afterwards. One reply from a person, within a business day.',
+    },
+    faqs: [
+      { q: 'Is this a sales call?', a: "It is a pricing call. You asked what it costs, so you get told what it costs. If it is not a fit we say so on the call rather than putting you into a follow-up sequence." },
+      { q: 'Do I need to prepare anything?', a: "No. Knowing roughly what you spend a month on media helps, but if you do not know it off the top of your head that is fine too." },
+      { q: 'Why not just publish all the prices?', a: "The setup is published \u2014 $19,500, fixed, on the pricing page. The rest depends on the account: accounts, markets and feeds change the work, and a number quoted before reading the account would be a made-up number." },
+      { q: 'Do you sell packages or tiers?', a: "No. There are four things you can buy and any of them can be taken on its own, which is why there is nothing to put in a tier. The call is where the ones priced to the work get a number against them." },
+      { q: 'What if I would rather answer the questions?', a: "Start at Get started instead \u2014 five questions and a straight read on which product fits, or whether none of them do. The call is the shorter path when the only thing you want is the price." },
+    ],
+    closing: { h2: 'Prefer to answer five questions instead?', p: "The application takes a couple of minutes and comes back with a straight read on which product fits your account \u2014 or whether none of them do." },
+    related: [
+      { href: '/pricing', title: 'How buying works', note: 'Four ways, no tiers.' },
+      { href: '/install', title: 'The setup', note: 'Four weeks, fixed price.' },
+      { href: '/agency-fee', title: 'Agency fee calculator', note: 'What percentage fees cost.' },
+    ],
+  },
+  {
     slug: 'ad-creative',
     skipOwnership: true,
     gallery: {
@@ -1019,6 +1077,13 @@ function build() {
          creative case below the fold on a page that has to sell creative. */
       ...(p.skipOwnership ? [] : [{ tone: 'paper', h2: OWNERSHIP.h2, paras: OWNERSHIP.paras, items: OWNERSHIP.items }]),
     ],
+    callForm: p.callForm,
+    /* Default /apply unless a page has a better next step of its own. Only
+       /pricing-call sets these: its hero CTA points at its own form, because
+       sending a "what does it cost" visitor to the five-question application is
+       the friction the page exists to remove. The closing CTA is still /apply. */
+    ctaHref: p.ctaHref,
+    ctaLabel: p.ctaLabel,
     gantt: p.gantt,
     steps: p.steps,
     toolstrip: p.toolstrip,

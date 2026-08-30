@@ -280,6 +280,57 @@ const PAGES = [
     ],
   },
   {
+    slug: 'what-is-roas',
+    title: 'What Is ROAS? Return on Ad Spend, Explained | Sevenam',
+    description: 'ROAS is revenue divided by ad spend. What counts as good, why break-even depends entirely on your margin, and where blended ROAS and MER give a truer read.',
+    eyebrow: 'GUIDE', h1: 'What Is ROAS?',
+    lead: 'Revenue divided by ad spend. The number is easy; knowing which one you need is the hard part.',
+    s1: {
+      h2: 'The calculation, and the number that actually matters.',
+      paras: [
+        "ROAS is return on ad spend: revenue attributed to advertising, divided by what you spent on it. Spend $1,000 and attribute $4,000 of revenue and you are at 4x, sometimes written 400%. That is the whole formula.",
+        "The useful question is not your ROAS, it is your break-even ROAS, and that is decided by your gross margin rather than by anything in the ad account. Break-even ROAS is 1 divided by your margin. At a 25% margin you need 4x just to cover the cost of goods. At 60% you break even at 1.67x. So a 3x that is excellent for one business is a loss for another, and any benchmark quoted without a margin beside it is not telling you anything.",
+      ],
+      items: [
+        'ROAS = revenue attributed to ads \u00f7 ad spend.',
+        'Break-even ROAS = 1 \u00f7 gross margin.',
+        '25% margin: break-even is 4x. 50% margin: 2x. 60% margin: 1.67x.',
+        'A "good" ROAS quoted without a margin is meaningless.',
+        'Profit lives in the gap between your ROAS and your break-even ROAS.',
+      ],
+    },
+    s2: {
+      h2: 'Platform ROAS, blended ROAS and MER.',
+      paras: [
+        "The ROAS in Ads Manager is platform-attributed: Meta counting conversions it believes it caused, inside its own attribution window. It is useful for comparing ad sets against each other, because every ad set is measured the same way. It is much weaker as a read on whether the business made money, because it cannot see the sale your email list would have made anyway.",
+        "Blended ROAS divides total revenue by total ad spend across every channel. MER \u2014 marketing efficiency ratio \u2014 is the same idea expressed the other way: total revenue divided by total marketing spend, or its inverse as a percentage of revenue. Neither attributes anything to anyone, which is exactly why they are harder to fool. When platform ROAS climbs and blended ROAS does not move, the platform is claiming credit for sales that were already coming.",
+      ],
+      items: [
+        'Platform ROAS: Meta\u2019s own attribution. Good for comparing ad sets.',
+        'Blended ROAS: total revenue \u00f7 total ad spend. Good for the business.',
+        'MER: total revenue \u00f7 total marketing spend, the same read from the other side.',
+        'Watch them together \u2014 the gap between them is the attribution question.',
+        'Platform ROAS up while blended is flat usually means claimed credit, not new sales.',
+      ],
+    },
+    faqs: [
+      { q: 'What is ROAS?', a: "Return on ad spend: revenue attributed to advertising divided by the amount spent on it. $4,000 of revenue from $1,000 of spend is a 4x ROAS, also written as 400%." },
+      { q: 'How do you calculate ROAS?', a: "Divide the revenue attributed to your advertising by the advertising spend over the same period. Keep the period and the attribution window consistent on both sides, or you are comparing two different things." },
+      { q: 'What is a good ROAS?', a: "The one above your break-even, which is 1 divided by your gross margin. At a 25% margin you need better than 4x to make money; at 60% you need better than 1.67x. There is no industry figure that answers this without knowing your margin." },
+      { q: 'What is a good ROAS for Facebook ads?', a: "The same answer \u2014 it depends on margin, not on the platform. Meta reports ROAS on its own attribution, so a Meta-reported figure will usually read higher than the blended number your accounts show. Judge the account on both." },
+      { q: 'What is MER in marketing?', a: "Marketing efficiency ratio: total revenue divided by total marketing spend across every channel. It attributes nothing to any single channel, which makes it harder to game than platform-reported ROAS and a better read on whether marketing as a whole is working." },
+      { q: 'MER vs ROAS \u2014 which should we use?', a: "Both, for different jobs. Platform ROAS to compare ad sets against each other inside the account. MER or blended ROAS to decide whether the marketing budget is earning its place. Optimising only to platform ROAS tends to concentrate spend on the audiences that were going to buy anyway." },
+      { q: 'What is blended ROAS?', a: "Total revenue divided by total ad spend across all channels, with no attribution applied. It is the number that moves when the business genuinely sells more, which is why it is worth watching alongside what any platform reports." },
+      { q: 'Does ROAS include GST?', a: "It should be consistent on both sides. If your revenue figure includes GST and your ad spend does not, the ratio is flattered. Pick one basis and hold it \u2014 most operators work ex-GST." },
+    ],
+    closing: { h2: 'Find out which number your account is actually being run on.', p: "Five days, a written read on what the account is doing \u2014 including whether the reported returns survive contact with your own revenue." },
+    related: [
+      { href: '/facebook-ads-cost-australia', title: 'What ads cost', note: 'Media pricing explained.' },
+      { href: '/glossary', title: 'Glossary', note: 'The terms, plainly.' },
+      { href: '/check', title: 'Account check', note: 'Five days, a straight read.' },
+    ],
+  },
+  {
     slug: 'gst-on-facebook-advertising',
     title: 'Do Facebook Ads Have GST in Australia? | Sevenam',
     description: 'Yes, unless your ad account carries a valid ABN and confirms you are registered for GST. The 10% rule, the reverse charge, and what to check in payment settings.',
