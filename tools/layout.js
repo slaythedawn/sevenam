@@ -217,7 +217,7 @@ function closing(c) {
       <h2 style="margin: 0px; max-width: 18ch; font-size: clamp(38px, 5.4vw, 74px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05;">${esc(c.h2)}</h2>
       <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: ${INK_TEXT};">${esc(c.p)}</p>
       <a href="/apply" class="scp0" style="background: ${VOLT}; color: ${INK}; font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a>
-        <a href="/apply" class="scp4" style="color: ${VOLT}; font-size: 16px; font-weight: 600; border-bottom: 1px solid rgb(85, 85, 79);">Five questions, two minutes →</a>
+        <a href="/apply" class="scp4" style="color: ${VOLT}; font-size: 16px; font-weight: 600; border-bottom: 1px solid rgb(85, 85, 79);">Four fields, twenty seconds →</a>
     </div>
   </section>`;
 }

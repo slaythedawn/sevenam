@@ -48,7 +48,7 @@ const PAGES = [
       { href: '/seedance-2', title: 'Seedance 2.0 for ad creative', note: 'The version most work still runs on.' },
       { href: '/higgsfield-ads', title: 'Higgsfield for ad creative', note: 'Directed motion, not prompt-and-hope.' },
     ],
-    closing: { h2: 'Would rather not run the line yourself?', p: "Answer five questions about the account and Josh comes back with what producing the creative would cost." },
+    closing: { h2: 'Would rather not run the line yourself?', p: "Tell us four things about the account and Josh comes back with what producing the creative would cost." },
   },
   {
     slug: 'nano-banana-2',
@@ -93,7 +93,7 @@ const PAGES = [
       { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
       { href: '/seedance-2-5', title: 'Seedance 2.5 for ad creative', note: 'Judging a new model version.' },
     ],
-    closing: { h2: 'Would rather not run the line yourself?', p: "Answer five questions about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
+    closing: { h2: 'Would rather not run the line yourself?', p: "Tell us four things about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
   },
   {
     slug: 'seedance-2',
@@ -138,7 +138,7 @@ const PAGES = [
       { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
       { href: '/seedance-2-5', title: 'Seedance 2.5 for ad creative', note: 'Judging a new model version.' },
     ],
-    closing: { h2: 'Would rather not run the line yourself?', p: "Answer five questions about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
+    closing: { h2: 'Would rather not run the line yourself?', p: "Tell us four things about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
   },
   {
     slug: 'higgsfield-ads',
@@ -183,7 +183,7 @@ const PAGES = [
       { href: '/facebook-ad-creative-testing', title: 'How to test creative', note: 'Judging what you make.' },
       { href: '/seedance-2-5', title: 'Seedance 2.5 for ad creative', note: 'Judging a new model version.' },
     ],
-    closing: { h2: 'Would rather not run the line yourself?', p: "Answer five questions about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
+    closing: { h2: 'Would rather not run the line yourself?', p: "Tell us four things about the account and Josh comes back with what producing the creative would cost, and whether it is the right buy." },
   },
   {
     slug: 'are-facebook-ads-worth-it',
@@ -224,7 +224,7 @@ const PAGES = [
       { q: 'How much do we need to spend to find out?', a: "Enough for the platform to gather signal — a few thousand a month at the very least, and closer to ten thousand before daily decisions add much." },
       { q: 'What if we have tried and it did not work?', a: "Worth checking what was actually run. In most accounts we read, the honest verdict is that the channel was never properly tested — too few creative concepts, too little time, or conversion tracking that was quietly broken throughout." },
     ],
-    closing: { h2: 'Get a straight answer for your account.', p: "Five questions, two minutes, and an honest read on whether any of this fits — including if the answer is that it does not." },
+    closing: { h2: 'Get a straight answer for your account.', p: "Four fields, twenty seconds, and an honest read on whether any of this fits — including if the answer is that it does not." },
     related: [
       { href: '/check', title: 'The account check', note: 'Whether they work on yours.' },
       { href: '/what-are-meta-ads', title: 'What are Meta ads?', note: 'The plain-English explanation.' },
@@ -912,7 +912,7 @@ const PAGES = [
       { q: 'Does this mean media buying is dead?', a: "It means the mechanical part is. Somebody still has to decide what to stop, what to scale and what to make next, and those decisions are worth more now, not less." },
       { q: 'Where does AI fit?', a: "In reading the account overnight and drafting the day's decisions, and in creative production volume. Not in deciding what your customers are worth or what is worth saying to them." },
     ],
-    closing: { h2: 'See what the thesis looks like applied to your account.', p: "Fifteen minutes with Josh, no pitch deck. Or answer five questions first and get a straight read on which part fits." },
+    closing: { h2: 'See what the thesis looks like applied to your account.', p: "Fifteen minutes with Josh, no pitch deck. Or leave your details first and get a straight read on which part fits." },
     related: [
       { href: '/agency-fee', title: 'Agency fee calculator', note: 'The percentage, in dollars.' },
       { href: '/about', title: 'About', note: 'Who builds the system.' },

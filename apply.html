@@ -52,11 +52,11 @@
 <style>x-dc{display:none!important}</style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/apply","name":"Get started — see if the system fits your account","isPartOf":{"@id":"https://sevenam.com.au/#org"}}]}</script>
 <title>Get Started — See If The System Fits Your Account | Sevenam</title>
-<meta name="description" content="Five questions about your ad spend, who runs your Meta account now and what's in the way. You'll get a straight answer on which Sevenam product fits — or whether none of them do.">
+<meta name="description" content="Four fields: where to reply, your website, what you spend a month and which product. You'll get a straight answer on which Sevenam product fits — or whether none of them do.">
 <link rel="canonical" href="https://sevenam.com.au/apply">
 <meta name="robots" content="index,follow">
 <meta property="og:title" content="Get Started — See If The System Fits Your Account | Sevenam">
-<meta property="og:description" content="Five questions. A straight answer on what fits, including when the answer is nothing.">
+<meta property="og:description" content="Four fields, twenty seconds. Josh replies with a time and a straight answer on what fits.">
 <meta property="og:site_name" content="Sevenam">
 <meta property="og:image" content="https://sevenam.com.au/og/apply.jpg">
 <meta property="og:image:width" content="1200">
@@ -390,6 +390,40 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
 
 [style*="color: rgb(85, 85, 79)"] { color: var(--sv-muted) !important; }
 [style*="color: rgb(154, 154, 146)"] { color: var(--sv-faint) !important; }
+
+/* Same problem one layer out. A control whose outline is the only thing marking
+   it as a control needs 3:1 against its surface (WCAG 1.4.11), and #55554F on
+   Ink is 2.64:1 — so the secondary button on every dark hero had an edge you
+   could not reliably see. On Paper the same value is 7:1 and stays put. Card
+   hairlines are deliberately not included: a card with its own fill is not
+   identified by its border, and decoration is exempt. */
+:root { --sv-control-edge: #55554F; }
+[style*="background: rgb(10, 10, 10)"],
+[style*="background: rgb(17, 17, 16)"],
+[style*="background: rgb(22, 22, 19)"],
+[style*="background: rgb(35, 35, 32)"] { --sv-control-edge: #6B6B63; }
+[style*="background: rgb(255, 255, 255)"],
+[style*="background: rgb(250, 250, 248)"],
+[style*="background: rgb(247, 247, 245)"] { --sv-control-edge: #55554F; }
+
+a[style*="border: 1px solid rgb(85, 85, 79)"],
+button[style*="border: 1px solid rgb(85, 85, 79)"] { border-color: var(--sv-control-edge) !important; }
+
+/* The secondary hero button specifically. The custom property above resolves off
+   the nearest ancestor that declares a background, and a hero that paints itself
+   with an image declares none — so it kept the Paper value on a dark hero. Light
+   text on that outline is only ever used on Ink, so the pair identifies the
+   surface where an ancestor walk cannot. */
+a[style*="border: 1px solid rgb(85, 85, 79)"][style*="color: rgb(247, 247, 245)"],
+a[style*="border: 1px solid rgb(85, 85, 79)"][style*="color: rgb(255, 255, 255)"] {
+  border-color: #6B6B63 !important;
+}
+
+/* Nothing sets a placeholder colour, so every field fell back to Chromium's own
+   #757575 — 4.3:1 on Ink and 3.9:1 on the raised surface, both under AA. The
+   forms are the whole conversion path; the hint text in them has to be readable. */
+input::placeholder, textarea::placeholder { color: #B5B5AD; opacity: 1; }
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #B5B5AD; opacity: 1; }
 </style>
 </head>
 <body>
@@ -421,67 +455,6 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
     <p style="margin: 24px 0px 0px; max-width: 54ch; font-size: 19px; line-height: 1.65; color: rgb(201, 201, 194);">The prices are on the site, so there is nothing to extract from you. Tell us where to reply, what you run and what you're after, and Josh comes back with a time.</p>
     <div id="book-root" style="position: relative; margin-top: 44px;"></div>
 
-    <details style="margin-top: 64px; border-top: 1px solid rgb(35, 35, 32); padding-top: 28px;">
-      <summary style="cursor: pointer; font-size: 16px; font-weight: 600; color: rgb(216, 255, 0); list-style: none;">Not sure which one you need? Take the five-question version</summary>
-      <p style="margin: 16px 0px 0px; max-width: 56ch; font-size: 16px; line-height: 1.7; color: rgb(181, 181, 173);">Five questions about the account, then a straight read on which of the four is actually right — including when the answer is none of them.</p>
-      <div style="margin-top: 48px;">
-<div id="apply-root" style="max-width: 860px; margin: 0px auto;">
-
-    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px;">
-      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(216, 255, 0);"><span class="sc-interp">Ad spend</span></span>
-      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(85, 85, 79); font-variant-numeric: tabular-nums;"><span class="sc-interp">Step 1 of 6</span></span>
-    </div>
-    <div style="height: 3px; background: rgb(22, 22, 19); border-radius: 2px; overflow: hidden; margin-bottom: 56px;">
-      <div style="height: 3px; background: rgb(216, 255, 0); border-radius: 2px; transition: width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); width: 0%;"></div>
-    </div>
-
-    
-      <div style="animation: 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) 0s 1 normal both running stepIn;">
-        <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(32px, 4vw, 56px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05; color: rgb(255, 255, 255); text-wrap: balance;"><span class="sc-interp">What are you spending on Meta ads a month?</span></h2>
-        <p style="margin: 20px 0px 0px; max-width: 56ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);"><span class="sc-interp">Media only — not fees, not creative. Round to the nearest ten thousand; we're sizing whether a daily decision has enough information to be worth making.</span></p>
-
-        <div style="margin-top: 44px; display: flex; flex-direction: column; gap: 10px;">
-          
-            <button type="button" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; background: rgb(22, 22, 19); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 20px 22px; cursor: pointer; color: rgb(247, 247, 245); min-height: 44px; transition: border-color 0.2s, background 0.2s;">
-              <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.015em;"><span class="sc-interp">Under $3,000</span></span>
-              <span style="font-size: 15px; line-height: 1.5; color: rgb(181, 181, 173);"><span class="sc-interp">Or nothing at the moment</span></span>
-            </button>
-          
-            <button type="button" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; background: rgb(22, 22, 19); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 20px 22px; cursor: pointer; color: rgb(247, 247, 245); min-height: 44px; transition: border-color 0.2s, background 0.2s;">
-              <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.015em;"><span class="sc-interp">$3,000 – $10,000</span></span>
-              <span style="font-size: 15px; line-height: 1.5; color: rgb(181, 181, 173);"><span class="sc-interp">Enough to learn monthly, not daily</span></span>
-            </button>
-          
-            <button type="button" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; background: rgb(22, 22, 19); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 20px 22px; cursor: pointer; color: rgb(247, 247, 245); min-height: 44px; transition: border-color 0.2s, background 0.2s;">
-              <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.015em;"><span class="sc-interp">$10,000 – $30,000</span></span>
-              <span style="font-size: 15px; line-height: 1.5; color: rgb(181, 181, 173);"><span class="sc-interp">Where a daily decision starts to pay</span></span>
-            </button>
-          
-            <button type="button" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; background: rgb(22, 22, 19); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 20px 22px; cursor: pointer; color: rgb(247, 247, 245); min-height: 44px; transition: border-color 0.2s, background 0.2s;">
-              <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.015em;"><span class="sc-interp">$30,000 – $100,000</span></span>
-              <span style="font-size: 15px; line-height: 1.5; color: rgb(181, 181, 173);"><span class="sc-interp">Fees are now a real line item</span></span>
-            </button>
-          
-            <button type="button" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; background: rgb(22, 22, 19); border: 1px solid rgb(35, 35, 32); border-radius: 6px; padding: 20px 22px; cursor: pointer; color: rgb(247, 247, 245); min-height: 44px; transition: border-color 0.2s, background 0.2s;">
-              <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.015em;"><span class="sc-interp">Over $100,000</span></span>
-              <span style="font-size: 15px; line-height: 1.5; color: rgb(181, 181, 173);"><span class="sc-interp">A percentage fee is costing you six figures</span></span>
-            </button>
-          
-        </div>
-
-        <div style="margin-top: 36px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-          
-          
-        </div>
-      </div>
-    
-
-    
-
-    
-  </div>
-      </div>
-    </details>
   </div></main><div class="sc-host"><footer style="background: rgb(10, 10, 10); color: rgb(181, 181, 173); padding: 96px 32px 48px;">
   <div style="max-width: 1240px; margin: 0px auto;">
     <div style="min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 48px; padding-bottom: 64px; border-bottom: 1px solid rgb(35, 35, 32);">
@@ -538,6 +511,6 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
       <span>Your growth system for Meta. It runs at seven.</span>
     </div>
   </div></footer></div></div>
-<script src="/site.js?v=8e197594" defer></script>
+<script src="/site.js?v=10aa1798" defer></script>
 </body>
 </html>

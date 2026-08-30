@@ -57,9 +57,8 @@ const PAGES = [
       ],
     },
     /* The hero CTA is the form on this page, not /apply. Somebody who searched
-       for a price and landed here should reach the one field without being
-       handed the five-question application first; the closing CTA still offers
-       it for anyone who would rather answer the questions. */
+       for a price and landed here should reach the fields in place rather than
+       being sent somewhere else for the same four. */
     ctaHref: '#pricing-call',
     ctaLabel: 'Request a call',
     callForm: {
@@ -72,9 +71,9 @@ const PAGES = [
       { q: 'Do I need to prepare anything?', a: "No. Knowing roughly what you spend a month helps, but it is not required." },
       { q: 'What happens after the call?', a: "You get the figures in writing the same day. If you want to go ahead, we agree a start date. If not, nothing follows." },
       { q: 'Do you sell packages or tiers?', a: "No. Four things you can buy, any of them on their own." },
-      { q: 'What if I would rather answer the questions?', a: "Start at Get started instead \u2014 five questions, and a straight read on which product fits. The call is the shorter path if you only want the price." },
+      { q: 'What do I have to fill in?', a: "Four things: where to reply, your website, roughly what you spend a month, and which of the four you are after. It takes about twenty seconds and Josh replies himself." },
     ],
-    closing: { h2: 'Prefer to answer five questions instead?', p: "The application takes a couple of minutes and comes back with a straight read on which product fits your account." },
+    closing: { h2: 'Same four fields, wherever you start.', p: "The form above is the one on every page. Fill it in here or on /apply \u2014 either way it reaches Josh, and he replies with a time." },
     related: [
       { href: '/pricing', title: 'How buying works', note: 'Four ways, no tiers.' },
       { href: '/install', title: 'The setup', note: 'Four weeks, fixed price.' },
@@ -180,7 +179,7 @@ const PAGES = [
       ],
       note: 'The models change every few months and the line changes with them. What does not is that a person briefs it, directs it and rejects it before anything reaches your account.',
     },
-    closing: { h2: 'Order what the account needs.', p: "Answer five questions about the account and Josh comes back with what it would cost and whether creative alone is the right buy." },
+    closing: { h2: 'Order what the account needs.', p: "Tell us four things about the account and Josh comes back with what it would cost and whether creative alone is the right buy." },
   },
   {
     /* "performance marketing agency" is 700 a month in Australia at a difficulty
@@ -234,7 +233,7 @@ const PAGES = [
       { href: '/ecommerce-performance-marketing-agency', title: 'Ecommerce performance marketing', note: 'Where the margin actually goes.' },
       { href: '/system', title: 'How the system works', note: 'Installed, then run.' },
     ],
-    closing: { h2: 'Have the account read first.', p: "Answer five questions and Josh comes back with what the account needs, what it would cost, and whether it is worth doing at all." },
+    closing: { h2: 'Have the account read first.', p: "Tell us four things and Josh comes back with what the account needs, what it would cost, and whether it is worth doing at all." },
   },
   {
     slug: 'ecommerce-performance-marketing-agency',
@@ -279,7 +278,7 @@ const PAGES = [
       { href: '/ad-creative', title: 'Ad creative, without the shoot', note: 'Where volume comes from.' },
       { href: '/ecommerce-facebook-ads-agency', title: 'Ecommerce Facebook ads', note: 'The channel in detail.' },
     ],
-    closing: { h2: 'Start with the numbers.', p: "Answer five questions about the account and Josh comes back with what the measurement is likely hiding and what it would cost to fix." },
+    closing: { h2: 'Start with the numbers.', p: "Tell us four things about the account and Josh comes back with what the measurement is likely hiding and what it would cost to fix." },
   },
   {
     slug: 'meta-ads-agency',
@@ -321,7 +320,7 @@ const PAGES = [
       { q: 'How is the monthly fee set if not on spend?', a: "On what the account actually needs: how much creative it consumes, how complex the structure is and how much execution you want us doing. It is quoted in writing before you commit and it does not move because you scaled." },
       { q: 'What spend does this suit?', a: "Roughly ten thousand a month in media and up. Under about three thousand there is not enough daily volume for any of it to pay for itself, and we will say so." },
     ],
-    closing: { h2: 'Find out what your account is leaving on the table.', p: "Fifteen minutes with Josh, no pitch deck. Or answer five questions first and get a straight read on which part of this fits — or whether none of it does." },
+    closing: { h2: 'Find out what your account is leaving on the table.', p: "Fifteen minutes with Josh, no pitch deck. Or leave your details first and get a straight read on which part of this fits — or whether none of it does." },
     related: [
       { href: '/facebook-ads-agency', title: 'Facebook ads agency', note: 'The same case, the other term.' },
       { href: '/agency-fee', title: 'Fee calculator', note: 'What a percentage really costs.' },
@@ -892,7 +891,7 @@ const PAGES = [
       { href: '/check', title: 'The account check', note: 'Five days, a straight read.' },
       { href: '/agency-fee', title: 'What a percentage really costs', note: 'The fee, in dollars.' },
     ],
-    closing: { h2: 'Find out which one is your constraint.', p: "Answer five questions and Josh comes back with what the numbers say to fix first — including when that is not us." },
+    closing: { h2: 'Find out which one is your constraint.', p: "Tell us four things and Josh comes back with what the numbers say to fix first — including when that is not us." },
   },
 
 
@@ -944,7 +943,7 @@ const PAGES = [
       { href: '/pricing', title: 'How it works to buy', note: 'What is published and what is quoted.' },
       { href: '/facebook-ads-agency', title: 'Facebook ads agency', note: 'Or a system you own.' },
     ],
-    closing: { h2: 'See what the monthly would cover.', p: "Answer five questions about the account and Josh comes back with the scope and the figure in writing." },
+    closing: { h2: 'See what the monthly would cover.', p: "Tell us four things about the account and Josh comes back with the scope and the figure in writing." },
   },
 
   {
@@ -997,7 +996,7 @@ const PAGES = [
       { href: '/ecommerce-facebook-ads-agency', title: 'Ecommerce Facebook ads agency', note: 'The channel case.' },
       { href: '/check', title: 'The account check', note: 'Where the money is going.' },
     ],
-    closing: { h2: 'Have the feed and the numbers read first.', p: "Answer five questions about the store and Josh comes back with what is actually wrong, starting with the measurement." },
+    closing: { h2: 'Have the feed and the numbers read first.', p: "Tell us four things about the store and Josh comes back with what is actually wrong, starting with the measurement." },
   },
 
   {
@@ -1049,7 +1048,7 @@ const PAGES = [
       { href: '/how-to-run-meta-ads-yourself', title: 'Run it yourself', note: 'The whole process, published.' },
       { href: '/facebook-ads-expert', title: 'Facebook ads expert', note: 'Hire a person, or install a system.' },
     ],
-    closing: { h2: 'Have the account read by the person who would run it.', p: "Answer five questions and Josh comes back himself with what is wrong and whether you need anyone at all." },
+    closing: { h2: 'Have the account read by the person who would run it.', p: "Tell us four things and Josh comes back himself with what is wrong and whether you need anyone at all." },
   },
 
   {
@@ -1101,7 +1100,7 @@ const PAGES = [
       { href: '/instagram-ads-agency', title: 'Instagram ads agency', note: 'One auction, one system.' },
       { href: '/google-ads-vs-facebook-ads', title: 'Google Ads vs Facebook Ads', note: 'Which one first.' },
     ],
-    closing: { h2: 'Find out whether Meta is actually saturated.', p: "Answer five questions about the account and Josh comes back with whether a second channel would help or just spread you thinner." },
+    closing: { h2: 'Find out whether Meta is actually saturated.', p: "Tell us four things about the account and Josh comes back with whether a second channel would help or just spread you thinner." },
   },
 
 
@@ -1131,7 +1130,7 @@ function build() {
     callForm: p.callForm,
     /* Default /apply unless a page has a better next step of its own. Only
        /pricing-call sets these: its hero CTA points at its own form, because
-       sending a "what does it cost" visitor to the five-question application is
+       sending a "what does it cost" visitor away for the same four fields is
        the friction the page exists to remove. The closing CTA is still /apply. */
     ctaHref: p.ctaHref,
     ctaLabel: p.ctaLabel,

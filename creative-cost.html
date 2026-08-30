@@ -386,6 +386,40 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
 
 [style*="color: rgb(85, 85, 79)"] { color: var(--sv-muted) !important; }
 [style*="color: rgb(154, 154, 146)"] { color: var(--sv-faint) !important; }
+
+/* Same problem one layer out. A control whose outline is the only thing marking
+   it as a control needs 3:1 against its surface (WCAG 1.4.11), and #55554F on
+   Ink is 2.64:1 — so the secondary button on every dark hero had an edge you
+   could not reliably see. On Paper the same value is 7:1 and stays put. Card
+   hairlines are deliberately not included: a card with its own fill is not
+   identified by its border, and decoration is exempt. */
+:root { --sv-control-edge: #55554F; }
+[style*="background: rgb(10, 10, 10)"],
+[style*="background: rgb(17, 17, 16)"],
+[style*="background: rgb(22, 22, 19)"],
+[style*="background: rgb(35, 35, 32)"] { --sv-control-edge: #6B6B63; }
+[style*="background: rgb(255, 255, 255)"],
+[style*="background: rgb(250, 250, 248)"],
+[style*="background: rgb(247, 247, 245)"] { --sv-control-edge: #55554F; }
+
+a[style*="border: 1px solid rgb(85, 85, 79)"],
+button[style*="border: 1px solid rgb(85, 85, 79)"] { border-color: var(--sv-control-edge) !important; }
+
+/* The secondary hero button specifically. The custom property above resolves off
+   the nearest ancestor that declares a background, and a hero that paints itself
+   with an image declares none — so it kept the Paper value on a dark hero. Light
+   text on that outline is only ever used on Ink, so the pair identifies the
+   surface where an ancestor walk cannot. */
+a[style*="border: 1px solid rgb(85, 85, 79)"][style*="color: rgb(247, 247, 245)"],
+a[style*="border: 1px solid rgb(85, 85, 79)"][style*="color: rgb(255, 255, 255)"] {
+  border-color: #6B6B63 !important;
+}
+
+/* Nothing sets a placeholder colour, so every field fell back to Chromium's own
+   #757575 — 4.3:1 on Ink and 3.9:1 on the raised surface, both under AA. The
+   forms are the whole conversion path; the hint text in them has to be readable. */
+input::placeholder, textarea::placeholder { color: #B5B5AD; opacity: 1; }
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #B5B5AD; opacity: 1; }
 </style>
 </head>
 <body>
@@ -523,9 +557,9 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
     <div style="max-width: 1240px; margin: 0px auto; display: flex; flex-direction: column; align-items: flex-start; gap: 30px;">
       <span style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; padding: 5px 9px; border-radius: 3px;">07:00</span>
       <h2 style="margin: 0px; max-width: 18ch; font-size: clamp(38px, 5.4vw, 74px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05; text-wrap: balance;">Move the number, not the budget.</h2>
-      <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173);">Answer five questions about the account and Josh comes back with what the creative actually needs to cost, and whether the rest of it is worth changing.</p>
+      <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173);">Tell us four things about the account and Josh comes back with what the creative actually needs to cost, and whether the rest of it is worth changing.</p>
       <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a>
-      <a href="/apply" class="scp4" style="color: rgb(216, 255, 0); font-size: 16px; font-weight: 600; border-bottom: 1px solid rgb(85, 85, 79);">Five questions, two minutes →</a>
+      <a href="/apply" class="scp4" style="color: rgb(216, 255, 0); font-size: 16px; font-weight: 600; border-bottom: 1px solid rgb(85, 85, 79);">Four fields, twenty seconds →</a>
     </div>
   </section>
   </main>
@@ -585,6 +619,6 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
       <span>Your growth system for Meta. It runs at seven.</span>
     </div>
   </div></footer></div></div>
-<script src="/site.js?v=8e197594" defer></script>
+<script src="/site.js?v=10aa1798" defer></script>
 </body>
 </html>

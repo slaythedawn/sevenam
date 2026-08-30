@@ -64,6 +64,13 @@ design — but it also means **breaking that file breaks all 42**.
   moved inside that carries no colour of its own renders black — which is how
   "From $5,000" shipped invisible at 1.06:1 on the dark tier. The head now sets
   `color:inherit`; don't remove it.
+- **Contrast is not only text.** WCAG 1.4.11 wants 3:1 on the boundary of a
+  control that its outline is the only marker for. The dark form inputs were
+  `#232320` on Ink at 1.26:1 and the secondary hero button `#55554F` at 2.64:1 —
+  both now resolve through `--sv-control-edge` (or `#6B6B63` where `site.js`
+  builds them). Card hairlines are deliberately left alone: a card with its own
+  fill is not identified by its border, and decoration is exempt. Text-only audits
+  will not catch any of this — check placeholders, borders and both viewports.
 - **`#55554F` is the Paper body token and fails on Ink at 2.64:1.** It had leaked
   onto dark surfaces on all 68 pages. The theme layer now resolves both muted greys
   through inherited custom properties (`--sv-muted`, `--sv-faint`) set by whichever
@@ -74,7 +81,7 @@ design — but it also means **breaking that file breaks all 42**.
 - **`data-` attributes are behaviour hooks**, not styling: `data-reveal`,
   `data-faq-item` / `data-faq-toggle` / `data-faq-sign` / `data-faq-answer`,
   `data-clock`, `data-approve`, `data-act`, `data-ad-drift`, `data-parallax`,
-  `data-out`, `data-tab`, `data-range`, `data-field`, `data-verdict`, `#apply-root`, `#concepts` and the `data-cc` / `data-ccrange` hooks on the creative
+  `data-out`, `data-tab`, `data-range`, `#book-root`, `#pricing-call-root`, `#adlib-root`, `#concepts` and the `data-cc` / `data-ccrange` hooks on the creative
   calculator,
   `#pct-block`, `#flat-block`. Remove one while editing markup and the feature
   detaches with no error.
@@ -124,7 +131,7 @@ design — but it also means **breaking that file breaks all 42**.
 - **No form on the site may discard what someone types.** `/check` carried five fields
   and a "Continue to payment" button with no `action` and no handler behind it — it
   looked live and went nowhere. It is now a panel that routes to `/apply`. The only
-  real forms are built in `site.js` (`#apply-root`, `#pricing-call`) and POST to
+  real forms are built in `site.js` (`#book-root`, `#pricing-call-root`) and POST to
   `/api/lead`; there is no `<form>` element in any `.html` file, and that is the check.
 - Case studies: SRW, knest.ai, Online Model Academy only. Never a client's revenue.
 - Sydney-based, working wherever the auction runs. Australian-based, not Australian-only:
@@ -138,14 +145,20 @@ design — but it also means **breaking that file breaks all 42**.
   one. They are built in `setupProducts()` with `createElement`, never inserted into
   `pricing.html` — placing an element before a card's closing tag needs a regex tag
   walk that has now put content in the wrong place twice on this file.
-- **`/apply` is the short form now, not the quiz.** Four fields on one screen — work
-  email, website, monthly spend, which product — built by `setupShortForm()` in
-  `site.js` and mounted on `#book-root`. The five-question quiz still exists,
-  unchanged, folded into a `<details>` below it on the same page; that is why the
-  quiz's screens render `<h2>` rather than `<h1>` (the short form owns the page's one
-  `<h1>`, and the quiz is on the page at the same time). `/pricing-call` mounts the
-  same form on `#pricing-call-root` with `source: "pricing-call"`, so the two are
-  identical downstream apart from that field. Do not put the quiz's `<h1>` back.
+- **`/apply` is the short form, and it is the only form.** Four fields on one
+  screen — work email, website, monthly spend, which product — built by
+  `setupShortForm()` in `site.js` and mounted on `#book-root`. `/pricing-call`
+  mounts the same form on `#pricing-call-root`; `source` is the only thing that
+  tells the two apart downstream.
+- **The five-question quiz was deleted, on purpose.** It was 524 lines of
+  `site.js` — `QUESTIONS`, `VERDICTS`, `verdict()`, `#apply-root` — served on all
+  68 pages, and it stood between a visitor and any capture at all before a single
+  lead had come in. Removing it took `site.js` from 79KB to 47KB. It is in git if
+  it is ever wanted back; **do not resurrect it from memory**, and do not add
+  qualifying questions to the short form without being asked — reducing friction
+  was the whole point. Nothing on the site may say "five questions" any more; that
+  phrasing was the default secondary CTA in `tools/layout.js`, so it was on 60-odd
+  pages and had to be swept.
 - **Every CTA routes to `/apply`, and now there is only one exception.**
   `/pricing-call`'s hero CTA points at its own `#pricing-call` form, because that page
   exists to answer a price query in place. Everything else — including `/pricing`'s
@@ -244,12 +257,11 @@ Playwright are installed — drive them rather than guessing (launch with
   its children, which is exactly the bug that shipped once already
 - the FAQ accordion opening and closing
 - the fee calculator recalculating and switching between percentage and retainer
-- the quiz reaching all six verdicts, and refusing to submit without a name and a
-  valid email
-
-The quiz's `verdict()` routing in `site.js` is order-sensitive. Two verdicts once
-shared a key and routed the smallest accounts to the most expensive option, so if you
-touch that function, walk all six paths by hand.
+- the short form refusing to submit without a valid email, keeping focus in the
+  field being typed in, and posting `email`, `website`, `spend` and `want` — the
+  endpoint reads `website`, so a field named `site` is dropped in silence
+- the Ad Library search on `/meta-ad-library` building a link that carries both
+  `country` and `active_status=active`
 
 ## Lead capture
 

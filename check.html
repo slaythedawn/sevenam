@@ -401,6 +401,40 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
 
 [style*="color: rgb(85, 85, 79)"] { color: var(--sv-muted) !important; }
 [style*="color: rgb(154, 154, 146)"] { color: var(--sv-faint) !important; }
+
+/* Same problem one layer out. A control whose outline is the only thing marking
+   it as a control needs 3:1 against its surface (WCAG 1.4.11), and #55554F on
+   Ink is 2.64:1 — so the secondary button on every dark hero had an edge you
+   could not reliably see. On Paper the same value is 7:1 and stays put. Card
+   hairlines are deliberately not included: a card with its own fill is not
+   identified by its border, and decoration is exempt. */
+:root { --sv-control-edge: #55554F; }
+[style*="background: rgb(10, 10, 10)"],
+[style*="background: rgb(17, 17, 16)"],
+[style*="background: rgb(22, 22, 19)"],
+[style*="background: rgb(35, 35, 32)"] { --sv-control-edge: #6B6B63; }
+[style*="background: rgb(255, 255, 255)"],
+[style*="background: rgb(250, 250, 248)"],
+[style*="background: rgb(247, 247, 245)"] { --sv-control-edge: #55554F; }
+
+a[style*="border: 1px solid rgb(85, 85, 79)"],
+button[style*="border: 1px solid rgb(85, 85, 79)"] { border-color: var(--sv-control-edge) !important; }
+
+/* The secondary hero button specifically. The custom property above resolves off
+   the nearest ancestor that declares a background, and a hero that paints itself
+   with an image declares none — so it kept the Paper value on a dark hero. Light
+   text on that outline is only ever used on Ink, so the pair identifies the
+   surface where an ancestor walk cannot. */
+a[style*="border: 1px solid rgb(85, 85, 79)"][style*="color: rgb(247, 247, 245)"],
+a[style*="border: 1px solid rgb(85, 85, 79)"][style*="color: rgb(255, 255, 255)"] {
+  border-color: #6B6B63 !important;
+}
+
+/* Nothing sets a placeholder colour, so every field fell back to Chromium's own
+   #757575 — 4.3:1 on Ink and 3.9:1 on the raised surface, both under AA. The
+   forms are the whole conversion path; the hint text in them has to be readable. */
+input::placeholder, textarea::placeholder { color: #B5B5AD; opacity: 1; }
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #B5B5AD; opacity: 1; }
 </style>
 </head>
 <body>
@@ -446,7 +480,7 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
           <p style="margin: 0px 0px 24px; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Every check is read and recorded by Josh, who has spent fifteen years inside Australian ecommerce ad accounts — not handed to an account manager. <a href="/about" class="scp0" style="font-weight: 600; border-bottom: 1px solid rgb(181, 181, 173);">More about that here</a>.</p>
 
           <h2 style="margin: 36px 0px 12px; font-size: 23px; font-weight: 600; letter-spacing: -0.02em;">Not ready to pay up front?</h2>
-          <p style="margin: 0px 0px 24px; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Fair enough. Send the five questions through and say what's in the way — scope, procurement, an invoice instead of a card, or whether the check is the right thing for you at all. Josh answers it himself.</p>
+          <p style="margin: 0px 0px 24px; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Fair enough. Send the form through and say what's in the way — scope, procurement, an invoice instead of a card, or whether the check is the right thing for you at all. Josh answers it himself.</p>
           <div style="display: flex; flex-direction: column; gap: 14px;">
             <a href="/apply" class="scp1" style="font-size: 19px; font-weight: 600; letter-spacing: -0.01em; border-bottom: 1px solid rgb(227, 227, 221); padding-bottom: 2px; align-self: flex-start;">Start an application</a>
             <span style="font-size: 15px; line-height: 1.6; color: rgb(85, 85, 79);">Sydney, Australia · replies within one business day · invoicing and purchase orders available on request.</span>
@@ -458,7 +492,7 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
         
           <div style="display: flex; flex-direction: column; gap: 24px;">
             <h2 style="margin: 0px; font-size: 26px; font-weight: 600; letter-spacing: -0.025em;">Request a check</h2>
-            <p style="margin: 0px; font-size: 17px; line-height: 1.7; color: rgb(201, 201, 194);">Five questions about the account — spend, who runs it now, what you sell. It takes about a minute.</p>
+            <p style="margin: 0px; font-size: 17px; line-height: 1.7; color: rgb(201, 201, 194);">Four fields — where to reply, your website, what you spend a month, and which of the four you are after. About twenty seconds.</p>
             <p style="margin: 0px; font-size: 17px; line-height: 1.7; color: rgb(201, 201, 194);">Josh reads every one himself and replies with a time. If the account isn't worth checking yet, he'll tell you that instead.</p>
             <a href="/apply" class="scp0" style="align-self: flex-start; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-family: inherit; font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Request the check</a>
             <p style="margin: 0px; font-size: 13px; line-height: 1.6; color: rgb(181, 181, 173);">Credited in full against an Install. No retainer, no lock-in, priced to the work.</p>
@@ -526,6 +560,6 @@ a[style*="border-radius: 100px"]:hover { box-shadow: 0 8px 22px -8px rgba(10, 10
       <span>Your growth system for Meta. It runs at seven.</span>
     </div>
   </div></footer></div></div>
-<script src="/site.js?v=8e197594" defer></script>
+<script src="/site.js?v=10aa1798" defer></script>
 </body>
 </html>
