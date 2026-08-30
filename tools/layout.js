@@ -115,6 +115,39 @@ function faqSection(faqs, heading) {
   </section>`;
 }
 
+/* A data table with a source line under it. Added for the CPM benchmark page,
+   where the figures are third-party data and the attribution has to travel with
+   them rather than sit in a footnote at the bottom of the page.
+
+   Wrapped in overflow-x so a ten-column table scrolls inside its own box on a
+   phone instead of making the whole page scroll sideways. */
+function dataTable(t) {
+  if (!t) return '';
+  const head = t.columns.map((c, i) =>
+    `<th style="text-align: ${i ? 'right' : 'left'}; padding: 0px 0px 12px; ${i ? 'padding-left: 20px;' : ''} font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: ${PAPER_TEXT}; white-space: nowrap;">${esc(c)}</th>`).join('');
+  const body = t.rows.map(r =>
+    '<tr>' + r.map((cell, i) =>
+      `<td style="text-align: ${i ? 'right' : 'left'}; padding: 14px 0px; ${i ? 'padding-left: 20px;' : ''} border-top: 1px solid ${HAIRLINE_LIGHT}; font-size: 16px; line-height: 1.5; ${i ? 'font-variant-numeric: tabular-nums; white-space: nowrap;' : 'font-weight: 500;'} color: ${i ? PAPER_TEXT : INK};">${esc(cell)}</td>`).join('') + '</tr>').join('\n          ');
+  const note = t.note
+    ? `<p style="margin: 20px 0px 0px; max-width: 78ch; font-size: 14px; line-height: 1.65; color: ${PAPER_TEXT};">${esc(t.note)}</p>`
+    : '';
+  return `<section style="border-bottom: 1px solid ${HAIRLINE_LIGHT}; padding: 96px 32px;">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <h2 style="margin: 0px 0px 14px; max-width: 26ch; font-size: clamp(26px, 3vw, 40px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(t.h2)}</h2>
+      ${t.lead ? `<p style="margin: 0px 0px 34px; max-width: 70ch; font-size: 17px; line-height: 1.7; color: ${PAPER_TEXT};">${esc(t.lead)}</p>` : ''}
+      <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <table style="border-collapse: collapse; width: 100%; min-width: 640px;">
+          <thead><tr>${head}</tr></thead>
+          <tbody>
+          ${body}
+          </tbody>
+        </table>
+      </div>
+      ${note}
+    </div>
+  </section>`;
+}
+
 function pills(label, links) {
   if (!links || !links.length) return '';
   const items = links.map(l =>
@@ -354,6 +387,7 @@ function page(p) {
     hero(p),
     gallery(p.gallery),
     ...(p.sections || []).map(prose),
+    ...(p.tables || []).map(dataTable),
     gantt(p.gantt),
     steps(p.steps),
     callForm(p.callForm),
