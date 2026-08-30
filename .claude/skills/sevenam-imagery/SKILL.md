@@ -86,8 +86,17 @@ shots. Keep the daughter photo (second person) and the sunglasses one (eyes hidd
 the identity set unless the scene itself calls for them. Identity holds better across a set
 than off one photo, so pass as many as the model accepts.
 
-**Pass the same reference set across a whole batch.** Changing references between frames
-of one set is how likeness drifts and the set stops looking like one person.
+**Pass the same reference set across a whole batch — and on every single request in it.**
+`generate_image_batch` takes `medias` per item, so it is easy to attach references to the
+test frame and forget them on the batch that follows. Nothing errors; the model just renders
+a stranger, and the whole set is wasted. Before submitting a batch, count that every request
+carries the reference set. Changing references between frames of one set is the other way
+likeness drifts and a set stops looking like one person.
+
+**When the omission happens anyway, re-run only the frames where a face is readable.** A
+shot from behind, from a distance, or with the face out of frame does not need the
+references, so a mirror or close mid-ground frame is worth a credit and a distant back is
+not.
 
 New photos: `search_files` on `parentId = '1U8iqnZSvPPAIuN2Hlh6k2pYls5omjPkm'`, then
 `media_import_url` with `https://drive.google.com/uc?export=download&id=<FILE_ID>`, which
