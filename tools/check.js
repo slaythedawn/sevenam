@@ -13,6 +13,10 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const { checkDesign } = require('./check-design');
+/* Loading this proves theme.js parses. A stray backtick inside its template
+   literal made it a syntax error once, build-pages.js died, and the pages kept
+   their previous theme — which looks exactly like a change that did not work. */
+const { THEME } = require('./theme');
 const drifts = [];
 const drift = (file, msg) => drifts.push(`${file}: ${msg}`);
 const SITE_JS_HASH = require('crypto')
@@ -133,6 +137,15 @@ for (const file of htmlFiles) {
      advisory — 30 clamp ramps, 20 font sizes, three off-palette greys — is
      cleared, so anything it finds now is new drift rather than history. */
   checkDesign(file, html, fail);
+
+  /* The injected theme must match tools/theme.js. Editing the theme without
+     rerunning build-pages.js leaves stale CSS on every page, and the symptom is
+     indistinguishable from the edit having no effect. */
+  const themeBlock = html.match(/<style id="sv-theme">([\s\S]*?)<\/style>/);
+  if (!themeBlock) fail(file, 'no theme block — run node tools/build-pages.js');
+  else if (themeBlock[1] !== THEME) {
+    fail(file, 'theme block is stale vs tools/theme.js — run node tools/build-pages.js');
+  }
 
   const stamp = html.match(/<script src="\/site\.js\?v=([a-f0-9]+)"/);
   if (!stamp) fail(file, 'site.js script tag missing or unstamped — run node tools/build-pages.js');

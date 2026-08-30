@@ -105,7 +105,11 @@ main section[style*="background: rgb(10, 10, 10)"] {
   position: relative; isolation: isolate;
   border-radius: 36px;
   margin: 0 24px;
-  overflow: hidden;
+  /* clip, not hidden: overflow-clip-margin lets a card's 4px hover lift and its
+     glow cross the panel edge without being sliced off, while the corners still
+     clip. "hidden" cut the top off every card sitting flush to the edge. */
+  overflow: clip;
+  overflow-clip-margin: 16px;
 }
 /* A run of adjacent Ink sections is one panel, not a stack of them. Without
    this, three sections in a row each round separately and the internal seams
@@ -144,8 +148,14 @@ main section[style*="background: rgb(10, 10, 10)"]::after {
    Cards on Ink. A real front surface: a bright top edge, a visible fill, a
    saturating blur, and a wide shadow so the tile sits above the panel. */
 [style*="border: 1px solid rgb(35, 35, 32)"][style*="border-radius"] {
-  background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04) 55%) !important;
+  /* background-IMAGE, never the shorthand. The shorthand replaces the fill, and
+     several cards set their own — the homepage quote is background: rgb(22,22,19)
+     with #F7F7F5 text, so replacing it turned white text onto a near-white card.
+     A sheen layered over whatever colour the element already has works on every
+     surface. !important is still needed: the inline "background" shorthand sets
+     background-image: none, which would otherwise win. */
+  background-image:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.025) 58%) !important;
   backdrop-filter: blur(22px) saturate(150%);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
   border-color: rgba(255, 255, 255, 0.17) !important;
