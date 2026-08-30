@@ -13,7 +13,6 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const { checkDesign } = require('./check-design');
-const STRICT = process.argv.includes('--strict');
 const drifts = [];
 const drift = (file, msg) => drifts.push(`${file}: ${msg}`);
 const SITE_JS_HASH = require('crypto')
@@ -130,11 +129,10 @@ for (const file of htmlFiles) {
      the /pricing-call email field, the /apply form — renders as an empty box
      with no error anywhere. Editing site.js without rerunning build-pages.js
      fails here rather than on the live site. */
-  /* Design-system drift against DESIGN.md. Reported, not fatal: the drift
-     predates the scale being written down, and several fixes are colour
-     decisions that are the owner's to make, not a script's. Run with --strict
-     to fail on it, which is what CI should do once the backlog is cleared. */
-  checkDesign(file, html, STRICT ? fail : drift);
+  /* Design-system drift against DESIGN.md. Fatal: the backlog that made this
+     advisory — 30 clamp ramps, 20 font sizes, three off-palette greys — is
+     cleared, so anything it finds now is new drift rather than history. */
+  checkDesign(file, html, fail);
 
   const stamp = html.match(/<script src="\/site\.js\?v=([a-f0-9]+)"/);
   if (!stamp) fail(file, 'site.js script tag missing or unstamped — run node tools/build-pages.js');

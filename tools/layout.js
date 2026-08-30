@@ -171,7 +171,7 @@ function related(cards) {
   return `<section style="padding: 96px 32px; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: ${PAPER_TEXT};">Keep reading</span>
-      <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+      <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px;">
         ${items}
       </div>
     </div>
@@ -272,7 +272,7 @@ function gallery(g) {
   return `<section style="background: rgb(247, 247, 245); padding: 72px 32px 8px;">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">${esc(g.label)}</span>
-      <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px;">
+      <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 14px;">
           ${tiles}
       </div>
       <p style="margin: 18px 0px 0px; max-width: 76ch; font-size: 14px; line-height: 1.65; color: rgb(85, 85, 79);">${esc(g.note)}</p>
@@ -328,14 +328,14 @@ function steps(st) {
   const cards = st.items.map((it, i) =>
     `<div data-reveal="" style="border-top: 2px solid ${INK}; padding: 18px 0px 0px;">
           <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: ${PAPER_TEXT}; font-variant-numeric: tabular-nums;">0${i + 1}</span>
-          <h3 style="margin: 10px 0px 6px; font-size: 18px; font-weight: 600; letter-spacing: -0.02em;">${esc(it.t)}</h3>
+          <h3 style="margin: 10px 0px 6px; font-size: 17px; font-weight: 600; letter-spacing: -0.02em;">${esc(it.t)}</h3>
           <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: ${PAPER_TEXT};">${esc(it.p)}</p>
         </div>`).join('\n        ');
   return `<section style="background: rgb(255, 255, 255); padding: 96px 32px; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(st.label)}</span>
       <h2 style="margin: 16px 0px 40px; max-width: 22ch; font-size: clamp(26px, 3vw, 40px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(st.h2)}</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 28px;">
         ${cards}
       </div>
     </div>
@@ -374,8 +374,8 @@ function callForm(c) {
   return `<section id="pricing-call" style="padding: 112px 32px; background: rgb(10, 10, 10); color: rgb(247, 247, 245); border-bottom: 1px solid ${HAIRLINE_DARK};">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT};">${esc(c.label)}</span>
-      <h2 style="margin: 20px 0px 0px; max-width: 20ch; font-size: clamp(30px, 3.6vw, 46px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(c.h2)}</h2>
-      <p style="margin: 22px 0px 0px; max-width: 58ch; font-size: 18px; line-height: 1.65; color: ${INK_TEXT};">${esc(c.p)}</p>
+      <h2 style="margin: 20px 0px 0px; max-width: 20ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(c.h2)}</h2>
+      <p style="margin: 22px 0px 0px; max-width: 58ch; font-size: 17px; line-height: 1.65; color: ${INK_TEXT};">${esc(c.p)}</p>
       <div id="pricing-call-root" data-call-form style="margin-top: 40px; max-width: 560px;"><noscript><p style="margin: 0px; max-width: 52ch; font-size: 17px; line-height: 1.7; color: ${INK_TEXT};">This form needs JavaScript. <a href="/apply" style="color: ${VOLT}; border-bottom: 1px solid rgb(85, 85, 79);">Use the application instead</a> — it takes a couple of minutes and reaches the same inbox.</p></noscript></div>
     </div>
   </section>`;

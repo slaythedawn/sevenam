@@ -9,14 +9,20 @@
    without adding it there is how the drift starts again — change both, in the
    same commit. */
 
-const SIZES = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 40];
+/* 15 steps. 18, 22, 24, 27 and 32 were collapsed onto their neighbours — each
+   had under 40 uses against thousands, and a 1-2px step is drift, not a
+   decision. */
+const SIZES = [11, 12, 13, 14, 15, 16, 17, 19, 20, 21, 23, 26, 30, 34, 40];
 
 const CLAMPS = [
-  'clamp(30px, 3.6vw, 50px)',   // section h2
-  'clamp(38px, 5.4vw, 74px)',   // closing h2
-  'clamp(40px, 6vw, 84px)',     // hero h1
-  'clamp(30px, 3.6vw, 46px)',   // call-form h2
-  'clamp(26px, 3vw, 40px)',     // table h2
+  'clamp(40px, 6vw, 84px)',     // display-xl — hero h1
+  'clamp(38px, 5.4vw, 74px)',   // display    — closing h2
+  'clamp(34px, 4.6vw, 64px)',   // section-xl
+  'clamp(32px, 4vw, 56px)',     // section-lg
+  'clamp(30px, 3.6vw, 50px)',   // section    — the default h2
+  'clamp(26px, 3vw, 40px)',     // section-sm — table h2
+  'clamp(24px, 2.6vw, 34px)',   // section-xs
+  'clamp(18px, 2vw, 24px)',     // lead
 ];
 
 const TRACKING = ['0', '0.04em', '0.06em', '0.08em', '0.1em', '0.12em', '0.14em',
@@ -33,6 +39,10 @@ const COLOURS = new Set([
   'rgb(247, 247, 245)', 'rgb(227, 227, 221)',
   'rgb(201, 201, 194)', 'rgb(181, 181, 173)', 'rgb(85, 85, 79)',
   'rgb(154, 154, 146)', 'rgb(255, 255, 255)', 'rgb(0, 0, 0)',
+  /* Promoted from strays to real tokens, each placed by measured contrast on
+     Paper: Ink soft 11.16:1, Muted on paper 5.01:1, Faint on paper 3.24:1
+     (large text only). See the contrast ladder in DESIGN.md. */
+  'rgb(55, 55, 50)', 'rgb(107, 107, 99)', 'rgb(138, 138, 130)',
 ]);
 
 function checkDesign(file, html, fail) {
@@ -42,7 +52,7 @@ function checkDesign(file, html, fail) {
     }
   }
   for (const [, c] of html.matchAll(/font-size: (clamp\([^)]*\))/g)) {
-    if (!CLAMPS.includes(c)) fail(file, `off-scale ${c} — DESIGN.md allows three ramps`);
+    if (!CLAMPS.includes(c)) fail(file, `off-scale ${c} — off the display ramp set in DESIGN.md`);
   }
   for (const [, t] of html.matchAll(/letter-spacing: (-?[\d.]+em)/g)) {
     if (!TRACKING.includes(t)) fail(file, `off-scale letter-spacing ${t} — see DESIGN.md`);
@@ -65,7 +75,7 @@ function checkDesign(file, html, fail) {
     }
   }
   for (const [, c] of html.matchAll(/(?:^|[^-])color: (rgb\([^)]*\))/g)) {
-    if (!COLOURS.has(c)) fail(file, `off-palette colour ${c} — DESIGN.md lists nine`);
+    if (!COLOURS.has(c)) fail(file, `off-palette colour ${c} — not in the DESIGN.md palette`);
   }
 }
 

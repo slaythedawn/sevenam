@@ -142,16 +142,23 @@ is not on the scale, add it there in the same commit.
 
 `tools/check-design.js` runs inside `check.js` and reports drift against it:
 off-scale sizes, clamp ramps, tracking, radii, off-palette colour and blurred
-shadows. It is **reported, not fatal** — the drift predates the scale and some
-fixes are colour decisions. `node tools/check.js --strict` fails on it.
+shadows. It **fails the build**. The backlog that once made it advisory — 30 clamp ramps,
+20 font sizes, three off-palette greys — is cleared, so anything it reports now
+is new drift. If you need a value it rejects, add it to `DESIGN.md` and to
+`check-design.js` in the same commit, or you are back to twenty font sizes.
 
 ## Design tokens
+
+Twelve values, listed with their measured contrast in `DESIGN.md`.
 
 Ink `#0A0A0A` · Ink raised `#161613` · Hairline dark `#232320` · Volt `#D8FF00` ·
 Volt hover `#CCFF00` · Paper `#F7F7F5` · Hairline light `#E3E3DD` · Body on ink
 `#C9C9C2` · Muted on ink `#B5B5AD` · Body on paper `#55554F`.
 
-`#9A9A92` is legal on ink only — it fails AA on white. Single typeface: Inter Tight.
+Ink soft `#373732` · Muted on paper `#6B6B63` · Faint on paper `#8A8A82`.
+
+`#9A9A92` (2.64:1) and `#8A8A82` (3.24:1) both fail AA as body text on paper —
+`#8A8A82` is legal there only at 24px, or 19px at weight 600+. Single typeface: Inter Tight.
 All animation must be disabled under `prefers-reduced-motion: reduce`.
 
 ## What `tools/check.js` cannot see

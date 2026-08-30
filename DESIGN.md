@@ -9,8 +9,8 @@ decision is being asked for.
 This file is the reference for anything designed for Sevenam — a page, a
 section, an email, a social card. It describes the system that already exists,
 measured from the 68 pages in this repository, so it can be applied
-consistently rather than reinvented. `tools/check-design.js` enforces the parts
-that can be checked mechanically.
+consistently rather than reinvented. `tools/check-design.js` runs inside `check.js` and **fails the build** on
+anything off the scale — sizes, ramps, tracking, radii, palette and elevation.
 
 The single rule behind everything below: **type tightens as it grows.** Tracking
 goes more negative and leading compresses as size increases. That is what makes
@@ -21,7 +21,8 @@ reason the site looks designed rather than assembled.
 
 ## Tokens — Colour
 
-Nine values. Nothing else is legal.
+Twelve values. Nothing else is legal, and `check-design.js` fails the build on a
+thirteenth.
 
 | Name | Value | Role |
 |---|---|---|
@@ -34,10 +35,24 @@ Nine values. Nothing else is legal.
 | Hairline light | `#E3E3DD` | Borders and dividers on Paper |
 | Body on ink | `#C9C9C2` | Body copy on Ink |
 | Muted on ink | `#B5B5AD` | Secondary copy on Ink |
+| Ink soft | `#373732` | Strong text and heavy borders on Paper |
 | Body on paper | `#55554F` | Body copy on Paper |
+| Muted on paper | `#6B6B63` | Secondary copy on Paper |
+| Faint on paper | `#8A8A82` | Large text and inactive borders on Paper |
 
-**Contrast law.** `#9A9A92` is legal on Ink only — it fails AA on white. Any
-grey below `#55554F` on Paper is a bug.
+**The contrast ladder.** Measured against Paper `#F7F7F5`. Pick by the ratio the
+text needs, not by how the swatch looks in isolation.
+
+| Grey | On Paper | On Ink | Legal for |
+|---|---|---|---|
+| `#373732` | **11.16:1** | 1.65:1 | Anything on Paper |
+| `#55554F` | **7.00:1** | 2.64:1 | Body on Paper |
+| `#6B6B63` | **5.01:1** | 3.68:1 | Body on Paper, just clears AA |
+| `#8A8A82` | 3.24:1 | **5.69:1** | Large text only on Paper. Body on Ink |
+| `#9A9A92` | 2.64:1 | **6.99:1** | Ink only. Never on Paper |
+
+Large text means 24px, or 19px at weight 600 and above. Below `#8A8A82` on
+Paper is a bug, and `#9A9A92` on Paper is the one that keeps recurring.
 
 **Volt is rationed.** It marks the action, the eyebrow, and the one number a
 calculator is currently computing. It is never a background wash, never body
@@ -65,12 +80,31 @@ picking a size means taking its pair.
 | Lead | 19–21px | 1.6 | `-0.01em` | Section intros, hero support |
 | Card heading | 20px | 1.4 | `-0.02em` | Card and row titles |
 | Heading | 23px | 1.3 | `-0.02em` | Sub-section headings |
-| Section | `clamp(30px, 3.6vw, 50px)` | 1.08 | `-0.03em` | Every `h2` |
+| Section | `clamp(30px, 3.6vw, 50px)` | 1.08 | `-0.03em` | The default `h2` |
 | Closing | `clamp(38px, 5.4vw, 74px)` | 1.05 | `-0.035em` | Closing CTA `h2` |
 | Display | `clamp(40px, 6vw, 84px)` | 1.04 | `-0.035em` | Hero `h1` only |
 
-**Three clamp ramps, not ten.** Section, Closing, Display. A new page uses one of
-those three; it does not invent a fourth.
+### Fixed sizes
+
+`11 · 12 · 13 · 14 · 15 · 16 · 17 · 19 · 20 · 21 · 23 · 26 · 30 · 34 · 40`
+
+Fifteen steps. 18, 22, 24, 27 and 32 were collapsed onto their neighbours — each
+had under 40 uses against thousands, and a 1–2px step is drift, not a decision.
+
+### Display ramps
+
+Eight, down from thirty. Pick by role; do not invent a ninth.
+
+| Ramp | Value | Role |
+|---|---|---|
+| display-xl | `clamp(40px, 6vw, 84px)` | Hero `h1` |
+| display | `clamp(38px, 5.4vw, 74px)` | Closing CTA `h2` |
+| section-xl | `clamp(34px, 4.6vw, 64px)` | Oversized section |
+| section-lg | `clamp(32px, 4vw, 56px)` | Large section |
+| section | `clamp(30px, 3.6vw, 50px)` | **Default `h2`** |
+| section-sm | `clamp(26px, 3vw, 40px)` | Table and sub-section `h2` |
+| section-xs | `clamp(24px, 2.6vw, 34px)` | Small section |
+| lead | `clamp(18px, 2vw, 24px)` | Oversized lead paragraph |
 
 **Weight discipline.** 600 for headings and buttons, 500 for lead and labels, 400
 for body. Never 700 — Inter Tight at 600 is already dense, and 700 at display
@@ -177,9 +211,9 @@ introducing one to signal an error is how a second accent gets in.
 ## Don't
 
 - Don't add a blurred shadow. The system has no elevation, and one lifted surface makes every flat one beside it look unfinished. Zero-blur spread rings are not shadows and are fine.
-- Don't invent a fourth clamp ramp. Section, Closing, Display.
+- Don't invent a ninth display ramp. Eight cover 30px to 84px.
 - Don't use weight 700.
-- Don't put `#9A9A92` on Paper — it fails AA.
+- Don't put `#9A9A92` or `#8A8A82` on Paper as body text — 2.64:1 and 3.24:1 both fail AA. Use `#6B6B63` or darker.
 - Don't use Volt as a background wash or for body text.
 - Don't introduce a second accent, including a red for errors.
 - Don't let a paragraph run the full 1240px column.
@@ -193,7 +227,8 @@ introducing one to signal an error is how a second accent gets in.
 1. Pick the closest existing component above and copy its values.
 2. If a size is not on the scale, use the nearest one that is.
 3. Run `node tools/build-pages.js && node tools/check.js` before committing.
-4. `check-design.js` runs inside `check.js` and fails on off-scale values.
+4. It fails on off-scale values. That is the point — it is cheaper to argue with
+   the check than to find the twenty-first font size two years from now.
 
 The scale is deliberately short. If something genuinely needs a value that is
 not here, add it to this file in the same commit — an undocumented value is how
