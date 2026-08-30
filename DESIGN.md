@@ -213,7 +213,14 @@ box-shadow: 0 2px 4px rgba(10,10,10,.05), 0 18px 44px -18px rgba(10,10,10,.24);
 **Atmosphere.** Ink sections carry a faint Volt bloom off the top-right in a
 `::before`, so a dark band reads as lit rather than as fill.
 
-**Hover.** Cards lift 3px and their border warms toward Volt. The Volt CTA takes
+**Movement means clickable.** A lift is a promise that a click does something, so
+it belongs only to cards that are themselves an `<a>` — where the whole surface is
+the target. Of 107 cards on this site, 49 are not links at all; those get an
+acknowledgement without a promise, brightening their edge and sheen with no
+movement and no pointer cursor. If a static card ought to lead somewhere, the fix
+is to make it a link, not to give it a lift.
+
+**Hover.** Link cards lift 4px and their border warms toward Volt. The Volt CTA takes
 a coloured bloom rather than a grey shadow, which would go muddy under a
 saturated fill. Pills take a shadow only — a moving pill nudges its neighbours in
 a wrapped row.

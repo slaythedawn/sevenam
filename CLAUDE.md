@@ -84,6 +84,10 @@ design — but it also means **breaking that file breaks all 42**.
   `/pricing-call`, and `$890` a month on `/system` — all removed. Do not reintroduce
   one, and do not write "published" of our own pricing; the promise is that the fee is
   **fixed and agreed before we start**, not that it is on the site.
+- **One deliberate exception: `/agency-fee`.** The calculator exists to set a climbing
+  percentage against a flat fee, and with our side blank there is nothing to compare —
+  so the twelve-month total stays there, and only there. It is the single page on the
+  site where a Sevenam figure appears. If that stops being wanted, it is one line.
 - Market rates on the cost pages are other agencies' typical ranges, attributed to the
   business that published them, and are **not** covered by the rule above — those stay.
   So do client spend ranges like "$30k–$500k a month".
