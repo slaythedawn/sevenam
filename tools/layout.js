@@ -203,7 +203,7 @@ function related(cards) {
   return `<section style="padding: 96px 32px; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: ${PAPER_TEXT};">Keep reading</span>
-      <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px;">
+      <div style="margin-top: 24px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px;">
         ${items}
       </div>
     </div>
@@ -304,7 +304,7 @@ function gallery(g) {
   return `<section style="background: rgb(247, 247, 245); padding: 72px 32px 8px;">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">${esc(g.label)}</span>
-      <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 14px;">
+      <div style="margin-top: 20px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 14px;">
           ${tiles}
       </div>
       <p style="margin: 18px 0px 0px; max-width: 76ch; font-size: 14px; line-height: 1.65; color: rgb(85, 85, 79);">${esc(g.note)}</p>
@@ -329,7 +329,7 @@ function gantt(g) {
     const caption = row.caption
       ? `<div style="margin-top: 7px; font-size: 13px; line-height: 1.5; color: ${PAPER_TEXT};">${esc(row.caption)}</div>`
       : '';
-    return `<div data-reveal="" style="display: grid; grid-template-columns: 168px 1fr; gap: 0px 18px; align-items: center;${i ? ' margin-top: 20px;' : ''}">
+    return `<div data-reveal="" style="display: grid; grid-template-columns: minmax(0, 168px) minmax(0, 1fr); gap: 0px 18px; align-items: center;${i ? ' margin-top: 20px;' : ''}">
           <div>
             <div style="font-size: 15px; font-weight: 600; letter-spacing: -0.015em;">${esc(row.label)}</div>
             <div style="font-size: 13px; color: ${PAPER_TEXT}; margin-top: 2px;">${esc(row.duration)}</div>
@@ -367,7 +367,7 @@ function steps(st) {
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(st.label)}</span>
       <h2 style="margin: 16px 0px 40px; max-width: 22ch; font-size: clamp(26px, 3vw, 40px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(st.h2)}</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 28px;">
+      <div style="min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 28px;">
         ${cards}
       </div>
     </div>

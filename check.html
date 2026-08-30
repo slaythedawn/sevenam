@@ -99,6 +99,16 @@
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
   @media (max-width: 780px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
 </style>
+<style>
+/* The two-up form row is a hard 1fr 1fr, so at 320px it laid two 125px fields
+   into a container narrower than their content and pushed the page 8px wide.
+   Collapsed to one column on a narrow phone — two fields at that width were
+   unusable regardless. Targeted through the inline style because the grid
+   carries no class, and data- attributes here are behaviour hooks. */
+@media (max-width: 380px) {
+  [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+}
+</style>
 </head>
 <body>
 <div class="sc-host"><div class="sc-host"><header style="position: sticky; top: 0px; z-index: 50; background: rgb(10, 10, 10); border-bottom: 1px solid rgb(35, 35, 32);">
@@ -124,7 +134,7 @@
   </div>
   </header></div><main>
   <section style="padding: 120px 32px 96px;">
-    <div style="max-width: 1240px; margin: 0px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 80px; align-items: start;">
+    <div style="max-width: 1240px; margin: 0px auto; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 80px; align-items: start;">
       <div>
         <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: rgb(85, 85, 79);">THE CHECK · $1,000</span>
         <h1 style="margin: 28px 0px 0px; max-width: 16ch; font-size: clamp(40px, 6vw, 84px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; text-wrap: balance;">Start with a check.</h1>
@@ -203,7 +213,7 @@
     </div>
   </section></main><div class="sc-host"><footer style="background: rgb(10, 10, 10); color: rgb(181, 181, 173); padding: 96px 32px 48px;">
   <div style="max-width: 1240px; margin: 0px auto;">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 48px; padding-bottom: 64px; border-bottom: 1px solid rgb(35, 35, 32);">
+    <div style="min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 48px; padding-bottom: 64px; border-bottom: 1px solid rgb(35, 35, 32);">
       <div style="display: flex; flex-direction: column; gap: 18px; max-width: 340px;">
         <div style="display: flex; align-items: center; gap: 12px;">
           <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
