@@ -12,6 +12,10 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
+const { checkDesign } = require('./check-design');
+const STRICT = process.argv.includes('--strict');
+const drifts = [];
+const drift = (file, msg) => drifts.push(`${file}: ${msg}`);
 const SITE_JS_HASH = require('crypto')
   .createHash('sha256').update(fs.readFileSync(path.join(ROOT, 'site.js'))).digest('hex').slice(0, 8);
 const ORIGIN = 'https://sevenam.com.au';
@@ -126,6 +130,12 @@ for (const file of htmlFiles) {
      the /pricing-call email field, the /apply form — renders as an empty box
      with no error anywhere. Editing site.js without rerunning build-pages.js
      fails here rather than on the live site. */
+  /* Design-system drift against DESIGN.md. Reported, not fatal: the drift
+     predates the scale being written down, and several fixes are colour
+     decisions that are the owner's to make, not a script's. Run with --strict
+     to fail on it, which is what CI should do once the backlog is cleared. */
+  checkDesign(file, html, STRICT ? fail : drift);
+
   const stamp = html.match(/<script src="\/site\.js\?v=([a-f0-9]+)"/);
   if (!stamp) fail(file, 'site.js script tag missing or unstamped — run node tools/build-pages.js');
   else if (stamp[1] !== SITE_JS_HASH) {
@@ -193,3 +203,21 @@ if (problems.length) {
 }
 const fnCount = fs.existsSync(apiDir) ? fs.readdirSync(apiDir).filter(f => f.endsWith('.js')).length : 0;
 console.log(`OK — ${htmlFiles.length} pages, ${fnCount} function(s), all links and assets resolve, schema matches page text.`);
+
+/* Design drift is reported after the pass line so it never reads as a failure,
+   but it is always visible. Grouped by message, because 35 instances of one
+   off-palette grey is one decision to make, not 35. */
+if (drifts.length) {
+  const byMsg = new Map();
+  for (const d of drifts) {
+    const msg = d.slice(d.indexOf(': ') + 2);
+    if (!byMsg.has(msg)) byMsg.set(msg, new Set());
+    byMsg.get(msg).add(d.slice(0, d.indexOf(':')));
+  }
+  const pages = new Set(drifts.map(d => d.slice(0, d.indexOf(':'))));
+  console.log(`\ndesign drift vs DESIGN.md — ${drifts.length} across ${pages.size} page(s), not failing the build:`);
+  for (const [msg, files] of [...byMsg.entries()].sort((a, b) => b[1].size - a[1].size)) {
+    console.log(`  ${msg}  (${files.size} page${files.size > 1 ? 's' : ''})`);
+  }
+  console.log('  run: node tools/check.js --strict  to fail on these');
+}

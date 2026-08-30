@@ -133,6 +133,18 @@ this repository deliberately — the key's whole job is to be publicly fetchable
 which is how it proves the domain is ours. Delete that file and IndexNow returns
 403. Nothing else uses it.
 
+## Design
+
+`DESIGN.md` is the playbook — the type scale with its paired leading and tracking,
+the surface stack, radii by element size, the component specs and the do/don't
+list. Read it before designing anything, and if you genuinely need a value that
+is not on the scale, add it there in the same commit.
+
+`tools/check-design.js` runs inside `check.js` and reports drift against it:
+off-scale sizes, clamp ramps, tracking, radii, off-palette colour and blurred
+shadows. It is **reported, not fatal** — the drift predates the scale and some
+fixes are colour decisions. `node tools/check.js --strict` fails on it.
+
 ## Design tokens
 
 Ink `#0A0A0A` · Ink raised `#161613` · Hairline dark `#232320` · Volt `#D8FF00` ·

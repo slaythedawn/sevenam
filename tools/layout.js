@@ -312,7 +312,7 @@ function gantt(g) {
   return `<section style="padding: 96px 32px; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(g.label)}</span>
-      <h2 style="margin: 16px 0px 34px; max-width: 22ch; font-size: clamp(26px, 3vw, 38px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(g.h2)}</h2>
+      <h2 style="margin: 16px 0px 34px; max-width: 22ch; font-size: clamp(26px, 3vw, 40px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(g.h2)}</h2>
       <div style="max-width: 960px;">
         ${rows}
       </div>
@@ -334,7 +334,7 @@ function steps(st) {
   return `<section style="background: rgb(255, 255, 255); padding: 96px 32px; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(st.label)}</span>
-      <h2 style="margin: 16px 0px 40px; max-width: 22ch; font-size: clamp(26px, 3vw, 38px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(st.h2)}</h2>
+      <h2 style="margin: 16px 0px 40px; max-width: 22ch; font-size: clamp(26px, 3vw, 40px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(st.h2)}</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px;">
         ${cards}
       </div>
