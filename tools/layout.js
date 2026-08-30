@@ -29,6 +29,7 @@ const INK = 'rgb(10, 10, 10)';
 const PAPER_TEXT = 'rgb(85, 85, 79)';
 const INK_TEXT = 'rgb(181, 181, 173)';
 const HAIRLINE_LIGHT = 'rgb(227, 227, 221)';
+const PAPER = 'rgb(247, 247, 245)';
 const HAIRLINE_DARK = 'rgb(35, 35, 32)';
 const VOLT = 'rgb(216, 255, 0)';
 
@@ -144,6 +145,37 @@ function dataTable(t) {
         </table>
       </div>
       ${note}
+    </div>
+  </section>`;
+}
+
+/* Attribution block for pages built on third-party data. Sits at the foot,
+   below the closing CTA, which is where the research's own linking policy puts
+   it: a competitor's pricing page must never be linked from a comparison table
+   or within reach of a lead form.
+
+   This is the one builder that emits an anchor from content, so `href` is
+   whitelisted to http(s) and the label is still escaped. Everything is
+   rel="noopener nofollow" except sources marked `credit: true` — an audit we
+   quote by name is worth a real link, a competitor is not. */
+function sources(sr) {
+  if (!sr) return '';
+  const rows = sr.items.map((it) => {
+    const safe = /^https?:\/\//.test(it.href || '') ? it.href : '';
+    const rel = it.credit ? 'noopener' : 'noopener nofollow';
+    const link = safe
+      ? `<a href="${esc(safe)}" target="_blank" rel="${rel}" class="scp4" style="color: ${PAPER_TEXT}; border-bottom: 1px solid ${HAIRLINE_LIGHT};">${esc(it.name)}</a>`
+      : esc(it.name);
+    return `<div style="border-top: 1px solid ${HAIRLINE_LIGHT}; padding: 14px 0px; font-size: 14px; line-height: 1.6; color: ${PAPER_TEXT};">${link} \u2014 ${esc(it.note)}</div>`;
+  }).join('\n        ');
+  return `<section style="padding: 72px 32px; background: ${PAPER};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${PAPER_TEXT};">Sources</span>
+      <p style="margin: 16px 0px 0px; max-width: 78ch; font-size: 14px; line-height: 1.7; color: ${PAPER_TEXT};">${esc(sr.method)}</p>
+      <div style="margin-top: 26px; display: flex; flex-direction: column; max-width: 840px;">
+        ${rows}
+      </div>
+      <p style="margin: 26px 0px 0px; font-size: 13px; color: ${PAPER_TEXT};">Updated ${esc(sr.updated)}.</p>
     </div>
   </section>`;
 }
@@ -396,6 +428,7 @@ function page(p) {
     related(p.related),
     toolstrip(p.toolstrip),
     closing(p.closing),
+    sources(p.sources),
   ].filter(Boolean).join('\n\n  ');
 
   return `<!DOCTYPE html>

@@ -726,6 +726,23 @@ const PAGES = [
       { q: 'Is there a standard setup or onboarding fee?', a: "Where published, setup fees run from about $499 to $2,500, and the DNHQ audit found they are often revealed only at proposal stage. What matters more is what you own at the end of it — an onboarding that builds the account in the agency's Business Manager is worth considerably less to you." },
       { q: 'How do we work out what we are really paying?', a: "Add the management fee, the creative cost and any platform or reporting fees, then divide by media spend. That effective percentage is the number to compare, and it is usually higher than the headline." },
     ],
+    /* Below the closing CTA on purpose. Most of these are agencies competing for
+       the same lead, so the links sit at the foot of the page and carry nofollow;
+       the DNHQ audit and TRIBE are credited with a real follow link because we
+       quote their figures by name. */
+    sources: {
+      updated: '30 August 2026',
+      method: 'Every figure on this page was taken from a price the named business publishes on its own site, or from a stated-method audit. Nothing is estimated, averaged across sources, or converted between currencies. Where Australian data does not support a range \u2014 percentage-of-spend bands, hybrid models, large-agency fees, per-static creative \u2014 no range is given.',
+      items: [
+        { name: 'Digital Nomads HQ \u2014 Digital Marketing Cost in Australia', href: 'https://digitalnomadshq.com.au/blog/digital-marketing-cost/', note: 'Audit of published prices, 411 service lines across 140 agencies, June 2026. Quoted with attribution to DNHQ Research', credit: true },
+        { name: 'TRIBE \u2014 A Rundown on the TRIBE Fee', href: 'https://www.tribegroup.co/blog/rundown-on-tribes-fee', note: 'Published platform fee structure, December 2024', credit: true },
+        { name: 'Aesthetic Digital Marketing', href: 'https://aestudio.au/paid-advertising/pricing/', note: 'Published rate card, 22 July 2026' },
+        { name: 'Click Click Media', href: 'https://clickclickmedia.com.au/paid-social-agency/', note: 'Published entry price, 2 August 2026' },
+        { name: 'Webapex', href: 'https://www.webapex.com.au/facebook-ads-cost', note: 'Published packages, page undated' },
+        { name: 'Mink Media', href: 'https://minkmedia.com.au/pricing/facebook-ads-packages/', note: 'Published setup fees, indexed January 2023' },
+        { name: 'Australia Experiences', href: 'https://australiaexperiences.com/blog/ugc-creator-rates-australia/', note: 'UGC rate benchmark, method stated, August 2026' },
+      ],
+    },
     closing: { h2: 'See your fee as an annual number.', p: "The calculator takes about a minute. Then fifteen minutes with Josh if the number bothers you — no pitch deck." },
     related: [
       { href: '/agency-fee', title: 'Fee calculator', note: 'Your fee, in dollars a year.' },
@@ -1110,6 +1127,7 @@ function build() {
       ...(p.skipOwnership ? [] : [{ tone: 'paper', h2: OWNERSHIP.h2, paras: OWNERSHIP.paras, items: OWNERSHIP.items }]),
     ],
     tables: p.tables,
+    sources: p.sources,
     callForm: p.callForm,
     /* Default /apply unless a page has a better next step of its own. Only
        /pricing-call sets these: its hero CTA points at its own form, because
