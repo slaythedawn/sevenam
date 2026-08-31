@@ -442,6 +442,56 @@ function walkthrough(w) {
   </section>`;
 }
 
+/* /what-is-roas defined the metric, gave the formula in a sentence, and left the
+   reader to do the arithmetic. The whole point of the page is that break-even
+   ROAS is decided by margin rather than by anything in the ad account, which is
+   a claim you can only feel by moving the margin and watching the number move.
+
+   The figures below are the JS defaults, computed here at build time, so the
+   page is correct before site.js runs and stays correct if it never does. Change
+   a default in setupRoas() and you must change it here too. */
+function roasCalc(rc) {
+  if (!rc) return '';
+  const field = (key, label, hint, min, max, step, value, suffix) =>
+    `<div style="display: grid; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+              <label for="${key}" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">${esc(label)}</label>
+              <span data-rout="${key}Label" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">${esc(value)}${esc(suffix)}</span>
+            </div>
+            <input id="${key}" data-roas="${key}" type="range" min="${min}" max="${max}" step="${step}" value="${esc(String(rc.defaults[key]))}" style="width: 100%; accent-color: ${VOLT};">
+            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">${esc(hint)}</span>
+          </div>`;
+
+  const out = (key, label, value, note, big) =>
+    `<div style="border-top: 1px solid ${HAIRLINE_DARK}; padding: 22px 0px;">
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">${esc(label)}</span>
+            <span data-rout="${key}" style="display: block; margin-top: 8px; font-size: ${big ? '40px' : '26px'}; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: ${big ? VOLT : 'rgb(247, 247, 245)'};">${esc(value)}</span>
+            <span data-rout="${key}Note" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">${esc(note)}</span>
+          </div>`;
+
+  return `<section id="roas-calculator" style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 104px 32px; border-bottom: 1px solid ${HAIRLINE_DARK};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT};">${esc(rc.label)}</span>
+      <h2 style="margin: 18px 0px 0px; max-width: 20ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(rc.h2)}</h2>
+      <p style="margin: 22px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: ${INK_TEXT};">${esc(rc.p)}</p>
+
+      <div style="margin-top: 52px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 56px; align-items: start;">
+        <div style="display: grid; gap: 34px;">
+          ${field('margin', 'Gross margin', 'What is left of a sale after the cost of the goods and the cost of shipping it.', 5, 90, 1, rc.defaults.margin, '%')}
+          ${field('roas', 'The ROAS you are getting', 'Whatever the account reports today. Move it and watch the profit line.', 5, 100, 1, (rc.defaults.roas / 10).toFixed(1), 'x')}
+          ${field('spend', 'Monthly ad spend', 'Media only — not fees, not creative.', 5000, 200000, 1000, '$' + rc.defaults.spend.toLocaleString('en-AU'), '')}
+        </div>
+
+        <div>
+          ${out('breakeven', 'Your break-even ROAS', rc.rendered.breakeven, rc.rendered.breakevenNote, true)}
+          ${out('profit', 'Gross profit from that spend', rc.rendered.profit, rc.rendered.profitNote, false)}
+          ${out('headroom', 'Every extra 0.5x is worth', rc.rendered.headroom, rc.rendered.headroomNote, false)}
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
 /* The models the line is built on, named in type rather than borrowed marks.
    Sits with the closing links so the page ends on what it runs on. */
 function toolstrip(t) {
@@ -491,6 +541,7 @@ function page(p) {
     gantt(p.gantt),
     steps(p.steps),
     walkthrough(p.walkthrough),
+    roasCalc(p.roasCalc),
     callForm(p.callForm),
     p.faqs && p.faqs.length ? faqSection(p.faqs, p.faqHeading) : '',
     p.pills ? pills(p.pills.label, p.pills.links) : '',
