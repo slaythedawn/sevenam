@@ -469,6 +469,30 @@ function roasCalc(rc) {
             <span data-rout="${key}Note" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">${esc(note)}</span>
           </div>`;
 
+  /* Computed here from the same defaults the sliders carry, rather than written
+     out in the content file. /agency-fee keeps its figures in the HTML by hand
+     and that is a standing trap — change the default and the page flashes a
+     stale number until JS lands. These cannot drift because nobody types them. */
+  const d = rc.defaults;
+  const marginFrac = d.margin / 100;
+  const roasX = d.roas / 10;
+  const money = (n) => (Math.round(n) < 0 ? '-$' : '$') + Math.abs(Math.round(n)).toLocaleString('en-AU');
+  const breakeven = 1 / marginFrac;
+  const revenue = d.spend * roasX;
+  const grossProfit = revenue * marginFrac;
+  const netOfMedia = grossProfit - d.spend;
+  const perHalfX = 0.5 * d.spend * marginFrac;
+  const rendered = {
+    breakeven: breakeven.toFixed(2) + 'x',
+    breakevenNote: `At a ${d.margin}% margin you need ${breakeven.toFixed(2)}x just to cover the cost of the goods.`,
+    profit: money(netOfMedia),
+    profitNote: netOfMedia >= 0
+      ? `${roasX.toFixed(1)}x on ${money(d.spend)} is ${money(revenue)} of revenue and ${money(grossProfit)} of gross profit, less the ${money(d.spend)} you spent.`
+      : `${roasX.toFixed(1)}x on ${money(d.spend)} returns ${money(grossProfit)} of gross profit against ${money(d.spend)} of media. You are below break-even.`,
+    headroom: money(perHalfX),
+    headroomNote: `A month, at this spend and margin, without buying any more media.`,
+  };
+
   return `<section id="roas-calculator" style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 104px 32px; border-bottom: 1px solid ${HAIRLINE_DARK};">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT};">${esc(rc.label)}</span>
@@ -483,9 +507,9 @@ function roasCalc(rc) {
         </div>
 
         <div>
-          ${out('breakeven', 'Your break-even ROAS', rc.rendered.breakeven, rc.rendered.breakevenNote, true)}
-          ${out('profit', 'Gross profit from that spend', rc.rendered.profit, rc.rendered.profitNote, false)}
-          ${out('headroom', 'Every extra 0.5x is worth', rc.rendered.headroom, rc.rendered.headroomNote, false)}
+          ${out('breakeven', 'Your break-even ROAS', rendered.breakeven, rendered.breakevenNote, true)}
+          ${out('profit', 'Gross profit from that spend', rendered.profit, rendered.profitNote, false)}
+          ${out('headroom', 'Every extra 0.5x is worth', rendered.headroom, rendered.headroomNote, false)}
         </div>
       </div>
     </div>

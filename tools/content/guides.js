@@ -400,6 +400,12 @@ const PAGES = [
         'Platform ROAS up while blended is flat usually means claimed credit, not new sales.',
       ],
     },
+    roasCalc: {
+      label: 'WORK IT OUT',
+      h2: 'Your break-even, in one slider.',
+      p: 'Break-even ROAS is decided by your gross margin, not by anything in the ad account \u2014 so the same 3x is a healthy month for one business and a loss for another. Move the margin and watch the number you have to beat move with it.',
+      defaults: { margin: 40, roas: 30, spend: 30000 },
+    },
     faqs: [
       { q: 'What is ROAS?', a: "Return on ad spend: revenue attributed to advertising divided by the amount spent on it. $4,000 of revenue from $1,000 of spend is a 4x ROAS, also written as 400%." },
       { q: 'How do you calculate ROAS?', a: "Divide the revenue attributed to your advertising by the advertising spend over the same period. Keep the period and the attribution window consistent on both sides, or you are comparing two different things." },
@@ -943,6 +949,9 @@ function build() {
     /* Only /meta-ad-library sets this. Undefined elsewhere, so the other
        16 guides render exactly as before. */
     walkthrough: p.walkthrough,
+    /* Only /what-is-roas sets this. Undefined elsewhere, so the other guides
+       render exactly as before — same rule as walkthrough above. */
+    roasCalc: p.roasCalc,
     faqs: p.faqs,
     related: p.related,
     closing: p.closing,

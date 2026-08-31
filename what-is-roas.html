@@ -501,6 +501,61 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
     </div>
   </section>
 
+  <section id="roas-calculator" style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 104px 32px; border-bottom: 1px solid rgb(35, 35, 32);">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(216, 255, 0);">WORK IT OUT</span>
+      <h2 style="margin: 18px 0px 0px; max-width: 20ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">Your break-even, in one slider.</h2>
+      <p style="margin: 22px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Break-even ROAS is decided by your gross margin, not by anything in the ad account — so the same 3x is a healthy month for one business and a loss for another. Move the margin and watch the number you have to beat move with it.</p>
+
+      <div style="margin-top: 52px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 56px; align-items: start;">
+        <div style="display: grid; gap: 34px;">
+          <div style="display: grid; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+              <label for="margin" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Gross margin</label>
+              <span data-rout="marginLabel" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">40%</span>
+            </div>
+            <input id="margin" data-roas="margin" type="range" min="5" max="90" step="1" value="40" style="width: 100%; accent-color: rgb(216, 255, 0);">
+            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">What is left of a sale after the cost of the goods and the cost of shipping it.</span>
+          </div>
+          <div style="display: grid; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+              <label for="roas" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">The ROAS you are getting</label>
+              <span data-rout="roasLabel" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">3.0x</span>
+            </div>
+            <input id="roas" data-roas="roas" type="range" min="5" max="100" step="1" value="30" style="width: 100%; accent-color: rgb(216, 255, 0);">
+            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">Whatever the account reports today. Move it and watch the profit line.</span>
+          </div>
+          <div style="display: grid; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+              <label for="spend" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Monthly ad spend</label>
+              <span data-rout="spendLabel" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">$30,000</span>
+            </div>
+            <input id="spend" data-roas="spend" type="range" min="5000" max="200000" step="1000" value="30000" style="width: 100%; accent-color: rgb(216, 255, 0);">
+            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">Media only — not fees, not creative.</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px;">
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Your break-even ROAS</span>
+            <span data-rout="breakeven" style="display: block; margin-top: 8px; font-size: 40px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(216, 255, 0);">2.50x</span>
+            <span data-rout="breakevenNote" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">At a 40% margin you need 2.50x just to cover the cost of the goods.</span>
+          </div>
+          <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px;">
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Gross profit from that spend</span>
+            <span data-rout="profit" style="display: block; margin-top: 8px; font-size: 26px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">$6,000</span>
+            <span data-rout="profitNote" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">3.0x on $30,000 is $90,000 of revenue and $36,000 of gross profit, less the $30,000 you spent.</span>
+          </div>
+          <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px;">
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Every extra 0.5x is worth</span>
+            <span data-rout="headroom" style="display: block; margin-top: 8px; font-size: 26px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">$6,000</span>
+            <span data-rout="headroomNote" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">A month, at this spend and margin, without buying any more media.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section style="padding: 112px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
     <div style="max-width: 1240px; margin: 0px auto;">
       <h2 style="margin: 0px 0px 40px; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Questions people actually ask.</h2>
@@ -618,6 +673,6 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
       <span>Your growth system for Meta. It runs at seven.</span>
     </div>
   </div></footer></div></div>
-<script src="/site.js?v=a30f6409" defer></script>
+<script src="/site.js?v=1e7162d4" defer></script>
 </body>
 </html>

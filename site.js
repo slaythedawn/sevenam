@@ -781,6 +781,83 @@
     window.addEventListener("resize", paint);
   }
 
+  /* ------------------------------------------------- break-even ROAS */
+
+  /* The page argues that break-even ROAS is decided by gross margin rather than
+     by anything in the ad account. That is a claim you feel by moving the margin
+     and watching the number move, so the page carries the arithmetic rather than
+     describing it.
+
+     Everything here is derived from the three sliders — no stored results, no
+     endpoint, nothing leaves the browser. The server already rendered the same
+     figures from the same defaults in layout.js, so the page is right before
+     this runs and identical after. */
+  function setupRoas() {
+    var root = q("#roas-calculator");
+    if (!root) return;
+
+    var S = { margin: 40, roas: 30, spend: 30000 };
+    qa("[data-roas]", root).forEach(function (el) {
+      var k = el.dataset.roas;
+      if (el.value !== "") S[k] = Number(el.value);
+    });
+
+    function money(n) {
+      var r = Math.round(n);
+      return (r < 0 ? "-$" : "$") + Math.abs(r).toLocaleString("en-AU");
+    }
+    function set(name, v) {
+      var el = q('[data-rout="' + name + '"]', root);
+      if (el) el.textContent = v;
+    }
+
+    function render() {
+      var marginFrac = (Number(S.margin) || 1) / 100;
+      var roasX = (Number(S.roas) || 0) / 10;
+      var spend = Number(S.spend) || 0;
+
+      var breakeven = 1 / marginFrac;
+      var revenue = spend * roasX;
+      var grossProfit = revenue * marginFrac;
+      var netOfMedia = grossProfit - spend;
+      var perHalfX = 0.5 * spend * marginFrac;
+
+      set("marginLabel", S.margin + "%");
+      set("roasLabel", roasX.toFixed(1) + "x");
+      set("spendLabel", money(spend));
+
+      set("breakeven", breakeven.toFixed(2) + "x");
+      set("breakevenNote", "At a " + S.margin + "% margin you need " +
+        breakeven.toFixed(2) + "x just to cover the cost of the goods.");
+
+      set("profit", money(netOfMedia));
+      set("profitNote", netOfMedia >= 0
+        ? roasX.toFixed(1) + "x on " + money(spend) + " is " + money(revenue) +
+          " of revenue and " + money(grossProfit) + " of gross profit, less the " +
+          money(spend) + " you spent."
+        : roasX.toFixed(1) + "x on " + money(spend) + " returns " + money(grossProfit) +
+          " of gross profit against " + money(spend) +
+          " of media. You are below break-even.");
+
+      set("headroom", money(perHalfX));
+      set("headroomNote", "A month, at this spend and margin, without buying any more media.");
+
+      /* The headline number is the one that changes meaning, not just value:
+         above break-even it is the point of the page, below it is a warning. */
+      var be = q('[data-rout="breakeven"]', root);
+      if (be) be.style.color = roasX >= breakeven ? VOLT : "#FF6B5A";
+    }
+
+    qa("[data-roas]", root).forEach(function (el) {
+      el.addEventListener("input", function () {
+        S[el.dataset.roas] = el.value;
+        render();
+      });
+    });
+
+    render();
+  }
+
   /* ------------------------------------------------- ad library search */
 
   /* The guide used to describe the Ad Library and then leave the reader to go
@@ -1039,6 +1116,7 @@
     setupProducts();
     setupPricingCall();
     setupAdLibrary();
+    setupRoas();
   }
 
   if (document.readyState === "loading") {
