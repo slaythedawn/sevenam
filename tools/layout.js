@@ -555,6 +555,79 @@ function callForm(c) {
   </section>`;
 }
 
+/* Twenty pages named a thing and offered no route to it — Advantage+ with no
+   link to /meta-advantage-plus, ROAS with no link to /what-is-roas, NDIS, the
+   Ad Library. Each one was a small dead end for a reader who wanted the next
+   thing, and a wasted internal link for a site with no authority to spare.
+
+   Done at build time over the assembled sections rather than written into the
+   content files, because those strings go through esc() and would render the
+   markup as text.
+
+   The scanner never rewrites a tag. It walks the string, copies every tag
+   through untouched, and only ever substitutes inside the text between tags —
+   so it cannot land a closing </div> in the wrong place, which is the failure
+   a regex tag-walk has produced twice on this repo. Anchors, headings and
+   script/style bodies are skipped by depth counters: a link inside a link is
+   invalid, and a link inside a heading looks like a mistake.
+
+   First occurrence per page only. Linking all seven ROAS mentions on the
+   glossary would read as keyword stuffing, which is the opposite of the point. */
+const AUTOLINK = [
+  ['Advantage\\+', '/meta-advantage-plus'],
+  ['Ad Library', '/meta-ad-library'],
+  ['Shopify', '/shopify-facebook-ads'],
+  ['NDIS', '/ndis-facebook-ads'],
+  ['ROAS', '/what-is-roas'],
+];
+
+function autolink(html, selfPath) {
+  const pending = AUTOLINK
+    .filter(([, href]) => href !== selfPath)
+    /* A trailing \\b after "Advantage\\+" can never match: \\b needs a word
+       character on one side, and both "+" and the space after it are non-word,
+       so the term was silently skipped everywhere. Only fence the end of a
+       pattern that actually ends in a word character. */
+    .map(([pat, href]) => ({
+      re: new RegExp('\\b' + pat + (/[\\w]$/.test(pat.replace(/\\\\/g, '')) ? '\\b' : '')),
+      href, done: false,
+    }));
+  if (!pending.length) return html;
+
+  const linkify = (text) => {
+    for (const t of pending) {
+      if (t.done) continue;
+      const m = t.re.exec(text);
+      if (!m) continue;
+      t.done = true;
+      return text.slice(0, m.index) +
+        `<a href="${t.href}" style="border-bottom: 1px solid currentColor;">${m[0]}</a>` +
+        linkify(text.slice(m.index + m[0].length));
+    }
+    return text;
+  };
+
+  let out = '', i = 0, inA = 0, inH = 0, inRaw = 0;
+  while (i < html.length) {
+    const lt = html.indexOf('<', i);
+    if (lt === -1) { out += (inA || inH || inRaw) ? html.slice(i) : linkify(html.slice(i)); break; }
+    const chunk = html.slice(i, lt);
+    out += (inA || inH || inRaw) ? chunk : linkify(chunk);
+    const gt = html.indexOf('>', lt);
+    if (gt === -1) { out += html.slice(lt); break; }
+    const tag = html.slice(lt, gt + 1);
+    if (/^<a\b/i.test(tag)) inA++;
+    else if (/^<\/a\s*>/i.test(tag)) inA = Math.max(0, inA - 1);
+    else if (/^<h[1-6]\b/i.test(tag)) inH++;
+    else if (/^<\/h[1-6]\s*>/i.test(tag)) inH = Math.max(0, inH - 1);
+    else if (/^<(script|style|noscript)\b/i.test(tag)) inRaw++;
+    else if (/^<\/(script|style|noscript)\s*>/i.test(tag)) inRaw = Math.max(0, inRaw - 1);
+    out += tag;
+    i = gt + 1;
+  }
+  return out;
+}
+
 function page(p) {
   const url = ORIGIN + p.path;
   const main = [
@@ -574,6 +647,8 @@ function page(p) {
     closing(p.closing),
     sources(p.sources),
   ].filter(Boolean).join('\n\n  ');
+
+  const linked = autolink(main, p.path);
 
   return `<!DOCTYPE html>
 <html lang="en-AU">
@@ -605,7 +680,7 @@ ${SHELL.styles}
 </head>
 <body>
 ${SHELL.header}<main style="background: rgb(247, 247, 245); color: rgb(10, 10, 10);">
-  ${main}
+  ${linked}
   </main>
 ${SHELL.footer}
 <script src="${siteJsSrc()}" defer></script>
