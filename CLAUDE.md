@@ -305,8 +305,16 @@ sketch, after `systemMap`) and `workshopFigure` (Josh running the mapping
 workshop, after the deliverables). Both were generated but the CDN they live on
 is blocked from the build container, and binary cannot be moved through the
 agent's context economically, so Josh has to download them. Drop the files in as
-`img/automation-whiteboard-a1.png` and `img/automation-workshop-a1.jpg`, rebuild,
+`img/automation-whiteboard-a1.jpg` and `img/automation-workshop-a1.jpg`, rebuild,
 and both appear. Do not swap the slots for a hotlink to someone else's CDN.
+
+**Both slots are `.jpg` on purpose.** The generated sources are 5.8MB and 8MB
+PNGs — a photographic render has no business being a PNG, and `img/*` is served
+immutable for a year, so shipping the original would put that weight on the page
+permanently. Resize to about 1600px and convert before committing; macOS has
+`sips` built in and needs nothing installed. And the extension has to match the
+actual encoding: saving a PNG as `.jpg` makes Vercel serve `image/jpeg` for a
+file that is not one.
 
 `figure()` renders an image **only if the file exists on disk** at build time.
 That is how `/marketing-automation` carries a slot for a whiteboard render the

@@ -1254,7 +1254,7 @@ const PAGES = [
     /* Renders only once this file is in img/. Until then the page builds
        and validates exactly as it does now — see figure() in layout.js. */
     figure: {
-      src: '/img/automation-whiteboard-a1.png',
+      src: '/img/automation-whiteboard-a1.jpg',
       alt: 'A whiteboard sketch of the same three-part system: signal in on the left, the repository in the middle, agents on the right, and one approval bar underneath all three.',
       caption: 'The same shape, drawn the way it gets drawn on a first call.',
     },
