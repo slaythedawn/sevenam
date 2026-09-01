@@ -32,14 +32,14 @@ hard-coded API key. CI runs the same script.
   `learn`, `glossary`, `agency-fee`, `what-are-meta-ads`, `facebook-ads-agency`,
   `ecommerce-facebook-ads-agency`, `ai-marketing-agency`, `facebook-ads-sydney`,
   `facebook-ads-for-tradies`, `tools`, `creative-cost`.
-- **62 generated pages** (other cities, industries, head terms, guides, markets) are built from
+- **67 generated pages** (other cities, industries, head terms, guides, markets) are built from
   data in `tools/content/*.js`. **Editing their `.html` directly is wasted work** — the
   next `node tools/build-pages.js` overwrites it. Edit the content file, then rebuild.
 
 `tools/build-pages.js` also rewrites `sitemap.xml` and prunes redirects that would
 shadow a page. `tools/layout.js` lifts the nav, footer and stylesheet out of
 `facebook-ads-sydney.html` at build time, so generated pages cannot drift from the
-design — but it also means **breaking that file breaks all 62**.
+design — but it also means **breaking that file breaks all 67**.
 
 ## Things that will silently break the site
 
@@ -52,7 +52,7 @@ design — but it also means **breaking that file breaks all 62**.
   hand-authored pages, which is why the build step matters even when you changed no
   content. `check.js` fails on a stale stamp. The tag is matched on the prefix
   `<script src="/site.js` with no closing quote (`SITE_JS_TAG`); adding the quote
-  back breaks the shell lift in `layout.js` and with it all 62 generated pages.
+  back breaks the shell lift in `layout.js` and with it all 67 generated pages.
 - **`"framework": null` in `vercel.json`.** The Vercel project's preset is Next.js.
   Without this override, every deploy runs `next build`, finds no `package.json`, and
   fails. Do not remove it.
@@ -72,7 +72,7 @@ design — but it also means **breaking that file breaks all 62**.
   fill is not identified by its border, and decoration is exempt. Text-only audits
   will not catch any of this — check placeholders, borders and both viewports.
 - **`#55554F` is the Paper body token and fails on Ink at 2.64:1.** It had leaked
-  onto dark surfaces on all 80 pages. The theme layer now resolves both muted greys
+  onto dark surfaces on all 85 pages. The theme layer now resolves both muted greys
   through inherited custom properties (`--sv-muted`, `--sv-faint`) set by whichever
   background-setting ancestor is nearest, so a white card inside an ink section and a
   dark card inside a paper section both come out right. That only reaches inline
@@ -87,6 +87,16 @@ design — but it also means **breaking that file breaks all 62**.
   neutralised below 829px so `auto-fit` cannot be asked for a second track it did
   not create. Reported from a real iPhone; it does not reproduce in Chromium at
   any width, so do not "simplify" either rule away because a desktop check passes.
+  **`min-width: 0` was not the whole fix.** It shipped, and the two-column slice
+  came back from the same phone. Those grids are `minmax(min(240px, 100%), 1fr)`,
+  and WebKit will not resolve that `100%` against a container it does not yet
+  treat as definite — it keeps the pixel floor, fits two tracks it has no room
+  for, and overflows. So `theme.js` now names one column outright below the width
+  where a second could honestly fit: `[style*="minmax(min(3"]` at ≤719px and
+  `[style*="minmax(min(2"]` at ≤599px. That substring hits the ~100 card grids and
+  **none** of the small stat grids, which are `minmax(180px, 1fr)` and are meant to
+  sit two-up on a phone — forcing those to one column is what made the page longer
+  last time. Verified 390→1280: 1 / 2 / 3-4 tracks, no overflow at any width.
 - **Section padding is not the lever on page height.** It is 1,228px of an
   18,856px homepage — 6.5%. A blanket `padding: 80px` on mobile sections made the
   page *longer* (19,176px), because most sections deliberately carry
@@ -173,6 +183,19 @@ design — but it also means **breaking that file breaks all 62**.
   one. They are built in `setupProducts()` with `createElement`, never inserted into
   `pricing.html` — placing an element before a card's closing tag needs a regex tag
   walk that has now put content in the wrong place twice on this file.
+- **Every primary CTA carries `AUDIT_LINE`** — one constant in `tools/layout.js`
+  rendered under the hero and closing buttons, plus 28 hand-written copies across
+  the 18 hand-authored pages and one above the form on `/apply`. It says what four
+  fields buys: whether you qualify for a free marketing technology, systems and
+  performance audit. The wording is legally deliberate — **"whether you qualify"**
+  and **"at our discretion and in limited numbers"** keep it an invitation to be
+  assessed rather than an offer to supply, the same discretion the audit table on
+  `/marketing-automation` is written to preserve. Do not soften it to "get your
+  free audit". All 85 pages carry it; grep before assuming a new one does.
+- **The three published prices exclude GST, and say so.** `/pricing` (the section
+  copy, three card sub-labels and the FAQ answer, which means the JSON-LD copy of
+  it too), `/install`, `/system`, `/agency-fee` and `/pricing-call`. A new price
+  mention needs the treatment stated or the page contradicts the others.
 - **`/apply` is the short form, and it is the only form.** Four fields on one
   screen — work email, website, monthly spend, which product — built by
   `setupShortForm()` in `site.js` and mounted on `#book-root`. `/pricing-call`
@@ -244,6 +267,19 @@ underneath a build differ for every client, so a fixed logo wall would be wrong 
 most of them and stale the moment anyone rebrands. Same call as the Ad Library
 walkthrough. Opt-in like the other blocks — only a page that sets `systemMap`
 renders it, and `services.js` must pass the key through `build()`.
+
+`explainer()` and `accordion()` in `tools/layout.js` are the other two blocks on
+`/marketing-automation`, added because the page was one dense diagram and two long
+prose sections. The explainer is three before/after cards under the hero — by hand
+today, once it is built, why that is worth money — and it renders **above** the
+prose on purpose. `systemMap` moved up with it: it used to render after the tables,
+which put the only picture on the page below everything it introduces.
+
+The accordion **reuses the FAQ hooks** (`data-faq-item` / `-toggle` / `-sign` /
+`-answer`) rather than inventing its own. `setupFaq()` in `site.js` already scopes
+open/close by `parentElement`, so several accordions coexist on one page with no new
+JavaScript, and with JS off every answer is simply visible. Both blocks are opt-in
+and only the automation pillar sets them.
 
 **Six market pages** cover New Zealand, Singapore and Malaysia, two each: a
 performance/Meta page and a marketing-automation page. They are written to real
