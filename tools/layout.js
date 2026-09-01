@@ -697,6 +697,7 @@ function callForm(c) {
 const AUTOLINK = [
   ['Advantage\\+', '/meta-advantage-plus'],
   ['Ad Library', '/meta-ad-library'],
+  ['Ads Manager', '/meta-ads-manager'],
   ['Shopify', '/shopify-facebook-ads'],
   ['NDIS', '/ndis-facebook-ads'],
   ['ROAS', '/what-is-roas'],

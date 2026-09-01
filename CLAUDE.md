@@ -27,19 +27,19 @@ hard-coded API key. CI runs the same script.
 
 ## Two kinds of page — do not confuse them
 
-- **16 hand-authored pages** came from a Claude Design handoff bundle. Edit their HTML
+- **18 hand-authored pages** came from a Claude Design handoff bundle. Edit their HTML
   directly: `index`, `apply`, `pricing`, `system`, `install`, `check`, `about`,
   `learn`, `glossary`, `agency-fee`, `what-are-meta-ads`, `facebook-ads-agency`,
   `ecommerce-facebook-ads-agency`, `ai-marketing-agency`, `facebook-ads-sydney`,
   `facebook-ads-for-tradies`, `tools`, `creative-cost`.
-- **42 generated pages** (other cities, industries, head terms, guides) are built from
+- **62 generated pages** (other cities, industries, head terms, guides, markets) are built from
   data in `tools/content/*.js`. **Editing their `.html` directly is wasted work** — the
   next `node tools/build-pages.js` overwrites it. Edit the content file, then rebuild.
 
 `tools/build-pages.js` also rewrites `sitemap.xml` and prunes redirects that would
 shadow a page. `tools/layout.js` lifts the nav, footer and stylesheet out of
 `facebook-ads-sydney.html` at build time, so generated pages cannot drift from the
-design — but it also means **breaking that file breaks all 42**.
+design — but it also means **breaking that file breaks all 62**.
 
 ## Things that will silently break the site
 
@@ -52,7 +52,7 @@ design — but it also means **breaking that file breaks all 42**.
   hand-authored pages, which is why the build step matters even when you changed no
   content. `check.js` fails on a stale stamp. The tag is matched on the prefix
   `<script src="/site.js` with no closing quote (`SITE_JS_TAG`); adding the quote
-  back breaks the shell lift in `layout.js` and with it all 49 generated pages.
+  back breaks the shell lift in `layout.js` and with it all 62 generated pages.
 - **`"framework": null` in `vercel.json`.** The Vercel project's preset is Next.js.
   Without this override, every deploy runs `next build`, finds no `package.json`, and
   fails. Do not remove it.
@@ -72,7 +72,7 @@ design — but it also means **breaking that file breaks all 42**.
   fill is not identified by its border, and decoration is exempt. Text-only audits
   will not catch any of this — check placeholders, borders and both viewports.
 - **`#55554F` is the Paper body token and fails on Ink at 2.64:1.** It had leaked
-  onto dark surfaces on all 68 pages. The theme layer now resolves both muted greys
+  onto dark surfaces on all 80 pages. The theme layer now resolves both muted greys
   through inherited custom properties (`--sv-muted`, `--sv-faint`) set by whichever
   background-setting ancestor is nearest, so a white card inside an ink section and a
   dark card inside a paper section both come out right. That only reaches inline
@@ -180,7 +180,7 @@ design — but it also means **breaking that file breaks all 42**.
   tells the two apart downstream.
 - **The five-question quiz was deleted, on purpose.** It was 524 lines of
   `site.js` — `QUESTIONS`, `VERDICTS`, `verdict()`, `#apply-root` — served on all
-  68 pages, and it stood between a visitor and any capture at all before a single
+  every page, and it stood between a visitor and any capture at all before a single
   lead had come in. Removing it took `site.js` from 79KB to 47KB. It is in git if
   it is ever wanted back; **do not resurrect it from memory**, and do not add
   qualifying questions to the short form without being asked — reducing friction

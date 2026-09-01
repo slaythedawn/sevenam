@@ -580,6 +580,7 @@ const PAGES = [
     related: [
       { href: '/tools', title: 'Free calculators', note: 'Fee and creative cost.' },
       { href: '/what-are-meta-ads', title: 'What are Meta ads?', note: 'Start here if it is all new.' },
+      { href: '/meta-ads-manager', title: 'Ads Manager', note: 'The interface, level by level.' },
       { href: '/ai-in-meta-ads-manager', title: 'AI in Ads Manager', note: 'What it can reach, and what it should not.' },
       { href: '/facebook-ad-creative-testing', title: 'Creative testing', note: 'The part most people skip.' },
       { href: '/glossary', title: 'Glossary', note: 'Every term, in plain English.' },
@@ -1054,6 +1055,7 @@ const PAGES = [
     closing: { h2: 'See what a day of this looks like on your account.', p: "Fifteen minutes with Josh, no pitch deck. You will get a straight read on what is worth automating and what is not." },
     related: [
       { href: '/meta-ads-mcp', title: 'Meta Ads MCP', note: 'The connector, explained.' },
+      { href: '/meta-ads-manager', title: 'Ads Manager', note: 'What each level controls.' },
       { href: '/automate-meta-ads', title: 'Automating Meta ads', note: 'What holds up daily.' },
       { href: '/system', title: 'How ours runs', note: 'Read overnight, decided by 7am.' },
       { href: '/meta-advantage-plus', title: 'Advantage+', note: 'Meta’s own automation.' },
@@ -1157,6 +1159,58 @@ const PAGES = [
       { href: '/ai-in-meta-ads-manager', title: 'AI in Ads Manager', note: 'The three ways in.' },
       { href: '/system', title: 'How ours runs', note: 'Read overnight, decided by 7am.' },
       { href: '/agency-fee', title: 'What a percentage costs', note: 'Run your own numbers.' },
+    ],
+  },
+  {
+    slug: 'meta-ads-manager',
+    title: 'Meta Ads Manager: What Each Level Controls | Sevenam',
+    description: 'Meta Ads Manager explained — campaign, ad set and ad, which setting belongs where, which columns mislead you, and what to change when a campaign stops working.',
+    eyebrow: 'TOOL', h1: 'Meta Ads Manager',
+    lead: 'Three levels, and most of what goes wrong is a setting changed at the wrong one.',
+    s1: {
+      h2: 'The three levels, and what each one decides.',
+      paras: [
+        "Ads Manager lives at adsmanager.facebook.com and is the same tool whether you reach it through Facebook, Instagram or Business Manager. Everything inside it sits at one of three levels. The campaign holds the objective — what you are asking Meta to optimise towards — and, if you turn it on, a pooled budget shared across everything beneath it. The ad set holds the budget, the audience, the placements, the schedule and the optimisation event. The ad holds the creative, the copy and the destination. There is no fourth level, and every setting belongs to exactly one of these.",
+        "That hierarchy is not administrative tidiness. It is what the delivery system reads, and it is why the most common self-inflicted problem in an account is a correct setting applied at the wrong level: a budget pinned to one ad set when it needed to pool across several, or an objective chosen for the number it puts in a report rather than the outcome it actually buys.",
+        "The other consequence worth knowing before you touch anything is the learning phase. Meaningful edits at the ad set level — budget, audience, optimisation event — restart it, and the ad set spends the next stretch buying data rather than results. Edits at the campaign level and swaps of creative at the ad level generally do not. This is the single best reason to change one thing at a time and leave it alone afterwards.",
+      ],
+      items: [
+        'Campaign: the objective, and whether budget pools across ad sets.',
+        'Ad set: budget, audience, placements, schedule, optimisation event.',
+        'Ad: the creative, the copy, the destination and the tracking.',
+        'Ad set edits restart the learning phase. Campaign edits usually do not.',
+        'Optimise for the event you actually sell, not the one that fills up fastest.',
+      ],
+    },
+    s2: {
+      h2: 'The columns that mislead you.',
+      paras: [
+        "The default column set reports on the platform's terms rather than yours. Results is whatever the objective happened to be, so two campaigns both showing a Results figure are frequently not counting the same thing — one is counting purchases and the other landing page views, and the comparison between them is meaningless. Read the small grey label under the number before you read the number.",
+        "Frequency is averaged across whatever date range you are looking at, which means a fatigued ad set looks healthy on a ninety-day view and alarming on a seven-day one. It is the same ad set. And the attribution setting changes the reported figure without changing a single dollar that arrived in the business, so moving it from seven-day click to one-day click will appear to halve your performance and will have done nothing at all.",
+        "Build one custom column preset and use it on every account: spend, the conversion you genuinely sell, cost per that conversion, ROAS, and frequency read on a seven-day window. Then compare the total against your own bank account rather than against an industry benchmark, because the platform's reported conversions and your actual revenue diverge for reasons that have nothing to do with how well the ads are working.",
+      ],
+      items: [
+        'Results counts different things in different campaigns. Read the label.',
+        'Frequency averages over your date range and hides fatigue.',
+        'Attribution changes the reported number, not the revenue.',
+        'Save a custom column preset — the default one was not built for you.',
+        'Reconcile against your own sales data at least monthly.',
+      ],
+    },
+    faqs: [
+      { q: 'Where do I find Meta Ads Manager?', a: "At adsmanager.facebook.com, or through the Ads Manager entry in Meta Business Suite. It is the same interface either way, and it needs an ad account attached to a Business Manager you have access to." },
+      { q: 'What is the difference between Ads Manager and Business Suite?', a: "Business Suite is the wrapper — pages, inboxes, posts and a simplified boost flow. Ads Manager is where campaigns are actually built and read. Boosting from Business Suite creates an ad, but with far fewer controls than the same money would buy in Ads Manager." },
+      { q: 'Why did my results drop the day I edited an ad set?', a: "You most likely restarted the learning phase. Budget, audience and optimisation event changes at the ad set level send it back to buying data, and performance is unstable until it exits. Swapping creative at the ad level is the cheaper edit when you have the choice." },
+      { q: 'Should I use campaign budget optimisation?', a: "It helps when your ad sets are genuinely interchangeable and you want Meta to find the winner. It hurts when one ad set exists for a reason that spend alone will not respect — a market you must be present in, or a segment with different economics. Pool budget when you are indifferent about where it goes." },
+      { q: 'Why do Ads Manager numbers not match my store?', a: "Because they are counting different things by different rules: modelled versus recorded, view-through windows, cross-device stitching, and browsers that block what they can. Treat Ads Manager as the steering instrument and your own sales data as the scoreboard, and reconcile them monthly rather than expecting agreement." },
+      { q: 'Can I let Meta run the account for me?', a: "Parts of it, and increasingly well — Advantage+ placements and audience expansion do a job that hand-building rarely beats. What no automation inside the interface does is decide what to stop funding this morning, which is the decision that actually moves an account." },
+    ],
+    closing: { h2: 'Or have the decisions arrive already made.', p: "Reading Ads Manager well is a daily job. If you would rather it arrived written down each morning with the numbers behind it, that is what we build." },
+    related: [
+      { href: '/ai-in-meta-ads-manager', title: 'AI inside Ads Manager', note: 'What it can and cannot do.' },
+      { href: '/how-to-run-meta-ads-yourself', title: 'Run it yourself', note: 'The honest version.' },
+      { href: '/meta-ad-library', title: 'The Ad Library', note: 'What competitors run.' },
+      { href: '/meta-advantage-plus', title: 'Advantage+', note: 'The automated campaign type.' },
     ],
   },
 ];
