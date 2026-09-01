@@ -96,7 +96,7 @@
   @keyframes pulseDot { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
   @keyframes chipIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
-  @media (max-width: 829px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
+  @media (max-width: 939px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
 </style>
 <style id="sv-theme">
 /* ============================================================== the nav ====
@@ -148,16 +148,17 @@ main > section:first-of-type { padding-top: 128px !important; }
    floating capsule is a desktop flourish.
 
    This breakpoint must match the one in the page stylesheet that sends
-   [data-nav-links] to its own full-width row. Both are 829px, because 830 is
-   the first width where the seven links, the logo and the button actually fit
-   on one line — measured, not guessed.
+   [data-nav-links] to its own full-width row, and the min-width in setupNav().
+   All three are 939px, because 940 is the first width where the EIGHT links,
+   the logo and the button fit on one line — measured after the Automation tab
+   was added, which pushed it up from 830.
 
    It used to say 640 here and 780 there, and the gap between them was a fixed
    999px-radius pill wrapped to three rows and 152px tall: the capsule shape
    broke, and because the hero only takes back a fixed 128px of padding, a 152px
    nav sat on top of the h1. Change one of these two numbers and you must change
    the other, and re-measure the fit width if a nav link is ever added. */
-@media (max-width: 829px) {
+@media (max-width: 939px) {
   header[style*="position: sticky"] {
     position: sticky !important;
     top: 0 !important; padding: 0;
@@ -187,6 +188,38 @@ main > section:first-of-type { padding-top: 128px !important; }
      80px back on every one of them. Section padding is 6.5% of this page — the
      height is the content, and the only real lever is showing less of it. */
 
+  /* The hamburger. Everything here is scoped to [data-nav-ready], which only
+     setupNav() sets — so with JS off none of it applies and the links stay the
+     scrolling row below, rather than hiding behind a button that cannot open. */
+  [data-nav-toggle] { display: inline-flex !important; color: #F7F7F5 !important; }
+  /* space-between across three items pushed the logo into the middle-right once
+     the button joined the row. Pack them left and let the nav claim the rest. */
+  [data-nav-bar][data-nav-ready] { justify-content: flex-start !important; }
+  [data-nav-bar][data-nav-ready] > a:first-of-type { margin-right: auto !important; }
+  [data-nav-bar][data-nav-ready] [data-nav-links] { display: none !important; }
+  [data-nav-bar][data-nav-ready][data-nav-open] [data-nav-links] {
+    display: flex !important;
+    order: 3 !important;
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    overflow: visible !important;
+    padding: 8px 0 4px !important;
+    margin-top: 6px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+  /* A stacked link is a row you tap, not a word you aim at. */
+  [data-nav-bar][data-nav-ready][data-nav-open] [data-nav-links] > * {
+    display: block !important;
+    width: 100% !important;
+    padding: 13px 4px !important;
+    font-size: 17px !important;
+  }
+
   [data-nav-links] {
     order: 0 !important;
     width: auto !important;
@@ -204,6 +237,10 @@ main > section:first-of-type { padding-top: 128px !important; }
     mask-image: linear-gradient(to right, #000 calc(100% - 20px), transparent);
   }
 }
+
+/* The hamburger exists only below the breakpoint; above it the seven links fit
+   on one line and a menu button would be a step backwards. */
+[data-nav-toggle] { display: none; }
 
 /* ======================================================= grid robustness ==
    A grid item will not shrink below its own min-content width unless it is told
@@ -509,6 +546,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
     <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; flex: 1 1 auto; min-width: 0px;">
       <span data-nav-links="" style="display: flex; align-items: center; gap: 2px; min-width: 0px;">
         <a href="/system" class="scp5" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">How it works</a>
+        <a href="/marketing-automation" class="scp5" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Automation</a>
         <a href="/pricing" class="scp5" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Pricing</a>
         <a href="/ad-creative" class="scp5" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Creative</a>
         <a href="/tools" class="scp5" style="font-size: 15px; font-weight: 500; color: rgb(181, 181, 173); padding: 10px 12px; border-radius: 4px; white-space: nowrap;">Free tools</a>
@@ -687,6 +725,6 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
       <span>Your growth system for Meta. It runs at seven.</span>
     </div>
   </div></footer></div></div>
-<script src="/site.js?v=36e2bbf5" defer></script>
+<script src="/site.js?v=cfb16977" defer></script>
 </body>
 </html>

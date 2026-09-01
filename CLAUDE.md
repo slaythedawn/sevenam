@@ -91,14 +91,21 @@ design — but it also means **breaking that file breaks all 42**.
   18,856px homepage — 6.5%. A blanket `padding: 80px` on mobile sections made the
   page *longer* (19,176px), because most sections deliberately carry
   `padding-top: 0` so a stacked run does not double up. Measured and reverted.
-- **The nav has two breakpoints and they must stay equal.** The page stylesheet
-  sends `[data-nav-links]` to its own row, and `tools/theme.js` reverts the floating
-  capsule to an in-flow sticky bar. Both are **829px**, because 830 is the first
-  width where the logo, seven links and the button fit on one line — measured, not
-  guessed. They used to be 780 and 640, and in the 140px between them the nav was a
-  fixed 999px-radius pill wrapped to three rows and 152px tall: the capsule shape
-  broke, and since the hero only takes back a fixed 128px, the nav sat on the `h1`.
-  Add a nav link and you must re-measure the fit width and move both numbers.
+- **The nav has three coupled numbers and they must stay equal.** The page
+  stylesheet's media query, the one in `tools/theme.js`, and the `matchMedia` in
+  `setupNav()` are all **939/940px**, because 940 is the first width where the logo,
+  **eight** links and the button fit on one line. It was 830 with seven; adding the
+  Automation tab moved it. **Add or rename a nav link and you must re-measure and
+  move all three** — the measurement is a 20px sweep of `[data-nav-bar]` height,
+  looking for where it stops being 103px and becomes 65px.
+  They were once 780 and 640, and in the 140px between them the nav was a fixed
+  999px-radius pill wrapped to three rows and 152px tall: the capsule broke, and
+  since the hero only takes back a fixed 128px, the nav sat on the `h1`.
+- **Below that width the nav is a hamburger**, built by `setupNav()` in `site.js`
+  and never in the HTML. All of its styling is scoped to `[data-nav-ready]`, an
+  attribute only that function sets, so with JS off there is no dead button and the
+  links stay the scrolling row they were. The panel closes on link click, Escape,
+  an outside click, and on crossing the breakpoint.
 - **`data-` attributes are behaviour hooks**, not styling: `data-reveal`,
   `data-faq-item` / `data-faq-toggle` / `data-faq-sign` / `data-faq-answer`,
   `data-clock`, `data-approve`, `data-act`, `data-ad-drift`, `data-parallax`,
@@ -228,6 +235,15 @@ field is created in `site.js`, never in the HTML, so a visitor without JS gets t
 complete list rather than a search box that does nothing. It matches the whole
 row — term and definition — because someone half-remembering "the unstable period
 after a change" should find Learning phase without knowing its name.
+
+`/marketing-automation` is the second service pillar and the only page with a
+**bespoke** price — there is deliberately no figure on it, because the work depends
+entirely on the client's existing stack. Do not give it one. It also carries the
+**free systems audit**, which is offered at Sevenam's discretion and in limited
+numbers: the table and its note are written so the page is not an offer to supply,
+and the fifteen-minute call is where qualifying is decided. If that copy is
+softened, the discretion has to survive it. Josh should have a lawyer read it if it
+ever matters commercially — it is written carefully, not written by a solicitor.
 
 ## Icons and social cards
 

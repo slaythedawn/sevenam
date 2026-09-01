@@ -29,6 +29,80 @@
     });
   }
 
+  /* --------------------------------------------------------------- nav */
+
+  /* On a phone the links were a horizontally scrolling row sharing a line with
+     the button — legible, but a scroll strip is a poor way to show seven
+     destinations, and the last one was always half off the edge. This collapses
+     them behind a hamburger on the left.
+
+     The button is built here, not in the HTML, and the panel styling is scoped
+     to [data-nav-ready] which only this function sets. So with JS off nothing
+     changes: no dead button, and the links stay the scrolling row they are
+     today rather than vanishing behind a control that cannot open. */
+  function setupNav() {
+    var bar = q("[data-nav-bar]");
+    var links = q("[data-nav-links]");
+    if (!bar || !links) return;
+
+    if (!links.id) links.id = "nav-links";
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.setAttribute("data-nav-toggle", "");
+    btn.setAttribute("aria-controls", links.id);
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-label", "Open menu");
+    btn.style.cssText = "order:-1; margin-right:2px; width:40px; height:40px; padding:0;" +
+      "background:none; border:0; border-radius:6px; cursor:pointer; color:inherit;" +
+      "align-items:center; justify-content:center; flex-shrink:0;";
+    /* Three bars that become a cross. aria-hidden because the button already
+       carries a label — a screen reader should not read three empty spans. */
+    btn.innerHTML =
+      '<span aria-hidden="true" style="position:relative; display:block; width:20px; height:14px;">' +
+      ["top:0", "top:6px", "top:12px"].map(function (pos, i) {
+        return '<span data-bar="' + i + '" style="position:absolute; left:0; ' + pos +
+          '; width:20px; height:2px; background:currentColor; border-radius:2px;' +
+          'transition:transform 0.22s ' + EASE + ', opacity 0.18s linear;"></span>';
+      }).join("") + "</span>";
+
+    bar.insertBefore(btn, bar.firstChild);
+    bar.setAttribute("data-nav-ready", "");
+
+    var bars = qa("[data-bar]", btn);
+    function paint(open) {
+      if (open) bar.setAttribute("data-nav-open", "");
+      else bar.removeAttribute("data-nav-open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      if (reduced) return;
+      bars[0].style.transform = open ? "translateY(6px) rotate(45deg)" : "";
+      bars[1].style.opacity = open ? "0" : "1";
+      bars[2].style.transform = open ? "translateY(-6px) rotate(-45deg)" : "";
+    }
+
+    function close() { paint(false); }
+
+    btn.addEventListener("click", function () {
+      paint(!bar.hasAttribute("data-nav-open"));
+    });
+
+    /* Three ways out, because a menu you can only close with the same small
+       button is a trap on a phone. */
+    qa("a", links).forEach(function (a) { a.addEventListener("click", close); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    document.addEventListener("click", function (e) {
+      if (!bar.hasAttribute("data-nav-open")) return;
+      if (!bar.contains(e.target)) close();
+    });
+    /* Crossing the breakpoint with the panel open would leave the desktop nav in
+       a state it has no styling for. */
+    var WIDE = window.matchMedia("(min-width: 940px)");
+    if (WIDE.addEventListener) WIDE.addEventListener("change", close);
+
+    paint(false);
+  }
+
   /* ---------------------------------------------------------------- reveals */
   /* Elements ship visible. We hide only what is below the fold, then animate it
      in. The reveal list is re-queried on every sweep and a safety sweep runs on
@@ -1082,7 +1156,8 @@
       "$30,000 – $100,000", "Over $100,000"];
     var WANTS = ["Not sure yet — talk it through", "The setup, $19,500",
       "The daily decisions, $2,500 a month", "Creative packages, from $5,000",
-      "Custom, end to end"];
+      "Custom, end to end", "Marketing automation, quoted",
+      "The free systems audit — see if I qualify"];
 
     var S = { email: "", website: "", spend: "", want: "", hp: "",
       tried: false, sending: false, sent: false, failed: false };
@@ -1240,6 +1315,7 @@
     setupProducts();
     setupPricingCall();
     setupAdLibrary();
+    setupNav();
     setupCalculators();
     setupGlossary();
   }

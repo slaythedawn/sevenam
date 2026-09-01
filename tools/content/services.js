@@ -1175,6 +1175,76 @@ const PAGES = [
 
 
 
+  {
+    slug: 'marketing-automation',
+    title: 'Marketing Automation Agency — Systems That Replace the Busywork | Sevenam',
+    description: 'Marketing automation built as a system: a team of AI agents, one marketing data repository, and the workflows that connect them. Bespoke, quoted after we map what you run.',
+    eyebrow: 'MARKETING AUTOMATION', h1: 'Marketing Automation',
+    support: 'Sevenam builds the system underneath your marketing \u2014 a repository of what the market is telling you, a set of agents with real job specs, and the workflows that connect them to the CRM and the tools you already own. Scoped and quoted after we map what you run.',
+    trust: ['Built on your own accounts', 'Quoted after we map it', 'Yours if we stop'],
+    lead: 'Not another tool. The system underneath the tools — agents, a data repository, and the workflows that connect them.',
+    s1: {
+      h2: 'Why most marketing automation stalls.',
+      paras: [
+        "Most companies already own the pieces. There is a CRM, an email platform, a scheduler, a dashboard, a folder of decks, and somebody using an AI assistant in a browser tab. What is missing is the thing that joins them, so the learning never accumulates: sales hears one version of the market, support hears another, the ads account sees what got clicked, and the founder remembers the one call that stuck. Everyone arrives at the growth meeting with a different version of reality.",
+        "The second failure is subtler. Work done in a chat window disappears when the tab closes. Ask for ten posts on Monday and by Friday the assistant has forgotten the objection that came up on every sales call, the phrasing that actually earned replies, and the offer that did not land. It starts from nothing every time, which is why AI output so often feels generic — it is generic, because nothing it needs is in front of it.",
+      ],
+      items: [
+        'The tools exist; the connection between them does not.',
+        'Signal is scattered across sales, support, product and the ad account.',
+        'Work done in a chat window is thrown away when the tab closes.',
+        'Generic output is a context problem before it is a model problem.',
+        'Nobody owns the system, so nobody improves it.',
+      ],
+    },
+    s2: {
+      h2: 'What we actually build.',
+      paras: [
+        "Three things, in order. A marketing data repository — one place where what the market is telling you is written down and kept: the objections, the winning language, the offers that worked, the ones that did not, and the rules the business runs by. Then a set of agents with real job specs: what each reads, when it runs, what it produces, what needs a human before it goes anywhere. Then the workflows that connect the two to the systems you already pay for, including the CRM.",
+        "The point is not to remove people. It is to take the part of the work that is reading, collating, drafting and chasing — which is most of it — and give it to something that does it every day without getting bored, so the people you have spend their time on judgement, taste and the decisions that need a business context no system has.",
+      ],
+      items: [
+        'A marketing data repository: the memory the rest of it runs on.',
+        'Agents with written job specs, run schedules and approval gates.',
+        'Workflows into the CRM, the ad accounts and the tools you already own.',
+        'Creative and content production wired to what performed, not to a calendar.',
+        'A weekly read on what changed and what to do about it.',
+      ],
+    },
+    tables: [
+      {
+        wrap: true,
+        h2: 'The systems audit, and who we can do it for.',
+        lead: 'We run a small number of free marketing technology, systems and performance audits each month. It is a real piece of work — a read of your stack, your data and what is actually firing — and because it takes real time, it is offered only where we can see something worth finding. The call is fifteen minutes and decides whether you qualify.',
+        columns: ['', 'What that means', 'Why the line is there'],
+        rows: [
+          ['What the audit covers', 'Your marketing stack and how the parts connect, the state of the data in your CRM, what is tracked against what actually happens, and where a system would remove work', 'These are the four places we consistently find something, so they are the four we look at'],
+          ['What you get', 'A written read, and a call to go through it. Yours to keep and act on, with us or without us', 'A document you cannot act on without hiring us is a sales asset, not an audit'],
+          ['Who tends to qualify', 'A real marketing stack, someone accountable for it, and enough activity that the data means something', 'With no data and no owner there is nothing to audit — we would be guessing, at length'],
+          ['Who tends not to', 'Pre-launch, no CRM or ad data yet, or looking for a document to take to another supplier', 'Both are fine positions to be in. Neither is helped by this'],
+          ['How we decide', 'On the fifteen-minute call, from what you tell us about the stack and the data', 'It is quicker to say on a call than after a week of work'],
+          ['If you do not qualify', 'We say so on the call and tell you what would change that', 'Nobody should wait on an audit that is not coming'],
+        ],
+        note: 'To be plain about it: the audit is offered at our discretion, in limited numbers, and nothing on this page is an offer to supply it — qualifying is decided on the call and we may decline for any reason, including simply being full that month. If we say yes, you get the scope and the dates in writing before we start.',
+      },
+    ],
+    faqs: [
+      { q: 'What does marketing automation cost here?', a: "It is bespoke, and deliberately so — the work depends entirely on what you already run, how clean the data is and how much of it can be trusted. We map that first and quote a fixed figure in writing before anything starts. Unlike our Meta products, there is no list price for this, because there is no standard shape to it." },
+      { q: 'Is this just Zapier with extra steps?', a: "No, though it will often use tools like that underneath. The difference is the repository and the job specs: a connector moves data between two apps, and what we build accumulates what the business learns so that every agent gets sharper rather than repeating itself." },
+      { q: 'Will this replace our marketing team?', a: "It replaces a large amount of the work a marketing team does by hand — the reading, collating, drafting, reporting and chasing. What it does not replace is judgement about what should exist in the first place, which is the part worth paying people for. Most clients redeploy rather than reduce." },
+      { q: 'Do you work with our CRM?', a: "Yes. CRM automation is usually where the fastest return sits, because the data is already there and almost nothing is being done with it. We work with what you have rather than moving you onto something new, unless what you have genuinely cannot do the job." },
+      { q: 'How long before anything works?', a: "The repository and the first agent are usually live inside a few weeks. Whether that is worth having depends on your data, which is exactly what the mapping session is for — and if the answer is that you are not ready, we say that." },
+      { q: 'Who owns what you build?', a: "You do, on your own accounts and infrastructure, the same as everything else we do. If the arrangement ends, the system keeps running." },
+      { q: 'What is the catch with the free audit?', a: "That we choose who gets one. It is real work, we run a small number each month, and we offer them where we can already see something worth finding — which we decide on a fifteen-minute call rather than after a week of digging. If we decline, you get told on the call and you get told why. There is no obligation on you either way, and the written read is yours whether or not you hire us." },
+    ],
+    closing: { h2: 'See whether your systems are worth automating yet.', p: "Fifteen minutes with Josh, no pitch deck. Some accounts are not ready, and that is a faster answer than a proposal." },
+    related: [
+      { href: '/system', title: 'The Meta system', note: 'The same idea, one channel.' },
+      { href: '/ai-in-meta-ads-manager', title: 'AI in Ads Manager', note: 'What an agent may touch.' },
+      { href: '/meta-ads-mcp', title: 'Meta Ads MCP', note: 'How the connector works.' },
+      { href: '/automate-meta-ads', title: 'What actually automates', note: 'And what does not.' },
+    ],
+  },
 ];
 
 function build() {
@@ -1185,7 +1255,10 @@ function build() {
     eyebrow: p.eyebrow,
     h1: p.h1,
     lead: p.lead,
-    support: SUPPORT,
+    /* The Meta support line is wrong on a page selling something else, so it is
+       overridable. Every other page still gets SUPPORT. */
+    support: p.support || SUPPORT,
+    trust: p.trust,
     gallery: p.gallery,
     sections: [
       { tone: 'paper', h2: p.s1.h2, paras: p.s1.paras, items: p.s1.items },
