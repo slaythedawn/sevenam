@@ -587,14 +587,14 @@ const PAGES = [
   },
   {
     slug: 'meta-ad-library',
-    title: 'Meta Ad Library — How to Use It Properly | Sevenam',
-    description: 'The Meta Ad Library shows every ad your competitors are running. Here is how to read it for creative intelligence rather than for copying.',
-    eyebrow: 'TOOL', h1: 'The Meta Ad Library',
-    lead: 'Every ad your competitors run is public. Very few people use that well.',
+    title: 'Meta Ads Library: How to Search It Properly | Sevenam',
+    description: 'The Meta Ads Library \u2014 also called the Facebook Ads Library \u2014 shows every ad your competitors are running. How to search it, and how to read it for creative intelligence rather than for copying.',
+    eyebrow: 'TOOL', h1: 'The Meta Ads Library',
+    lead: 'Every ad your competitors run is public. Very few people search it well.',
     s1: {
       h2: 'What it actually shows you.',
       paras: [
-        "The Ad Library lists the ads any advertiser is currently running, along with when each started. It does not show spend, results, or audience for ordinary commercial ads — those details are only published for political and social issue advertising.",
+        "Meta calls it the Ad Library. Almost everyone searching for it types the Meta Ads Library or the Facebook Ads Library, and all three are the same tool at facebook.com/ads/library. It lists the ads any advertiser is currently running, along with when each started. It does not show spend, results, or audience for ordinary commercial ads — those details are only published for political and social issue advertising.",
         "That limitation matters, because the most common misuse is treating a competitor's ad as proof that something works. You cannot see whether it is working. You can only see that it exists.",
       ],
       items: [
