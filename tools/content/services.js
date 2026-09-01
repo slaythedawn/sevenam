@@ -1187,6 +1187,48 @@ const PAGES = [
 
   {
     slug: 'marketing-automation',
+    explainer: {
+      label: 'START HERE',
+      h2: 'What marketing automation actually is.',
+      p: 'Software that does the parts of marketing that do not need a person. Not the thinking — the collecting, the drafting, the chasing and the reporting, which is most of the week for most marketing teams. Three examples of the same idea.',
+      cases: [
+        {
+          job: 'Following up an enquiry',
+          before: 'Someone remembers, eventually. A form arrives on Friday afternoon and gets a reply on Tuesday, by which time the person has bought from whoever answered first.',
+          after: 'The record updates the moment the form lands, the follow-up drafts itself against what that person actually looked at, and a human reads it and presses send.',
+          gain: 'More deals are lost to slow follow-up than to bad advertising.',
+        },
+        {
+          job: 'Knowing what the market wants',
+          before: 'Sales hears the objections, support hears the complaints, and the ad account sees what got clicked. None of it is written anywhere the other two can read it.',
+          after: 'One repository holds all three, ranked by how often each comes up, so the next campaign argues against the objection people actually have.',
+          gain: 'This is the part almost nobody builds, and the part everything else runs on.',
+        },
+        {
+          job: 'Producing the work',
+          before: 'A person opens a blank document on Monday, works from memory and a content calendar, and by Friday has eight pieces that could have come from any company in the category.',
+          after: 'An agent drafts from what has already worked in your own account and in your own words, and a person edits rather than starting from nothing.',
+          gain: 'Editing is faster than writing, and the output is specific to you.',
+        },
+      ],
+      foot: 'None of it removes the person deciding. Every one of those steps ends with someone approving what happens next — which is the difference between automation you can leave running and automation you have to supervise.',
+    },
+    accordion: {
+      label: 'THE DETAIL',
+      h2: 'What gets built, in order.',
+      p: 'Open whichever part you care about. Nothing here is a product you buy off a shelf — it is the same five or six pieces, assembled around what you already run.',
+      items: [
+        { q: 'A marketing data repository', a: "The first build and the one that makes the rest worth doing. One place where what the market is telling you is written down and kept: the objections ranked by how often they come up, the language that earns replies, the offers that worked and the ones that did not, your thresholds and brand rules, and the corrections — so a mistake is made once rather than every week. It lives on your own infrastructure. Almost no company has this, which is why almost every AI output they generate reads generic." },
+        { q: 'Agents with written job specs', a: "Not a chat window. Each agent has a specification the same way a person would: what it reads, when it runs, what it produces, what good looks like, and who approves the output. One might read every sales call transcript and update the objection list. Another might draft creative angles from what performed last month. They write back what they learned, so the repository gets better rather than staying still." },
+        { q: 'CRM automation', a: "Usually the fastest return in the whole build, because the data is already sitting there and almost nothing is being done with it. Records that update themselves from real activity rather than from someone remembering. Lifecycle stages that move on evidence. Follow-up that fires on a trigger instead of a calendar reminder. Lists that are correct on the morning you send rather than correct last quarter." },
+        { q: 'The approval gate', a: "Nothing that spends money, emails a customer or changes a record leaves the system without a person agreeing to it. This is not a setting that can be switched off, and it is the reason the system can be trusted with a live account and a real list. An agent that can send on its own is a liability dressed as a productivity gain." },
+        { q: 'Workflows into what you already own', a: "The connective tissue: your CRM, your email platform, your ad accounts, your scheduler, your warehouse if you have one. We do not migrate you to a new stack as the opening move, because the tools are rarely the problem — the absence of anything joining them is. Where a tool genuinely has to change we will say so and explain what it buys." },
+        { q: 'A weekly read on what changed', a: "One document that says what moved, what it probably means, and what to do about it. Written by the system from the repository and the accounts, then read by a person before it reaches you. It exists because a dashboard tells you what happened and almost never tells you what to do." },
+        { q: 'What this does not do', a: "It does not replace judgement, set your strategy, or decide what business you are in. It is not a compliance function — we build the approval gates, but the person approving has to be yours. And it does not fix bad data: if the CRM is empty or nobody owns it, the honest answer is that you are not ready yet, and we would rather say that on a fifteen-minute call than after a month of work." },
+        { q: 'Have you built this before?', a: "Yes, and it is worth being straight about the shape of it: the advertising side of Sevenam is older than the automation side. The repository, the job specs and the approval gate come out of running our own operation that way — the daily decisions our Meta clients receive are produced by exactly this kind of system. If you want the automation line's own case studies, ask on the call and we will tell you honestly what exists and what does not." },
+        { q: 'How the pricing works', a: "Bespoke, quoted as a fixed figure in writing after we map what you run. There is no list price the way there is for the Meta products, because a company on one clean CRM and a company running four disconnected tools are not the same job, and pretending otherwise means one of you is being overcharged." },
+      ],
+    },
     title: 'Marketing Automation Agency — Systems That Replace the Busywork | Sevenam',
     description: 'Marketing automation built as a system: a team of AI agents, one marketing data repository, and the workflows that connect them. Bespoke, quoted after we map what you run.',
     eyebrow: 'MARKETING AUTOMATION', h1: 'Marketing Automation',
@@ -1199,21 +1241,21 @@ const PAGES = [
           label: 'IN',
           title: 'What the market tells you',
           note: 'Scattered across four systems today, and lost the moment a tab closes.',
-          rows: ['Sales calls and objections', 'Support tickets and churn notes', 'CRM history and pipeline', 'Ad account performance', 'What customers actually say'],
+          rows: ['Sales calls and objections', 'Support tickets and CRM history', 'Ad account performance'],
           foot: 'Currently: nobody owns it',
         },
         {
           label: 'THE REPOSITORY',
           title: 'One place it is written down',
           note: 'The memory everything else reads from. This is the part almost nobody builds.',
-          rows: ['Winning language and hooks', 'Objections, ranked by frequency', 'Offers that worked, and did not', 'Your thresholds and brand rules', 'Corrections, so mistakes happen once'],
+          rows: ['Winning language and hooks', 'Objections, ranked by frequency', 'Corrections, so mistakes happen once'],
           foot: 'Owned by you, on your systems',
         },
         {
           label: 'OUT',
           title: 'Agents with real job specs',
           note: 'Each one reads the repository, runs on a schedule, and writes back what it learned.',
-          rows: ['Content drafted from what performed', 'Outbound timed to real triggers', 'Creative angles for testing', 'CRM updates and follow-up', 'A weekly read on what changed'],
+          rows: ['Content drafted from what performed', 'CRM updates and follow-up', 'A weekly read on what changed'],
           foot: 'Every output goes to approval',
         },
       ],
@@ -1928,6 +1970,11 @@ function build() {
     roasCalc: p.roasCalc,
     /* Only the automation pillar sets this. Undefined elsewhere. */
     systemMap: p.systemMap,
+    /* Same rule: only the automation pillar sets these two. The explainer is
+       the plain-English answer above the fold; the accordion folds the detail
+       so the copy survives for search without being a wall to read. */
+    explainer: p.explainer,
+    accordion: p.accordion,
     sources: p.sources,
     callForm: p.callForm,
     /* Default /apply unless a page has a better next step of its own. Only

@@ -113,6 +113,71 @@ function prose(s) {
   </section>`;
 }
 
+/* ------------------------------------------------------ explainer + accordion
+
+   /marketing-automation was one big diagram and two long prose sections, and
+   the feedback on it was fair: too much information at once, nothing moving,
+   nothing collapsed, and no plain answer to the question most visitors arrive
+   with, which is what marketing automation even is.
+
+   These two blocks fix the density rather than the word count. The copy is
+   load-bearing for search, so none of it is deleted — the explainer puts a
+   concrete before/after in front of it, and the accordion folds the detail
+   behind headings a person can scan in ten seconds.
+
+   The accordion reuses the FAQ hooks on purpose. setupFaq() in site.js already
+   scopes open/close by parentElement so several accordions can share the hooks
+   without fighting, which means this needs no new JavaScript at all — and with
+   JS off every answer is simply visible, the same graceful failure the FAQ has. */
+function explainer(e) {
+  if (!e) return '';
+  const cards = e.cases.map((c, i) => `<div data-reveal="" style="min-width: 0; background: rgb(255, 255, 255); border: 1px solid ${HAIRLINE_LIGHT}; border-radius: 6px; padding: 28px 26px; display: flex; flex-direction: column; gap: 16px;">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(c.job)}</span>
+        <span style="display: flex; flex-direction: column; gap: 6px;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(107, 107, 99);">By hand today</span>
+          <span style="font-size: 16px; line-height: 1.6; color: ${PAPER_TEXT};">${esc(c.before)}</span>
+        </span>
+        <span aria-hidden="true" style="display: block; height: 1px; background: ${HAIRLINE_LIGHT};"></span>
+        <span style="display: flex; flex-direction: column; gap: 6px;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: ${INK};">Once it is built</span>
+          <span style="font-size: 16px; line-height: 1.6; color: ${INK};">${esc(c.after)}</span>
+        </span>
+        <span style="margin-top: auto; padding-top: 14px; border-top: 1px solid ${HAIRLINE_LIGHT}; font-size: 13px; line-height: 1.6; color: ${PAPER_TEXT};">${esc(c.gain)}</span>
+      </div>`).join('\n      ');
+  return `<section style="padding: 112px 32px; background: ${PAPER}; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(e.label)}</span>
+      <h2 style="margin: 20px 0px 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">${esc(e.h2)}</h2>
+      <p style="margin: 22px 0px 0px; max-width: 62ch; font-size: 19px; line-height: 1.65; color: ${PAPER_TEXT};">${esc(e.p)}</p>
+      <div style="min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 20px; margin-top: 44px;">
+      ${cards}
+      </div>
+      ${e.foot ? `<p style="margin: 32px 0px 0px; max-width: 62ch; font-size: 16px; line-height: 1.7; color: ${PAPER_TEXT};">${esc(e.foot)}</p>` : ''}
+    </div>
+  </section>`;
+}
+
+function accordion(a) {
+  if (!a) return '';
+  const rows = a.items.map(it => `<div data-faq-item="" style="border-top: 1px solid ${HAIRLINE_DARK}; padding: 24px 0px;">
+          <button type="button" data-faq-toggle="" style="width: 100%; background: none; border: none; padding: 0px; margin: 0px; font-family: inherit; text-align: left; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; color: rgb(247, 247, 245);">
+            <span style="font-size: 20px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.4;">${esc(it.q)}</span>
+            <span data-faq-sign="" style="font-size: 23px; font-weight: 400; color: ${INK_TEXT}; line-height: 1;">+</span>
+          </button>
+          <p data-faq-answer="" style="margin: 16px 0px 0px; max-width: 66ch; font-size: 16px; line-height: 1.7; color: ${INK_TEXT};">${esc(it.a)}</p>
+        </div>`).join('\n        ');
+  return `<section style="padding: 112px 32px; background: ${INK}; color: rgb(247, 247, 245); border-bottom: 1px solid ${HAIRLINE_DARK};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT};">${esc(a.label)}</span>
+      <h2 style="margin: 20px 0px 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">${esc(a.h2)}</h2>
+      ${a.p ? `<p style="margin: 22px 0px 0px; max-width: 62ch; font-size: 19px; line-height: 1.65; color: ${INK_TEXT};">${esc(a.p)}</p>` : ''}
+      <div style="display: flex; flex-direction: column; max-width: 900px; margin-top: 40px;">
+        ${rows}
+      </div>
+    </div>
+  </section>`;
+}
+
 function faqSection(faqs, heading) {
   const rows = faqs.map(f =>
     `<div style="border-top: 1px solid ${HAIRLINE_LIGHT}; padding: 26px 0px;">
@@ -768,14 +833,22 @@ function page(p) {
   const url = ORIGIN + p.path;
   const main = [
     hero(p),
+    /* The explainer answers "what is this" and the diagram shows the shape of
+       it, so both belong above the prose rather than after it. systemMap used
+       to render below the tables, which put the one picture on the page after
+       two long sections and an audit table — buried, and the reason the page
+       read as a wall of copy. Only /marketing-automation sets either key, so
+       nothing else moves. */
+    explainer(p.explainer),
     gallery(p.gallery),
+    systemMap(p.systemMap),
     ...(p.sections || []).map(prose),
+    accordion(p.accordion),
     ...(p.tables || []).map(dataTable),
     gantt(p.gantt),
     steps(p.steps),
     walkthrough(p.walkthrough),
     roasCalc(p.roasCalc),
-    systemMap(p.systemMap),
     callForm(p.callForm),
     p.faqs && p.faqs.length ? faqSection(p.faqs, p.faqHeading) : '',
     p.pills ? pills(p.pills.label, p.pills.links) : '',
