@@ -1923,6 +1923,78 @@
     else if (mq.addListener) mq.addListener(apply);
   }
 
+  /* ------------------------------------------------------------- prose folds */
+  /* /marketing-automation runs 17,000px on a phone. The copy earns the rankings
+     so none of it goes, but three long prose sections between the offer and the
+     detail is more than anyone scrolls before deciding.
+
+     Below the same 720px the case cards use, a folded section keeps its heading
+     and its first paragraph and puts the rest behind a toggle. The markup is
+     untouched — everything stays in the HTML, collapsed client-side rather than
+     omitted, which is the same rule the FAQ answers follow — and above the
+     breakpoint, or with JS off, the section is simply whole. */
+  function setupFolds() {
+    var blocks = qa("[data-fold]");
+    if (!blocks.length || !window.matchMedia) return;
+    var mq = window.matchMedia("(max-width: 719px)");
+
+    function build(block, i) {
+      if (block._foldBtn) return;
+      var kids = [].slice.call(block.children);
+      /* Keep the h2 and the first paragraph; fold whatever follows. */
+      var rest = kids.slice(2);
+      if (!rest.length) return;
+      var dark = /rgb\(247, 247, 245\)/.test(block.parentElement.style.color || "");
+      var wrap = document.createElement("div");
+      wrap.id = "fold-" + i;
+      rest.forEach(function (el) { wrap.appendChild(el); });
+      block.appendChild(wrap);
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.setAttribute("aria-controls", wrap.id);
+      btn.style.cssText =
+        "background: none; border: none; padding: 20px 0px 0px; margin: 0px;" +
+        "font-family: inherit; font-size: 15px; font-weight: 600; text-align: left;" +
+        "cursor: pointer; display: flex; align-items: center; gap: 10px;" +
+        "color: " + (dark ? "rgb(216, 255, 0)" : "rgb(10, 10, 10)") + ";";
+      var label = document.createElement("span");
+      var sign = document.createElement("span");
+      sign.setAttribute("aria-hidden", "true");
+      sign.style.cssText = "font-size: 20px; font-weight: 400; line-height: 1;";
+      btn.appendChild(label);
+      btn.appendChild(sign);
+      block.appendChild(btn);
+      block._foldBtn = btn;
+      block._foldWrap = wrap;
+
+      var open = false;
+      function paint() {
+        wrap.style.display = open ? "" : "none";
+        label.textContent = open ? "Show less" : "Read the rest";
+        sign.textContent = open ? "−" : "+";
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+      paint();
+      btn.addEventListener("click", function () { open = !open; paint(); });
+    }
+
+    function teardown(block) {
+      if (!block._foldBtn) return;
+      while (block._foldWrap.firstChild) block.insertBefore(block._foldWrap.firstChild, block._foldWrap);
+      block.removeChild(block._foldWrap);
+      block.removeChild(block._foldBtn);
+      block._foldBtn = null;
+      block._foldWrap = null;
+    }
+
+    function apply() {
+      blocks.forEach(function (b, i) { if (mq.matches) build(b, i); else teardown(b); });
+    }
+    apply();
+    if (mq.addEventListener) mq.addEventListener("change", apply);
+    else if (mq.addListener) mq.addListener(apply);
+  }
+
   /* ------------------------------------------------------------------- init */
   function init() {
     recordFirstTouch();
@@ -1941,6 +2013,7 @@
     setupCalculators();
     setupGlossary();
     setupCaseCards();
+    setupFolds();
   }
 
   if (document.readyState === "loading") {

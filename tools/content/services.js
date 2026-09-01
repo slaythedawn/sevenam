@@ -1187,6 +1187,7 @@ const PAGES = [
 
   {
     slug: 'marketing-automation',
+    foldProse: true,
     explainer: {
       label: 'START HERE',
       h2: 'What marketing automation actually is.',
@@ -1232,6 +1233,13 @@ const PAGES = [
     title: 'Marketing Automation Agency — Systems That Replace the Busywork | Sevenam',
     description: 'Marketing automation built as a system: a team of AI agents, one marketing data repository, and the workflows that connect them. Bespoke, quoted after we map what you run.',
     eyebrow: 'MARKETING AUTOMATION', h1: 'Marketing Automation',
+    /* Renders only once this file is in img/. Until then the page builds
+       and validates exactly as it does now — see figure() in layout.js. */
+    figure: {
+      src: '/img/automation-whiteboard-a1.png',
+      alt: 'A whiteboard sketch of the same three-part system: signal in on the left, the repository in the middle, agents on the right, and one approval bar underneath all three.',
+      caption: 'The same shape, drawn the way it gets drawn on a first call.',
+    },
     systemMap: {
       label: 'THE SHAPE OF IT',
       h2: 'Three parts, in this order.',
@@ -1296,7 +1304,7 @@ const PAGES = [
         'A weekly read on what changed and what to do about it.',
       ],
     },
-    tables: [
+    topTables: [
       {
         wrap: true,
         h2: 'The systems audit, and who we can do it for.',
@@ -1310,6 +1318,7 @@ const PAGES = [
           ['How we decide', 'On the fifteen-minute call, from what you tell us about the stack and the data', 'It is quicker to say on a call than after a week of work'],
           ['If you do not qualify', 'We say so on the call and tell you what would change that', 'Nobody should wait on an audit that is not coming'],
         ],
+        cta: { href: '/apply', label: 'Ask whether you qualify \u2192' },
         note: 'To be plain about it: the audit is offered at our discretion, in limited numbers, and nothing on this page is an offer to supply it — qualifying is decided on the call and we may decline for any reason, including simply being full that month. If we say yes, you get the scope and the dates in writing before we start.',
       },
     ],
@@ -1960,7 +1969,11 @@ function build() {
          is long enough already, and repeating the section there pushes the
          creative case below the fold on a page that has to sell creative. */
       ...(p.skipOwnership ? [] : [{ tone: 'paper', h2: OWNERSHIP.h2, paras: OWNERSHIP.paras, items: OWNERSHIP.items }]),
-    ],
+    /* foldProse marks every prose section on a page so site.js can keep the
+       heading and first paragraph on a phone and put the rest behind a toggle.
+       Only /marketing-automation sets it — 17,000px was more page than anyone
+       scrolls before deciding, and none of the copy could go. */
+    ].map(sec => (p.foldProse ? Object.assign({}, sec, { fold: true }) : sec)),
     tables: p.tables,
     /* Only the digital-marketing head page sets this: a row of city links so the
        five city pages are reachable from the term they sit under. */
@@ -1975,6 +1988,10 @@ function build() {
        so the copy survives for search without being a wall to read. */
     explainer: p.explainer,
     accordion: p.accordion,
+    /* The audit offer, rendered high instead of after the prose. */
+    topTables: p.topTables,
+    /* Renders only once the image file exists in img/. See figure() in layout.js. */
+    figure: p.figure,
     sources: p.sources,
     callForm: p.callForm,
     /* Default /apply unless a page has a better next step of its own. Only

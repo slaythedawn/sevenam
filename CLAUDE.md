@@ -275,6 +275,32 @@ today, once it is built, why that is worth money — and it renders **above** th
 prose on purpose. `systemMap` moved up with it: it used to render after the tables,
 which put the only picture on the page below everything it introduces.
 
+Two more collapses, both in `site.js` and both keyed to the same **719px** the
+card grids use. `setupCaseCards()` folds the homepage case studies on a phone —
+each keeps its name and headline number, the rest goes behind a toggle, and it
+comes back whole above the breakpoint. Forcing one column had cut the slicing
+bug and left 2,606px of stacked cards; this takes that to 688px. `setupFolds()`
+does the same for any prose section rendered with `fold: true` — heading and
+first paragraph stay, the rest folds — and only `/marketing-automation` sets it,
+via `foldProse` in `services.js`. Both build their toggles in JS and touch no
+markup, so with JS off every section is simply whole, and both handle the two
+card shapes by counting children rather than by adding hooks. **Fold inside the
+element the content already sits in**, or it loses that element's padding and
+renders full-bleed.
+
+`figure()` renders an image **only if the file exists on disk** at build time.
+That is how `/marketing-automation` carries a slot for a whiteboard render the
+build container cannot fetch: drop the file into `img/` and rebuild, and it
+appears with no code change. Never reference an image that is not there —
+`check.js` fails a missing asset, and a broken image is worse than none.
+
+`dataTable` takes an optional `cta` — one inline link under the note, not a
+button. The audit block described something free and offered no way to ask for
+it, the same dead end `/pricing`'s cards had. A text link fixes that without
+reintroducing the mid-page CTA block that was deleted from 34 pages. `topTables`
+renders a table high, just under the explainer, instead of after the prose;
+only the audit block uses it, because an offer four screens down is not an offer.
+
 The accordion **reuses the FAQ hooks** (`data-faq-item` / `-toggle` / `-sign` /
 `-answer`) rather than inventing its own. `setupFaq()` in `site.js` already scopes
 open/close by `parentElement`, so several accordions coexist on one page with no new

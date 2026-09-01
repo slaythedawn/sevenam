@@ -105,7 +105,7 @@ function prose(s) {
     ? `background: ${INK}; color: rgb(247, 247, 245); padding: 112px 32px;`
     : `border-bottom: 1px solid ${HAIRLINE_LIGHT}; padding: 112px 32px;`;
   return `<section style="${style}">
-    <div style="max-width: 1240px; margin: 0px auto;">
+    <div style="max-width: 1240px; margin: 0px auto;"${s.fold ? ' data-fold=""' : ''}>
       <h2 style="margin: 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">${esc(s.h2)}</h2>
       ${paras}
       ${list}
@@ -129,6 +129,31 @@ function prose(s) {
    scopes open/close by parentElement so several accordions can share the hooks
    without fighting, which means this needs no new JavaScript at all — and with
    JS off every answer is simply visible, the same graceful failure the FAQ has. */
+/* An image the page renders only once the file is actually in the repo.
+
+   The whiteboard render for /marketing-automation was generated but the CDN it
+   lives on is blocked from the build container, so the file cannot be fetched
+   here — Josh has to drop it into img/ himself. Rather than ship a reference to
+   a file that is not there (check.js fails a missing asset, and a broken image
+   renders as a grey box, which is worse than none) this checks the filesystem at
+   build time and renders nothing until the file exists. Add the file, rebuild,
+   and the figure appears with no code change.
+
+   img/* is served immutable for a year, so a replacement needs a new filename —
+   the same reason the two homepage images carry a content hash. */
+function figure(f) {
+  if (!f || !f.src) return '';
+  if (!fs.existsSync(path.join(ROOT, f.src.replace(/^\//, '')))) return '';
+  return `<section style="padding: 0px 32px 112px; background: ${PAPER}; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <figure data-reveal="" style="margin: 0px;">
+        <img loading="lazy" decoding="async" src="${esc(f.src)}" alt="${esc(f.alt)}" style="display: block; width: 100%; height: auto; border: 1px solid ${HAIRLINE_LIGHT}; border-radius: 6px;">
+        ${f.caption ? `<figcaption style="margin: 16px 0px 0px; max-width: 62ch; font-size: 13px; line-height: 1.6; color: ${PAPER_TEXT};">${esc(f.caption)}</figcaption>` : ''}
+      </figure>
+    </div>
+  </section>`;
+}
+
 function explainer(e) {
   if (!e) return '';
   const cards = e.cases.map((c, i) => `<div data-reveal="" style="min-width: 0; background: rgb(255, 255, 255); border: 1px solid ${HAIRLINE_LIGHT}; border-radius: 6px; padding: 28px 26px; display: flex; flex-direction: column; gap: 16px;">
@@ -214,6 +239,13 @@ function dataTable(t) {
   const body = t.rows.map(r =>
     '<tr>' + r.map((cell, i) =>
       `<td style="text-align: ${align(i)}; padding: 14px 0px; ${i ? 'padding-left: 20px;' : ''} border-top: 1px solid ${HAIRLINE_LIGHT}; font-size: ${wrap ? '15px' : '16px'}; line-height: ${wrap ? '1.6' : '1.5'}; vertical-align: top; ${wrap ? '' : (i ? 'font-variant-numeric: tabular-nums; white-space: nowrap;' : 'font-weight: 500;')}${wrap && !i ? 'font-weight: 600;' : ''} color: ${i ? PAPER_TEXT : INK};">${esc(cell)}</td>`).join('') + '</tr>').join('\n          ');
+  /* One inline link, not a button. The audit block describes something free and
+     gave no way to ask for it, which is the same dead end /pricing's cards had
+     before they got their own pills. A text link removes it without adding a
+     mid-page CTA block — the rule that block was deleted from 34 pages for. */
+  const cta = t.cta
+    ? `<p style="margin: 18px 0px 0px;"><a href="${esc(t.cta.href)}" style="font-size: 16px; font-weight: 600; color: ${INK}; border-bottom: 2px solid ${VOLT};">${esc(t.cta.label)}</a></p>`
+    : '';
   const note = t.note
     ? `<p style="margin: 20px 0px 0px; max-width: 78ch; font-size: 14px; line-height: 1.65; color: ${PAPER_TEXT};">${esc(t.note)}</p>`
     : '';
@@ -229,6 +261,7 @@ function dataTable(t) {
           </tbody>
         </table>
       </div>
+      ${cta}
       ${note}
     </div>
   </section>`;
@@ -840,8 +873,14 @@ function page(p) {
        read as a wall of copy. Only /marketing-automation sets either key, so
        nothing else moves. */
     explainer(p.explainer),
+    /* The offer is the reason the page exists, and it was rendering below two
+       prose sections and a diagram — about four screens down on a phone. A page
+       that has to sell a bespoke service puts the qualifying step near the top
+       or it does not get one. Only /marketing-automation sets topTables. */
+    ...(p.topTables || []).map(dataTable),
     gallery(p.gallery),
     systemMap(p.systemMap),
+    figure(p.figure),
     ...(p.sections || []).map(prose),
     accordion(p.accordion),
     ...(p.tables || []).map(dataTable),
