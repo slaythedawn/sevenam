@@ -817,6 +817,7 @@ const PAGES = [
     },
     roasCalc: {
       id: 'retainer',
+      disclaimer: 'It assumes the split you enter is accurate and that the paid line is doing only paid work. Effective rate is a comparison device, not a judgement: a higher rate on a smaller budget can still be the better deal.',
       label: 'WORK IT OUT',
       h2: 'What the paid line actually costs you.',
       p: 'Once the retainer is split, the number worth having is what the paid management works out to as a share of the media it manages. It is the same comparison a percentage-of-spend agency invites, made on a retainer that never mentions a percentage.',
@@ -880,6 +881,7 @@ const PAGES = [
     },
     roasCalc: {
       id: 'cpr',
+      disclaimer: 'It assumes one flat conversion rate from click to sale, no returns and no repeat purchase, and it holds two of the three rates still while you move the third — a real account moves all three at once.',
       label: 'WORK IT OUT',
       h2: 'What a result actually costs.',
       p: 'CPM is the number everyone benchmarks and the least useful of the three. Move the click-through and conversion rates instead \\u2014 they sit between an impression and a sale, and they move cost per result far harder than the media price does.',

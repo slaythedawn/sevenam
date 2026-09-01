@@ -78,6 +78,19 @@ design — but it also means **breaking that file breaks all 42**.
   dark card inside a paper section both come out right. That only reaches inline
   styles written as `color: rgb(85, 85, 79)` — colours built in `site.js` are hex and
   bypass it, so pick the correct one there by hand.
+- **A grid item will not shrink below its own min-content width** unless told it
+  may, and a track that cannot shrink pushes the grid past its container. Chromium
+  resolved the homepage case-study strip to one column on a phone; Safari widened
+  the layout viewport instead and rendered two columns with the second sliced off
+  screen, the visible card wrapping one word per line. `min-width: 0` on every
+  grid child in `main` is the engine-independent fix, and `grid-column: span 2` is
+  neutralised below 829px so `auto-fit` cannot be asked for a second track it did
+  not create. Reported from a real iPhone; it does not reproduce in Chromium at
+  any width, so do not "simplify" either rule away because a desktop check passes.
+- **Section padding is not the lever on page height.** It is 1,228px of an
+  18,856px homepage — 6.5%. A blanket `padding: 80px` on mobile sections made the
+  page *longer* (19,176px), because most sections deliberately carry
+  `padding-top: 0` so a stacked run does not double up. Measured and reverted.
 - **The nav has two breakpoints and they must stay equal.** The page stylesheet
   sends `[data-nav-links]` to its own row, and `tools/theme.js` reverts the floating
   capsule to an in-flow sticky bar. Both are **829px**, because 830 is the first

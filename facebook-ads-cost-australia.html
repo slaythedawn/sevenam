@@ -170,7 +170,10 @@ main > section:first-of-type { padding-top: 128px !important; }
     min-height: 0 !important; padding: 10px 16px !important;
     gap: 8px 12px !important;
   }
-  main > section:first-of-type { padding-top: 0 !important; }
+  /* Not zero. The floating capsule needed 128px taken back; an in-flow bar needs
+     none of it — but taking all of it away left 2px between the nav and the
+     eyebrow on every page, which read as the header sitting on the content. */
+  main > section:first-of-type { padding-top: 44px !important; }
 
   /* The page stylesheet sends the links to their own full-width row, which put
      the logo, the button and the links on three separate lines — 156px of
@@ -178,6 +181,12 @@ main > section:first-of-type { padding-top: 128px !important; }
      links scroll horizontally anyway, so they do not need the full width: they
      take the remaining space on the button's line instead and the bar comes
      down to 105px at every width from 320 up. */
+  /* Tried and reverted: a blanket "padding: 80px" on every section made the
+     homepage LONGER, 18,856px to 19,176px. Most sections are deliberately set to
+     padding-top: 0 so a stacked run does not double up, and a blanket rule put
+     80px back on every one of them. Section padding is 6.5% of this page — the
+     height is the content, and the only real lever is showing less of it. */
+
   [data-nav-links] {
     order: 0 !important;
     width: auto !important;
@@ -194,6 +203,27 @@ main > section:first-of-type { padding-top: 128px !important; }
     -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 20px), transparent);
     mask-image: linear-gradient(to right, #000 calc(100% - 20px), transparent);
   }
+}
+
+/* ======================================================= grid robustness ==
+   A grid item will not shrink below its own min-content width unless it is told
+   it may, and a track that cannot shrink pushes the whole grid past its
+   container. Chromium resolved the case-study strip to one column on a phone;
+   Safari widened the layout viewport instead and rendered two columns with the
+   second sliced off the screen — cards side by side, the right one wrapping one
+   word per line.
+
+   min-width: 0 on grid children is the fix for that class of bug in every
+   engine, and it is a no-op wherever the content already fits. */
+main [style*="display: grid"] > * { min-width: 0; }
+
+/* The other half of it. auto-fit can resolve to a single track on a narrow
+   screen, and a "grid-column: span 2" child then demands a second one — which
+   the engine invents. index.html already neutralised the span below 720px;
+   moving it here extends the same guard to all 71 pages and up to the width
+   where a second column is genuinely wanted. */
+@media (max-width: 829px) {
+  main [style*="grid-column: span 2"] { grid-column: auto !important; }
 }
 
 /* ============================================================ atmosphere ==
@@ -597,6 +627,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
             <span data-rout="lever" style="display: block; margin-top: 8px; font-size: 26px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">$13 vs $8</span>
             <span data-rout="leverNote" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">What a fifth of a point of CTR saves per result, against what taking $2.00 off the CPM saves. Creative moves the first number; nothing in the account reliably moves the second.</span>
           </div>
+          <p style="margin: 26px 0px 0px; padding: 18px 20px; border: 1px solid rgb(35, 35, 32); border-radius: 6px; max-width: 62ch; font-size: 14px; line-height: 1.65; color: rgb(181, 181, 173);"><strong style="color: rgb(247, 247, 245);">Indicative only.</strong> It assumes one flat conversion rate from click to sale, no returns and no repeat purchase, and it holds two of the three rates still while you move the third — a real account moves all three at once. It is arithmetic on the numbers you type, not a forecast, not a quote, and not advice. Your own account will differ. Nothing here is recorded or sent anywhere.</p>
         </div>
       </div>
     </div>

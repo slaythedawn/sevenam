@@ -436,6 +436,7 @@ const PAGES = [
     },
     roasCalc: {
       id: 'roas',
+      disclaimer: 'This is a simplified model: it assumes your gross margin is the same across everything you sell, ignores returns, discounting and the cost of the ads themselves beyond media, and treats attributed revenue as real.',
       label: 'WORK IT OUT',
       h2: 'Your break-even, in one slider.',
       p: 'Break-even ROAS is decided by your gross margin, not by anything in the ad account \u2014 so the same 3x is a healthy month for one business and a loss for another. Move the margin and watch the number you have to beat move with it.',

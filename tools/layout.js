@@ -578,6 +578,7 @@ function roasCalc(rc) {
         </div>
         <div>
           ${rc.outputs.map(out).join('\n          ')}
+          <p style="margin: 26px 0px 0px; padding: 18px 20px; border: 1px solid ${HAIRLINE_DARK}; border-radius: 6px; max-width: 62ch; font-size: 14px; line-height: 1.65; color: rgb(181, 181, 173);"><strong style="color: rgb(247, 247, 245);">Indicative only.</strong> ${esc(rc.disclaimer)} It is arithmetic on the numbers you type, not a forecast, not a quote, and not advice. Your own account will differ. Nothing here is recorded or sent anywhere.</p>
         </div>
       </div>
     </div>
