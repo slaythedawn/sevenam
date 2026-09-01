@@ -881,6 +881,11 @@ function page(p) {
     gallery(p.gallery),
     systemMap(p.systemMap),
     figure(p.figure),
+    /* "What you actually get" belongs above the prose, not after it — a bespoke
+       service that never lists its deliverables reads as vague. Only the
+       automation pillar sets topSteps and workshopFigure. */
+    steps(p.topSteps),
+    figure(p.workshopFigure),
     ...(p.sections || []).map(prose),
     accordion(p.accordion),
     ...(p.tables || []).map(dataTable),

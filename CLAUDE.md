@@ -275,6 +275,17 @@ today, once it is built, why that is worth money — and it renders **above** th
 prose on purpose. `systemMap` moved up with it: it used to render after the tables,
 which put the only picture on the page below everything it introduces.
 
+**The one-column rule for the case-study strip is enforced in `site.js`, not
+just in CSS.** The theme stylesheet names one column below 720px via an attribute
+selector on the inline style; that rule is in the shipped HTML and Chromium obeys
+it, and the strip still came back two-up from a real iPhone with the cards
+squeezed to 131px and 206px. Whether that is a stale cached document or WebKit
+reading the selector differently, the stylesheet is not something to depend on
+here — `setupCaseCards()` now sets `gridTemplateColumns` directly, which beats an
+inline style without needing a selector to match, and `site.js` is content-hash
+stamped so it is never the stale half of a deploy. The CSS rule stays for the
+no-JS case. Do not remove either.
+
 Two more collapses, both in `site.js` and both keyed to the same **719px** the
 card grids use. `setupCaseCards()` folds the homepage case studies on a phone —
 each keeps its name and headline number, the rest goes behind a toggle, and it
@@ -287,6 +298,15 @@ markup, so with JS off every section is simply whole, and both handle the two
 card shapes by counting children rather than by adding hooks. **Fold inside the
 element the content already sits in**, or it loses that element's padding and
 renders full-bleed.
+
+**The images on `/marketing-automation` are not in the repo yet, and that is the
+one open item on that page.** Two slots exist — `figure` (the whiteboard system
+sketch, after `systemMap`) and `workshopFigure` (Josh running the mapping
+workshop, after the deliverables). Both were generated but the CDN they live on
+is blocked from the build container, and binary cannot be moved through the
+agent's context economically, so Josh has to download them. Drop the files in as
+`img/automation-whiteboard-a1.png` and `img/automation-workshop-a1.jpg`, rebuild,
+and both appear. Do not swap the slots for a hotlink to someone else's CDN.
 
 `figure()` renders an image **only if the file exists on disk** at build time.
 That is how `/marketing-automation` carries a slot for a whiteboard render the

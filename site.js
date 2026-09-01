@@ -1881,6 +1881,7 @@
         "cursor: pointer; display: flex; align-items: center; justify-content: space-between;" +
         "gap: 16px; color: " + (dark ? "rgb(216, 255, 0)" : "rgb(10, 10, 10)") + ";";
       var label = document.createElement("span");
+      label.style.cssText = "white-space: nowrap;";
       var sign = document.createElement("span");
       sign.setAttribute("aria-hidden", "true");
       sign.style.cssText = "font-size: 20px; font-weight: 400; line-height: 1;";

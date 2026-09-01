@@ -1188,6 +1188,24 @@ const PAGES = [
   {
     slug: 'marketing-automation',
     foldProse: true,
+    topSteps: {
+      label: 'WHAT YOU GET',
+      h2: 'What is actually delivered.',
+      items: [
+        { t: 'A workshop, in your office', p: 'A full day with your team, in the room. Josh flies in for it. Every tool, every handover and every piece of work being repeated by hand goes on the wall, and by the end of the day you can see the shape of your own operation. Most people have never seen it drawn.' },
+        { t: 'A written systems audit', p: 'What we found, ranked by what it is costing you and what it would take to fix. Yours to keep and act on, with us or without us.' },
+        { t: 'The marketing data repository', p: 'Built on your own infrastructure: objections ranked by frequency, the language that earns replies, the offers that worked, your thresholds and brand rules, and the corrections so a mistake happens once.' },
+        { t: 'Agents with written job specs', p: 'Each one documented like a role — what it reads, when it runs, what it produces, what good looks like and who approves the output. Not a prompt in someone’s browser tab.' },
+        { t: 'CRM and workflow automation', p: 'Records that update themselves from real activity, lifecycle stages that move on evidence, and follow-up that fires on a trigger. Wired into the tools you already pay for.' },
+        { t: 'Training for your team', p: 'Two sessions once it is live, recorded, plus written runbooks. Your people have to be able to change a job spec, add an agent and read what the system is telling them without calling us. A system only you can operate is a dependency, not an asset.' },
+        { t: 'A handover you own', p: 'Every account, every credential and every document in your name from the first day. If we stop working together the system keeps running, and nothing has to be negotiated back.' },
+      ],
+    },
+    workshopFigure: {
+      src: '/img/automation-workshop-a1.jpg',
+      alt: 'Josh Peacock standing at a whiteboard running a marketing systems workshop, drawing a boxes-and-arrows diagram while a team watches from a table in front of him.',
+      caption: 'The mapping workshop. A day in the room, in your office, before anything gets built.',
+    },
     explainer: {
       label: 'START HERE',
       h2: 'What marketing automation actually is.',
@@ -1373,7 +1391,7 @@ const PAGES = [
         'Your Business Manager, your ad account, your billing in NZD.',
         'Decisions written every morning, not discussed weekly.',
         'Sydney-based and remote — no local office, and we will not claim one.',
-        'The same fixed fees as our Australian work: nothing scales with your budget.',
+        'The same fixed fees as our Australian work, priced to the work.',
         'Set up to expand into Australia when the domestic auction tightens.',
       ],
     },
@@ -1992,6 +2010,9 @@ function build() {
     topTables: p.topTables,
     /* Renders only once the image file exists in img/. See figure() in layout.js. */
     figure: p.figure,
+    workshopFigure: p.workshopFigure,
+    /* The deliverables list, rendered above the prose rather than after it. */
+    topSteps: p.topSteps,
     sources: p.sources,
     callForm: p.callForm,
     /* Default /apply unless a page has a better next step of its own. Only
