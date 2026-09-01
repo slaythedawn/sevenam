@@ -851,81 +851,135 @@
     apply();
   }
 
-  /* ------------------------------------------------- break-even ROAS */
+  /* ---------------------------------------------------------- calculators */
 
-  /* The page argues that break-even ROAS is decided by gross margin rather than
-     by anything in the ad account. That is a claim you feel by moving the margin
-     and watching the number move, so the page carries the arithmetic rather than
-     describing it.
+  /* Three pages carry one. The markup is identical and built by layout.js; the
+     only thing that differs is the arithmetic, so COMPUTE here mirrors COMPUTE
+     there, keyed by the same id. layout.js renders the defaults at build time so
+     the page is correct before this file lands, and this recomputes on input.
 
-     Everything here is derived from the three sliders — no stored results, no
-     endpoint, nothing leaves the browser. The server already rendered the same
-     figures from the same defaults in layout.js, so the page is right before
-     this runs and identical after. */
-  function setupRoas() {
-    var root = q("#roas-calculator");
-    if (!root) return;
+     The two copies are kept honest by a test that loads each page with
+     JavaScript disabled and diffs every output against the scripted render — if
+     they ever drift, that fails rather than shipping two different answers.
 
-    var S = { margin: 40, roas: 30, spend: 30000 };
-    qa("[data-roas]", root).forEach(function (el) {
-      var k = el.dataset.roas;
-      if (el.value !== "") S[k] = Number(el.value);
-    });
+     Nothing leaves the browser. It is arithmetic on three sliders. */
+  function money(n) {
+    var r = Math.round(n);
+    return (r < 0 ? "-$" : "$") + Math.abs(r).toLocaleString("en-AU");
+  }
 
-    function money(n) {
-      var r = Math.round(n);
-      return (r < 0 ? "-$" : "$") + Math.abs(r).toLocaleString("en-AU");
-    }
-    function set(name, v) {
-      var el = q('[data-rout="' + name + '"]', root);
-      if (el) el.textContent = v;
-    }
-
-    function render() {
-      var marginFrac = (Number(S.margin) || 1) / 100;
-      var roasX = (Number(S.roas) || 0) / 10;
-      var spend = Number(S.spend) || 0;
-
+  var COMPUTE = {
+    roas: function (d) {
+      var marginFrac = (Number(d.margin) || 1) / 100;
+      var roasX = (Number(d.roas) || 0) / 10;
+      var spend = Number(d.spend) || 0;
       var breakeven = 1 / marginFrac;
       var revenue = spend * roasX;
       var grossProfit = revenue * marginFrac;
       var netOfMedia = grossProfit - spend;
-      var perHalfX = 0.5 * spend * marginFrac;
+      return {
+        labels: { margin: d.margin + "%", roas: roasX.toFixed(1) + "x", spend: money(spend) },
+        breakeven: breakeven.toFixed(2) + "x",
+        breakevenNote: "At a " + d.margin + "% margin you need " + breakeven.toFixed(2) +
+          "x just to cover the cost of the goods.",
+        profit: money(netOfMedia),
+        profitNote: netOfMedia >= 0
+          ? roasX.toFixed(1) + "x on " + money(spend) + " is " + money(revenue) +
+            " of revenue and " + money(grossProfit) + " of gross profit, less the " +
+            money(spend) + " you spent."
+          : roasX.toFixed(1) + "x on " + money(spend) + " returns " + money(grossProfit) +
+            " of gross profit against " + money(spend) + " of media. You are below break-even.",
+        headroom: money(0.5 * spend * marginFrac),
+        headroomNote: "A month, at this spend and margin, without buying any more media.",
+        /* The headline changes meaning below break-even, not just value. */
+        breakevenTone: roasX >= breakeven ? "good" : "bad"
+      };
+    },
 
-      set("marginLabel", S.margin + "%");
-      set("roasLabel", roasX.toFixed(1) + "x");
-      set("spendLabel", money(spend));
+    cpr: function (d) {
+      var cpm = (Number(d.cpm) || 0) / 10;
+      var ctr = (Number(d.ctr) || 0) / 100;
+      var cvr = (Number(d.cvr) || 0) / 100;
+      var clicks = 1000 * (ctr / 100);
+      var results = clicks * (cvr / 100);
+      var cpc = clicks > 0 ? cpm / clicks : 0;
+      var cpa = results > 0 ? cpm / results : 0;
+      var betterCtr = 1000 * ((ctr + 0.2) / 100) * (cvr / 100);
+      var cpaCtr = betterCtr > 0 ? cpm / betterCtr : 0;
+      var cpaCpm = results > 0 ? Math.max(0, cpm - 2) / results : 0;
+      return {
+        labels: { cpm: "$" + cpm.toFixed(2), ctr: ctr.toFixed(2) + "%", cvr: cvr.toFixed(2) + "%" },
+        cpa: money(cpa),
+        cpaNote: "At a $" + cpm.toFixed(2) + " CPM, " + ctr.toFixed(2) +
+          "% of impressions click and " + cvr.toFixed(2) + "% of those convert.",
+        cpc: "$" + cpc.toFixed(2),
+        cpcNote: clicks.toFixed(1) + " clicks per thousand impressions.",
+        lever: money(cpa - cpaCtr) + " vs " + money(cpa - cpaCpm),
+        leverNote: "What a fifth of a point of CTR saves per result, against what taking " +
+          "$2.00 off the CPM saves. Creative moves the first number; nothing in the " +
+          "account reliably moves the second."
+      };
+    },
 
-      set("breakeven", breakeven.toFixed(2) + "x");
-      set("breakevenNote", "At a " + S.margin + "% margin you need " +
-        breakeven.toFixed(2) + "x just to cover the cost of the goods.");
-
-      set("profit", money(netOfMedia));
-      set("profitNote", netOfMedia >= 0
-        ? roasX.toFixed(1) + "x on " + money(spend) + " is " + money(revenue) +
-          " of revenue and " + money(grossProfit) + " of gross profit, less the " +
-          money(spend) + " you spent."
-        : roasX.toFixed(1) + "x on " + money(spend) + " returns " + money(grossProfit) +
-          " of gross profit against " + money(spend) +
-          " of media. You are below break-even.");
-
-      set("headroom", money(perHalfX));
-      set("headroomNote", "A month, at this spend and margin, without buying any more media.");
-
-      /* The headline number is the one that changes meaning, not just value:
-         above break-even it is the point of the page, below it is a warning. */
-      var be = q('[data-rout="breakeven"]', root);
-      if (be) be.style.color = roasX >= breakeven ? VOLT : "#FF6B5A";
+    retainer: function (d) {
+      var retainer = Number(d.retainer) || 0;
+      var spend = Number(d.spend) || 0;
+      var paidMonthly = retainer * ((Number(d.paid) || 0) / 100);
+      var restMonthly = retainer - paidMonthly;
+      var effective = spend > 0 ? (paidMonthly / spend) * 100 : 0;
+      return {
+        labels: { retainer: money(retainer), spend: money(spend), paid: d.paid + "%" },
+        effective: effective.toFixed(1) + "%",
+        effectiveNote: money(paidMonthly) + " a month to manage " + money(spend) +
+          " of media is the same as a " + effective.toFixed(1) +
+          "% fee, whatever the invoice calls it.",
+        paid: money(paidMonthly * 12),
+        paidNote: "A year on the paid line — the only part with a clean revenue trace.",
+        rest: money(restMonthly * 12),
+        restNote: "A year on content, scheduling and community. Judge this on brand goals, " +
+          "not on sales it did not make."
+      };
     }
+  };
 
-    qa("[data-roas]", root).forEach(function (el) {
-      el.addEventListener("input", function () {
-        S[el.dataset.roas] = el.value;
-        render();
+  function setupCalculators() {
+    qa("[data-calc]").forEach(function (root) {
+      var id = root.dataset.calc;
+      var compute = COMPUTE[id];
+      if (!compute) return;
+
+      var S = {};
+      qa("[data-roas]", root).forEach(function (el) { S[el.dataset.roas] = Number(el.value); });
+
+      function set(name, v) {
+        var el = q('[data-rout="' + name + '"]', root);
+        if (el) el.textContent = v;
+      }
+
+      function render() {
+        var r = compute(S);
+        Object.keys(r.labels || {}).forEach(function (k) { set(k + "Label", r.labels[k]); });
+        Object.keys(r).forEach(function (k) {
+          if (k === "labels" || /Tone$/.test(k)) return;
+          set(k, r[k]);
+        });
+        Object.keys(r).forEach(function (k) {
+          var m = /^(.*)Tone$/.exec(k);
+          if (!m) return;
+          var el = q('[data-rout="' + m[1] + '"]', root);
+          if (el) el.style.color = r[k] === "bad" ? "#FF6B5A" : VOLT;
+        });
+      }
+
+      qa("[data-roas]", root).forEach(function (el) {
+        el.addEventListener("input", function () {
+          S[el.dataset.roas] = Number(el.value);
+          render();
+        });
       });
-    });
 
-    render();
+      render();
+    });
   }
 
   /* ------------------------------------------------- ad library search */
@@ -1186,7 +1240,7 @@
     setupProducts();
     setupPricingCall();
     setupAdLibrary();
-    setupRoas();
+    setupCalculators();
     setupGlossary();
   }
 

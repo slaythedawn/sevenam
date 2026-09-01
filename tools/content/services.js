@@ -815,6 +815,23 @@ const PAGES = [
         'A provider who cannot split the bill is telling you something.',
       ],
     },
+    roasCalc: {
+      id: 'retainer',
+      label: 'WORK IT OUT',
+      h2: 'What the paid line actually costs you.',
+      p: 'Once the retainer is split, the number worth having is what the paid management works out to as a share of the media it manages. It is the same comparison a percentage-of-spend agency invites, made on a retainer that never mentions a percentage.',
+      defaults: { retainer: 4500, spend: 30000, paid: 40 },
+      fields: [
+        { key: 'retainer', label: 'Monthly retainer', min: 1000, max: 30000, step: 250, hint: 'The whole invoice, before you split it.' },
+        { key: 'spend', label: 'Monthly ad spend', min: 5000, max: 300000, step: 1000, hint: 'Media only. This is the budget the paid line is managing.' },
+        { key: 'paid', label: 'Share on paid management', min: 5, max: 100, hint: 'Ask for the split. A provider doing good work answers without difficulty.' },
+      ],
+      outputs: [
+        { key: 'effective', label: 'Effective rate on your media' },
+        { key: 'paid', label: 'Paid management, a year' },
+        { key: 'rest', label: 'Creative and organic, a year' },
+      ],
+    },
     faqs: [
       { q: 'What should we expect to pay?', a: "For small and medium businesses in Australia, retainers commonly run from around eight hundred dollars a month to five thousand and beyond, and the spread is that wide because the scope is. A retainer covering daily posting, community management and a modest ad budget looks nothing like one covering serious media buying and weekly creative production. Ask what portion is paid media management before comparing anything." },
       { q: 'Is organic social worth paying for?', a: "For some businesses genuinely yes — it is brand, service and community. Just do not buy it expecting it to perform like advertising, and do not let it be measured as though it does." },
@@ -859,6 +876,23 @@ const PAGES = [
         'Decision speed: how fast losing spend is stopped.',
         'Offer and landing experience, which no ad can rescue.',
         'Audience size, which sets how fast frequency climbs.',
+      ],
+    },
+    roasCalc: {
+      id: 'cpr',
+      label: 'WORK IT OUT',
+      h2: 'What a result actually costs.',
+      p: 'CPM is the number everyone benchmarks and the least useful of the three. Move the click-through and conversion rates instead \\u2014 they sit between an impression and a sale, and they move cost per result far harder than the media price does.',
+      defaults: { cpm: 200, ctr: 100, cvr: 250 },
+      fields: [
+        { key: 'cpm', label: 'CPM', min: 50, max: 600, hint: 'What the auction charges per thousand impressions. Australian all-industry sits around $14\\u2013$20.' },
+        { key: 'ctr', label: 'Click-through rate', min: 10, max: 500, hint: 'The share of impressions that click. This is a creative number.' },
+        { key: 'cvr', label: 'Landing conversion rate', min: 10, max: 1500, hint: 'The share of clicks that buy. This is an offer and a page, not an ad.' },
+      ],
+      outputs: [
+        { key: 'cpa', label: 'Cost per result' },
+        { key: 'cpc', label: 'Cost per click' },
+        { key: 'lever', label: 'CTR lever vs CPM lever' },
       ],
     },
     faqs: [
@@ -1160,6 +1194,9 @@ function build() {
       ...(p.skipOwnership ? [] : [{ tone: 'paper', h2: OWNERSHIP.h2, paras: OWNERSHIP.paras, items: OWNERSHIP.items }]),
     ],
     tables: p.tables,
+    /* Only the two cost pages set this. Undefined elsewhere, so every other
+       service page renders exactly as before. */
+    roasCalc: p.roasCalc,
     sources: p.sources,
     callForm: p.callForm,
     /* Default /apply unless a page has a better next step of its own. Only

@@ -548,6 +548,60 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
     </div>
   </section>
 
+  <section id="retainer-calculator" data-calc="retainer" style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 104px 32px; border-bottom: 1px solid rgb(35, 35, 32);">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(216, 255, 0);">WORK IT OUT</span>
+      <h2 style="margin: 18px 0px 0px; max-width: 20ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">What the paid line actually costs you.</h2>
+      <p style="margin: 22px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Once the retainer is split, the number worth having is what the paid management works out to as a share of the media it manages. It is the same comparison a percentage-of-spend agency invites, made on a retainer that never mentions a percentage.</p>
+
+      <div style="margin-top: 52px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 56px; align-items: start;">
+        <div style="display: grid; gap: 34px;">
+          <div style="display: grid; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+              <label for="retainer" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Monthly retainer</label>
+              <span data-rout="retainerLabel" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">$4,500</span>
+            </div>
+            <input id="retainer" data-roas="retainer" type="range" min="1000" max="30000" step="250" value="4500" style="width: 100%; accent-color: rgb(216, 255, 0);">
+            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">The whole invoice, before you split it.</span>
+          </div>
+          <div style="display: grid; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+              <label for="spend" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Monthly ad spend</label>
+              <span data-rout="spendLabel" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">$30,000</span>
+            </div>
+            <input id="spend" data-roas="spend" type="range" min="5000" max="300000" step="1000" value="30000" style="width: 100%; accent-color: rgb(216, 255, 0);">
+            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">Media only. This is the budget the paid line is managing.</span>
+          </div>
+          <div style="display: grid; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+              <label for="paid" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Share on paid management</label>
+              <span data-rout="paidLabel" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">40%</span>
+            </div>
+            <input id="paid" data-roas="paid" type="range" min="5" max="100" step="1" value="40" style="width: 100%; accent-color: rgb(216, 255, 0);">
+            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">Ask for the split. A provider doing good work answers without difficulty.</span>
+          </div>
+        </div>
+        <div>
+          <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px;">
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Effective rate on your media</span>
+            <span data-rout="effective" style="display: block; margin-top: 8px; font-size: 40px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(216, 255, 0);">6.0%</span>
+            <span data-rout="effectiveNote" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">$1,800 a month to manage $30,000 of media is the same as a 6.0% fee, whatever the invoice calls it.</span>
+          </div>
+          <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px;">
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Paid management, a year</span>
+            <span data-rout="paid" style="display: block; margin-top: 8px; font-size: 26px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">$21,600</span>
+            <span data-rout="paidNote" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">A year on the paid line — the only part with a clean revenue trace.</span>
+          </div>
+          <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px;">
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Creative and organic, a year</span>
+            <span data-rout="rest" style="display: block; margin-top: 8px; font-size: 26px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">$32,400</span>
+            <span data-rout="restNote" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">A year on content, scheduling and community. Judge this on brand goals, not on sales it did not make.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section style="padding: 112px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
     <div style="max-width: 1240px; margin: 0px auto;">
       <h2 style="margin: 0px 0px 40px; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Questions people actually ask.</h2>
@@ -653,6 +707,6 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
       <span>Your growth system for Meta. It runs at seven.</span>
     </div>
   </div></footer></div></div>
-<script src="/site.js?v=de3bbaa9" defer></script>
+<script src="/site.js?v=36e2bbf5" defer></script>
 </body>
 </html>

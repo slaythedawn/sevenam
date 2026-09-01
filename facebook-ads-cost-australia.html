@@ -548,6 +548,60 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
     </div>
   </section>
 
+  <section id="cpr-calculator" data-calc="cpr" style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 104px 32px; border-bottom: 1px solid rgb(35, 35, 32);">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(216, 255, 0);">WORK IT OUT</span>
+      <h2 style="margin: 18px 0px 0px; max-width: 20ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">What a result actually costs.</h2>
+      <p style="margin: 22px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">CPM is the number everyone benchmarks and the least useful of the three. Move the click-through and conversion rates instead \u2014 they sit between an impression and a sale, and they move cost per result far harder than the media price does.</p>
+
+      <div style="margin-top: 52px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 56px; align-items: start;">
+        <div style="display: grid; gap: 34px;">
+          <div style="display: grid; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+              <label for="cpm" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">CPM</label>
+              <span data-rout="cpmLabel" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">$20.00</span>
+            </div>
+            <input id="cpm" data-roas="cpm" type="range" min="50" max="600" step="1" value="200" style="width: 100%; accent-color: rgb(216, 255, 0);">
+            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">What the auction charges per thousand impressions. Australian all-industry sits around $14\u2013$20.</span>
+          </div>
+          <div style="display: grid; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+              <label for="ctr" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Click-through rate</label>
+              <span data-rout="ctrLabel" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">1.00%</span>
+            </div>
+            <input id="ctr" data-roas="ctr" type="range" min="10" max="500" step="1" value="100" style="width: 100%; accent-color: rgb(216, 255, 0);">
+            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">The share of impressions that click. This is a creative number.</span>
+          </div>
+          <div style="display: grid; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+              <label for="cvr" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Landing conversion rate</label>
+              <span data-rout="cvrLabel" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">2.50%</span>
+            </div>
+            <input id="cvr" data-roas="cvr" type="range" min="10" max="1500" step="1" value="250" style="width: 100%; accent-color: rgb(216, 255, 0);">
+            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">The share of clicks that buy. This is an offer and a page, not an ad.</span>
+          </div>
+        </div>
+        <div>
+          <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px;">
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Cost per result</span>
+            <span data-rout="cpa" style="display: block; margin-top: 8px; font-size: 40px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(216, 255, 0);">$80</span>
+            <span data-rout="cpaNote" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">At a $20.00 CPM, 1.00% of impressions click and 2.50% of those convert.</span>
+          </div>
+          <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px;">
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">Cost per click</span>
+            <span data-rout="cpc" style="display: block; margin-top: 8px; font-size: 26px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">$2.00</span>
+            <span data-rout="cpcNote" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">10.0 clicks per thousand impressions.</span>
+          </div>
+          <div style="border-top: 1px solid rgb(35, 35, 32); padding: 22px 0px;">
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">CTR lever vs CPM lever</span>
+            <span data-rout="lever" style="display: block; margin-top: 8px; font-size: 26px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">$13 vs $8</span>
+            <span data-rout="leverNote" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">What a fifth of a point of CTR saves per result, against what taking $2.00 off the CPM saves. Creative moves the first number; nothing in the account reliably moves the second.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section style="padding: 112px 32px; border-bottom: 1px solid rgb(227, 227, 221);">
     <div style="max-width: 1240px; margin: 0px auto;">
       <h2 style="margin: 0px 0px 40px; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">Questions people actually ask.</h2>
@@ -653,6 +707,6 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
       <span>Your growth system for Meta. It runs at seven.</span>
     </div>
   </div></footer></div></div>
-<script src="/site.js?v=de3bbaa9" defer></script>
+<script src="/site.js?v=36e2bbf5" defer></script>
 </body>
 </html>

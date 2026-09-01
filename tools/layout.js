@@ -457,50 +457,116 @@ function walkthrough(w) {
    The figures below are the JS defaults, computed here at build time, so the
    page is correct before site.js runs and stays correct if it never does. Change
    a default in setupRoas() and you must change it here too. */
+/* Three pages now carry a calculator and the markup is the same every time —
+   sliders on the left, derived figures on the right. Only the arithmetic
+   differs, so that is the only thing each page supplies. COMPUTE is keyed by
+   `id` and is mirrored by a function of the same name in site.js: the server
+   renders the defaults so the page is right before JS lands, and the browser
+   recomputes on input. The pair is verified by loading each page with
+   JavaScript disabled and diffing every output against the scripted render. */
+const MONEY = (n) =>
+  (Math.round(n) < 0 ? '-$' : '$') + Math.abs(Math.round(n)).toLocaleString('en-AU');
+
+const COMPUTE = {
+  roas(d) {
+    const marginFrac = d.margin / 100;
+    const roasX = d.roas / 10;
+    const breakeven = 1 / marginFrac;
+    const revenue = d.spend * roasX;
+    const grossProfit = revenue * marginFrac;
+    const netOfMedia = grossProfit - d.spend;
+    const perHalfX = 0.5 * d.spend * marginFrac;
+    return {
+      labels: { margin: d.margin + '%', roas: roasX.toFixed(1) + 'x', spend: MONEY(d.spend) },
+      breakeven: breakeven.toFixed(2) + 'x',
+      breakevenNote: `At a ${d.margin}% margin you need ${breakeven.toFixed(2)}x just to cover the cost of the goods.`,
+      profit: MONEY(netOfMedia),
+      profitNote: netOfMedia >= 0
+        ? `${roasX.toFixed(1)}x on ${MONEY(d.spend)} is ${MONEY(revenue)} of revenue and ${MONEY(grossProfit)} of gross profit, less the ${MONEY(d.spend)} you spent.`
+        : `${roasX.toFixed(1)}x on ${MONEY(d.spend)} returns ${MONEY(grossProfit)} of gross profit against ${MONEY(d.spend)} of media. You are below break-even.`,
+      headroom: MONEY(perHalfX),
+      headroomNote: 'A month, at this spend and margin, without buying any more media.',
+    };
+  },
+
+  /* Cost per result, from the two rates that sit between an impression and a
+     sale. The page's argument is that CPM benchmarks are close to useless; this
+     is that argument you can move — a fifth of a point of CTR beats a two-dollar
+     CPM saving, every time. */
+  cpr(d) {
+    const cpm = d.cpm / 10;            // slider carries tenths of a dollar
+    const ctr = d.ctr / 100;           // slider carries hundredths of a percent
+    const cvr = d.cvr / 100;
+    const clicks = 1000 * (ctr / 100);
+    const results = clicks * (cvr / 100);
+    const cpc = clicks > 0 ? cpm / clicks : 0;
+    const cpa = results > 0 ? cpm / results : 0;
+    const perThousand = cpa > 0 ? 1000 / cpa : 0;
+    const betterCtr = 1000 * ((ctr + 0.2) / 100) * (cvr / 100);
+    const cpaCtr = betterCtr > 0 ? cpm / betterCtr : 0;
+    const cpaCpm = results > 0 ? Math.max(0, cpm - 2) / results : 0;
+    return {
+      labels: {
+        cpm: '$' + cpm.toFixed(2),
+        ctr: ctr.toFixed(2) + '%',
+        cvr: cvr.toFixed(2) + '%',
+      },
+      cpa: MONEY(cpa),
+      cpaNote: `At a $${cpm.toFixed(2)} CPM, ${ctr.toFixed(2)}% of impressions click and ${cvr.toFixed(2)}% of those convert.`,
+      cpc: '$' + cpc.toFixed(2),
+      cpcNote: `${clicks.toFixed(1)} clicks per thousand impressions.`,
+      lever: MONEY(cpa - cpaCtr) + ' vs ' + MONEY(cpa - cpaCpm),
+      leverNote: `What a fifth of a point of CTR saves per result, against what taking $2.00 off the CPM saves. Creative moves the first number; nothing in the account reliably moves the second.`,
+    };
+  },
+
+  /* The retainer, split. The page's whole ask is "get it broken into paid,
+     creative and organic" — this is what the answer looks like once you have it,
+     and the effective rate is the number that usually ends the conversation. */
+  retainer(d) {
+    const paidShare = d.paid / 100;
+    const paidMonthly = d.retainer * paidShare;
+    const restMonthly = d.retainer - paidMonthly;
+    const effective = d.spend > 0 ? (paidMonthly / d.spend) * 100 : 0;
+    return {
+      labels: {
+        retainer: MONEY(d.retainer),
+        spend: MONEY(d.spend),
+        paid: d.paid + '%',
+      },
+      effective: effective.toFixed(1) + '%',
+      effectiveNote: `${MONEY(paidMonthly)} a month to manage ${MONEY(d.spend)} of media is the same as a ${effective.toFixed(1)}% fee, whatever the invoice calls it.`,
+      paid: MONEY(paidMonthly * 12),
+      paidNote: 'A year on the paid line — the only part with a clean revenue trace.',
+      rest: MONEY(restMonthly * 12),
+      restNote: 'A year on content, scheduling and community. Judge this on brand goals, not on sales it did not make.',
+    };
+  },
+};
+
 function roasCalc(rc) {
   if (!rc) return '';
-  const field = (key, label, hint, min, max, step, value, suffix) =>
+  const d = rc.defaults;
+  const r = COMPUTE[rc.id](d);
+
+  const field = (fl) =>
     `<div style="display: grid; gap: 10px;">
             <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
-              <label for="${key}" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">${esc(label)}</label>
-              <span data-rout="${key}Label" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">${esc(value)}${esc(suffix)}</span>
+              <label for="${fl.key}" style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">${esc(fl.label)}</label>
+              <span data-rout="${fl.key}Label" style="font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; color: rgb(247, 247, 245);">${esc(r.labels[fl.key])}</span>
             </div>
-            <input id="${key}" data-roas="${key}" type="range" min="${min}" max="${max}" step="${step}" value="${esc(String(rc.defaults[key]))}" style="width: 100%; accent-color: ${VOLT};">
-            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">${esc(hint)}</span>
+            <input id="${fl.key}" data-roas="${fl.key}" type="range" min="${fl.min}" max="${fl.max}" step="${fl.step || 1}" value="${esc(String(d[fl.key]))}" style="width: 100%; accent-color: ${VOLT};">
+            <span style="font-size: 13px; line-height: 1.55; color: rgb(181, 181, 173);">${esc(fl.hint)}</span>
           </div>`;
 
-  const out = (key, label, value, note, big) =>
+  const out = (o, i) =>
     `<div style="border-top: 1px solid ${HAIRLINE_DARK}; padding: 22px 0px;">
-            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">${esc(label)}</span>
-            <span data-rout="${key}" style="display: block; margin-top: 8px; font-size: ${big ? '40px' : '26px'}; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: ${big ? VOLT : 'rgb(247, 247, 245)'};">${esc(value)}</span>
-            <span data-rout="${key}Note" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">${esc(note)}</span>
+            <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">${esc(o.label)}</span>
+            <span data-rout="${o.key}" style="display: block; margin-top: 8px; font-size: ${i ? '26px' : '40px'}; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: ${i ? 'rgb(247, 247, 245)' : VOLT};">${esc(r[o.key])}</span>
+            <span data-rout="${o.key}Note" style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">${esc(r[o.key + 'Note'])}</span>
           </div>`;
 
-  /* Computed here from the same defaults the sliders carry, rather than written
-     out in the content file. /agency-fee keeps its figures in the HTML by hand
-     and that is a standing trap — change the default and the page flashes a
-     stale number until JS lands. These cannot drift because nobody types them. */
-  const d = rc.defaults;
-  const marginFrac = d.margin / 100;
-  const roasX = d.roas / 10;
-  const money = (n) => (Math.round(n) < 0 ? '-$' : '$') + Math.abs(Math.round(n)).toLocaleString('en-AU');
-  const breakeven = 1 / marginFrac;
-  const revenue = d.spend * roasX;
-  const grossProfit = revenue * marginFrac;
-  const netOfMedia = grossProfit - d.spend;
-  const perHalfX = 0.5 * d.spend * marginFrac;
-  const rendered = {
-    breakeven: breakeven.toFixed(2) + 'x',
-    breakevenNote: `At a ${d.margin}% margin you need ${breakeven.toFixed(2)}x just to cover the cost of the goods.`,
-    profit: money(netOfMedia),
-    profitNote: netOfMedia >= 0
-      ? `${roasX.toFixed(1)}x on ${money(d.spend)} is ${money(revenue)} of revenue and ${money(grossProfit)} of gross profit, less the ${money(d.spend)} you spent.`
-      : `${roasX.toFixed(1)}x on ${money(d.spend)} returns ${money(grossProfit)} of gross profit against ${money(d.spend)} of media. You are below break-even.`,
-    headroom: money(perHalfX),
-    headroomNote: `A month, at this spend and margin, without buying any more media.`,
-  };
-
-  return `<section id="roas-calculator" style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 104px 32px; border-bottom: 1px solid ${HAIRLINE_DARK};">
+  return `<section id="${esc(rc.id)}-calculator" data-calc="${esc(rc.id)}" style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 104px 32px; border-bottom: 1px solid ${HAIRLINE_DARK};">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT};">${esc(rc.label)}</span>
       <h2 style="margin: 18px 0px 0px; max-width: 20ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(rc.h2)}</h2>
@@ -508,15 +574,10 @@ function roasCalc(rc) {
 
       <div style="margin-top: 52px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 56px; align-items: start;">
         <div style="display: grid; gap: 34px;">
-          ${field('margin', 'Gross margin', 'What is left of a sale after the cost of the goods and the cost of shipping it.', 5, 90, 1, rc.defaults.margin, '%')}
-          ${field('roas', 'The ROAS you are getting', 'Whatever the account reports today. Move it and watch the profit line.', 5, 100, 1, (rc.defaults.roas / 10).toFixed(1), 'x')}
-          ${field('spend', 'Monthly ad spend', 'Media only — not fees, not creative.', 5000, 200000, 1000, '$' + rc.defaults.spend.toLocaleString('en-AU'), '')}
+          ${rc.fields.map(field).join('\n          ')}
         </div>
-
         <div>
-          ${out('breakeven', 'Your break-even ROAS', rendered.breakeven, rendered.breakevenNote, true)}
-          ${out('profit', 'Gross profit from that spend', rendered.profit, rendered.profitNote, false)}
-          ${out('headroom', 'Every extra 0.5x is worth', rendered.headroom, rendered.headroomNote, false)}
+          ${rc.outputs.map(out).join('\n          ')}
         </div>
       </div>
     </div>

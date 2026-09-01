@@ -435,10 +435,21 @@ const PAGES = [
       ],
     },
     roasCalc: {
+      id: 'roas',
       label: 'WORK IT OUT',
       h2: 'Your break-even, in one slider.',
       p: 'Break-even ROAS is decided by your gross margin, not by anything in the ad account \u2014 so the same 3x is a healthy month for one business and a loss for another. Move the margin and watch the number you have to beat move with it.',
       defaults: { margin: 40, roas: 30, spend: 30000 },
+      fields: [
+        { key: 'margin', label: 'Gross margin', min: 5, max: 90, hint: 'What is left of a sale after the cost of the goods and the cost of shipping it.' },
+        { key: 'roas', label: 'The ROAS you are getting', min: 5, max: 100, hint: 'Whatever the account reports today. Move it and watch the profit line.' },
+        { key: 'spend', label: 'Monthly ad spend', min: 5000, max: 200000, step: 1000, hint: 'Media only \u2014 not fees, not creative.' },
+      ],
+      outputs: [
+        { key: 'breakeven', label: 'Your break-even ROAS' },
+        { key: 'profit', label: 'Gross profit from that spend' },
+        { key: 'headroom', label: 'Every extra 0.5x is worth' },
+      ],
     },
     faqs: [
       { q: 'What is ROAS?', a: "Return on ad spend: revenue attributed to advertising divided by the amount spent on it. $4,000 of revenue from $1,000 of spend is a 4x ROAS, also written as 400%." },

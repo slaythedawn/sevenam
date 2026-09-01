@@ -189,6 +189,20 @@ someone else's product ages worse than the shape of it. The block is opt-in — 
 pages that set `walkthrough` render it, and `tools/content/guides.js` has to pass the
 key through `build()` or it is silently dropped.
 
+Three pages carry a calculator — `/what-is-roas`, `/facebook-ads-cost-australia`
+and `/social-media-management-cost`. The markup is built once by `roasCalc()` in
+`tools/layout.js` and driven entirely by the page's `fields` and `outputs`; the
+only thing that differs per page is the arithmetic, which lives in a `COMPUTE`
+map keyed by `id`. **That map is mirrored in `site.js`** — layout renders the
+defaults at build time so the page is right before JS lands, and `site.js`
+recomputes on input. Two copies of the same formula is a drift risk, so the guard
+is a test that loads each page with JavaScript disabled and diffs every output
+against the scripted render; run it after touching either copy. `data-calc` on
+the section picks the formula, `data-roas` marks an input, `data-rout` an output,
+and a `<key>Tone` field in the result recolours `<key>` (that is how break-even
+goes red). Adding a fourth calculator means a `COMPUTE` entry in both files and
+nothing else.
+
 `dataTable()` has two modes. The default right-aligns every column after the
 first, holds each cell on one line and uses tabular figures — right for money,
 wrong for sentences. `wrap: true` gives a prose comparison: left-aligned, cells
