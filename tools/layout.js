@@ -585,6 +585,58 @@ function roasCalc(rc) {
   </section>`;
 }
 
+/* A page selling a system that nobody can see needs a picture of it. The
+   automation pillar was 1,100 words of prose and no diagram, which is a hard
+   thing to convert on — the whole proposition is "these parts connect", and a
+   paragraph is the worst medium for that claim.
+
+   Drawn from our own tokens rather than assembled from vendor logos. Two
+   reasons: the tools underneath a build vary per client, so a fixed logo wall
+   would be wrong for most of them, and a diagram of somebody else's brand marks
+   ages the moment they rebrand. Same call as the Ad Library walkthrough.
+
+   Laid out as a grid rather than an SVG so the text reflows and stays
+   selectable, and so it collapses to one column on a phone without a viewBox
+   fight. */
+function systemMap(m) {
+  if (!m) return '';
+  const col = (c, i) =>
+    `<div style="min-width: 0;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <span aria-hidden="true" style="width: 22px; height: 22px; border-radius: 100px; background: ${i === 1 ? VOLT : 'rgb(35, 35, 32)'}; color: ${i === 1 ? 'rgb(10, 10, 10)' : 'rgb(181, 181, 173)'}; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">${i + 1}</span>
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: ${i === 1 ? VOLT : 'rgb(181, 181, 173)'};">${esc(c.label)}</span>
+            </div>
+            <div style="border: 1px solid ${i === 1 ? VOLT : HAIRLINE_DARK}; border-radius: 8px; overflow: hidden;">
+              <div style="padding: 16px; border-bottom: 1px solid ${HAIRLINE_DARK};">
+                <span style="display: block; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(247, 247, 245);">${esc(c.title)}</span>
+                <span style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">${esc(c.note)}</span>
+              </div>
+              ${c.rows.map((r) =>
+                `<div style="padding: 11px 16px; border-bottom: 1px solid ${HAIRLINE_DARK}; font-size: 14px; line-height: 1.5; color: rgb(201, 201, 194);">${esc(r)}</div>`).join('\n              ')}
+              <div style="padding: 11px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">${esc(c.foot)}</div>
+            </div>
+          </div>`;
+
+  return `<section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 104px 32px; border-bottom: 1px solid ${HAIRLINE_DARK};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT};">${esc(m.label)}</span>
+      <h2 style="margin: 18px 0px 0px; max-width: 22ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(m.h2)}</h2>
+      <p style="margin: 22px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: ${INK_TEXT};">${esc(m.p)}</p>
+
+      <div style="margin-top: 52px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 28px; align-items: start;">
+        ${m.columns.map(col).join('\n        ')}
+      </div>
+
+      <div style="margin-top: 34px; border: 1px solid ${VOLT}; border-radius: 8px; padding: 18px 20px; max-width: 78ch;">
+        <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: ${VOLT};">${esc(m.gate.label)}</span>
+        <span style="display: block; margin-top: 8px; font-size: 17px; line-height: 1.65; color: rgb(247, 247, 245);">${esc(m.gate.text)}</span>
+      </div>
+
+      <p style="margin: 22px 0px 0px; max-width: 78ch; font-size: 14px; line-height: 1.65; color: rgb(181, 181, 173);">${esc(m.note)}</p>
+    </div>
+  </section>`;
+}
+
 /* The models the line is built on, named in type rather than borrowed marks.
    Sits with the closing links so the page ends on what it runs on. */
 function toolstrip(t) {
@@ -708,6 +760,7 @@ function page(p) {
     steps(p.steps),
     walkthrough(p.walkthrough),
     roasCalc(p.roasCalc),
+    systemMap(p.systemMap),
     callForm(p.callForm),
     p.faqs && p.faqs.length ? faqSection(p.faqs, p.faqHeading) : '',
     p.pills ? pills(p.pills.label, p.pills.links) : '',

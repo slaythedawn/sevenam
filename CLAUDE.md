@@ -236,6 +236,24 @@ complete list rather than a search box that does nothing. It matches the whole
 row — term and definition — because someone half-remembering "the unstable period
 after a change" should find Learning phase without knowing its name.
 
+`systemMap()` in `tools/layout.js` draws the three-part diagram on
+`/marketing-automation` — in, repository, out, with the approval gate under it. It
+is a CSS grid rather than an SVG so the text reflows and stays selectable, and it
+is **drawn from our own tokens rather than a wall of vendor logos**: the tools
+underneath a build differ for every client, so a fixed logo wall would be wrong for
+most of them and stale the moment anyone rebrands. Same call as the Ad Library
+walkthrough. Opt-in like the other blocks — only a page that sets `systemMap`
+renders it, and `services.js` must pass the key through `build()`.
+
+**Six market pages** cover New Zealand, Singapore and Malaysia, two each: a
+performance/Meta page and a marketing-automation page. They are written to real
+structural differences — NZ saturates because the audience is small, Singapore is a
+small audience with well-funded regional competitors, Malaysia has cheap media and
+a marketplace habit that eats margin — **not one template with the country swapped**,
+which is thin content and reads like it. Every one of them says plainly that Sevenam
+is Sydney-based and remote with no local office; do not soften that into implying a
+local presence.
+
 `/marketing-automation` is the second service pillar and the only page with a
 **bespoke** price — there is deliberately no figure on it, because the work depends
 entirely on the client's existing stack. Do not give it one. It also carries the
