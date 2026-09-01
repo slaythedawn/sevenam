@@ -321,6 +321,8 @@ const CITIES = [
 
 const SUPPORT = "Sevenam installs a Meta advertising system on your own ad account and runs the technology that operates it — written decisions at 7am every morning telling you exactly what to do that day. One fixed setup fee, a fixed monthly, priced to the work.";
 
+const DM_CITIES = new Set(['Melbourne', 'Brisbane', 'Perth', 'Canberra']);
+
 function build() {
   return CITIES.map(c => {
     const others = CITIES.filter(o => o.slug !== c.slug)
@@ -342,6 +344,10 @@ function build() {
       faqs: c.faqs,
       pills: { label: 'Other cities', links: others },
       related: [
+        /* Five cities also have a digital-marketing page. Linking the pair both
+           ways is the point of building them — a visitor on the paid-social page
+           who wanted the broader service should not have to go back to search. */
+        ...(DM_CITIES.has(c.city) ? [{ href: '/digital-marketing-agency-' + c.city.toLowerCase(), title: 'Digital marketing ' + c.city, note: 'The broader service.' }] : []),
         { href: '/facebook-ads-agency', title: 'Facebook ads agency', note: 'Why you might not need one.' },
         { href: '/what-facebook-ads-agencies-charge', title: 'What agencies charge', note: 'The going rates, in dollars.' },
         { href: '/check', title: 'Account check', note: 'Five days, a straight read.' },

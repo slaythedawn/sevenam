@@ -470,6 +470,13 @@ const PAGES = [
   },
   {
     slug: 'digital-marketing-agency',
+    pills: { label: 'Digital marketing by city', links: [
+      { href: '/digital-marketing-agency-sydney', label: 'Sydney' },
+      { href: '/digital-marketing-agency-melbourne', label: 'Melbourne' },
+      { href: '/digital-marketing-agency-brisbane', label: 'Brisbane' },
+      { href: '/digital-marketing-agency-perth', label: 'Perth' },
+      { href: '/digital-marketing-agency-canberra', label: 'Canberra' },
+    ] },
     title: 'Digital Marketing Agency Australia — Or Specialise | Sevenam',
     description: 'Full-service digital agencies run Meta as one line item among many. Here is when that costs you more than it saves, and what the alternative looks like.',
     eyebrow: 'DIGITAL MARKETING', h1: 'Digital Marketing Agency',
@@ -1634,6 +1641,261 @@ const PAGES = [
       { href: '/apply', title: 'Get started', note: 'Four fields.' },
     ],
   },
+  {
+    slug: 'digital-marketing-agency-sydney',
+    title: 'Digital Marketing Agency Sydney | Sevenam',
+    description: 'Digital marketing for Sydney businesses, built as systems you own rather than bought as a retainer. The most expensive media market in the country, and the most expensive agency rates.',
+    eyebrow: 'SYDNEY', h1: 'Digital Marketing Agency in Sydney',
+    lead: 'The most expensive auction in the country, bought at the most expensive agency rates in the country.',
+    s1: {
+      h2: 'What Sydney costs you twice over.',
+      paras: [
+        "Sydney runs the highest media costs in Australia and the highest agency rates, and the two compound. Finance, property, insurance and professional services all concentrate here, and they bid with lifetime values that a consumer brand cannot match — so the CPM you pay for an ordinary audience is set partly by advertisers who can afford three times what you can. That is the auction, and no agency changes it.",
+        "What an agency does change is the second cost. A Sydney full-service retainer buys you a team, and the honest arithmetic is that most of the hours go to coordination: the status call, the deck, the monthly report, the account manager relaying between you and the person who actually touches the account. On a $12,000 retainer that is a lot of money for meetings, and it is the part of the invoice that grows when the team grows.",
+        "The businesses that do well here are the ones that stop paying for the channel to be managed and start paying for it to be built. Once the system exists it runs on its own economics, and the recurring cost is the decisions rather than the department.",
+      ],
+      items: [
+        'The highest CPMs in the country, set partly by advertisers with far higher margins.',
+        'The highest agency rates in the country, layered on top of that.',
+        'Most of a full-service retainer is coordination, not execution.',
+        'Media cost is the auction. Agency cost is a choice.',
+        'A system built once has a lower recurring cost than a team retained monthly.',
+      ],
+    },
+    s2: {
+      h2: 'What we actually do, and what we do not.',
+      paras: [
+        "Three things. Meta advertising installed on your own ad account and operated by written decisions every morning. The creative that feeds it, because in a market this expensive the only durable lever is what goes into the auction. And the marketing automation underneath both — the CRM, the data, the agents that read what the market is telling you and draft against it.",
+        "We do not run your SEO, write your press releases, or manage your organic social calendar. If what you want is one supplier for all of it, a full-service Sydney agency is the right hire and we will say so on the call rather than take the work and subcontract it. What we are is the technical half done properly, on infrastructure you own outright.",
+        "We are based in Sydney, so a same-day conversation is genuinely same-day. But nothing depends on that — the account is read every morning and the decisions arrive written down whether anyone is in the room or not.",
+      ],
+      items: [
+        'Meta advertising, on your own Business Manager from the first hour.',
+        'Creative volume, because the auction here punishes a thin library.',
+        'Marketing automation and CRM, quoted bespoke after we map it.',
+        'No SEO, no PR, no organic social calendar — and we will tell you so.',
+        'Sydney-based, and the decisions land in writing regardless.',
+      ],
+    },
+    faqs: [
+      { q: 'Are you a full-service digital agency?', a: "Not in the traditional sense. We cover paid social, creative and marketing automation properly rather than covering everything shallowly. Where a project genuinely needs SEO or PR we will say so and stay out of it, because subcontracting a discipline you cannot audit is how retainers quietly get worse." },
+      { q: 'Why are Sydney CPMs so high?', a: "Because the advertisers with the highest margins in the country are concentrated here — finance, property, insurance, professional services — and they can afford to pay more for the same impression than a consumer brand can. You are not bidding against your competitors alone; you are bidding against everyone targeting the same person." },
+      { q: 'Do you work with Sydney businesses only?', a: "No. We are based in Sydney and work wherever the auction runs, including New Zealand and Southeast Asia. The local pages exist because that is how people search, not because the work is geographically limited." },
+      { q: 'What does it cost?', a: "The Meta setup is $19,500 once and the daily decisions are $2,500 a month, both excluding GST, and creative packages start at $5,000. Marketing automation is quoted bespoke after we map what you run, because there is no standard shape to it." },
+      { q: 'Can you take over an account an agency already built?', a: "Usually, and the first question is whose Business Manager it lives in. If the assets are in an agency-owned account, getting them moved is the first piece of work and it is worth doing whoever you end up using." },
+    ],
+    closing: { h2: 'Find out what the coordination is costing you.', p: "Fifteen minutes with Josh, no pitch deck. Bring the retainer and the account, and we will tell you which half of the invoice is actually buying performance." },
+    related: [
+      { href: '/digital-marketing-agency', title: 'Digital marketing agency', note: 'The full argument.' },
+      { href: '/facebook-ads-sydney', title: 'Facebook ads Sydney', note: 'The paid social side.' },
+      { href: '/marketing-automation', title: 'Marketing automation', note: 'The systems side.' },
+      { href: '/agency-fee', title: 'What a fee really costs', note: 'The calculator.' },
+    ],
+  },
+  {
+    slug: 'digital-marketing-agency-melbourne',
+    title: 'Digital Marketing Agency Melbourne | Sevenam',
+    description: 'Digital marketing for Melbourne businesses, built as systems you own. The densest agency market in the country, and the one where creative fatigue arrives first.',
+    eyebrow: 'MELBOURNE', h1: 'Digital Marketing Agency in Melbourne',
+    lead: 'The most crowded agency market in the country, selling to the most crowded advertiser market in the country.',
+    s1: {
+      h2: 'Why breadth is the pitch here, and why it should not be.',
+      paras: [
+        "Melbourne has more agencies per advertiser than anywhere else in Australia, and when a market is that crowded the easiest way to differentiate is to add a service line. So the pitch becomes range — paid, organic, SEO, content, email, CRO, all under one roof — because range is the thing a competitor down the road cannot immediately match. It is a good sales strategy. It is rarely a good operating one.",
+        "The advertiser side is just as crowded, and in a specific way: Melbourne carries the country's densest concentration of retail, fashion and hospitality advertisers, all working the same seasonal calendar. They chase the same audiences in the same weeks, so a winning ad has a shorter useful life here than almost anywhere else. Frequency climbs, CPMs follow, and the concept that carried autumn stops working in a fortnight.",
+        "Those two facts collide badly. An account that needs a high creative replacement rate is exactly the account that suffers when creative is one of eight things a generalist team is juggling. Volume of output is the whole game, and volume is what breadth costs you.",
+      ],
+      items: [
+        'More agencies per advertiser than any other Australian market.',
+        'Breadth is the local differentiator, so it gets sold hard.',
+        'Retail, fashion and hospitality density means a shared seasonal calendar.',
+        'Creative fatigue arrives in weeks, not months.',
+        'A high replacement rate is the first thing a generalist team drops.',
+      ],
+    },
+    s2: {
+      h2: 'What we actually do, and what we do not.',
+      paras: [
+        "Meta advertising on your own ad account, operated by written decisions every morning. The creative that feeds it, produced at the rate this market actually consumes rather than the rate a retainer makes convenient. And marketing automation underneath both — CRM, the data repository, agents with real job specs.",
+        "We do not do SEO, PR or organic social. In a market where every second agency offers all of it, saying that out loud costs us some enquiries and saves everyone the more expensive discovery six months in. If you need the full stack, hire the full stack and let us do the paid and the systems inside it.",
+        "We work from Sydney and run Melbourne accounts remotely. There is no Melbourne office and we will not imply one — what there is instead is a read of the account before your morning, every morning, which is worth considerably more than a quarterly visit.",
+      ],
+      items: [
+        'Creative volume as the primary lever, because here it is the constraint.',
+        'Meta advertising on your Business Manager, yours from hour one.',
+        'Marketing automation and CRM, scoped and quoted bespoke.',
+        'No SEO, no PR, no organic calendar — deliberately.',
+        'Sydney-based and remote. No Melbourne office, and we will not claim one.',
+      ],
+    },
+    faqs: [
+      { q: 'Do you have a Melbourne office?', a: "No. We are based in Sydney and work remotely, which is how every account runs regardless of city. If having someone in the room matters to you, a Melbourne agency is the better fit and we would say so." },
+      { q: 'Why does creative fatigue faster in Melbourne?', a: "Because the addressable audience is being worked by an unusually dense set of advertisers on the same seasonal calendar. Frequency against any given segment climbs faster, and cost per result follows it. The fix is supply — genuinely distinct concepts entering the auction continuously, not variations of one image." },
+      { q: 'Can you replace our full-service agency?', a: "For paid social, creative and the systems underneath, yes. For SEO, PR and organic social, no — and we would rather you kept a specialist for those than let us pretend. Most of the businesses we work with end up with two suppliers instead of one, and spend less in total." },
+      { q: 'How much creative do we actually need?', a: "More than most accounts produce, and the honest answer depends on spend and audience size. The creative calculator on the site gives an indicative figure from your own numbers, and the call turns that into a real one." },
+      { q: 'What does it cost?', a: "The Meta setup is $19,500 once and the daily decisions are $2,500 a month, both excluding GST. Creative packages start at $5,000. Marketing automation is quoted bespoke after we map what you already run." },
+    ],
+    closing: { h2: 'Find out whether your ceiling is the market or the creative.', p: "Fifteen minutes with Josh, no pitch deck. In this market it is almost always the creative, and the account will show it." },
+    related: [
+      { href: '/digital-marketing-agency', title: 'Digital marketing agency', note: 'The full argument.' },
+      { href: '/facebook-ads-melbourne', title: 'Facebook ads Melbourne', note: 'The paid social side.' },
+      { href: '/creative-cost', title: 'Creative cost calculator', note: 'What volume costs.' },
+      { href: '/marketing-automation', title: 'Marketing automation', note: 'The systems side.' },
+    ],
+  },
+  {
+    slug: 'digital-marketing-agency-brisbane',
+    title: 'Digital Marketing Agency Brisbane | Sevenam',
+    description: 'Digital marketing for Brisbane businesses, built as systems you own. Cheaper media than the southern capitals, and a retainer market that has not caught up.',
+    eyebrow: 'BRISBANE', h1: 'Digital Marketing Agency in Brisbane',
+    lead: 'Cheaper media than Sydney and Melbourne, sold at southern-capital retainer rates.',
+    s1: {
+      h2: 'The mismatch worth knowing about.',
+      paras: [
+        "Brisbane media is meaningfully cheaper than Sydney or Melbourne — a smaller pool of advertisers bidding for a fast-growing population. That is a real advantage and it is the reason a lot of Queensland accounts look healthier than their southern equivalents at the same spend. What has not adjusted at the same rate is the price of managing it.",
+        "The result is a common shape: an account spending $20,000 a month paying a retainer sized for an account spending $60,000, because the retainer was benchmarked against a Sydney rate card. On cheaper media the fee is a much larger fraction of total marketing cost, and the ratio is what matters — not whether the number sounds reasonable in isolation.",
+        "The other Brisbane pattern is owner-operators and franchise groups rather than marketing departments. That changes what good looks like: the person deciding is usually also running the business, so a monthly report nobody has time to read is worse than useless, and a daily instruction they can act on in five minutes is worth a great deal.",
+      ],
+      items: [
+        'Lower CPMs than the southern capitals, from a thinner advertiser pool.',
+        'Retainers often benchmarked against Sydney rather than the local account size.',
+        'On cheaper media, the fee is a larger share of total cost.',
+        'More owner-operators and franchise groups, fewer marketing departments.',
+        'A daily instruction beats a monthly report when the reader also runs the business.',
+      ],
+    },
+    s2: {
+      h2: 'What we actually do, and what we do not.',
+      paras: [
+        "Meta advertising built on your own ad account and run by written decisions every morning — one page, in plain English, telling you what to do that day. The creative that feeds it. And marketing automation across the wider business, which in a franchise or multi-site group is often where the largest return sits, because the same manual work is being repeated in every location.",
+        "We do not do SEO, PR or organic social. For a Brisbane business that mostly means keeping a local specialist for the local search work and using us for the paid and the systems — which is usually cheaper than one supplier billing for both.",
+        "We are Sydney-based and work remotely. Same time zone for most of the year, no travel cost baked into a fee, and nothing that depends on being in the room.",
+      ],
+      items: [
+        'Written decisions daily, sized for someone who also runs the business.',
+        'Your Business Manager, your pixel, your creative library.',
+        'Automation that removes work repeated across sites or franchisees.',
+        'No SEO, no PR, no organic calendar.',
+        'Sydney-based, remote, no travel loaded into the fee.',
+      ],
+    },
+    faqs: [
+      { q: 'Is our spend too small for this?', a: "It is about signal rather than city. Below roughly $10,000 a month there is usually not enough daily conversion data for a daily decision to beat a weekly one, and we will tell you that rather than sell you the system anyway." },
+      { q: 'Do you work with franchise groups?', a: "Yes, and it is one of the clearer cases for the automation side — the same reporting, list-building and lead follow-up is usually being done by hand in every location. Building it once and running it everywhere is a larger return than tuning any single ad account." },
+      { q: 'Do you have a Brisbane office?', a: "No. We are based in Sydney and work remotely with businesses across Australia and the region. We will not claim a local presence we do not have." },
+      { q: 'Is Brisbane media really cheaper?', a: "Generally yes, for the same audience definition, because fewer advertisers are competing for it. It is not a licence to spend less attention on the account — a cheap auction still punishes a thin creative library, it just takes slightly longer to do it." },
+      { q: 'What does it cost?', a: "The Meta setup is $19,500 once and the daily decisions are $2,500 a month, both excluding GST, with creative packages from $5,000. Automation is quoted bespoke after the mapping session." },
+    ],
+    closing: { h2: 'Find out what share of your marketing budget is fee.', p: "Fifteen minutes with Josh, no pitch deck. Bring what you spend and what you pay, and the ratio will tell you most of it." },
+    related: [
+      { href: '/digital-marketing-agency', title: 'Digital marketing agency', note: 'The full argument.' },
+      { href: '/facebook-ads-brisbane', title: 'Facebook ads Brisbane', note: 'The paid social side.' },
+      { href: '/agency-fee', title: 'What a fee really costs', note: 'The calculator.' },
+      { href: '/marketing-automation', title: 'Marketing automation', note: 'The systems side.' },
+    ],
+  },
+  {
+    slug: 'digital-marketing-agency-perth',
+    title: 'Digital Marketing Agency Perth | Sevenam',
+    description: 'Digital marketing for Perth businesses, built as systems you own. Three hours behind the east coast, which is exactly why a written daily decision beats a national agency call.',
+    eyebrow: 'PERTH', h1: 'Digital Marketing Agency in Perth',
+    lead: 'Three hours behind the east coast, which is where most of the agencies are.',
+    s1: {
+      h2: 'The time zone is the whole problem.',
+      paras: [
+        "Perth sits two to three hours behind Sydney and Melbourne depending on the season, and almost every national agency is on the east coast. In practice that means an eastern team starts work as the Perth morning is already underway and finishes before the Perth afternoon does. A question asked at 9am in Perth is answered at lunchtime; a problem spotted on Friday afternoon in Perth reaches the account on Monday.",
+        "That gap is invisible on a monthly report and expensive in an ad account. A losing ad set left running from Friday to Monday is three days of spend, and the platform does not pause while anyone is offline. It is the single most common reason a Perth business ends up feeling like it is being serviced rather than managed.",
+        "A written decision removes the problem entirely, because it does not require anyone to be awake at the same time as anyone else. The account is read overnight, the instruction is waiting before your morning, and you approve what runs. Distance from the agency stops mattering when the agency is not the bottleneck.",
+      ],
+      items: [
+        'Two to three hours behind the agencies most likely to be pitching you.',
+        'An eastern working day barely overlaps a western one.',
+        'Weekend drift is real money and does not show up in a monthly report.',
+        'Written decisions do not need two people awake at once.',
+        'A thinner local agency market, so less competitive pressure on rates.',
+      ],
+    },
+    s2: {
+      h2: 'What we actually do, and what we do not.',
+      paras: [
+        "Meta advertising on your own ad account with a written decision waiting each morning — which for a Perth account means genuinely each morning, not the east coast's. The creative that feeds it. And marketing automation across the business, which suits the resources-adjacent B2B common here, where the sales cycle runs long past the click and most of the value is in what the CRM does with the lead afterwards.",
+        "We do not do SEO, PR or organic social. Perth has a good local market for that work and we would rather you used it than let us subcontract something we cannot audit.",
+        "We are Sydney-based and remote, and we are not going to pretend the time difference is a feature. What we will say is that the operating model was built so it does not matter, and that is a stronger claim than a fly-in visit twice a year.",
+      ],
+      items: [
+        'The morning decision lands in your morning, not the east coast’s.',
+        'Your Business Manager and your creative library from hour one.',
+        'Automation for long B2B cycles, where the CRM does most of the work.',
+        'No SEO, no PR, no organic calendar.',
+        'Sydney-based and remote, with an operating model that does not need overlap.',
+      ],
+    },
+    faqs: [
+      { q: 'Does the time difference actually matter?', a: "It matters when the operating model depends on people talking. Ours does not — the account is read overnight and the instruction is written before your morning. That is the reason we can say the distance is not the issue without it being a sales line." },
+      { q: 'Do you have a Perth office?', a: "No. We are based in Sydney and work remotely across Australia and the region. If a local presence is a requirement, say so early and we will not waste your time." },
+      { q: 'Do you work with B2B and resources-adjacent businesses?', a: "Yes, and the shape of the work is different: fewer decisions in the ad account, far more in what happens between the lead arriving and the deal closing. That is usually an automation and CRM project with paid social attached, rather than the other way round." },
+      { q: 'Can you handle Western Australian compliance requirements?', a: "We build to whatever claims and evidentiary standards your industry requires, and where an industry has specific advertising rules the approval gate is where they get enforced. We are not lawyers and will not act as your compliance sign-off." },
+      { q: 'What does it cost?', a: "The Meta setup is $19,500 once and the daily decisions are $2,500 a month, both excluding GST, with creative packages from $5,000. Automation is bespoke, quoted after we map what you run." },
+    ],
+    closing: { h2: 'Find out what the time difference is costing you.', p: "Fifteen minutes with Josh, no pitch deck. Look at what happened in the account over the last three weekends — that is usually the answer." },
+    related: [
+      { href: '/digital-marketing-agency', title: 'Digital marketing agency', note: 'The full argument.' },
+      { href: '/facebook-ads-perth', title: 'Facebook ads Perth', note: 'The paid social side.' },
+      { href: '/marketing-automation', title: 'Marketing automation', note: 'The systems side.' },
+      { href: '/system', title: 'How the mornings work', note: 'The operating model.' },
+    ],
+  },
+  {
+    slug: 'digital-marketing-agency-canberra',
+    title: 'Digital Marketing Agency Canberra | Sevenam',
+    description: 'Digital marketing for Canberra businesses, built as systems you own. A government-shaped market where the click is the start of a long procurement, not the end of a funnel.',
+    eyebrow: 'CANBERRA', h1: 'Digital Marketing Agency in Canberra',
+    lead: 'A market where almost nothing closes on the click, and the funnel is a procurement process.',
+    s1: {
+      h2: 'Why the usual playbook does not fit here.',
+      paras: [
+        "Canberra's economy is shaped by government and the businesses that sell to it, and that changes the fundamentals of a digital marketing account. The buying cycle is long, the decision is made by a group rather than a person, and the thing being bought is frequently awarded through a panel or a tender rather than a checkout. Optimising towards a purchase event is meaningless when there is no purchase event for eighteen months.",
+        "That has two practical consequences. First, whatever you optimise towards has to be a real early signal that correlates with revenue — a qualified enquiry, a capability document downloaded by the right kind of organisation — and defining that honestly is most of the work. Second, the value of the account is decided long after the click, in whether the CRM keeps the relationship warm through a cycle measured in quarters.",
+        "The other Canberra particular is standards. Public-sector-adjacent advertising is held to a higher bar on claims, accessibility and record-keeping than consumer ecommerce, and an agency that treats those as friction will eventually create a problem that costs more than the campaign earned.",
+      ],
+      items: [
+        'Long, committee-led buying cycles with no purchase event to optimise towards.',
+        'Panels and tenders rather than checkouts.',
+        'The optimisation event has to be an honest early proxy for revenue.',
+        'Most of the value is created after the click, inside the CRM.',
+        'Higher expectations on claims, accessibility and record-keeping.',
+      ],
+    },
+    s2: {
+      h2: 'What we actually do, and what we do not.',
+      paras: [
+        "For a market like this the automation side usually leads and the advertising follows. A marketing data repository holding what the market is actually telling you, CRM automation that keeps a long relationship warm without anyone remembering to, and agents with written job specs that draft and hand a person the decision. Then Meta advertising on your own ad account, optimised towards a signal that means something rather than the one that fills up fastest.",
+        "We do not do SEO, PR or organic social, and we do not write tender responses. We are also not a compliance function: we will build approval gates so that nothing reaches a customer without a person agreeing to it, but the person agreeing has to be yours.",
+        "We are Sydney-based and work remotely. Canberra is close enough that a meeting is possible and rarely necessary — the operating model is written decisions, and those arrive the same way from anywhere.",
+      ],
+      items: [
+        'Automation and CRM first, advertising second, in most cases here.',
+        'Optimisation towards a defined, honest early signal.',
+        'Approval gates on anything that reaches a customer or changes a record.',
+        'No SEO, no PR, no tender writing, no compliance sign-off.',
+        'Sydney-based and remote, with the same written decisions.',
+      ],
+    },
+    faqs: [
+      { q: 'Do you work with government agencies?', a: "We work with businesses that sell to government and to the organisations around it. We are a small company and not on procurement panels, so if your requirement is a panel supplier we are not the answer and it is quicker to know that now." },
+      { q: 'How do you measure anything with an eighteen-month cycle?', a: "By agreeing an early signal that genuinely correlates with revenue, and being honest that it is a proxy. Then the job is keeping the relationship alive from that signal to the decision, which is a CRM and automation problem rather than an advertising one." },
+      { q: 'Can you meet accessibility requirements?', a: "The site work and the assets we produce are built to WCAG AA as a matter of course rather than on request. Where a specific standard applies to your organisation, tell us at the start and it shapes the build instead of being retrofitted." },
+      { q: 'Is Meta advertising even right for this market?', a: "Sometimes not, and we will say so. Where the audience is a few hundred named organisations, paid social is a poor fit and the money is better spent on the systems that handle the relationships you already have. That is a real answer we give on the call." },
+      { q: 'What does it cost?', a: "Marketing automation is quoted bespoke after we map what you run, because the work depends entirely on what already exists. Where Meta advertising is part of it, the setup is $19,500 once and the daily decisions $2,500 a month, both excluding GST." },
+    ],
+    closing: { h2: 'Find out whether advertising is even your constraint.', p: "Fifteen minutes with Josh, no pitch deck. In a market like this it is usually the systems between the enquiry and the decision, and that is a cheaper problem to fix." },
+    related: [
+      { href: '/digital-marketing-agency', title: 'Digital marketing agency', note: 'The full argument.' },
+      { href: '/facebook-ads-canberra', title: 'Facebook ads Canberra', note: 'The paid social side.' },
+      { href: '/marketing-automation', title: 'Marketing automation', note: 'Usually the lead here.' },
+      { href: '/email-marketing-agency', title: 'Email and CRM', note: 'Keeping a long cycle warm.' },
+    ],
+  },
 ];
 
 function build() {
@@ -1658,6 +1920,9 @@ function build() {
       ...(p.skipOwnership ? [] : [{ tone: 'paper', h2: OWNERSHIP.h2, paras: OWNERSHIP.paras, items: OWNERSHIP.items }]),
     ],
     tables: p.tables,
+    /* Only the digital-marketing head page sets this: a row of city links so the
+       five city pages are reachable from the term they sit under. */
+    pills: p.pills,
     /* Only the two cost pages set this. Undefined elsewhere, so every other
        service page renders exactly as before. */
     roasCalc: p.roasCalc,
