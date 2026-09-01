@@ -124,11 +124,18 @@ function faqSection(faqs, heading) {
    phone instead of making the whole page scroll sideways. */
 function dataTable(t) {
   if (!t) return '';
+  /* Numeric tables right-align every column after the first and hold each cell on
+     one line, which is right for money and wrong for sentences. `wrap: true`
+     switches to a prose comparison: everything left-aligned, cells allowed to
+     break, and the tabular figures turned off. Both keep the scroll container,
+     so neither can push the page sideways on a phone. */
+  const wrap = !!t.wrap;
+  const align = (i) => (wrap || !i ? 'left' : 'right');
   const head = t.columns.map((c, i) =>
-    `<th style="text-align: ${i ? 'right' : 'left'}; padding: 0px 0px 12px; ${i ? 'padding-left: 20px;' : ''} font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: ${PAPER_TEXT}; white-space: nowrap;">${esc(c)}</th>`).join('');
+    `<th style="text-align: ${align(i)}; padding: 0px 0px 12px; ${i ? 'padding-left: 20px;' : ''} font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: ${PAPER_TEXT}; white-space: nowrap;">${esc(c)}</th>`).join('');
   const body = t.rows.map(r =>
     '<tr>' + r.map((cell, i) =>
-      `<td style="text-align: ${i ? 'right' : 'left'}; padding: 14px 0px; ${i ? 'padding-left: 20px;' : ''} border-top: 1px solid ${HAIRLINE_LIGHT}; font-size: 16px; line-height: 1.5; ${i ? 'font-variant-numeric: tabular-nums; white-space: nowrap;' : 'font-weight: 500;'} color: ${i ? PAPER_TEXT : INK};">${esc(cell)}</td>`).join('') + '</tr>').join('\n          ');
+      `<td style="text-align: ${align(i)}; padding: 14px 0px; ${i ? 'padding-left: 20px;' : ''} border-top: 1px solid ${HAIRLINE_LIGHT}; font-size: ${wrap ? '15px' : '16px'}; line-height: ${wrap ? '1.6' : '1.5'}; vertical-align: top; ${wrap ? '' : (i ? 'font-variant-numeric: tabular-nums; white-space: nowrap;' : 'font-weight: 500;')}${wrap && !i ? 'font-weight: 600;' : ''} color: ${i ? PAPER_TEXT : INK};">${esc(cell)}</td>`).join('') + '</tr>').join('\n          ');
   const note = t.note
     ? `<p style="margin: 20px 0px 0px; max-width: 78ch; font-size: 14px; line-height: 1.65; color: ${PAPER_TEXT};">${esc(t.note)}</p>`
     : '';
@@ -137,7 +144,7 @@ function dataTable(t) {
       <h2 style="margin: 0px 0px 14px; max-width: 26ch; font-size: clamp(26px, 3vw, 40px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(t.h2)}</h2>
       ${t.lead ? `<p style="margin: 0px 0px 34px; max-width: 70ch; font-size: 17px; line-height: 1.7; color: ${PAPER_TEXT};">${esc(t.lead)}</p>` : ''}
       <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-        <table style="border-collapse: collapse; width: 100%; min-width: 640px;">
+        <table style="border-collapse: collapse; width: 100%; min-width: ${wrap ? '560px' : '640px'};">
           <thead><tr>${head}</tr></thead>
           <tbody>
           ${body}

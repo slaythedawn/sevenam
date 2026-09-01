@@ -217,6 +217,23 @@ const PAGES = [
         'No capacity to make new creative: performance will decay.',
       ],
     },
+    tables: [
+      {
+        wrap: true,
+        h2: 'When it works, and when it will not.',
+        lead: 'The honest version. Most accounts that failed on Meta failed on one of the left column’s rows, not on the platform.',
+        columns: ['Condition', 'Worth it when', 'Not worth it when'],
+        rows: [
+          ['Margin', 'Gross margin leaves room above break-even ROAS at a realistic return', 'Margin is thin enough that even a good month barely clears the media cost'],
+          ['Budget', 'Enough spend that a day produces signal a decision can be made on', 'A few hundred a month, where every result is inside the noise'],
+          ['Creative', 'You can produce, or buy, new concepts continuously', 'One video and three images, expected to run for a quarter'],
+          ['Tracking', 'Conversions fire reliably and match what the business banked', 'Nobody is sure the pixel is right, so every number is arguable'],
+          ['Offer', 'The thing sells when a warm person sees it', 'It does not convert from your own list, and ads are being asked to fix that'],
+          ['Patience', 'You can leave a test alone long enough to read it', 'Changes are made daily because the number moved this morning'],
+        ],
+        note: 'Nothing in the right column is fixed by better targeting, a bigger budget or a different agency. Those are business conditions, and they decide the outcome before the first ad runs.',
+      },
+    ],
     faqs: [
       { q: 'Do Facebook ads still work in 2026?', a: "Yes, for businesses that meet the conditions above. What has changed is where the work sits: the platform now automates much of the targeting and bidding that used to be the specialist's job, and creative volume has become the main lever." },
       { q: 'Did the privacy changes kill Meta advertising?', a: "They made measurement harder, not advertising ineffective. The practical answer is server-side tracking, cleaner conversion data and a willingness to look at blended numbers rather than in-platform ROAS alone." },
@@ -264,6 +281,23 @@ const PAGES = [
         'Judge both on blended cost per acquisition, not per-platform ROAS.',
       ],
     },
+    tables: [
+      {
+        wrap: true,
+        h2: 'Where each one is actually better.',
+        lead: 'Not a scorecard. The two channels answer different questions, and most accounts that "tested both and Meta lost" were running Meta against demand Google had already captured.',
+        columns: ['', 'Google Ads', 'Meta ads'],
+        rows: [
+          ['What it buys', 'Attention that already exists — someone typed the problem into a search box', 'Attention you interrupt — nobody was looking for you at that moment'],
+          ['Wins when', 'There is search volume for what you sell and you can afford the click', 'The product is visual, the offer is explainable in three seconds, or demand has to be created'],
+          ['Main constraint', 'Search volume. You cannot buy more demand than exists', 'Creative. The auction consumes distinct ads faster than most brands can make them'],
+          ['Cost driver', 'Competition on the keyword, and quality score', 'Creative performance, then audience size and frequency'],
+          ['Reads well in analytics', 'Yes — intent is explicit, so attribution is comparatively honest', 'Poorly — it creates demand that often converts later, elsewhere'],
+          ['Common failure', 'Paying brand-term prices for traffic that would have arrived anyway', 'Judging it on last-click and concluding it does nothing'],
+        ],
+        note: 'The comparison most businesses should run is not Google against Meta. It is what each does to blended revenue when the other is paused for a fortnight — which is the only test that survives an attribution argument.',
+      },
+    ],
     faqs: [
       { q: 'Which one is cheaper?', a: "Search usually shows a lower cost per conversion and a lower ceiling; social usually shows a higher cost per conversion and far more available volume. Comparing them on cost per conversion alone will always mislead you." },
       { q: 'Should we run both?', a: "Once you can afford to, generally yes — they do different jobs and they compound. What you should not do is judge them against each other using last-click numbers." },
@@ -457,6 +491,23 @@ const PAGES = [
         'Keep the invoices either way \u2014 they are your substantiation.',
       ],
     },
+    tables: [
+      {
+        wrap: true,
+        h2: 'The same $10,000 month, both ways.',
+        lead: 'Nothing here is a rate you negotiate — it follows from the 10% rule above and which of the two states your account is in. The figures are arithmetic, not advice; your accountant owns the BAS.',
+        columns: ['On a $10,000 month of media', 'No ABN on the account', 'ABN recorded, GST registered'],
+        rows: [
+          ['What Meta invoices', '$11,000 — the media plus 10% GST', '$10,000 — no GST charged'],
+          ['GST on the invoice', '$1,000', 'Nil'],
+          ['What you do about it', 'Nothing at the point of purchase', 'Self-assess 10% under the reverse charge'],
+          ['Input tax credit, where creditable', 'Claim the $1,000 back on the BAS', 'Claim the $1,000 you self-assessed'],
+          ['Net cost of the advertising', '$10,000', '$10,000'],
+          ['Cash out the door before the BAS', '$11,000', '$10,000'],
+        ],
+        note: 'The net cost is identical — the difference is timing and paperwork, not money, which is why this is so often left wrong for years without anyone noticing. It matters most to cash flow at scale: on $100,000 a month, the no-ABN path has $10,000 sitting with the ATO until the return is lodged.',
+      },
+    ],
     faqs: [
       { q: 'Do Facebook ads have GST in Australia?', a: "Usually yes. Meta charges 10% GST to Australian customers who have not supplied a valid ABN and confirmed GST registration on the ad account. Supply both and Meta should not charge GST, because the reverse charge rules move the obligation to you instead." },
       { q: 'What is the GST rate on Facebook advertising?', a: "Ten per cent, the standard Australian GST rate. It applies to the advertising spend itself, so a $1,000 media bill becomes $1,100 where GST is charged." },
@@ -625,6 +676,23 @@ const PAGES = [
         'Knowing when to stop something the platform is still defending.',
       ],
     },
+    tables: [
+      {
+        wrap: true,
+        h2: 'What it takes over, and what stays yours.',
+        lead: 'A line-by-line read on where the automation actually reaches, which is narrower than the marketing suggests and wider than most agencies admit.',
+        columns: ['Job', 'Advantage+', 'Still yours'],
+        rows: [
+          ['Audience selection', 'Handled — it finds the buyers faster than manual segments', 'Exclusions, and knowing which customers you do not want more of'],
+          ['Placement', 'Handled across the whole family of apps', 'Whether a placement suits the creative you actually made'],
+          ['Budget distribution', 'Handled across creative combinations, continuously', 'The total, and when to stop feeding a campaign'],
+          ['Creative production', 'Not handled. It combines what you give it', 'All of it — concepts, hooks, cuts, the volume the auction eats'],
+          ['Measurement', 'Not handled. It optimises to whatever event you point it at', 'Whether that event is firing correctly and means what you think'],
+          ['Judgement', 'Not handled, and it cannot be', 'Margin, stock, what a customer is worth, when a winner has gone stale'],
+        ],
+        note: 'The pattern is the same everywhere automation lands: it raises the floor and moves the constraint. When the platform does the mechanics, the accounts that win are the ones supplying better creative and making faster decisions about what to feed it.',
+      },
+    ],
     faqs: [
       { q: 'Should we use Advantage+ campaigns?', a: "Usually worth testing, especially for ecommerce with clean conversion data. It rewards accounts with good creative and reliable tracking, and it exposes accounts without either." },
       { q: 'Does it mean we do not need a media buyer?', a: "It means you need less of the mechanical work and more of the creative and decision work. The job did not disappear; it moved." },

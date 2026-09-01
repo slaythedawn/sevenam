@@ -781,6 +781,76 @@
     window.addEventListener("resize", paint);
   }
 
+  /* ----------------------------------------------------- glossary filter */
+
+  /* Twenty terms in one flat list and no way to reach one without scanning the
+     lot. The field is built here rather than in the HTML so the page without JS
+     is exactly what it always was — a complete, readable list — instead of a
+     search box that does nothing.
+
+     Matching is on the whole row, term and definition together: somebody who
+     half-remembers "the one about the unstable period after a change" finds
+     Learning phase without knowing its name. */
+  function setupGlossary() {
+    var rows = qa("[data-term]");
+    if (rows.length < 2) return;
+
+    var list = rows[0].parentNode;
+    if (!list) return;
+
+    var wrap = document.createElement("div");
+    wrap.style.cssText = "margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 12px;" +
+      "align-items: center;";
+
+    var input = document.createElement("input");
+    input.type = "search";
+    input.setAttribute("aria-label", "Filter the glossary");
+    input.placeholder = "Filter " + rows.length + " terms…";
+    input.style.cssText = "flex: 1 1 260px; min-width: 0; background: #FFFFFF;" +
+      "border: 1px solid #6B6B63; border-radius: 4px; color: #0A0A0A;" +
+      "font-family: inherit; font-size: 17px; padding: 13px 15px; box-sizing: border-box;";
+
+    var count = document.createElement("span");
+    count.setAttribute("aria-live", "polite");
+    count.style.cssText = "font-size: 14px; color: #55554F; font-variant-numeric: tabular-nums;";
+
+    var empty = document.createElement("p");
+    empty.style.cssText = "margin: 20px 0 0; font-size: 17px; line-height: 1.6; color: #55554F; display: none;";
+
+    wrap.appendChild(input);
+    wrap.appendChild(count);
+    list.parentNode.insertBefore(wrap, list);
+    list.parentNode.insertBefore(empty, list.nextSibling);
+
+    /* Read the text once. Doing it per keystroke walks the DOM twenty times for
+       a list that never changes. */
+    var haystack = rows.map(function (r) {
+      return (r.textContent || "").toLowerCase().replace(/\s+/g, " ");
+    });
+
+    function apply() {
+      var q = input.value.trim().toLowerCase();
+      var shown = 0;
+      rows.forEach(function (r, i) {
+        var hit = !q || haystack[i].indexOf(q) > -1;
+        r.style.display = hit ? "" : "none";
+        if (hit) shown++;
+      });
+      count.textContent = q ? shown + " of " + rows.length : "";
+      empty.style.display = shown ? "none" : "";
+      empty.textContent = shown ? "" :
+        "Nothing matches “" + input.value.trim() + "”. Every term is listed above when the field is empty.";
+    }
+
+    input.addEventListener("input", apply);
+    /* Escape clears, which is what a search field is expected to do and what the
+       native clear button fires anyway. */
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { input.value = ""; apply(); }
+    });
+    apply();
+  }
+
   /* ------------------------------------------------- break-even ROAS */
 
   /* The page argues that break-even ROAS is decided by gross margin rather than
@@ -1117,6 +1187,7 @@
     setupPricingCall();
     setupAdLibrary();
     setupRoas();
+    setupGlossary();
   }
 
   if (document.readyState === "loading") {

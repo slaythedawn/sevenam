@@ -591,6 +591,23 @@ const PAGES = [
         'Can you show reporting a non-specialist could audit without you present?',
       ],
     },
+    tables: [
+      {
+        wrap: true,
+        h2: 'What to ask, and what the answer tells you.',
+        lead: 'Six questions that separate providers faster than any shortlist. The point is not the answer — it is whether they can give one without rearranging the question.',
+        columns: ['Ask this', 'A good sign', 'A warning'],
+        rows: [
+          ['Who owns the ad account and the pixel?', 'Yours, on your Business Manager, from the first day', 'Theirs, "for efficiency", handed over at the end if you ask'],
+          ['How is the fee structured?', 'A figure, in writing, that does not move when your budget does', 'A percentage of spend, so scaling your business raises their invoice'],
+          ['What happens in the first thirty days?', 'A specific list with dates against it', 'Discovery, strategy and onboarding, none of which are deliverables'],
+          ['Who actually touches the account?', 'A named person, and you speak to them', 'An account manager who relays to someone you never meet'],
+          ['How much creative do you produce a month?', 'A number, and examples of what happened to last month’s', 'Talk about quality over quantity, which usually means very little of either'],
+          ['What would make you tell us to stop?', 'A straight answer, including margins or spend that are too low', 'Nothing — every business is a fit, which means none of them are'],
+        ],
+        note: 'Ask all six on one call. Any provider worth hiring answers them in about ten minutes, and the ones who cannot will spend that ten minutes explaining why the questions are the wrong ones.',
+      },
+    ],
     faqs: [
       { q: 'So who is the best agency in Australia?', a: "There is no defensible answer, and anyone who gives you one is guessing or selling. The best provider for you is the one whose structure fits how your business actually operates — which the six questions above will surface faster than any list." },
       { q: 'Are awards worth anything?', a: "Very little. Most are entered, paid for and judged on submitted case studies rather than on portfolio-wide performance." },
@@ -637,8 +654,25 @@ const PAGES = [
         'Fixed fees, quoted in writing, priced to the work.',
       ],
     },
+    tables: [
+      {
+        wrap: true,
+        h2: 'What a tier table lists, and what decides the result.',
+        lead: 'Set one against the other. The left column is what almost every package page enumerates; the right is what actually moves cost per result, and it is nearly always absent.',
+        columns: ['', 'Usually in the table', 'Usually not, and it matters more'],
+        rows: [
+          ['Creative', 'A count of assets — "12 ad creatives a month"', 'How many *distinct concepts*, and what happened to last month’s losers'],
+          ['Campaigns', 'A number of campaigns or ad sets', 'Whether the structure lets the model learn, or splits data into pieces too small to read'],
+          ['Reporting', 'Weekly or monthly, sometimes a dashboard', 'Who reads it, and what they are allowed to change on the strength of it'],
+          ['Decisions', 'Not listed', 'How long a losing ad set runs before someone stops it'],
+          ['Measurement', 'Assumed to work', 'Whether the conversion events match what the business actually banked'],
+          ['Ownership', 'Rarely stated', 'Whose Business Manager it is built on, and what leaves with you'],
+        ],
+        note: 'Countable things go in the table because they are easy to put in a table. That is the whole reason tiers are built from asset counts rather than from the two variables — creative volume and decision speed — that explain most of the difference between accounts.',
+      },
+    ],
     faqs: [
-      { q: 'Why are there no prices on this page?', a: "Because the honest figure depends on what the account needs, and a number picked before anyone has read it would be a guess dressed as a quote. Every figure is in writing before you commit to anything, and the conversation that produces it is free." },
+      { q: 'What does it cost?', a: "The setup is $19,500 once. The daily decisions are $2,500 a month after it is live. Creative packages start at $5,000. The end-to-end option is the only one quoted after we read the account, because that figure genuinely depends on how many accounts and markets you run." },
       { q: 'Is there a minimum commitment?', a: "The setup is a four-week project with a fixed start and finish. Everything monthly is month to month with no notice period." },
       { q: 'Can we buy the setup and stop there?', a: "Yes, and some do. You own it — the account, the tracking, the structure and the documentation stay with you whether or not you buy anything else." },
       { q: 'How does the creative work?', a: "Concepts, hooks, cuts and statics produced end to end on our own AI line, ordered when you need them and delivered in days rather than weeks. Each one ships with its performance numbers attached, and there is no batch to commit to." },

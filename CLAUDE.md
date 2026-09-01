@@ -189,6 +189,19 @@ someone else's product ages worse than the shape of it. The block is opt-in — 
 pages that set `walkthrough` render it, and `tools/content/guides.js` has to pass the
 key through `build()` or it is silently dropped.
 
+`dataTable()` has two modes. The default right-aligns every column after the
+first, holds each cell on one line and uses tabular figures — right for money,
+wrong for sentences. `wrap: true` gives a prose comparison: left-aligned, cells
+allowed to break, no tabular figures. Both keep the `overflow-x: auto` container,
+so a wide table scrolls inside itself rather than pushing the page sideways on a
+phone. Six pages use the wrapping mode.
+
+`setupGlossary()` builds the filter on `/glossary` from `[data-term]` rows. The
+field is created in `site.js`, never in the HTML, so a visitor without JS gets the
+complete list rather than a search box that does nothing. It matches the whole
+row — term and definition — because someone half-remembering "the unstable period
+after a change" should find Learning phase without knowing its name.
+
 ## Icons and social cards
 
 `img/favicon.svg` is the source — volt square, ink 7. The PNGs beside it
