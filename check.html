@@ -69,7 +69,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0A0A0A">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/check","name":"Account Check — Five Days, A Straight Read On Your Meta Ads | Sevenam","description":"A recorded five-day walkthrough of your own Meta ad account: what's broken, what it's costing, what to fix first, and what your agency fee really works out to. Credited against the setup fee.","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"Service","name":"Meta ad account check","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"Australia","serviceType":"Advertising account audit"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sevenam.com.au/"},{"@type":"ListItem","position":2,"name":"The account check","item":"https://sevenam.com.au/check"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam builds growth systems with AI and technology — Meta advertising installed on businesses' own ad accounts, the creative that feeds it, and marketing automation across the wider business.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/check","name":"Account Check — Five Days, A Straight Read On Your Meta Ads | Sevenam","description":"A recorded five-day walkthrough of your own Meta ad account: what's broken, what it's costing, what to fix first, and what your agency fee really works out to. Credited against the setup fee.","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"Service","name":"Meta ad account check","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"Australia","serviceType":"Advertising account audit"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sevenam.com.au/"},{"@type":"ListItem","position":2,"name":"The account check","item":"https://sevenam.com.au/check"}]}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -272,6 +272,32 @@ main [style*="display: grid"] > * { min-width: 0; }
    where a second column is genuinely wanted. */
 @media (max-width: 829px) {
   main [style*="grid-column: span 2"] { grid-column: auto !important; }
+}
+
+/* And the half that min-width: 0 did not fix. Reported again from a real
+   iPhone after the first attempt shipped: two case-study cards side by side,
+   the second sliced off the screen, its text wrapping one word per line.
+
+   The card grids are written minmax(min(240px, 100%), 1fr), and that min()
+   is the guard that is supposed to let a track shrink below its floor on a
+   narrow screen. Chromium honours it. WebKit resolves the 100% against a
+   container width it does not consider definite yet, keeps the pixel floor,
+   fits two tracks it has no room for, and overflows.
+
+   So stop asking an engine to work it out. Below the width where a second
+   column could honestly fit, name one column outright. The substring
+   "minmax(min(" hits exactly the ~100 card grids and none of the small stat
+   grids, which are written minmax(180px, 1fr) and are meant to sit two-up on
+   a phone — forcing those to one column is what made the page taller last
+   time.
+
+   Two thresholds because the floors differ: a 280px-and-up card needs
+   2*280 + 20 gap + 64 section padding before a second column is real. */
+@media (max-width: 719px) {
+  main [style*="minmax(min(3"] { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 599px) {
+  main [style*="minmax(min(2"] { grid-template-columns: 1fr !important; }
 }
 
 /* ============================================================ atmosphere ==
@@ -605,7 +631,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
             <h2 style="margin: 0px; font-size: 26px; font-weight: 600; letter-spacing: -0.025em;">Request a check</h2>
             <p style="margin: 0px; font-size: 17px; line-height: 1.7; color: rgb(201, 201, 194);">Four fields — where to reply, your website, what you spend a month, and which of the four you are after. About twenty seconds.</p>
             <p style="margin: 0px; font-size: 17px; line-height: 1.7; color: rgb(201, 201, 194);">Josh reads every one himself and replies with a time. If the account isn't worth checking yet, he'll tell you that instead.</p>
-            <a href="/apply" class="scp0" style="align-self: flex-start; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-family: inherit; font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Request the check</a>
+            <a href="/apply" class="scp0" style="align-self: flex-start; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-family: inherit; font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Request the check</a><p style="flex: 1 0 100%; margin: 6px 0px 0px; max-width: 58ch; font-size: 15px; line-height: 1.65; color: rgb(85, 85, 79);">Four fields, and no call booked yet. We read what you send and tell you whether you qualify for a free marketing technology, systems and performance audit — offered at our discretion and in limited numbers.</p>
             <p style="margin: 0px; font-size: 13px; line-height: 1.6; color: rgb(181, 181, 173);">Credited in full against an Install. No retainer, no lock-in, priced to the work.</p>
           </div>
         
@@ -623,7 +649,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
           <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
           <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: rgb(255, 255, 255);">sevenam</span>
         </div>
-        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.</p>
+        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam builds growth systems with AI and technology. Three products: the Meta advertising system, the creative that feeds it, and the marketing automation underneath the whole business.</p>
         <span style="font-size: 15px; color: rgb(85, 85, 79);">Sydney, Australia</span>
       </div>
       <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -631,6 +657,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <a href="/install" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">One-time setup</a>
         <a href="/system" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">The daily decisions</a>
         <a href="/ad-creative" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Ad creative</a>
+        <a href="/marketing-automation" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Marketing automation</a>
         <a href="/ai-marketing-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Where we use AI</a>
         <a href="/facebook-marketing-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook marketing</a>
         <a href="/digital-marketing-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Digital marketing</a>
@@ -649,7 +676,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <a href="/meta-ads-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads</a>
         <a href="/instagram-ads-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Instagram ads</a>
         <a href="/social-media-advertising-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Social media advertising</a>
-        <a href="/facebook-ads-consultant" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a><a href="/facebook-ads-expert" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads expert</a><a href="/ecommerce-marketing-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Ecommerce marketing</a><a href="/meta-ads-management" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads management</a><a href="/paid-social-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Paid social</a>
+        <a href="/facebook-ads-consultant" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a><a href="/facebook-ads-expert" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads expert</a><a href="/ecommerce-marketing-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Ecommerce marketing</a><a href="/meta-ads-management" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads management</a><a href="/paid-social-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Paid social</a><a href="/marketing-automation" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Marketing automation</a><a href="/email-marketing-agency" class="scp5" style="color: rgb(181, 181, 173); font-size: 15px;">Email and CRM</a>
       </div>
       <div style="display: flex; flex-direction: column; gap: 12px;">
         <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Where</span>
@@ -668,7 +695,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
     </div>
     <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: rgb(85, 85, 79);">
       <span>© 2026 Sevenam. Australia.</span>
-      <span>Your growth system for Meta. It runs at seven.</span>
+      <span>Growth systems built with AI and technology. Ours runs at seven.</span>
     </div>
   </div></footer></div></div>
 <script src="/site.js?v=cfb16977" defer></script>

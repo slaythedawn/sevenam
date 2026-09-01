@@ -46,12 +46,12 @@ const PAGES = [
     s2: {
       h2: 'How the pricing works.',
       paras: [
-        "The setup is $19,500 \u2014 four weeks of fixed scope, the same number whatever you spend. The daily decisions are $2,500 a month once it is live. Creative packages start at $5,000, and how far past that you go depends on what the account consumes.",
+        "The setup is $19,500 \u2014 four weeks of fixed scope, the same number whatever you spend. The daily decisions are $2,500 a month once it is live. Creative packages start at $5,000, and how far past that you go depends on what the account consumes. Every figure excludes GST.",
         "There are no tiers. Four things you can buy, any of them on their own, and the end-to-end option is the only one quoted after we read the account.",
       ],
       items: [
-        'The setup is $19,500, agreed before anything starts.',
-        'The daily decisions are $2,500 a month, whatever you spend.',
+        'The setup is $19,500 plus GST, agreed before anything starts.',
+        'The daily decisions are $2,500 a month plus GST, whatever you spend.',
         'Creative packages start at $5,000, ordered when the account needs it.',
         'No tiers, no packages, no minimum term.',
       ],
@@ -675,7 +675,7 @@ const PAGES = [
       },
     ],
     faqs: [
-      { q: 'What does it cost?', a: "The setup is $19,500 once. The daily decisions are $2,500 a month after it is live. Creative packages start at $5,000. The end-to-end option is the only one quoted after we read the account, because that figure genuinely depends on how many accounts and markets you run." },
+      { q: 'What does it cost?', a: "The setup is $19,500 once. The daily decisions are $2,500 a month after it is live. Creative packages start at $5,000. Every figure excludes GST. The end-to-end option is the only one quoted after we read the account, because that figure genuinely depends on how many accounts and markets you run." },
       { q: 'Is there a minimum commitment?', a: "The setup is a four-week project with a fixed start and finish. Everything monthly is month to month with no notice period." },
       { q: 'Can we buy the setup and stop there?', a: "Yes, and some do. You own it — the account, the tracking, the structure and the documentation stay with you whether or not you buy anything else." },
       { q: 'How does the creative work?', a: "Concepts, hooks, cuts and statics produced end to end on our own AI line, ordered when you need them and delivered in days rather than weeks. Each one ships with its performance numbers attached, and there is no batch to commit to." },

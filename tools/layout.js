@@ -56,6 +56,18 @@ const SHELL = shell();
 
 /* ------------------------------------------------------------------ blocks */
 
+/* The line under every primary CTA. A button that says "Get started" asks for
+   work; this says what the visitor gets for the four fields, which is the only
+   reason anyone fills one in cold.
+
+   The wording is load-bearing and legally deliberate: "see whether you qualify"
+   and "at our discretion, in limited numbers" keep it an invitation to be
+   assessed rather than an offer to supply. It is the same discretion the audit
+   table on /marketing-automation is written to preserve. Do not soften it to
+   "get your free audit" — that is a promise, and Josh has to be free to say no
+   to an account he does not want. */
+const AUDIT_LINE = 'Four fields, and no call booked yet. We read what you send and tell you whether you qualify for a free marketing technology, systems and performance audit — offered at our discretion and in limited numbers.';
+
 function hero(p) {
   const trust = (p.trust || ['No retainer', 'No lock-in', 'Priced to the work'])
     .map(t => '<span>' + esc(t) + '</span>').join('<span>·</span>');
@@ -69,6 +81,7 @@ function hero(p) {
         <a href="${esc(p.ctaHref || '/apply')}" class="scp0" style="background: ${VOLT}; color: ${INK}; font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">${esc(p.ctaLabel || 'Get started')}</a>
         <a href="${esc(p.secondaryHref || '/system')}" class="scp1" style="border: 1px solid rgb(85, 85, 79); color: rgb(247, 247, 245); font-size: 16px; font-weight: 600; padding: 15px 26px; border-radius: 4px;">${esc(p.secondaryLabel || 'See how it works')}</a>
       </div>
+      <p style="margin: 20px 0px 0px; max-width: 58ch; font-size: 15px; line-height: 1.65; color: ${INK_TEXT};">${esc(AUDIT_LINE)}</p>
       <div style="display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 32px; font-size: 14px; font-weight: 500; color: ${INK_TEXT};">${trust}</div>
     </div>
   </section>`;
@@ -225,6 +238,7 @@ function closing(c) {
       <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: ${INK_TEXT};">${esc(c.p)}</p>
       <a href="/apply" class="scp0" style="background: ${VOLT}; color: ${INK}; font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a>
         <a href="/apply" class="scp4" style="color: ${VOLT}; font-size: 16px; font-weight: 600; border-bottom: 1px solid rgb(85, 85, 79);">Four fields, twenty seconds →</a>
+      <p style="margin: 0px; max-width: 58ch; font-size: 15px; line-height: 1.65; color: ${INK_TEXT};">${esc(AUDIT_LINE)}</p>
     </div>
   </section>`;
 }
@@ -236,7 +250,7 @@ const ORG = {
   "@id": ORIGIN + "/#org",
   "name": "Sevenam",
   "url": ORIGIN,
-  "description": "Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.",
+  "description": "Sevenam builds growth systems with AI and technology — Meta advertising installed on businesses' own ad accounts, the creative that feeds it, and marketing automation across the wider business.",
   /* Named so Google can tie the company to the person behind it. There is no
      Sevenam company page on LinkedIn yet; when there is, its URL belongs on the
      Organization as sameAs, alongside this. */

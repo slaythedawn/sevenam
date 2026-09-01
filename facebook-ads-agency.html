@@ -72,7 +72,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/facebook-ads-agency","name":"Facebook Ads Agency (Australia) — Or a System You Own | Sevenam","description":"Looking for a Facebook ads agency in Australia? Here's what an agency does now that Meta automated the targeting — and why installing a system on your own ad account is usually the better buy. Fixed prices, priced to the work not your budget.","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"Service","name":"Facebook advertising system installation","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"Australia","serviceType":"Facebook advertising system installation"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Sevenam a Facebook ads agency?","acceptedAnswer":{"@type":"Answer","text":"Not in the usual sense. We're a growth systems and technology company: we install the system on your own account and run the technology that operates it. We will do the daily execution end to end if you need that, but always for a fixed fee, priced to the work."}},{"@type":"Question","name":"Do you charge a percentage of ad spend?","acceptedAnswer":{"@type":"Answer","text":"The setup is a fixed one-time price and the monthly is a flat fee built around your account. Our fees are priced to the work, and none of that work gets harder because you spent more."}},{"@type":"Question","name":"Who owns the ad account?","acceptedAnswer":{"@type":"Answer","text":"You do. Everything is built inside your own Business Manager from hour one — account, pixel, audiences and creative files. If you stop working with us, none of it moves."}},{"@type":"Question","name":"What if we have nobody internally to run it?","acceptedAnswer":{"@type":"Answer","text":"Then we operate it. Self-run needs one person for about twenty minutes a day; where nobody has that, the end-to-end option covers media buying, creative and the daily execution for a fixed monthly fee, quoted after we read the account."}},{"@type":"Question","name":"Do you work with businesses outside Sydney?","acceptedAnswer":{"@type":"Answer","text":"Yes. We're based in Sydney and work with businesses across Australia — the system is delivered remotely and the decisions arrive at 7am in your own timezone."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sevenam.com.au/"},{"@type":"ListItem","position":2,"name":"Facebook ads agency","item":"https://sevenam.com.au/facebook-ads-agency"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam builds growth systems with AI and technology. Three products: the Meta advertising system, the creative that feeds it, and the marketing automation underneath the whole business.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/facebook-ads-agency","name":"Facebook Ads Agency (Australia) — Or a System You Own | Sevenam","description":"Looking for a Facebook ads agency in Australia? Here's what an agency does now that Meta automated the targeting — and why installing a system on your own ad account is usually the better buy. Fixed prices, priced to the work not your budget.","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"Service","name":"Facebook advertising system installation","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"Australia","serviceType":"Facebook advertising system installation"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Sevenam a Facebook ads agency?","acceptedAnswer":{"@type":"Answer","text":"Not in the usual sense. We're a growth systems and technology company: we install the system on your own account and run the technology that operates it. We will do the daily execution end to end if you need that, but always for a fixed fee, priced to the work."}},{"@type":"Question","name":"Do you charge a percentage of ad spend?","acceptedAnswer":{"@type":"Answer","text":"The setup is a fixed one-time price and the monthly is a flat fee built around your account. Our fees are priced to the work, and none of that work gets harder because you spent more."}},{"@type":"Question","name":"Who owns the ad account?","acceptedAnswer":{"@type":"Answer","text":"You do. Everything is built inside your own Business Manager from hour one — account, pixel, audiences and creative files. If you stop working with us, none of it moves."}},{"@type":"Question","name":"What if we have nobody internally to run it?","acceptedAnswer":{"@type":"Answer","text":"Then we operate it. Self-run needs one person for about twenty minutes a day; where nobody has that, the end-to-end option covers media buying, creative and the daily execution for a fixed monthly fee, quoted after we read the account."}},{"@type":"Question","name":"Do you work with businesses outside Sydney?","acceptedAnswer":{"@type":"Answer","text":"Yes. We're based in Sydney and work with businesses across Australia — the system is delivered remotely and the decisions arrive at 7am in your own timezone."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sevenam.com.au/"},{"@type":"ListItem","position":2,"name":"Facebook ads agency","item":"https://sevenam.com.au/facebook-ads-agency"}]}]}</script>
 <style>
   html, body { margin:0; padding:0; }
   body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
@@ -260,6 +260,32 @@ main [style*="display: grid"] > * { min-width: 0; }
    where a second column is genuinely wanted. */
 @media (max-width: 829px) {
   main [style*="grid-column: span 2"] { grid-column: auto !important; }
+}
+
+/* And the half that min-width: 0 did not fix. Reported again from a real
+   iPhone after the first attempt shipped: two case-study cards side by side,
+   the second sliced off the screen, its text wrapping one word per line.
+
+   The card grids are written minmax(min(240px, 100%), 1fr), and that min()
+   is the guard that is supposed to let a track shrink below its floor on a
+   narrow screen. Chromium honours it. WebKit resolves the 100% against a
+   container width it does not consider definite yet, keeps the pixel floor,
+   fits two tracks it has no room for, and overflows.
+
+   So stop asking an engine to work it out. Below the width where a second
+   column could honestly fit, name one column outright. The substring
+   "minmax(min(" hits exactly the ~100 card grids and none of the small stat
+   grids, which are written minmax(180px, 1fr) and are meant to sit two-up on
+   a phone — forcing those to one column is what made the page taller last
+   time.
+
+   Two thresholds because the floors differ: a 280px-and-up card needs
+   2*280 + 20 gap + 64 section padding before a second column is real. */
+@media (max-width: 719px) {
+  main [style*="minmax(min(3"] { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 599px) {
+  main [style*="minmax(min(2"] { grid-template-columns: 1fr !important; }
 }
 
 /* ============================================================ atmosphere ==
@@ -566,7 +592,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
       <p style="margin: 32px 0px 0px; max-width: 60ch; font-size: 21px; font-weight: 500; line-height: 1.5; letter-spacing: -0.01em; color: rgb(247, 247, 245);">You're probably looking for one. Here's why you might not need one.</p>
       <p style="margin: 24px 0px 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company in Australia. We install a Meta advertising system on your own ad account in four weeks, then run the technology that operates it — written decisions that lands at 7am every morning telling you exactly what to do that day. No retainer, no lock-in, and no fee that climbs with your ad spend.</p>
       <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 44px;">
-        <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Get started</a>
+        <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Get started</a><p style="flex: 1 0 100%; margin: 6px 0px 0px; max-width: 58ch; font-size: 15px; line-height: 1.65; color: rgb(85, 85, 79);">Four fields, and no call booked yet. We read what you send and tell you whether you qualify for a free marketing technology, systems and performance audit — offered at our discretion and in limited numbers.</p>
         <a href="/system" class="scp1" style="border: 1px solid rgb(85, 85, 79); color: rgb(247, 247, 245); font-size: 16px; font-weight: 600; padding: 15px 26px; border-radius: 4px;">See how it works</a>
       </div>
       <div style="display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 32px; font-size: 14px; font-weight: 500; color: rgb(181, 181, 173);"><span>No retainer</span><span>·</span><span>No lock-in</span><span>·</span><span>Priced to the work</span></div>
@@ -734,7 +760,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
       <span style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; padding: 5px 9px; border-radius: 3px;">07:00</span>
       <h2 style="margin: 0px; max-width: 18ch; font-size: clamp(38px, 5.4vw, 74px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05;">Have your Facebook ads read properly.</h2>
       <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173);">Fifteen minutes with Josh, no pitch. You'll leave knowing the two or three things costing you the most right now — and what it would take to fix them.</p>
-      <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a>
+      <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a><p style="flex: 1 0 100%; margin: 6px 0px 0px; max-width: 58ch; font-size: 15px; line-height: 1.65; color: rgb(85, 85, 79);">Four fields, and no call booked yet. We read what you send and tell you whether you qualify for a free marketing technology, systems and performance audit — offered at our discretion and in limited numbers.</p>
         <a href="/apply" class="scp5" style="color: rgb(216, 255, 0); font-size: 16px; font-weight: 600; border-bottom: 1px solid rgb(85, 85, 79);">Four fields, twenty seconds →</a>
     </div>
   </section></main><div class="sc-host"><footer style="background: rgb(10, 10, 10); color: rgb(181, 181, 173); padding: 96px 32px 48px;">
@@ -745,7 +771,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
           <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
           <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: rgb(255, 255, 255);">sevenam</span>
         </div>
-        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.</p>
+        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam builds growth systems with AI and technology. Three products: the Meta advertising system, the creative that feeds it, and the marketing automation underneath the whole business.</p>
         <span style="font-size: 15px; color: rgb(85, 85, 79);">Sydney, Australia</span>
       </div>
       <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -753,6 +779,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <a href="/install" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">One-time setup</a>
         <a href="/system" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">The daily decisions</a>
         <a href="/ad-creative" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Ad creative</a>
+        <a href="/marketing-automation" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Marketing automation</a>
         <a href="/ai-marketing-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Where we use AI</a>
         <a href="/facebook-marketing-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook marketing</a>
         <a href="/digital-marketing-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Digital marketing</a>
@@ -771,7 +798,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <a href="/meta-ads-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads</a>
         <a href="/instagram-ads-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Instagram ads</a>
         <a href="/social-media-advertising-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Social media advertising</a>
-        <a href="/facebook-ads-consultant" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a><a href="/facebook-ads-expert" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads expert</a><a href="/ecommerce-marketing-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Ecommerce marketing</a><a href="/meta-ads-management" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads management</a><a href="/paid-social-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Paid social</a>
+        <a href="/facebook-ads-consultant" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a><a href="/facebook-ads-expert" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads expert</a><a href="/ecommerce-marketing-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Ecommerce marketing</a><a href="/meta-ads-management" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads management</a><a href="/paid-social-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Paid social</a><a href="/marketing-automation" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Marketing automation</a><a href="/email-marketing-agency" class="scp8" style="color: rgb(181, 181, 173); font-size: 15px;">Email and CRM</a>
       </div>
       <div style="display: flex; flex-direction: column; gap: 12px;">
         <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Where</span>
@@ -790,7 +817,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
     </div>
     <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: rgb(85, 85, 79);">
       <span>© 2026 Sevenam. Australia.</span>
-      <span>Your growth system for Meta. It runs at seven.</span>
+      <span>Growth systems built with AI and technology. Ours runs at seven.</span>
     </div>
   </div></footer></div></div>
 <script src="/site.js?v=cfb16977" defer></script>

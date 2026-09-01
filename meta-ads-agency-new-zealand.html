@@ -22,7 +22,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0A0A0A">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam is a growth systems and technology company that installs Meta advertising systems on businesses' own ad accounts and runs the technology that operates them.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/meta-ads-agency-new-zealand","name":"Meta Ads Agency for New Zealand Ecommerce | Sevenam","description":"Facebook and Instagram ads for New Zealand brands, run on your own ad account. Sydney-based, two hours behind you, and built for a market small enough to saturate.","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"Service","name":"Meta Ads for New Zealand Brands","serviceType":"Meta advertising","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"AU","url":"https://sevenam.com.au/meta-ads-agency-new-zealand"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do you have an office in New Zealand?","acceptedAnswer":{"@type":"Answer","text":"No. We are based in Sydney and work remotely, which is how every account is run regardless of country. If having someone in the room matters to you, a local agency is the better fit and we would say so."}},{"@type":"Question","name":"Can you bill in New Zealand dollars?","acceptedAnswer":{"@type":"Answer","text":"Your ad account bills you directly in whatever currency it is set to, and we never touch your media spend. Our own fees are quoted in Australian dollars."}},{"@type":"Question","name":"Is the New Zealand market too small for this?","acceptedAnswer":{"@type":"Answer","text":"It is small enough that creative volume matters sooner, which is the part we are built for. What makes an account too small is spend rather than country — below roughly $10,000 a month there is not enough daily signal for a daily decision to beat a weekly one."}},{"@type":"Question","name":"Should we be advertising into Australia as well?","acceptedAnswer":{"@type":"Answer","text":"Often, yes, and usually earlier than brands expect. When a domestic audience saturates, buying a larger auction next door is frequently cheaper than paying rising frequency at home. It is one of the first things we look at."}},{"@type":"Question","name":"Do you understand the New Zealand market?","acceptedAnswer":{"@type":"Answer","text":"We understand the auction, which behaves the same way everywhere, and we understand what a small addressable audience does to frequency. Local cultural nuance in the creative is yours — you know your customer better than we will."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sevenam.com.au/"},{"@type":"ListItem","position":2,"name":"Meta Ads for New Zealand Brands","item":"https://sevenam.com.au/meta-ads-agency-new-zealand"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam builds growth systems with AI and technology — Meta advertising installed on businesses' own ad accounts, the creative that feeds it, and marketing automation across the wider business.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"WebPage","url":"https://sevenam.com.au/meta-ads-agency-new-zealand","name":"Meta Ads Agency for New Zealand Ecommerce | Sevenam","description":"Facebook and Instagram ads for New Zealand brands, run on your own ad account. Sydney-based, two hours behind you, and built for a market small enough to saturate.","isPartOf":{"@id":"https://sevenam.com.au/#org"}},{"@type":"Service","name":"Meta Ads for New Zealand Brands","serviceType":"Meta advertising","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"AU","url":"https://sevenam.com.au/meta-ads-agency-new-zealand"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do you have an office in New Zealand?","acceptedAnswer":{"@type":"Answer","text":"No. We are based in Sydney and work remotely, which is how every account is run regardless of country. If having someone in the room matters to you, a local agency is the better fit and we would say so."}},{"@type":"Question","name":"Can you bill in New Zealand dollars?","acceptedAnswer":{"@type":"Answer","text":"Your ad account bills you directly in whatever currency it is set to, and we never touch your media spend. Our own fees are quoted in Australian dollars."}},{"@type":"Question","name":"Is the New Zealand market too small for this?","acceptedAnswer":{"@type":"Answer","text":"It is small enough that creative volume matters sooner, which is the part we are built for. What makes an account too small is spend rather than country — below roughly $10,000 a month there is not enough daily signal for a daily decision to beat a weekly one."}},{"@type":"Question","name":"Should we be advertising into Australia as well?","acceptedAnswer":{"@type":"Answer","text":"Often, yes, and usually earlier than brands expect. When a domestic audience saturates, buying a larger auction next door is frequently cheaper than paying rising frequency at home. It is one of the first things we look at."}},{"@type":"Question","name":"Do you understand the New Zealand market?","acceptedAnswer":{"@type":"Answer","text":"We understand the auction, which behaves the same way everywhere, and we understand what a small addressable audience does to frequency. Local cultural nuance in the creative is yours — you know your customer better than we will."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sevenam.com.au/"},{"@type":"ListItem","position":2,"name":"Meta Ads for New Zealand Brands","item":"https://sevenam.com.au/meta-ads-agency-new-zealand"}]}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -261,6 +261,32 @@ main [style*="display: grid"] > * { min-width: 0; }
    where a second column is genuinely wanted. */
 @media (max-width: 829px) {
   main [style*="grid-column: span 2"] { grid-column: auto !important; }
+}
+
+/* And the half that min-width: 0 did not fix. Reported again from a real
+   iPhone after the first attempt shipped: two case-study cards side by side,
+   the second sliced off the screen, its text wrapping one word per line.
+
+   The card grids are written minmax(min(240px, 100%), 1fr), and that min()
+   is the guard that is supposed to let a track shrink below its floor on a
+   narrow screen. Chromium honours it. WebKit resolves the 100% against a
+   container width it does not consider definite yet, keeps the pixel floor,
+   fits two tracks it has no room for, and overflows.
+
+   So stop asking an engine to work it out. Below the width where a second
+   column could honestly fit, name one column outright. The substring
+   "minmax(min(" hits exactly the ~100 card grids and none of the small stat
+   grids, which are written minmax(180px, 1fr) and are meant to sit two-up on
+   a phone — forcing those to one column is what made the page taller last
+   time.
+
+   Two thresholds because the floors differ: a 280px-and-up card needs
+   2*280 + 20 gap + 64 section padding before a second column is real. */
+@media (max-width: 719px) {
+  main [style*="minmax(min(3"] { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 599px) {
+  main [style*="minmax(min(2"] { grid-template-columns: 1fr !important; }
 }
 
 /* ============================================================ atmosphere ==
@@ -570,6 +596,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 16px; font-weight: 600; padding: 16px 26px; border-radius: 4px;">Get started</a>
         <a href="/system" class="scp1" style="border: 1px solid rgb(85, 85, 79); color: rgb(247, 247, 245); font-size: 16px; font-weight: 600; padding: 15px 26px; border-radius: 4px;">See how it works</a>
       </div>
+      <p style="margin: 20px 0px 0px; max-width: 58ch; font-size: 15px; line-height: 1.65; color: rgb(181, 181, 173);">Four fields, and no call booked yet. We read what you send and tell you whether you qualify for a free marketing technology, systems and performance audit — offered at our discretion and in limited numbers.</p>
       <div style="display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 32px; font-size: 14px; font-weight: 500; color: rgb(181, 181, 173);"><span>No retainer</span><span>·</span><span>No lock-in</span><span>·</span><span>Priced to the work</span></div>
     </div>
   </section>
@@ -665,6 +692,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
       <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173);">Fifteen minutes with Josh, no pitch deck. Bring the account and we will tell you whether the ceiling is the audience or the creative.</p>
       <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a>
         <a href="/apply" class="scp4" style="color: rgb(216, 255, 0); font-size: 16px; font-weight: 600; border-bottom: 1px solid rgb(85, 85, 79);">Four fields, twenty seconds →</a>
+      <p style="margin: 0px; max-width: 58ch; font-size: 15px; line-height: 1.65; color: rgb(181, 181, 173);">Four fields, and no call booked yet. We read what you send and tell you whether you qualify for a free marketing technology, systems and performance audit — offered at our discretion and in limited numbers.</p>
     </div>
   </section>
   </main>
@@ -676,7 +704,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
           <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
           <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: rgb(255, 255, 255);">sevenam</span>
         </div>
-        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.</p>
+        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam builds growth systems with AI and technology. Three products: the Meta advertising system, the creative that feeds it, and the marketing automation underneath the whole business.</p>
         <span style="font-size: 15px; color: rgb(85, 85, 79);">Sydney, Australia</span>
       </div>
       <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -684,6 +712,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <a href="/install" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">One-time setup</a>
         <a href="/system" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">The daily decisions</a>
         <a href="/ad-creative" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Ad creative</a>
+        <a href="/marketing-automation" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Marketing automation</a>
         <a href="/ai-marketing-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Where we use AI</a>
         <a href="/facebook-marketing-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook marketing</a>
         <a href="/digital-marketing-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Digital marketing</a>
@@ -702,7 +731,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <a href="/meta-ads-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads</a>
         <a href="/instagram-ads-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Instagram ads</a>
         <a href="/social-media-advertising-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Social media advertising</a>
-        <a href="/facebook-ads-consultant" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a><a href="/facebook-ads-expert" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads expert</a><a href="/ecommerce-marketing-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Ecommerce marketing</a><a href="/meta-ads-management" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads management</a><a href="/paid-social-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Paid social</a>
+        <a href="/facebook-ads-consultant" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a><a href="/facebook-ads-expert" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads expert</a><a href="/ecommerce-marketing-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Ecommerce marketing</a><a href="/meta-ads-management" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads management</a><a href="/paid-social-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Paid social</a><a href="/marketing-automation" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Marketing automation</a><a href="/email-marketing-agency" class="scp6" style="color: rgb(181, 181, 173); font-size: 15px;">Email and CRM</a>
       </div>
       <div style="display: flex; flex-direction: column; gap: 12px;">
         <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Where</span>
@@ -721,7 +750,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
     </div>
     <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: rgb(85, 85, 79);">
       <span>© 2026 Sevenam. Australia.</span>
-      <span>Your growth system for Meta. It runs at seven.</span>
+      <span>Growth systems built with AI and technology. Ours runs at seven.</span>
     </div>
   </div></footer></div></div>
 <script src="/site.js?v=cfb16977" defer></script>

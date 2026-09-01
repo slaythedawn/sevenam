@@ -70,7 +70,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam buys Meta ads and produces ad creative for Australian ecommerce brands, on their own ad accounts, for fixed fees.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"Service","name":"Meta advertising system installation, creative production and daily decision approval","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"Australia","description":"A one-time setup that installs the system on your own Meta ad account, then creative ordered on demand, and a daily decision list you work through and we action."},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the price fixed before we start?","acceptedAnswer":{"@type":"Answer","text":"Yes. The setup is $19,500 and the daily decisions are $2,500 a month, and neither moves once agreed. Creative depends on how much the account consumes, so packages start at $5,000 and we put the rest in writing once we have read it — including what we would not sell you."}},{"@type":"Question","name":"Do you charge a percentage of ad spend?","acceptedAnswer":{"@type":"Answer","text":"Our fees are priced to the work — installing the system, running the decisions, producing the creative. None of that gets harder because you spent more, so none of it costs more."}},{"@type":"Question","name":"Is there a lock-in contract?","acceptedAnswer":{"@type":"Answer","text":"No. Setup is a fixed-scope project. Creative is ordered when you want it, priced per concept, with no minimum and no subscription. Anything monthly stops at the end of any month with no notice period."}},{"@type":"Question","name":"What happens on the consultation call?","acceptedAnswer":{"@type":"Answer","text":"Fifteen minutes. We look at your spend, your creative pipeline and who runs the account, then tell you which option fits and what it costs. If none of it fits, we say that."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sevenam.com.au/"},{"@type":"ListItem","position":2,"name":"Pricing","item":"https://sevenam.com.au/pricing"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sevenam.com.au/#org","name":"Sevenam","url":"https://sevenam.com.au","description":"Sevenam buys Meta ads and produces ad creative for Australian ecommerce brands, on their own ad accounts, for fixed fees.","founder":{"@type":"Person","name":"Josh Peacock","jobTitle":"Founder","sameAs":["https://www.linkedin.com/in/josh-peacock-b36b6b20/"]},"areaServed":"AU","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"}},{"@type":"Service","name":"Meta advertising system installation, creative production and daily decision approval","provider":{"@id":"https://sevenam.com.au/#org"},"areaServed":"Australia","description":"A one-time setup that installs the system on your own Meta ad account, then creative ordered on demand, and a daily decision list you work through and we action."},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the price fixed before we start?","acceptedAnswer":{"@type":"Answer","text":"Yes. The setup is $19,500 and the daily decisions are $2,500 a month, both excluding GST, and neither moves once agreed. Creative depends on how much the account consumes, so packages start at $5,000 and we put the rest in writing once we have read it — including what we would not sell you."}},{"@type":"Question","name":"Do you charge a percentage of ad spend?","acceptedAnswer":{"@type":"Answer","text":"Our fees are priced to the work — installing the system, running the decisions, producing the creative. None of that gets harder because you spent more, so none of it costs more."}},{"@type":"Question","name":"Is there a lock-in contract?","acceptedAnswer":{"@type":"Answer","text":"No. Setup is a fixed-scope project. Creative is ordered when you want it, priced per concept, with no minimum and no subscription. Anything monthly stops at the end of any month with no notice period."}},{"@type":"Question","name":"What happens on the consultation call?","acceptedAnswer":{"@type":"Answer","text":"Fifteen minutes. We look at your spend, your creative pipeline and who runs the account, then tell you which option fits and what it costs. If none of it fits, we say that."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sevenam.com.au/"},{"@type":"ListItem","position":2,"name":"Pricing","item":"https://sevenam.com.au/pricing"}]}]}</script>
 <style>
   html, body { margin:0; padding:0; }
   body { font-family:'Inter Tight', -apple-system, system-ui, sans-serif; background:#F7F7F5; color:#0A0A0A; -webkit-font-smoothing:antialiased; }
@@ -258,6 +258,32 @@ main [style*="display: grid"] > * { min-width: 0; }
    where a second column is genuinely wanted. */
 @media (max-width: 829px) {
   main [style*="grid-column: span 2"] { grid-column: auto !important; }
+}
+
+/* And the half that min-width: 0 did not fix. Reported again from a real
+   iPhone after the first attempt shipped: two case-study cards side by side,
+   the second sliced off the screen, its text wrapping one word per line.
+
+   The card grids are written minmax(min(240px, 100%), 1fr), and that min()
+   is the guard that is supposed to let a track shrink below its floor on a
+   narrow screen. Chromium honours it. WebKit resolves the 100% against a
+   container width it does not consider definite yet, keeps the pixel floor,
+   fits two tracks it has no room for, and overflows.
+
+   So stop asking an engine to work it out. Below the width where a second
+   column could honestly fit, name one column outright. The substring
+   "minmax(min(" hits exactly the ~100 card grids and none of the small stat
+   grids, which are written minmax(180px, 1fr) and are meant to sit two-up on
+   a phone — forcing those to one column is what made the page taller last
+   time.
+
+   Two thresholds because the floors differ: a 280px-and-up card needs
+   2*280 + 20 gap + 64 section padding before a second column is real. */
+@media (max-width: 719px) {
+  main [style*="minmax(min(3"] { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 599px) {
+  main [style*="minmax(min(2"] { grid-template-columns: 1fr !important; }
 }
 
 /* ============================================================ atmosphere ==
@@ -562,9 +588,9 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
       <div>
         <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: rgb(216, 255, 0);">HOW BUYING WORKS</span>
         <h1 style="margin: 26px 0px 0px; max-width: 20ch; font-size: clamp(40px, 6vw, 84px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; color: rgb(255, 255, 255); text-wrap: balance;">What it costs, and what it depends on.</h1>
-        <p style="margin: 32px 0px 0px; max-width: 56ch; font-size: 20px; font-weight: 500; line-height: 1.55; color: rgb(247, 247, 245);">The setup is $19,500 and the daily decisions are $2,500 a month. Creative packages start at $5,000. What your account needs on top of that we put in writing once we've read it — whether you go ahead or not.</p>
+        <p style="margin: 32px 0px 0px; max-width: 56ch; font-size: 20px; font-weight: 500; line-height: 1.55; color: rgb(247, 247, 245);">The setup is $19,500 and the daily decisions are $2,500 a month. Creative packages start at $5,000. Every figure on this page excludes GST. What your account needs on top of that we put in writing once we've read it — whether you go ahead or not.</p>
         <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px;">
-          <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 28px; border-radius: 4px;">Apply</a>
+          <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 28px; border-radius: 4px;">Apply</a><p style="flex: 1 0 100%; margin: 6px 0px 0px; max-width: 58ch; font-size: 15px; line-height: 1.65; color: rgb(85, 85, 79);">Four fields, and no call booked yet. We read what you send and tell you whether you qualify for a free marketing technology, systems and performance audit — offered at our discretion and in limited numbers.</p>
         </div>
       </div>
       <div style="border: 1px solid rgb(35, 35, 32); border-radius: 8px; padding: 36px; background: rgb(17, 17, 16);">
@@ -590,7 +616,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <div data-product style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 8px; padding: 40px 34px; display: flex; flex-direction: column; gap: 18px;">
           <span style="font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(85, 85, 79); font-weight: 600;">01 · Buy once</span>
           <h3 style="margin: 0px; min-height: 64px; font-size: 26px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.15;">The setup. Then you own it.</h3>
-          <div style="font-size: 34px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums;">$19,500</div><div style="font-size: 14px; font-weight: 500; color: rgb(107, 107, 99); margin-top: -8px;">once, fixed</div>
+          <div style="font-size: 34px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums;">$19,500</div><div style="font-size: 14px; font-weight: 500; color: rgb(107, 107, 99); margin-top: -8px;">once, fixed · ex GST</div>
           <p style="margin: 0px; min-height: 84px; font-size: 17px; line-height: 1.55; letter-spacing: -0.01em; color: rgb(10, 10, 10);">Four weeks inside your own Business Manager, and at the end of it the system is yours. The same number whatever you spend.</p>
           <div style="display: flex; flex-direction: column;">
             <div style="border-top: 1px solid rgb(227, 227, 221); padding: 13px 0px; display: grid; grid-template-columns: 88px 1fr; gap: 14px; align-items: baseline;"><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(85, 85, 79);">Week 1–2</span><span style="font-size: 16px; line-height: 1.5; color: rgb(85, 85, 79);">Account rebuilt, tracking fixed</span></div>
@@ -605,7 +631,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <div data-product style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); border: 1px solid rgb(10, 10, 10); border-radius: 8px; padding: 40px 34px; display: flex; flex-direction: column; gap: 18px;">
           <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(216, 255, 0);">02 · Buy as often as you like</span>
           <h3 style="margin: 0px; min-height: 64px; font-size: 26px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.15; color: rgb(255, 255, 255);">Creative on demand.</h3>
-          <div style="font-size: 34px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums;">From $5,000</div><div style="font-size: 14px; font-weight: 500; color: rgb(181, 181, 173); margin-top: -8px;">a package</div>
+          <div style="font-size: 34px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums;">From $5,000</div><div style="font-size: 14px; font-weight: 500; color: rgb(181, 181, 173); margin-top: -8px;">a package · ex GST</div>
           <p style="margin: 0px; min-height: 84px; font-size: 17px; line-height: 1.55; letter-spacing: -0.01em; color: rgb(255, 255, 255);">Order what the account needs, when it needs it. No batch to commit to, no monthly minimum, delivered in days.</p>
           <div style="display: flex; flex-direction: column;">
             <div style="border-top: 1px solid rgb(35, 35, 32); padding: 13px 0px; display: grid; grid-template-columns: 88px 1fr; gap: 14px; align-items: baseline;"><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(216, 255, 0);">Per concept</span><span style="font-size: 16px; line-height: 1.5; color: rgb(201, 201, 194);">Hooks, cuts and statics included</span></div>
@@ -620,7 +646,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <div data-product style="background: rgb(255, 255, 255); border: 1px solid rgb(227, 227, 221); border-radius: 8px; padding: 40px 34px; display: flex; flex-direction: column; gap: 22px;">
           <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(85, 85, 79);">03 · Runs every morning</span>
           <h3 style="margin: 0px; min-height: 64px; font-size: 26px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.15;">The daily decisions.</h3>
-          <div style="font-size: 34px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums;">$2,500</div><div style="font-size: 14px; font-weight: 500; color: rgb(107, 107, 99); margin-top: -8px;">a month, once the setup is done</div>
+          <div style="font-size: 34px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums;">$2,500</div><div style="font-size: 14px; font-weight: 500; color: rgb(107, 107, 99); margin-top: -8px;">a month, ex GST</div>
           <p style="margin: 0px; min-height: 84px; font-size: 17px; line-height: 1.55; letter-spacing: -0.01em; color: rgb(10, 10, 10);">Your account is read overnight and the day's decisions arrive at 7am with the numbers behind each one. You work through them; we action what you agree to.</p>
           <div style="display: flex; flex-direction: column;">
             <div style="border-top: 1px solid rgb(227, 227, 221); padding: 13px 0px; display: grid; grid-template-columns: 88px 1fr; gap: 14px; align-items: baseline;"><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(85, 85, 79);">Included</span><span style="font-size: 16px; line-height: 1.5; color: rgb(85, 85, 79);">Every account, market and feed you run</span></div>
@@ -696,7 +722,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
       <div style="display: flex; flex-direction: column; max-width: 840px;">
         <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
           <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Is the price fixed before we start?</h3>
-          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Yes. The setup is $19,500 and the daily decisions are $2,500 a month, and neither moves once agreed. Creative depends on how much the account consumes, so packages start at $5,000 and we put the rest in writing once we have read it — including what we would not sell you.</p>
+          <p style="margin: 0px; max-width: 64ch; font-size: 17px; line-height: 1.7; color: rgb(85, 85, 79);">Yes. The setup is $19,500 and the daily decisions are $2,500 a month, both excluding GST, and neither moves once agreed. Creative depends on how much the account consumes, so packages start at $5,000 and we put the rest in writing once we have read it — including what we would not sell you.</p>
         </div>
         <div style="border-top: 1px solid rgb(227, 227, 221); padding: 26px 0px;">
           <h3 style="margin: 0px 0px 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Do you charge a percentage of ad spend?</h3>
@@ -720,7 +746,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
       <h2 style="margin: 0px; max-width: 18ch; font-size: clamp(38px, 5.4vw, 74px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05;">Fifteen minutes, and you'll know every number.</h2>
       <p style="margin: 0px; max-width: 56ch; font-size: 19px; line-height: 1.65; color: rgb(181, 181, 173);">Tell us four things and Josh comes back to you with a time. If it turns out we're the wrong fit, you'll leave with the two or three things we'd fix in your account anyway.</p>
       <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-        <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a>
+        <a href="/apply" class="scp0" style="background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 17px; font-weight: 600; padding: 18px 30px; border-radius: 4px;">Get started</a><p style="flex: 1 0 100%; margin: 6px 0px 0px; max-width: 58ch; font-size: 15px; line-height: 1.65; color: rgb(85, 85, 79);">Four fields, and no call booked yet. We read what you send and tell you whether you qualify for a free marketing technology, systems and performance audit — offered at our discretion and in limited numbers.</p>
       </div>
     </div>
   </section></main><div class="sc-host"><footer style="background: rgb(10, 10, 10); color: rgb(181, 181, 173); padding: 96px 32px 48px;">
@@ -731,7 +757,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
           <span style="display: inline-flex; background: rgb(216, 255, 0); color: rgb(10, 10, 10); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 8px; border-radius: 4px;">07:00</span>
           <span style="font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: rgb(255, 255, 255);">sevenam</span>
         </div>
-        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam is a growth systems and technology company. We install Meta advertising systems on businesses' own accounts and run the technology that operates them.</p>
+        <p style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(181, 181, 173);">Sevenam builds growth systems with AI and technology. Three products: the Meta advertising system, the creative that feeds it, and the marketing automation underneath the whole business.</p>
         <span style="font-size: 15px; color: rgb(85, 85, 79);">Sydney, Australia</span>
       </div>
       <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -739,6 +765,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <a href="/install" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">One-time setup</a>
         <a href="/system" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">The daily decisions</a>
         <a href="/ad-creative" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Ad creative</a>
+        <a href="/marketing-automation" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Marketing automation</a>
         <a href="/ai-marketing-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Where we use AI</a>
         <a href="/facebook-marketing-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook marketing</a>
         <a href="/digital-marketing-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Digital marketing</a>
@@ -757,7 +784,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
         <a href="/meta-ads-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads</a>
         <a href="/instagram-ads-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Instagram ads</a>
         <a href="/social-media-advertising-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Social media advertising</a>
-        <a href="/facebook-ads-consultant" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a><a href="/facebook-ads-expert" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads expert</a><a href="/ecommerce-marketing-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Ecommerce marketing</a><a href="/meta-ads-management" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads management</a><a href="/paid-social-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Paid social</a>
+        <a href="/facebook-ads-consultant" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Consulting</a><a href="/facebook-ads-expert" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Facebook ads expert</a><a href="/ecommerce-marketing-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Ecommerce marketing</a><a href="/meta-ads-management" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Meta ads management</a><a href="/paid-social-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Paid social</a><a href="/marketing-automation" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Marketing automation</a><a href="/email-marketing-agency" class="scp2" style="color: rgb(181, 181, 173); font-size: 15px;">Email and CRM</a>
       </div>
       <div style="display: flex; flex-direction: column; gap: 12px;">
         <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(85, 85, 79);">Where</span>
@@ -776,7 +803,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
     </div>
     <div style="border-top: 1px solid rgb(35, 35, 32); padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: rgb(85, 85, 79);">
       <span>© 2026 Sevenam. Australia.</span>
-      <span>Your growth system for Meta. It runs at seven.</span>
+      <span>Growth systems built with AI and technology. Ours runs at seven.</span>
     </div>
   </div></footer></div></div>
 <script src="/site.js?v=cfb16977" defer></script>

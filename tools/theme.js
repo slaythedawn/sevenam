@@ -174,6 +174,32 @@ main [style*="display: grid"] > * { min-width: 0; }
   main [style*="grid-column: span 2"] { grid-column: auto !important; }
 }
 
+/* And the half that min-width: 0 did not fix. Reported again from a real
+   iPhone after the first attempt shipped: two case-study cards side by side,
+   the second sliced off the screen, its text wrapping one word per line.
+
+   The card grids are written minmax(min(240px, 100%), 1fr), and that min()
+   is the guard that is supposed to let a track shrink below its floor on a
+   narrow screen. Chromium honours it. WebKit resolves the 100% against a
+   container width it does not consider definite yet, keeps the pixel floor,
+   fits two tracks it has no room for, and overflows.
+
+   So stop asking an engine to work it out. Below the width where a second
+   column could honestly fit, name one column outright. The substring
+   "minmax(min(" hits exactly the ~100 card grids and none of the small stat
+   grids, which are written minmax(180px, 1fr) and are meant to sit two-up on
+   a phone — forcing those to one column is what made the page taller last
+   time.
+
+   Two thresholds because the floors differ: a 280px-and-up card needs
+   2*280 + 20 gap + 64 section padding before a second column is real. */
+@media (max-width: 719px) {
+  main [style*="minmax(min(3"] { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 599px) {
+  main [style*="minmax(min(2"] { grid-template-columns: 1fr !important; }
+}
+
 /* ============================================================ atmosphere ==
    Ink sections become floating panels rather than full-bleed bands: inset from
    the page edge with a large radius, over a Volt mesh. Glass needs something
