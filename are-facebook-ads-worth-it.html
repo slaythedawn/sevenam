@@ -96,7 +96,7 @@
   @keyframes pulseDot { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
   @keyframes chipIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; } }
-  @media (max-width: 780px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
+  @media (max-width: 829px) { [data-nav-links] { order:3; width:100%; justify-content:flex-start; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } [data-nav-links]::-webkit-scrollbar { display:none; } [data-nav-bar] { padding:12px 20px !important; min-height:64px !important; } }
 </style>
 <style id="sv-theme">
 /* ============================================================== the nav ====
@@ -143,10 +143,21 @@ main > section:first-of-type { padding-top: 128px !important; }
 
 /* On a phone the nav wraps to more than one line, so a fixed header of unknown
    height cannot be cleared by a fixed padding — the h1 ended up underneath it on
-   several pages. Below 640px it goes back to sticky and in flow, which pushes
+   several pages. Below the wrap it goes back to sticky and in flow, which pushes
    content down by exactly its own height whatever that turns out to be. The
-   floating capsule is a desktop flourish. */
-@media (max-width: 640px) {
+   floating capsule is a desktop flourish.
+
+   This breakpoint must match the one in the page stylesheet that sends
+   [data-nav-links] to its own full-width row. Both are 829px, because 830 is
+   the first width where the seven links, the logo and the button actually fit
+   on one line — measured, not guessed.
+
+   It used to say 640 here and 780 there, and the gap between them was a fixed
+   999px-radius pill wrapped to three rows and 152px tall: the capsule shape
+   broke, and because the hero only takes back a fixed 128px of padding, a 152px
+   nav sat on top of the h1. Change one of these two numbers and you must change
+   the other, and re-measure the fit width if a nav link is ever added. */
+@media (max-width: 829px) {
   header[style*="position: sticky"] {
     position: sticky !important;
     top: 0 !important; padding: 0;
@@ -156,9 +167,33 @@ main > section:first-of-type { padding-top: 128px !important; }
   }
   header[style*="position: sticky"] [data-nav-bar] {
     border-radius: 0; border: 0; background: transparent; box-shadow: none;
-    min-height: 0 !important; padding: 12px 20px !important;
+    min-height: 0 !important; padding: 10px 16px !important;
+    gap: 8px 12px !important;
   }
   main > section:first-of-type { padding-top: 0 !important; }
+
+  /* The page stylesheet sends the links to their own full-width row, which put
+     the logo, the button and the links on three separate lines — 156px of
+     sticky nav, 18% of a phone viewport, held there for the whole scroll. The
+     links scroll horizontally anyway, so they do not need the full width: they
+     take the remaining space on the button's line instead and the bar comes
+     down to 105px at every width from 320 up. */
+  [data-nav-links] {
+    order: 0 !important;
+    width: auto !important;
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    padding-bottom: 0 !important;
+    /* Sharing a line with the button means the last link gets sliced mid-word at
+       the scroll edge, which reads as broken rather than as "there is more".
+       The fade turns the cut into an affordance; the padding keeps the text off
+       the button. */
+    padding-right: 14px !important;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 20px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 20px), transparent);
+  }
 }
 
 /* ============================================================ atmosphere ==

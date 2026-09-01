@@ -78,6 +78,14 @@ design — but it also means **breaking that file breaks all 42**.
   dark card inside a paper section both come out right. That only reaches inline
   styles written as `color: rgb(85, 85, 79)` — colours built in `site.js` are hex and
   bypass it, so pick the correct one there by hand.
+- **The nav has two breakpoints and they must stay equal.** The page stylesheet
+  sends `[data-nav-links]` to its own row, and `tools/theme.js` reverts the floating
+  capsule to an in-flow sticky bar. Both are **829px**, because 830 is the first
+  width where the logo, seven links and the button fit on one line — measured, not
+  guessed. They used to be 780 and 640, and in the 140px between them the nav was a
+  fixed 999px-radius pill wrapped to three rows and 152px tall: the capsule shape
+  broke, and since the hero only takes back a fixed 128px, the nav sat on the `h1`.
+  Add a nav link and you must re-measure the fit width and move both numbers.
 - **`data-` attributes are behaviour hooks**, not styling: `data-reveal`,
   `data-faq-item` / `data-faq-toggle` / `data-faq-sign` / `data-faq-answer`,
   `data-clock`, `data-approve`, `data-act`, `data-ad-drift`, `data-parallax`,
