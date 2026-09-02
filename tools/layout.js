@@ -971,14 +971,14 @@ function page(p) {
     /* The offer is the reason the page exists, and it was rendering below two
        prose sections and a diagram — about four screens down on a phone. A page
        that has to sell a bespoke service puts the qualifying step near the top
-       or it does not get one. Only /marketing-automation sets topTables. */
+       or it does not get one. Only /marketing-automation sets qualifier. */
     qualifier(p.qualifier),
     gallery(p.gallery),
     systemMap(p.systemMap),
     figure(p.figure),
     /* "What you actually get" belongs above the prose, not after it — a bespoke
        service that never lists its deliverables reads as vague. Only the
-       automation pillar sets topSteps and workshopFigure. */
+       automation pillar sets phases and workshopFigure. */
     phases(p.phases),
     figure(p.workshopFigure),
     ...(p.sections || []).map(prose),
