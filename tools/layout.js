@@ -807,39 +807,43 @@ function roasCalc(rc) {
    fight. */
 function systemMap(m) {
   if (!m) return '';
-  const col = (c, i) =>
-    `<div style="min-width: 0;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span aria-hidden="true" style="width: 22px; height: 22px; border-radius: 100px; background: ${i === 1 ? VOLT : 'rgb(35, 35, 32)'}; color: ${i === 1 ? 'rgb(10, 10, 10)' : 'rgb(181, 181, 173)'}; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">${i + 1}</span>
-              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: ${i === 1 ? VOLT : 'rgb(181, 181, 173)'};">${esc(c.label)}</span>
-            </div>
-            <div style="border: 1px solid ${i === 1 ? VOLT : HAIRLINE_DARK}; border-radius: 8px; overflow: hidden;">
-              <div style="padding: 16px; border-bottom: 1px solid ${HAIRLINE_DARK};">
-                <span style="display: block; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: rgb(247, 247, 245);">${esc(c.title)}</span>
-                <span style="display: block; margin-top: 6px; font-size: 14px; line-height: 1.6; color: rgb(181, 181, 173);">${esc(c.note)}</span>
-              </div>
-              ${c.rows.map((r) =>
-                `<div style="padding: 11px 16px; border-bottom: 1px solid ${HAIRLINE_DARK}; font-size: 14px; line-height: 1.5; color: rgb(201, 201, 194);">${esc(r)}</div>`).join('\n              ')}
-              <div style="padding: 11px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(181, 181, 173);">${esc(c.foot)}</div>
-            </div>
-          </div>`;
 
+  /* One column carries volt and the other two are deliberately quiet: the
+     repository is the whole argument of the page, and a diagram where every
+     part shouts equally says nothing about which part is missing. */
+  const col = (c, i) => {
+    const on = i === 1;
+    return `<div style="min-width: 0px; border-top: 2px solid ${on ? VOLT : HAIRLINE_DARK}; padding-top: 22px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span aria-hidden="true" style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; color: ${on ? VOLT : INK_TEXT};">0${i + 1}</span>
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${on ? VOLT : INK_TEXT};">${esc(c.label)}</span>
+            </div>
+            <span style="display: block; margin-top: 12px; font-size: clamp(26px, 3vw, 40px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; color: rgb(247, 247, 245);">${esc(c.title)}</span>
+            <ul style="margin: 20px 0px 0px; padding: 0px; list-style: none;">
+              ${c.rows.map((r) =>
+                `<li style="display: flex; align-items: baseline; gap: 11px; padding: 11px 0px; border-top: 1px solid ${HAIRLINE_DARK}; font-size: 15px; line-height: 1.5; color: rgb(201, 201, 194);"><span aria-hidden="true" style="width: 5px; height: 5px; border-radius: 100px; flex-shrink: 0; background: ${on ? VOLT : 'rgb(55, 55, 50)'};"></span>${esc(r)}</li>`).join('\n              ')}
+            </ul>
+          </div>`;
+  };
+
+  /* The gate sits inside the same grid at 1 / -1 rather than after it, so it
+     reads as one bar under all three tracks — which is the actual claim — and
+     survives the track count changing under auto-fit. */
   return `<section style="background: rgb(10, 10, 10); color: rgb(247, 247, 245); padding: 104px 32px; border-bottom: 1px solid ${HAIRLINE_DARK};">
     <div style="max-width: 1240px; margin: 0px auto;">
       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT};">${esc(m.label)}</span>
-      <h2 style="margin: 18px 0px 0px; max-width: 22ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;">${esc(m.h2)}</h2>
-      <p style="margin: 22px 0px 0px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: ${INK_TEXT};">${esc(m.p)}</p>
+      <h2 style="margin: 18px 0px 0px; max-width: 18ch; font-size: clamp(34px, 4.6vw, 64px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05;">${esc(m.h2)}</h2>
+      <p style="margin: 22px 0px 0px; max-width: 54ch; font-size: clamp(18px, 2vw, 24px); line-height: 1.5; color: ${INK_TEXT};">${esc(m.p)}</p>
 
-      <div style="margin-top: 52px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 28px; align-items: start;">
+      <div style="margin-top: 56px; min-width: 0px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 32px; align-items: start;">
         ${m.columns.map(col).join('\n        ')}
+        <div style="grid-column: 1 / -1; min-width: 0px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 24px; background: rgb(22, 22, 19); border: 1px solid ${VOLT}; border-radius: 8px; padding: 22px 24px;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT}; white-space: nowrap;">${esc(m.gate.label)}</span>
+          <span style="flex: 1 1 340px; min-width: 0px; font-size: 17px; line-height: 1.6; color: rgb(247, 247, 245);">${esc(m.gate.text)}</span>
+        </div>
       </div>
 
-      <div style="margin-top: 34px; border: 1px solid ${VOLT}; border-radius: 8px; padding: 18px 20px; max-width: 78ch;">
-        <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: ${VOLT};">${esc(m.gate.label)}</span>
-        <span style="display: block; margin-top: 8px; font-size: 17px; line-height: 1.65; color: rgb(247, 247, 245);">${esc(m.gate.text)}</span>
-      </div>
-
-      <p style="margin: 22px 0px 0px; max-width: 78ch; font-size: 14px; line-height: 1.65; color: rgb(181, 181, 173);">${esc(m.note)}</p>
+      <p style="margin: 26px 0px 0px; max-width: 74ch; font-size: 14px; line-height: 1.65; color: ${INK_TEXT};">${esc(m.note)}</p>
     </div>
   </section>`;
 }
