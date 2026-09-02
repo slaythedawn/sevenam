@@ -1238,7 +1238,7 @@ const PAGES = [
     },
     workshopFigure: {
       src: '/img/automation-workshop-a1.jpg',
-      alt: 'Josh Peacock standing at a whiteboard running a marketing systems workshop, drawing a boxes-and-arrows diagram while a team watches from a table in front of him.',
+      alt: 'Josh Peacock mid-sentence beside a whiteboard in a brick-walled studio, one hand raised, talking through a systems map with a team scattered around the room on a couch, the floor and the edge of a desk.',
       caption: 'The mapping workshop. A day in the room, in your office, before anything gets built.',
     },
     explainer: {
