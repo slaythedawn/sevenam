@@ -1188,18 +1188,53 @@ const PAGES = [
   {
     slug: 'marketing-automation',
     foldProse: true,
-    topSteps: {
+    phases: {
       label: 'WHAT YOU GET',
-      h2: 'What is actually delivered.',
+      h2: 'The engagement, in four phases.',
+      p: 'Bespoke does not mean vague. This is the shape of every build, and what actually changes hands in each part of it.',
       items: [
-        { t: 'A workshop, in your office', p: 'A full day with your team, in the room. Josh flies in for it. Every tool, every handover and every piece of work being repeated by hand goes on the wall, and by the end of the day you can see the shape of your own operation. Most people have never seen it drawn.' },
-        { t: 'A written systems audit', p: 'What we found, ranked by what it is costing you and what it would take to fix. Yours to keep and act on, with us or without us.' },
-        { t: 'The marketing data repository', p: 'Built on your own infrastructure: objections ranked by frequency, the language that earns replies, the offers that worked, your thresholds and brand rules, and the corrections so a mistake happens once.' },
-        { t: 'Agents with written job specs', p: 'Each one documented like a role — what it reads, when it runs, what it produces, what good looks like and who approves the output. Not a prompt in someone’s browser tab.' },
-        { t: 'CRM and workflow automation', p: 'Records that update themselves from real activity, lifecycle stages that move on evidence, and follow-up that fires on a trigger. Wired into the tools you already pay for.' },
-        { t: 'Training for your team', p: 'Two sessions once it is live, recorded, plus written runbooks. Your people have to be able to change a job spec, add an agent and read what the system is telling them without calling us. A system only you can operate is a dependency, not an asset.' },
-        { t: 'A handover you own', p: 'Every account, every credential and every document in your name from the first day. If we stop working together the system keeps running, and nothing has to be negotiated back.' },
+        {
+          phase: 'PHASE 01', when: 'Day one, in your office',
+          t: 'The mapping workshop',
+          rows: [
+            'A full day in the room with your team',
+            'Josh flies in for it',
+            'Every tool, handover and manual step on the wall',
+            'The first time most teams see their own operation drawn',
+          ],
+        },
+        {
+          phase: 'PHASE 02', when: 'The following week',
+          t: 'The written audit',
+          rows: [
+            'What we found, ranked by what it costs you',
+            'What it would take to fix, and in what order',
+            'A call to go through it line by line',
+            'Yours to keep and act on, with us or without us',
+          ],
+        },
+        {
+          phase: 'PHASE 03', when: 'Weeks two to six',
+          t: 'The build',
+          rows: [
+            'The marketing data repository, on your infrastructure',
+            'Agents with written job specs and run schedules',
+            'CRM and workflow automation into your existing tools',
+            'Approval gates on anything that reaches a customer',
+          ],
+        },
+        {
+          phase: 'PHASE 04', when: 'From week six',
+          t: 'Training and handover',
+          rows: [
+            'Two live sessions with your team, recorded',
+            'Written runbooks for changing a job spec or adding an agent',
+            'Every account and credential in your name',
+            'It keeps running if we stop working together',
+          ],
+        },
       ],
+      foot: 'Training is on this list for a reason. A system only we can operate is a dependency rather than an asset, and your people have to be able to change it without calling us.',
     },
     workshopFigure: {
       src: '/img/automation-workshop-a1.jpg',
@@ -1322,24 +1357,40 @@ const PAGES = [
         'A weekly read on what changed and what to do about it.',
       ],
     },
-    topTables: [
-      {
-        wrap: true,
-        h2: 'The systems audit, and who we can do it for.',
-        lead: 'We run a small number of free marketing technology, systems and performance audits each month. It is a real piece of work — a read of your stack, your data and what is actually firing — and because it takes real time, it is offered only where we can see something worth finding. The call is fifteen minutes and decides whether you qualify.',
-        columns: ['', 'What that means', 'Why the line is there'],
+    qualifier: {
+      label: 'THE FREE AUDIT',
+      h2: 'The systems audit, and who we can do it for.',
+      p: 'We run a small number of free marketing technology, systems and performance audits each month. It is a real piece of work — a read of your stack, your data and what is actually firing — and because it takes real time, it is offered only where we can see something worth finding. The call is fifteen minutes and decides whether you qualify.',
+      coversLabel: 'What the audit covers',
+      covers: [
+        'Your marketing stack, and how the parts actually connect',
+        'The state of the data sitting in your CRM',
+        'What is tracked, against what actually happens',
+        'Where a system would take work off people',
+      ],
+      yes: {
+        label: 'Tends to qualify', t: 'Enough there to read',
         rows: [
-          ['What the audit covers', 'Your marketing stack and how the parts connect, the state of the data in your CRM, what is tracked against what actually happens, and where a system would remove work', 'These are the four places we consistently find something, so they are the four we look at'],
-          ['What you get', 'A written read, and a call to go through it. Yours to keep and act on, with us or without us', 'A document you cannot act on without hiring us is a sales asset, not an audit'],
-          ['Who tends to qualify', 'A real marketing stack, someone accountable for it, and enough activity that the data means something', 'With no data and no owner there is nothing to audit — we would be guessing, at length'],
-          ['Who tends not to', 'Pre-launch, no CRM or ad data yet, or looking for a document to take to another supplier', 'Both are fine positions to be in. Neither is helped by this'],
-          ['How we decide', 'On the fifteen-minute call, from what you tell us about the stack and the data', 'It is quicker to say on a call than after a week of work'],
-          ['If you do not qualify', 'We say so on the call and tell you what would change that', 'Nobody should wait on an audit that is not coming'],
+          'A real marketing stack, whatever shape it is in',
+          'Someone accountable for it internally',
+          'Enough activity that the data means something',
+          'A written read, and a call to go through it',
+          'Yours to keep and act on, with us or without us',
         ],
-        cta: { href: '/apply', label: 'Ask whether you qualify \u2192' },
-        note: 'To be plain about it: the audit is offered at our discretion, in limited numbers, and nothing on this page is an offer to supply it — qualifying is decided on the call and we may decline for any reason, including simply being full that month. If we say yes, you get the scope and the dates in writing before we start.',
       },
-    ],
+      no: {
+        label: 'Tends not to', t: 'Not yet, and we will say so',
+        rows: [
+          'Pre-launch, with no CRM or ad data yet',
+          'Looking for a document to take to another supplier',
+          'Nobody who owns the stack day to day',
+          'Both are fine positions to be in — neither is helped by this',
+          'We say so on the call, and tell you what would change it',
+        ],
+      },
+      cta: { href: '/apply', label: 'Ask whether you qualify \u2192' },
+      note: 'To be plain about it: the audit is offered at our discretion, in limited numbers, and nothing on this page is an offer to supply it — qualifying is decided on the call and we may decline for any reason, including simply being full that month. If we say yes, you get the scope and the dates in writing before we start.',
+    },
     faqs: [
       { q: 'What does marketing automation cost here?', a: "It is bespoke, and deliberately so — the work depends entirely on what you already run, how clean the data is and how much of it can be trusted. We map that first and quote a fixed figure in writing before anything starts. Unlike our Meta products, there is no list price for this, because there is no standard shape to it." },
       { q: 'Is this just Zapier with extra steps?', a: "No, though it will often use tools like that underneath. The difference is the repository and the job specs: a connector moves data between two apps, and what we build accumulates what the business learns so that every agent gets sharper rather than repeating itself." },
@@ -2006,13 +2057,13 @@ function build() {
        so the copy survives for search without being a wall to read. */
     explainer: p.explainer,
     accordion: p.accordion,
-    /* The audit offer, rendered high instead of after the prose. */
-    topTables: p.topTables,
+    /* The audit offer as a designed block, rendered high instead of after the prose. */
+    qualifier: p.qualifier,
     /* Renders only once the image file exists in img/. See figure() in layout.js. */
     figure: p.figure,
     workshopFigure: p.workshopFigure,
-    /* The deliverables list, rendered above the prose rather than after it. */
-    topSteps: p.topSteps,
+    /* The engagement drawn as a four-phase rail, above the prose. */
+    phases: p.phases,
     sources: p.sources,
     callForm: p.callForm,
     /* Default /apply unless a page has a better next step of its own. Only

@@ -43,6 +43,20 @@ design — but it also means **breaking that file breaks all 67**.
 
 ## Things that will silently break the site
 
+- **Never splice `site.js` by index on a generic function name.** An edit that
+  did `s.index("    function apply() {")` matched `setupGlossary`'s copy, which
+  appears earlier in the file, and spliced across it — leaving **two** copies of
+  `setupCaseCards`, `setupCalculators`, `money()` and `COMPUTE`, and 2,025 lines
+  where there should have been 1,328. Declarations hoist, so the *second* copy
+  won and the fix that was supposed to have shipped never ran. `node -c` passes
+  on a file like that, and so does `check.js`. The guard is to count:
+  `grep -c "function setupX()" site.js` should be 1 for every function, and
+  `COMPUTE` must appear once because it is already mirrored in `layout.js`.
+- **Test the JS path with the theme stylesheet neutralised.** The case-study
+  one-column rule exists in both CSS and JS on purpose, so a Chromium check
+  cannot tell you which one is working — that is how a broken JS fix was
+  reported as verified. The harness blanks `#sv-theme`'s `minmax(min(` rules
+  before asserting.
 - **A `site.js` edit without rerunning `node tools/build-pages.js`.** `site.js` is
   served `max-age=3600`, so for an hour after a deploy a returning visitor runs the
   *previous* file against the new HTML. Anything JS-rendered then shows as an empty
@@ -267,6 +281,24 @@ underneath a build differ for every client, so a fixed logo wall would be wrong 
 most of them and stale the moment anyone rebrands. Same call as the Ad Library
 walkthrough. Opt-in like the other blocks — only a page that sets `systemMap`
 renders it, and `services.js` must pass the key through `build()`.
+
+`phases()` and `qualifier()` are the two components that turned the rest of
+`/marketing-automation` from copy into process. `phases()` draws the engagement
+as a four-phase rail — workshop, audit, build, training and handover — each with
+its duration and the things that actually change hands in it; it replaced seven
+flat numbered cards. `qualifier()` replaced the audit `dataTable`: same
+sentences, arranged as what-it-covers chips over two contrasting columns, because
+a table is right for figures and wrong for an offer somebody has to decide about.
+**The discretion paragraph travels with that block** — "at our discretion, in
+limited numbers" and "nothing on this page is an offer to supply it" are what
+keep it an invitation to be assessed.
+
+Both are written in the homepage hub's language — a dark panel on paper, volt
+eyebrows, hairline nodes — deliberately. That diagram is the part of the site
+people report understanding immediately, and a second visual vocabulary would be
+a worse answer than reusing the one that works. The rails and columns are plain
+grids with no absolute widths, so they collapse to a stack on a phone with
+nothing to redraw.
 
 `explainer()` and `accordion()` in `tools/layout.js` are the other two blocks on
 `/marketing-automation`, added because the page was one dense diagram and two long

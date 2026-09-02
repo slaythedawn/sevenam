@@ -141,6 +141,101 @@ function prose(s) {
 
    img/* is served immutable for a year, so a replacement needs a new filename —
    the same reason the two homepage images carry a content hash. */
+/* The engagement drawn as a process rather than listed as one.
+
+   The deliverables were seven numbered cards in a flat grid — accurate, and
+   read as a dump. A bespoke service that never shows its shape is asking for
+   trust it has not earned yet, so this puts the same content on a timeline:
+   four phases, each with its duration, each carrying the things that actually
+   change hands in it.
+
+   Built in the homepage's hub language deliberately — a dark panel on paper,
+   volt eyebrows, hairline nodes — because that diagram is the one part of the
+   site people say they understood immediately, and a second visual vocabulary
+   on the same site would be a worse answer than reusing the one that works.
+
+   The rail is a top border per phase with a volt marker sitting on it, so it
+   reads as a continuous line across a desktop row and as a stacked timeline
+   when the grid collapses to one column on a phone. No absolute widths, no
+   drawing, nothing to break when the text length changes. */
+/* The audit offer as a designed block rather than a six-row table.
+
+   Everything here was already on the page — it was a `wrap: true` dataTable,
+   which is the right tool for a comparison of figures and the wrong one for an
+   offer somebody has to decide about. Same sentences, arranged so the two
+   things a reader actually wants are the two things they see: what it covers,
+   and whether they are the kind of business that gets one.
+
+   The discretion note is load-bearing and unchanged. "Offered at our
+   discretion, in limited numbers" and "nothing on this page is an offer to
+   supply it" are what keep this an invitation to be assessed. If this block is
+   ever restyled again, that paragraph travels with it. */
+function qualifier(q) {
+  if (!q) return '';
+  const chips = q.covers.map(c =>
+    `<div data-reveal="" style="min-width: 0; background: rgb(255, 255, 255); border: 1px solid ${HAIRLINE_LIGHT}; border-radius: 6px; padding: 18px 20px; font-size: 15px; line-height: 1.55;">${esc(c)}</div>`).join('\n        ');
+  function col(c, dark) {
+    const rows = c.rows.map(r =>
+      `<li style="margin: 0px; padding: 10px 0px; border-bottom: 1px solid ${dark ? HAIRLINE_DARK : HAIRLINE_LIGHT}; font-size: 16px; line-height: 1.55; color: ${dark ? INK_TEXT : PAPER_TEXT};">${esc(r)}</li>`).join('\n            ');
+    return `<div data-reveal="" style="min-width: 0; background: ${dark ? INK : 'rgb(255, 255, 255)'}; color: ${dark ? 'rgb(247, 247, 245)' : INK}; border: 1px solid ${dark ? INK : HAIRLINE_LIGHT}; border-radius: 6px; padding: 30px 28px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: ${dark ? VOLT : PAPER_TEXT};">${esc(c.label)}</span>
+          <h3 style="margin: 10px 0px 16px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">${esc(c.t)}</h3>
+          <ul style="margin: 0px; padding: 0px; list-style: none; border-top: 1px solid ${dark ? HAIRLINE_DARK : HAIRLINE_LIGHT};">
+            ${rows}
+          </ul>
+        </div>`;
+  }
+  return `<section style="padding: 112px 32px; background: ${PAPER}; border-bottom: 1px solid ${HAIRLINE_LIGHT};">
+    <div style="max-width: 1240px; margin: 0px auto;">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(q.label)}</span>
+      <h2 style="margin: 20px 0px 0px; max-width: 24ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">${esc(q.h2)}</h2>
+      <p style="margin: 22px 0px 0px; max-width: 62ch; font-size: 19px; line-height: 1.65; color: ${PAPER_TEXT};">${esc(q.p)}</p>
+      <div style="margin-top: 40px; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: ${PAPER_TEXT};">${esc(q.coversLabel)}</div>
+      <div style="min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 14px; margin-top: 16px;">
+        ${chips}
+      </div>
+      <div style="min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px; margin-top: 44px;">
+        ${col(q.yes, true)}
+        ${col(q.no, false)}
+      </div>
+      <p style="margin: 36px 0px 0px;"><a href="${esc(q.cta.href)}" style="font-size: 17px; font-weight: 600; color: ${INK}; border-bottom: 2px solid ${VOLT};">${esc(q.cta.label)}</a></p>
+      <p style="margin: 22px 0px 0px; max-width: 78ch; font-size: 14px; line-height: 1.65; color: ${PAPER_TEXT};">${esc(q.note)}</p>
+    </div>
+  </section>`;
+}
+
+function phases(ph) {
+  if (!ph) return '';
+  const cols = ph.items.map((it, i) => {
+    const rows = (it.rows || []).map(r =>
+      `<li style="margin: 0px; padding: 9px 0px; border-bottom: 1px solid ${HAIRLINE_DARK}; font-size: 14px; line-height: 1.5; color: ${INK_TEXT};">${esc(r)}</li>`).join('\n            ');
+    return `<div data-reveal="" style="min-width: 0; padding-right: 20px;">
+          <div aria-hidden="true" style="position: relative; height: 1px; background: ${HAIRLINE_DARK};">
+            <span style="position: absolute; top: -4px; left: 0px; width: 9px; height: 9px; border-radius: 3px; background: ${VOLT};"></span>
+          </div>
+          <div style="padding-top: 22px;">
+            <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: ${VOLT}; font-variant-numeric: tabular-nums;">${esc(it.phase)}</span>
+            <div style="margin-top: 6px; font-size: 13px; color: ${INK_TEXT};">${esc(it.when)}</div>
+            <h3 style="margin: 10px 0px 14px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: rgb(255, 255, 255);">${esc(it.t)}</h3>
+            <ul style="margin: 0px; padding: 0px; list-style: none; border-top: 1px solid ${HAIRLINE_DARK};">
+            ${rows}
+            </ul>
+          </div>
+        </div>`;
+  }).join('\n        ');
+  return `<section style="padding: 0px 32px 112px; background: ${PAPER};">
+    <div data-panel="" style="max-width: 1240px; margin: 0px auto; background: ${INK}; color: rgb(247, 247, 245); border-radius: 6px; padding: clamp(40px, 5vw, 88px);">
+      <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${VOLT};">${esc(ph.label)}</span>
+      <h2 style="margin: 26px 0px 0px; max-width: 22ch; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; color: rgb(255, 255, 255);">${esc(ph.h2)}</h2>
+      ${ph.p ? `<p style="margin: 26px 0px 0px; max-width: 62ch; font-size: 19px; line-height: 1.6; color: ${INK_TEXT};">${esc(ph.p)}</p>` : ''}
+      <div style="min-width: 0; margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 40px 0px;">
+        ${cols}
+      </div>
+      ${ph.foot ? `<p style="margin: 44px 0px 0px; max-width: 62ch; font-size: 15px; line-height: 1.65; color: ${INK_TEXT};">${esc(ph.foot)}</p>` : ''}
+    </div>
+  </section>`;
+}
+
 function figure(f) {
   if (!f || !f.src) return '';
   if (!fs.existsSync(path.join(ROOT, f.src.replace(/^\//, '')))) return '';
@@ -877,14 +972,14 @@ function page(p) {
        prose sections and a diagram — about four screens down on a phone. A page
        that has to sell a bespoke service puts the qualifying step near the top
        or it does not get one. Only /marketing-automation sets topTables. */
-    ...(p.topTables || []).map(dataTable),
+    qualifier(p.qualifier),
     gallery(p.gallery),
     systemMap(p.systemMap),
     figure(p.figure),
     /* "What you actually get" belongs above the prose, not after it — a bespoke
        service that never lists its deliverables reads as vague. Only the
        automation pillar sets topSteps and workshopFigure. */
-    steps(p.topSteps),
+    phases(p.phases),
     figure(p.workshopFigure),
     ...(p.sections || []).map(prose),
     accordion(p.accordion),
