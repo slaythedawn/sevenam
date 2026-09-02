@@ -1302,41 +1302,37 @@
   }
 
   /* ------------------------------------------------------- case study cards */
-  /* Forcing the case-study strip to one column stopped Safari slicing the second
-     card off the screen, and replaced that bug with a worse one: 2,606px of
-     stacked cards on a 390px phone, which is most of a thumb-scroll of the same
-     three stories. Shorter cards were the actual ask.
+  /* The homepage case studies, shortened on a phone. Forcing the strip to one
+     column stopped WebKit slicing the second card off screen and left 2,606px
+     of stacked cards in its place, so each card now keeps its name and its
+     headline number and folds the rest behind a toggle: 688px collapsed, one
+     tap to open, and restored whole above the breakpoint where the cards are
+     already short.
 
-     So below the strip's own breakpoint each card keeps its name and its headline
-     number — the part worth scanning — and folds the paragraph and the stat rows
-     behind a toggle. The two shapes on the page are handled by counting children
-     rather than by adding markup hooks: the small cards are
-     [header, figure, paragraph, stats] and fold from index 2, the wide panel is
-     [body, stats sub-panel] and folds its second half. index.html is
-     hand-authored and this is presentation, so it is built here and the HTML
-     stays as it is — which also means with JS off every card is simply whole.
+     The one-column rule is applied HERE as well as in the theme stylesheet, and
+     that redundancy is deliberate. The CSS names one column below 720px via an
+     attribute selector on the inline style; it is in the shipped HTML and
+     Chromium obeys it, and the strip still came back two-up from a real iPhone
+     with the cards squeezed to 131px and 206px. Setting the property directly
+     beats an inline style without needing a selector to match at all, and
+     site.js is content-hash stamped so it is never the stale half of a deploy.
+     Each card also gets grid-column: 1 / -1, so even if the track count is
+     wrong the card still spans the full row. The CSS rule stays for no-JS.
 
-     Everything is restored above the breakpoint, because on a desktop the cards
-     are already short and a click to read three lines is friction, not a saving. */
+     Built here rather than in markup: index.html is hand-authored, this is
+     presentation, and with JS off every card is simply whole. */
   function setupCaseCards() {
     var cards = qa('[data-placeholder="case-study"]');
     if (!cards.length || !window.matchMedia) return;
     var mq = window.matchMedia("(max-width: 719px)");
 
     /* Each entry is [parent, children-to-fold]. Folding has to happen inside the
-       element the content already sits in, or it loses that element's padding and
-       renders full-bleed — which is why this returns groups rather than a flat
-       list. Two known shapes; anything else is left whole rather than guessed at. */
+       element the content already sits in, or it loses that element's padding
+       and renders full-bleed. Two known shapes; anything else is left whole. */
     function groupsOf(card) {
       var kids = [].slice.call(card.children);
-      if (kids.length === 4) {
-        /* Small card: header, headline figure, paragraph, stat rows. */
-        return [[card, kids.slice(2)]];
-      }
+      if (kids.length === 4) return [[card, kids.slice(2)]];
       if (kids.length === 2) {
-        /* Wide panel: a padded text half and a stats sub-panel. Keep the name and
-           the headline, fold the paragraph, the stat rows and the source line,
-           then fold the whole second half. */
         var inner = [].slice.call(kids[0].children);
         var out = [];
         if (inner.length > 2) out.push([kids[0], inner.slice(2)]);
@@ -1350,523 +1346,11 @@
       if (card._csBtn) return;
       var groups = groupsOf(card);
       if (!groups.length) return;
-      /* A dark card needs light text on the button. A button does not inherit
-         colour — the UA sheet gives it buttontext — so it is set explicitly. */
       var dark = /rgb\(10, 10, 10\)/.test(card.style.background || "");
       var wraps = [];
       groups.forEach(function (g, n) {
         var wrap = document.createElement("div");
         wrap.id = "cs-body-" + i + "-" + n;
-        /* The parents are flex columns with a gap, and a stats block inside one of
-           them carries margin-top: auto. Re-parenting into a plain div would lose
-           both, so the wrapper repeats the column and the gap. */
-        wrap.style.cssText = "display: flex; flex-direction: column; gap: 18px;";
-        g[1].forEach(function (el) { wrap.appendChild(el); });
-        g[0].appendChild(wrap);
-        wraps.push(wrap);
-      });
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.setAttribute("aria-controls", wraps.map(function (w) { return w.id; }).join(" "));
-      btn.style.cssText =
-        "width: 100%; background: none; border: none; padding: 12px 0px 0px; margin: 0px;" +
-        "font-family: inherit; font-size: 15px; font-weight: 600; text-align: left;" +
-        "cursor: pointer; display: flex; align-items: center; justify-content: space-between;" +
-        "gap: 16px; color: " + (dark ? "rgb(216, 255, 0)" : "rgb(10, 10, 10)") + ";";
-      var label = document.createElement("span");
-      var sign = document.createElement("span");
-      sign.setAttribute("aria-hidden", "true");
-      sign.style.cssText = "font-size: 20px; font-weight: 400; line-height: 1;";
-      btn.appendChild(label);
-      btn.appendChild(sign);
-      /* On the wide panel the button belongs beside the headline it expands, not
-         under a sub-panel that is itself folded away. */
-      (card.children.length === 2 ? card.children[0] : card).appendChild(btn);
-      card._csBtn = btn;
-      card._csWraps = wraps;
-
-      var open = false;
-      function paint() {
-        wraps.forEach(function (w) { w.style.display = open ? "" : "none"; });
-        label.textContent = open ? "Show less" : "Read what happened";
-        sign.textContent = open ? "\u2212" : "+";
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
-      }
-      paint();
-      btn.addEventListener("click", function () { open = !open; paint(); });
-    }
-
-    function teardown(card) {
-      if (!card._csBtn) return;
-      /* Put every folded child back where it was, in order, before its wrapper. */
-      card._csWraps.forEach(function (wrap) {
-        var parent = wrap.parentElement;
-        while (wrap.firstChild) parent.insertBefore(wrap.firstChild, wrap);
-        parent.removeChild(wrap);
-      });
-      card._csBtn.parentElement.removeChild(card._csBtn);
-      card._csBtn = null;
-      card._csWraps = null;
-    }
-
-    function apply() {
-      var q = input.value.trim().toLowerCase();
-      var shown = 0;
-      rows.forEach(function (r, i) {
-        var hit = !q || haystack[i].indexOf(q) > -1;
-        r.style.display = hit ? "" : "none";
-        if (hit) shown++;
-      });
-      count.textContent = q ? shown + " of " + rows.length : "";
-      empty.style.display = shown ? "none" : "";
-      empty.textContent = shown ? "" :
-        "Nothing matches “" + input.value.trim() + "”. Every term is listed above when the field is empty.";
-    }
-
-    input.addEventListener("input", apply);
-    /* Escape clears, which is what a search field is expected to do and what the
-       native clear button fires anyway. */
-    input.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") { input.value = ""; apply(); }
-    });
-    apply();
-  }
-
-  /* ---------------------------------------------------------- calculators */
-
-  /* Three pages carry one. The markup is identical and built by layout.js; the
-     only thing that differs is the arithmetic, so COMPUTE here mirrors COMPUTE
-     there, keyed by the same id. layout.js renders the defaults at build time so
-     the page is correct before this file lands, and this recomputes on input.
-
-     The two copies are kept honest by a test that loads each page with
-     JavaScript disabled and diffs every output against the scripted render — if
-     they ever drift, that fails rather than shipping two different answers.
-
-     Nothing leaves the browser. It is arithmetic on three sliders. */
-  function money(n) {
-    var r = Math.round(n);
-    return (r < 0 ? "-$" : "$") + Math.abs(r).toLocaleString("en-AU");
-  }
-
-  var COMPUTE = {
-    roas: function (d) {
-      var marginFrac = (Number(d.margin) || 1) / 100;
-      var roasX = (Number(d.roas) || 0) / 10;
-      var spend = Number(d.spend) || 0;
-      var breakeven = 1 / marginFrac;
-      var revenue = spend * roasX;
-      var grossProfit = revenue * marginFrac;
-      var netOfMedia = grossProfit - spend;
-      return {
-        labels: { margin: d.margin + "%", roas: roasX.toFixed(1) + "x", spend: money(spend) },
-        breakeven: breakeven.toFixed(2) + "x",
-        breakevenNote: "At a " + d.margin + "% margin you need " + breakeven.toFixed(2) +
-          "x just to cover the cost of the goods.",
-        profit: money(netOfMedia),
-        profitNote: netOfMedia >= 0
-          ? roasX.toFixed(1) + "x on " + money(spend) + " is " + money(revenue) +
-            " of revenue and " + money(grossProfit) + " of gross profit, less the " +
-            money(spend) + " you spent."
-          : roasX.toFixed(1) + "x on " + money(spend) + " returns " + money(grossProfit) +
-            " of gross profit against " + money(spend) + " of media. You are below break-even.",
-        headroom: money(0.5 * spend * marginFrac),
-        headroomNote: "A month, at this spend and margin, without buying any more media.",
-        /* The headline changes meaning below break-even, not just value. */
-        breakevenTone: roasX >= breakeven ? "good" : "bad"
-      };
-    },
-
-    cpr: function (d) {
-      var cpm = (Number(d.cpm) || 0) / 10;
-      var ctr = (Number(d.ctr) || 0) / 100;
-      var cvr = (Number(d.cvr) || 0) / 100;
-      var clicks = 1000 * (ctr / 100);
-      var results = clicks * (cvr / 100);
-      var cpc = clicks > 0 ? cpm / clicks : 0;
-      var cpa = results > 0 ? cpm / results : 0;
-      var betterCtr = 1000 * ((ctr + 0.2) / 100) * (cvr / 100);
-      var cpaCtr = betterCtr > 0 ? cpm / betterCtr : 0;
-      var cpaCpm = results > 0 ? Math.max(0, cpm - 2) / results : 0;
-      return {
-        labels: { cpm: "$" + cpm.toFixed(2), ctr: ctr.toFixed(2) + "%", cvr: cvr.toFixed(2) + "%" },
-        cpa: money(cpa),
-        cpaNote: "At a $" + cpm.toFixed(2) + " CPM, " + ctr.toFixed(2) +
-          "% of impressions click and " + cvr.toFixed(2) + "% of those convert.",
-        cpc: "$" + cpc.toFixed(2),
-        cpcNote: clicks.toFixed(1) + " clicks per thousand impressions.",
-        lever: money(cpa - cpaCtr) + " vs " + money(cpa - cpaCpm),
-        leverNote: "What a fifth of a point of CTR saves per result, against what taking " +
-          "$2.00 off the CPM saves. Creative moves the first number; nothing in the " +
-          "account reliably moves the second."
-      };
-    },
-
-    retainer: function (d) {
-      var retainer = Number(d.retainer) || 0;
-      var spend = Number(d.spend) || 0;
-      var paidMonthly = retainer * ((Number(d.paid) || 0) / 100);
-      var restMonthly = retainer - paidMonthly;
-      var effective = spend > 0 ? (paidMonthly / spend) * 100 : 0;
-      return {
-        labels: { retainer: money(retainer), spend: money(spend), paid: d.paid + "%" },
-        effective: effective.toFixed(1) + "%",
-        effectiveNote: money(paidMonthly) + " a month to manage " + money(spend) +
-          " of media is the same as a " + effective.toFixed(1) +
-          "% fee, whatever the invoice calls it.",
-        paid: money(paidMonthly * 12),
-        paidNote: "A year on the paid line — the only part with a clean revenue trace.",
-        rest: money(restMonthly * 12),
-        restNote: "A year on content, scheduling and community. Judge this on brand goals, " +
-          "not on sales it did not make."
-      };
-    }
-  };
-
-  function setupCalculators() {
-    qa("[data-calc]").forEach(function (root) {
-      var id = root.dataset.calc;
-      var compute = COMPUTE[id];
-      if (!compute) return;
-
-      var S = {};
-      qa("[data-roas]", root).forEach(function (el) { S[el.dataset.roas] = Number(el.value); });
-
-      function set(name, v) {
-        var el = q('[data-rout="' + name + '"]', root);
-        if (el) el.textContent = v;
-      }
-
-      function render() {
-        var r = compute(S);
-        Object.keys(r.labels || {}).forEach(function (k) { set(k + "Label", r.labels[k]); });
-        Object.keys(r).forEach(function (k) {
-          if (k === "labels" || /Tone$/.test(k)) return;
-          set(k, r[k]);
-        });
-        Object.keys(r).forEach(function (k) {
-          var m = /^(.*)Tone$/.exec(k);
-          if (!m) return;
-          var el = q('[data-rout="' + m[1] + '"]', root);
-          if (el) el.style.color = r[k] === "bad" ? "#FF6B5A" : VOLT;
-        });
-      }
-
-      qa("[data-roas]", root).forEach(function (el) {
-        el.addEventListener("input", function () {
-          S[el.dataset.roas] = Number(el.value);
-          render();
-        });
-      });
-
-      render();
-    });
-  }
-
-  /* ------------------------------------------------- ad library search */
-
-  /* The guide used to describe the Ad Library and then leave the reader to go
-     and find it. This builds the real prefilled URL, because the two things
-     that make a search fail are both in the query string: no country (it
-     defaults to the viewer's, so an AU advertiser searched from elsewhere looks
-     dormant) and no active filter (so you read ads that stopped a year ago).
-
-     It opens Meta, so nothing here is submitted anywhere and nothing is stored.
-     The link is a real anchor, not a window.open, so it survives a popup
-     blocker and can be middle-clicked like any other link. */
-  function setupAdLibrary() {
-    var root = q("#adlib-root");
-    if (!root) return;
-
-    var COUNTRIES = [["AU", "Australia"], ["NZ", "New Zealand"], ["GB", "United Kingdom"],
-      ["US", "United States"], ["CA", "Canada"], ["IE", "Ireland"], ["SG", "Singapore"], ["ALL", "All countries"]];
-    var S = { brand: "", country: "AU" };
-
-    function url() {
-      return "https://www.facebook.com/ads/library/?" + [
-        "active_status=active", "ad_type=all", "media_type=all",
-        "country=" + encodeURIComponent(S.country),
-        "search_type=keyword_unordered",
-        "q=" + encodeURIComponent(S.brand.trim())
-      ].join("&");
-    }
-
-    var INPUT = "background:#0A0A0A; border:1px solid #6B6B63; border-radius:4px; color:#F7F7F5;" +
-      "font-family:inherit; font-size:17px; padding:15px 16px; width:100%; min-width:0; box-sizing:border-box;";
-    var LABEL = "font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#B5B5AD;";
-
-    function render() {
-      var ready = S.brand.trim().length > 0;
-      root.innerHTML =
-        '<span style="' + LABEL + '">Open it prefilled</span>' +
-        '<div style="margin-top:18px; display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end;">' +
-        '<label style="display:flex; flex-direction:column; gap:8px; flex:2 1 260px; min-width:0;">' +
-        '<span style="' + LABEL + '">Competitor</span>' +
-        '<input type="text" data-adlib="brand" value="' + esc(S.brand) + '" placeholder="Their business name" style="' + INPUT + '">' +
-        '</label>' +
-        '<label style="display:flex; flex-direction:column; gap:8px; flex:1 1 180px; min-width:0;">' +
-        '<span style="' + LABEL + '">Country</span>' +
-        '<select data-adlib="country" style="' + INPUT + '">' +
-        COUNTRIES.map(function (c) {
-          return '<option value="' + c[0] + '"' + (S.country === c[0] ? " selected" : "") + '>' + esc(c[1]) + '</option>';
-        }).join("") + '</select>' +
-        '</label>' +
-        '<a data-adlib-go href="' + esc(url()) + '" target="_blank" rel="noopener nofollow"' +
-        ' style="background:' + (ready ? VOLT : "#232320") + '; color:' + (ready ? "#0A0A0A" : "#8A8A82") + ';' +
-        'font-size:17px; font-weight:600; padding:16px 26px; border-radius:4px; text-decoration:none;' +
-        'white-space:nowrap;' + (ready ? "" : " pointer-events:none;") + '">Search the Ad Library</a>' +
-        '</div>' +
-        '<p style="margin:16px 0 0; max-width:62ch; font-size:14px; line-height:1.65; color:#B5B5AD;">' +
-        (ready
-          ? "Opens Meta in a new tab, filtered to ads running now."
-          : "Type a business name to build the link. It opens Meta — nothing is sent to us.") +
-        '</p>';
-      qa("[data-adlib]", root).forEach(function (el) {
-        el.addEventListener("input", function () { S[el.dataset.adlib] = el.value; sync(); });
-        el.addEventListener("change", function () { S[el.dataset.adlib] = el.value; sync(); });
-      });
-    }
-
-    /* Update the href in place rather than re-rendering: rebuilding the markup
-       on every keystroke would take the focus out of the field being typed in. */
-    function sync() {
-      var go = q("[data-adlib-go]", root);
-      var ready = S.brand.trim().length > 0;
-      if (!go) return;
-      go.href = url();
-      go.style.background = ready ? VOLT : "#232320";
-      go.style.color = ready ? "#0A0A0A" : "#8A8A82";
-      go.style.pointerEvents = ready ? "" : "none";
-      var note = q("p", root);
-      if (note) note.textContent = ready
-        ? "Opens Meta in a new tab, filtered to ads running now."
-        : "Type a business name to build the link. It opens Meta — nothing is sent to us.";
-    }
-
-    render();
-  }
-
-  /* ------------------------------------------------- short lead capture */
-
-  /* The five-question quiz at /apply is the considered door. This is the quick
-     one: email, website, budget, and which product they're after. Four fields
-     on one screen, no steps, no progress bar. It exists because the numbers are
-     published now — somebody who has read the price and wants a time should not
-     have to answer five questions to ask for one.
-
-     Same endpoint, same honeypot, same first-touch as the long form, so a lead
-     from here is indistinguishable downstream except by `source`. */
-  function setupShortForm(root, source) {
-    if (!root) return;
-
-    var SPENDS = ["Under $3,000", "$3,000 – $10,000", "$10,000 – $30,000",
-      "$30,000 – $100,000", "Over $100,000"];
-    var WANTS = ["Not sure yet — talk it through", "The setup, $19,500",
-      "The daily decisions, $2,500 a month", "Creative packages, from $5,000",
-      "Custom, end to end", "Marketing automation, quoted",
-      "The free systems audit — see if I qualify"];
-
-    var S = { email: "", website: "", spend: "", want: "", hp: "",
-      tried: false, sending: false, sent: false, failed: false };
-
-    /* Two columns of four fields is comfortable on a laptop and cramped on a
-       phone, so the grid collapses rather than shrinking the inputs. */
-    var ONE_COL = window.matchMedia("(max-width: 620px)");
-
-    var INPUT = "background:#161613; border:1px solid #6B6B63; border-radius:4px; color:#F7F7F5;" +
-      "font-family:inherit; font-size:17px; padding:15px 16px; width:100%; min-width:0;" +
-      "box-sizing:border-box;";
-    var LABEL = "font-size:12px; font-weight:600; letter-spacing:0.08em;" +
-      "text-transform:uppercase; color:#B5B5AD;";
-
-    function field(label, inner) {
-      return '<div style="display:flex; flex-direction:column; gap:8px; min-width:0;">' +
-        '<span style="' + LABEL + '">' + esc(label) + '</span>' + inner + '</div>';
-    }
-    function select(key, placeholder, list) {
-      return '<select data-call-field="' + key + '" style="' + INPUT + '">' +
-        '<option value="">' + esc(placeholder) + '</option>' +
-        list.map(function (o) {
-          return '<option' + (S[key] === o ? ' selected' : '') + '>' + esc(o) + '</option>';
-        }).join("") + '</select>';
-    }
-
-    function render() {
-      if (S.sent) {
-        root.innerHTML = '<p style="margin:0; max-width:52ch; font-size:19px; line-height:1.6; color:#F7F7F5;">' +
-          'Got it. Josh replies within a business day with a time.</p>';
-        return;
-      }
-      var ok = /.+@.+\..+/.test(S.email);
-      root.innerHTML =
-        '<div style="display:grid; grid-template-columns:repeat(' + (ONE_COL.matches ? 1 : 2) + ',minmax(0,1fr)); gap:18px;">' +
-        field("Work email", '<input type="email" data-call-field="email" value="' + esc(S.email) +
-          '" placeholder="you@yourbusiness.com.au" autocomplete="email" style="' + INPUT + '">') +
-        field("Website", '<input type="text" data-call-field="website" value="' + esc(S.website) +
-          '" placeholder="yourbusiness.com.au" autocomplete="url" style="' + INPUT + '">') +
-        field("Monthly ad spend", select("spend", "Choose a range", SPENDS)) +
-        field("What you're after", select("want", "Choose one", WANTS)) +
-        '</div>' +
-        '<div aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;">' +
-        '<input type="text" tabindex="-1" autocomplete="off" data-call-field="hp" name="hp-no-autofill"></div>' +
-        '<div style="margin-top:24px; display:flex; flex-wrap:wrap; gap:16px; align-items:center;">' +
-        '<button type="button" data-call-send' + (S.sending ? " disabled" : "") +
-        ' style="background:' + VOLT + '; color:#0A0A0A; border:none; font-family:inherit;' +
-        'font-size:17px; font-weight:600; padding:16px 28px; border-radius:4px; cursor:' +
-        (S.sending ? "default" : "pointer") + ';">' +
-        (S.sending ? "Sending…" : S.failed ? "Try again" : "Apply") + '</button>' +
-        '<span style="font-size:14px; line-height:1.6; color:#B5B5AD;">Takes about twenty seconds.</span>' +
-        '</div>' +
-        '<p style="margin:16px 0 0; max-width:56ch; font-size:14px; line-height:1.6; color:' +
-        (S.tried && !ok ? "#D8FF00" : S.failed ? "#FF6B5A" : "#B5B5AD") + ';">' +
-        (S.tried && !ok
-          ? "That email address does not look right — it is the only way we can reply."
-          : S.failed
-            ? "That did not go through. Try again in a moment."
-            : "One reply from a person. No sequence, no newsletter, no calendar to wrestle with.") +
-        '</p>';
-      wire();
-    }
-
-    function wire() {
-      qa("[data-call-field]", root).forEach(function (el) {
-        if (el.value && !S[el.dataset.callField]) S[el.dataset.callField] = el.value;
-        el.addEventListener("input", function () { S[el.dataset.callField] = el.value; });
-        el.addEventListener("change", function () { S[el.dataset.callField] = el.value; });
-      });
-      var btn = q("[data-call-send]", root);
-      if (btn) btn.addEventListener("click", function () {
-        qa("[data-call-field]", root).forEach(function (el) { S[el.dataset.callField] = el.value; });
-        S.tried = true;
-        if (!/.+@.+\..+/.test(S.email)) return render();
-        S.sending = true; S.failed = false; render();
-        var body = new URLSearchParams({
-          email: S.email, website: S.website, spend: S.spend, want: S.want,
-          source: source, partial: "no",
-          page: location.href,
-          landing: firstTouch().landing || "",
-          referrer: firstTouch().referrer || "",
-          utm: firstTouch().utm || "",
-          company_url: S.hp
-        });
-        fetch(LEAD_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: body.toString()
-        }).then(function (res) {
-          if (!res.ok) { S.sending = false; S.failed = true; return render(); }
-          S.sending = false; S.sent = true; render();
-        }).catch(function () { S.sending = false; S.failed = true; render(); });
-      });
-    }
-
-    render();
-    if (ONE_COL.addEventListener) ONE_COL.addEventListener("change", function () { if (!S.sent) render(); });
-  }
-
-  function setupPricingCall() {
-    setupShortForm(q("#pricing-call-root"), "pricing-call");
-    setupShortForm(q("#book-root"), "book");
-  }
-
-  /* --------------------------------------------------------- first touch */
-
-  /* A lead used to arrive saying "Submitted from: /apply", because that is where
-     the form is. It said nothing about which of the sixty-odd pages actually
-     earned the application, which made it impossible to tell whether the work
-     was paying off anywhere in particular.
-
-     So the first page of a visit is recorded once, in sessionStorage, and
-     travels with the application. sessionStorage rather than a cookie because
-     it needs no banner, dies with the tab, and never leaves the browser except
-     as three short strings attached to an application the person chose to send.
-
-     Wrapped in try/catch throughout: private windows and locked-down browsers
-     throw on the accessor itself, and a lead is worth more than its source. */
-  var TOUCH = "sevenam:first-touch";
-
-  function recordFirstTouch() {
-    try {
-      if (sessionStorage.getItem(TOUCH)) return;
-      var q = new URLSearchParams(location.search);
-      var utm = ["utm_source", "utm_medium", "utm_campaign"]
-        .map(function (k) { return q.get(k); })
-        .filter(Boolean)
-        .join(" / ");
-      sessionStorage.setItem(TOUCH, JSON.stringify({
-        landing: location.pathname,
-        /* Same-origin referrers are internal navigation, not a source. */
-        referrer: (document.referrer && document.referrer.indexOf(location.origin) !== 0)
-          ? document.referrer : "",
-        utm: utm
-      }));
-    } catch (e) { /* storage unavailable — the lead still sends without it */ }
-  }
-
-  function firstTouch() {
-    try { return JSON.parse(sessionStorage.getItem(TOUCH)) || {}; }
-    catch (e) { return {}; }
-  }
-
-  /* ------------------------------------------------------- case study cards */
-  /* Forcing the case-study strip to one column stopped Safari slicing the second
-     card off the screen, and replaced that bug with a worse one: 2,606px of
-     stacked cards on a 390px phone, which is most of a thumb-scroll of the same
-     three stories. Shorter cards were the actual ask.
-
-     So below the strip's own breakpoint each card keeps its name and its headline
-     number — the part worth scanning — and folds the paragraph and the stat rows
-     behind a toggle. The two shapes on the page are handled by counting children
-     rather than by adding markup hooks: the small cards are
-     [header, figure, paragraph, stats] and fold from index 2, the wide panel is
-     [body, stats sub-panel] and folds its second half. index.html is
-     hand-authored and this is presentation, so it is built here and the HTML
-     stays as it is — which also means with JS off every card is simply whole.
-
-     Everything is restored above the breakpoint, because on a desktop the cards
-     are already short and a click to read three lines is friction, not a saving. */
-  function setupCaseCards() {
-    var cards = qa('[data-placeholder="case-study"]');
-    if (!cards.length || !window.matchMedia) return;
-    var mq = window.matchMedia("(max-width: 719px)");
-
-    /* Each entry is [parent, children-to-fold]. Folding has to happen inside the
-       element the content already sits in, or it loses that element's padding and
-       renders full-bleed — which is why this returns groups rather than a flat
-       list. Two known shapes; anything else is left whole rather than guessed at. */
-    function groupsOf(card) {
-      var kids = [].slice.call(card.children);
-      if (kids.length === 4) {
-        /* Small card: header, headline figure, paragraph, stat rows. */
-        return [[card, kids.slice(2)]];
-      }
-      if (kids.length === 2) {
-        /* Wide panel: a padded text half and a stats sub-panel. Keep the name and
-           the headline, fold the paragraph, the stat rows and the source line,
-           then fold the whole second half. */
-        var inner = [].slice.call(kids[0].children);
-        var out = [];
-        if (inner.length > 2) out.push([kids[0], inner.slice(2)]);
-        out.push([card, [kids[1]]]);
-        return out;
-      }
-      return [];
-    }
-
-    function build(card, i) {
-      if (card._csBtn) return;
-      var groups = groupsOf(card);
-      if (!groups.length) return;
-      /* A dark card needs light text on the button. A button does not inherit
-         colour — the UA sheet gives it buttontext — so it is set explicitly. */
-      var dark = /rgb\(10, 10, 10\)/.test(card.style.background || "");
-      var wraps = [];
-      groups.forEach(function (g, n) {
-        var wrap = document.createElement("div");
-        wrap.id = "cs-body-" + i + "-" + n;
-        /* The parents are flex columns with a gap, and a stats block inside one of
-           them carries margin-top: auto. Re-parenting into a plain div would lose
-           both, so the wrapper repeats the column and the gap. */
         wrap.style.cssText = "display: flex; flex-direction: column; gap: 18px;";
         g[1].forEach(function (el) { wrap.appendChild(el); });
         g[0].appendChild(wrap);
@@ -1887,8 +1371,6 @@
       sign.style.cssText = "font-size: 20px; font-weight: 400; line-height: 1;";
       btn.appendChild(label);
       btn.appendChild(sign);
-      /* On the wide panel the button belongs beside the headline it expands, not
-         under a sub-panel that is itself folded away. */
       (card.children.length === 2 ? card.children[0] : card).appendChild(btn);
       card._csBtn = btn;
       card._csWraps = wraps;
@@ -1897,7 +1379,7 @@
       function paint() {
         wraps.forEach(function (w) { w.style.display = open ? "" : "none"; });
         label.textContent = open ? "Show less" : "Read what happened";
-        sign.textContent = open ? "\u2212" : "+";
+        sign.textContent = open ? "−" : "+";
         btn.setAttribute("aria-expanded", open ? "true" : "false");
       }
       paint();
@@ -1906,16 +1388,32 @@
 
     function teardown(card) {
       if (!card._csBtn) return;
-      /* Put the children back where they were, in order, before the button. */
-      while (card._csWrap.firstChild) card.insertBefore(card._csWrap.firstChild, card._csWrap);
-      card.removeChild(card._csWrap);
-      card.removeChild(card._csBtn);
+      card._csWraps.forEach(function (wrap) {
+        var parent = wrap.parentElement;
+        while (wrap.firstChild) parent.insertBefore(wrap.firstChild, wrap);
+        parent.removeChild(wrap);
+      });
+      card._csBtn.parentElement.removeChild(card._csBtn);
       card._csBtn = null;
-      card._csWrap = null;
+      card._csWraps = null;
     }
 
     function apply() {
+      var seen = [];
       cards.forEach(function (card, i) {
+        var g = card.parentElement;
+        if (g && /grid/.test(getComputedStyle(g).display) && seen.indexOf(g) === -1) {
+          seen.push(g);
+          if (mq.matches) {
+            if (g._csCols == null) g._csCols = g.style.gridTemplateColumns || "";
+            g.style.gridTemplateColumns = "1fr";
+          } else if (g._csCols != null) {
+            g.style.gridTemplateColumns = g._csCols;
+            g._csCols = null;
+          }
+        }
+        /* Belt and braces: span the whole row whatever the track count is. */
+        card.style.gridColumn = mq.matches ? "1 / -1" : "";
         if (mq.matches) build(card, i); else teardown(card);
       });
     }
@@ -1925,15 +1423,11 @@
   }
 
   /* ------------------------------------------------------------- prose folds */
-  /* /marketing-automation runs 17,000px on a phone. The copy earns the rankings
-     so none of it goes, but three long prose sections between the offer and the
-     detail is more than anyone scrolls before deciding.
-
-     Below the same 720px the case cards use, a folded section keeps its heading
-     and its first paragraph and puts the rest behind a toggle. The markup is
-     untouched — everything stays in the HTML, collapsed client-side rather than
-     omitted, which is the same rule the FAQ answers follow — and above the
-     breakpoint, or with JS off, the section is simply whole. */
+  /* /marketing-automation runs long on a phone. The copy earns the rankings so
+     none of it goes; below the same 719px a folded section keeps its heading and
+     first paragraph and puts the rest behind a toggle. Collapsed client-side
+     rather than omitted, the same rule the FAQ answers follow, and above the
+     breakpoint or with JS off the section is simply whole. */
   function setupFolds() {
     var blocks = qa("[data-fold]");
     if (!blocks.length || !window.matchMedia) return;
@@ -1942,7 +1436,6 @@
     function build(block, i) {
       if (block._foldBtn) return;
       var kids = [].slice.call(block.children);
-      /* Keep the h2 and the first paragraph; fold whatever follows. */
       var rest = kids.slice(2);
       if (!rest.length) return;
       var dark = /rgb\(247, 247, 245\)/.test(block.parentElement.style.color || "");
