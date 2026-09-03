@@ -1,21 +1,60 @@
 # https://sevenam.com.au
+
+# A crawler that matches a named group below uses ONLY that group and ignores
+# the wildcard one entirely — that is the robots.txt spec, not a quirk. The
+# named AI groups used to carry a bare "Allow: /", which meant GPTBot,
+# ClaudeBot and PerplexityBot were the three crawlers on the internet permitted
+# to fetch /onboard, the private per-client intake. Every group therefore
+# repeats the same four Disallow lines. Add a group and copy them, or that
+# crawler gets the client intake.
+
 User-agent: *
 Allow: /
-
-# No crawlable value, and nothing to index
 Disallow: /*.json$
 Disallow: /support.js
 Disallow: /image-slot.js
-
-# Client onboarding intake — reached only by a private per-client link
 Disallow: /onboard
 
-# AI crawlers: everything here is published deliberately
+# AI crawlers: everything else here is published deliberately, so they get the
+# same access as anyone. GPTBot is OpenAI's training crawler and OAI-SearchBot
+# is the one behind ChatGPT search results — they are separate agents and
+# allowing one does not allow the other. Google-Extended covers Gemini and
+# Vertex grounding; ordinary Google Search and AI Overviews follow Googlebot
+# and are already covered by the wildcard group above.
+
 User-agent: GPTBot
 Allow: /
+Disallow: /*.json$
+Disallow: /support.js
+Disallow: /image-slot.js
+Disallow: /onboard
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /*.json$
+Disallow: /support.js
+Disallow: /image-slot.js
+Disallow: /onboard
+
 User-agent: ClaudeBot
 Allow: /
+Disallow: /*.json$
+Disallow: /support.js
+Disallow: /image-slot.js
+Disallow: /onboard
+
 User-agent: PerplexityBot
 Allow: /
+Disallow: /*.json$
+Disallow: /support.js
+Disallow: /image-slot.js
+Disallow: /onboard
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /*.json$
+Disallow: /support.js
+Disallow: /image-slot.js
+Disallow: /onboard
 
 Sitemap: https://sevenam.com.au/sitemap.xml
