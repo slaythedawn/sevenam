@@ -307,6 +307,28 @@ today, once it is built, why that is worth money — and it renders **above** th
 prose on purpose. `systemMap` moved up with it: it used to render after the tables,
 which put the only picture on the page below everything it introduces.
 
+`columns()` is `prose()` in two columns, and a section opts into it with
+`render: 'columns'`. Auto-flow puts the heading and first paragraph on the top
+row and the second paragraph and the list on the second, which fills a 1240px
+container that a 62ch prose column leaves half empty. Three variants keep the
+three uses on `/marketing-automation` from reading as the same block three
+times: plain dots, `numbered: true`, and `accent: true` for volt. **Do not wrap
+the prose in a column div.** The direct children of `[data-fold]` have to stay
+`h2, p, p, list`, because `setupFolds()` keeps the first two and folds
+`slice(2)`; a wrapper leaves two children, `slice(2)` comes back empty, and
+every fold on the page stops working with no error. For the same reason nothing
+is pinned with `grid-row: 1 / -1` — `theme.js` collapses the grid by rewriting
+`grid-template-columns`, and a pinned item would then sit on top of the heading.
+The track minimum is 380px because 1240px fits three tracks of anything under
+371px, and a two-child grid with three tracks leaves a dead column.
+
+`sectionsSplit` is how many sections render above `phases()` instead of below
+it. Only `/marketing-automation` sets it, to 1: `systemMap` and `phases` are
+both ink, and stacked they read as one long dark run with a notch cut in it.
+The page's `s2` is `tone: 'paper'` for the same reason — four ink blocks cannot
+alternate with two paper ones. It defaults to 0, so every other page keeps the
+order it had.
+
 **The one-column rule for the case-study strip is enforced in `site.js`, not
 just in CSS.** The theme stylesheet names one column below 720px via an attribute
 selector on the inline style; that rule is in the shipped HTML and Chromium obeys

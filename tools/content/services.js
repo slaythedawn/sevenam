@@ -1187,6 +1187,8 @@ const PAGES = [
 
   {
     slug: 'marketing-automation',
+    sectionsSplit: 1,
+    ownership: { render: 'columns', accent: true, listLabel: 'WHAT YOU KEEP' },
     foldProse: true,
     phases: {
       label: 'WHAT YOU GET',
@@ -1324,6 +1326,8 @@ const PAGES = [
     trust: ['Built on your own accounts', 'Quoted after we map it', 'Yours if we stop'],
     lead: 'Not another tool. The system underneath the tools — agents, a data repository, and the workflows that connect them.',
     s1: {
+      render: 'columns',
+      listLabel: 'WHERE IT BREAKS',
       h2: 'Why most marketing automation stalls.',
       paras: [
         "Most companies already own the pieces. There is a CRM, an email platform, a scheduler, a dashboard, a folder of decks, and somebody using an AI assistant in a browser tab. What is missing is the thing that joins them, so the learning never accumulates: sales hears one version of the market, support hears another, the ads account sees what got clicked, and the founder remembers the one call that stuck. Everyone arrives at the growth meeting with a different version of reality.",
@@ -1338,6 +1342,10 @@ const PAGES = [
       ],
     },
     s2: {
+      render: 'columns',
+      tone: 'paper',
+      numbered: true,
+      listLabel: 'WHAT GETS BUILT',
       h2: 'What we actually build.',
       paras: [
         "Three things, in order. A marketing data repository — one place where what the market is telling you is written down and kept: the objections, the winning language, the offers that worked, the ones that did not, and the rules the business runs by. Then a set of agents with real job specs: what each reads, when it runs, what it produces, what needs a human before it goes anywhere. Then the workflows that connect the two to the systems you already pay for, including the CRM.",
@@ -2026,17 +2034,22 @@ function build() {
     trust: p.trust,
     gallery: p.gallery,
     sections: [
-      { tone: 'paper', h2: p.s1.h2, paras: p.s1.paras, items: p.s1.items },
-      { tone: 'ink', h2: p.s2.h2, paras: p.s2.paras, items: p.s2.items },
+      /* Object.assign rather than three named keys so a page can add render,
+         listLabel, numbered or accent to s1/s2 without a new passthrough here.
+         The tone in front is the default, overridden if the page names one. */
+      Object.assign({ tone: 'paper' }, p.s1),
+      Object.assign({ tone: 'ink' }, p.s2),
       /* /ad-creative carries the ownership argument in its FAQ instead — the page
          is long enough already, and repeating the section there pushes the
          creative case below the fold on a page that has to sell creative. */
-      ...(p.skipOwnership ? [] : [{ tone: 'paper', h2: OWNERSHIP.h2, paras: OWNERSHIP.paras, items: OWNERSHIP.items }]),
+      ...(p.skipOwnership ? [] : [Object.assign({ tone: 'paper' }, OWNERSHIP, p.ownership || {})]),
     /* foldProse marks every prose section on a page so site.js can keep the
        heading and first paragraph on a phone and put the rest behind a toggle.
        Only /marketing-automation sets it — 17,000px was more page than anyone
        scrolls before deciding, and none of the copy could go. */
     ].map(sec => (p.foldProse ? Object.assign({}, sec, { fold: true }) : sec)),
+    /* Only the automation pillar sets this. See page() in layout.js. */
+    sectionsSplit: p.sectionsSplit,
     tables: p.tables,
     /* Only the digital-marketing head page sets this: a row of city links so the
        five city pages are reachable from the term they sit under. */

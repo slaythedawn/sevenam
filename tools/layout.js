@@ -113,6 +113,72 @@ function prose(s) {
   </section>`;
 }
 
+/* Same content as prose(), laid out as two columns instead of one.
+
+   Three sections on /marketing-automation were heading + two paragraphs + a
+   list of five assertions, stacked full-bleed left. On a phone that is fine.
+   On a desktop it is a 62ch column of text with the right half of a 1240px
+   container empty, and after a page of designed components it reads as the
+   part nobody finished.
+
+   The layout is plain auto-flow into two tracks, which places heading and
+   first paragraph on the top row and second paragraph and list on the second.
+   No grid-row spanning, deliberately: the one-column collapse below 719px is
+   done by theme.js rewriting grid-template-columns, and an item pinned with
+   grid-row: 1 / -1 would then sit on top of the heading rather than under it.
+
+   Auto-flow also keeps the direct children of [data-fold] in reading order —
+   h2, p, p, list — which is what setupFolds() in site.js counts on when it
+   keeps the first two and folds the rest on a phone. Wrapping the prose in a
+   column div would leave that element with two children, slice(2) would come
+   back empty, and every fold on the page would silently stop working.
+
+   380px is the track minimum because 1240px of container fits three tracks of
+   anything under 371px, and a two-child grid with three tracks leaves a dead
+   column — the same bug the overview grid had at 260px. */
+function columns(s) {
+  const dark = s.tone === 'ink';
+  const rule = dark ? HAIRLINE_DARK : HAIRLINE_LIGHT;
+  const body = dark ? INK_TEXT : PAPER_TEXT;
+  const rowText = dark ? 'rgb(201, 201, 194)' : INK;
+  /* Volt reads on ink and is illegible on paper, so the label and the numerals
+     resolve to the muted paper token there. The marker is decoration and is
+     exempt, which is why accent can stay volt on both. */
+  const labelCol = dark ? VOLT : 'rgb(107, 107, 99)';
+  const dotCol = s.accent ? VOLT : (dark ? 'rgb(181, 181, 173)' : 'rgb(107, 107, 99)');
+
+  const paras = (s.paras || []).map(t =>
+    `<p style="margin: 0px; max-width: 54ch; font-size: 17px; line-height: 1.7; color: ${body};">${esc(t)}</p>`).join('\n      ');
+
+  const rows = (s.items || []).map((t, i) => {
+    const marker = s.numbered
+      ? `<span aria-hidden="true" style="flex-shrink: 0; min-width: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: ${labelCol};">${String(i + 1).padStart(2, '0')}</span>`
+      : `<span aria-hidden="true" style="flex-shrink: 0; width: 6px; height: 6px; border-radius: 100px; background: ${dotCol};"></span>`;
+    return `<li style="display: flex; align-items: baseline; gap: 14px; border-top: 1px solid ${rule}; padding: 16px 0px; font-size: 16px; line-height: 1.6; color: ${rowText};">${marker}<span>${esc(t)}</span></li>`;
+  }).join('\n          ');
+
+  const list = rows
+    ? `<div style="min-width: 0px;">
+        ${s.listLabel ? `<span style="display: block; margin-bottom: 12px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${labelCol};">${esc(s.listLabel)}</span>` : ''}
+        <ul style="margin: 0px; padding: 0px; list-style: none; border-bottom: 1px solid ${rule};">
+          ${rows}
+        </ul>
+      </div>`
+    : '';
+
+  const style = dark
+    ? `background: ${INK}; color: rgb(247, 247, 245); padding: 112px 32px;`
+    : `border-bottom: 1px solid ${HAIRLINE_LIGHT}; padding: 112px 32px;`;
+
+  return `<section style="${style}">
+    <div style="max-width: 1240px; margin: 0px auto; min-width: 0px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 28px 64px; align-items: start;"${s.fold ? ' data-fold=""' : ''}>
+      <h2 style="margin: 0px; max-width: 20ch; padding-bottom: 22px; border-bottom: 1px solid ${rule}; font-size: clamp(30px, 3.6vw, 50px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08;">${esc(s.h2)}</h2>
+      ${paras}
+      ${list}
+    </div>
+  </section>`;
+}
+
 /* ------------------------------------------------------ explainer + accordion
 
    /marketing-automation was one big diagram and two long prose sections, and
@@ -963,6 +1029,16 @@ function autolink(html, selfPath) {
 
 function page(p) {
   const url = ORIGIN + p.path;
+  /* A section renders through prose() unless it names another renderer, so
+     every page that does not set `render` is byte-identical to before. */
+  const secs = p.sections || [];
+  const renderSection = (s) => (s.render === 'columns' ? columns(s) : prose(s));
+  /* How many sections render above phases() rather than below it. Only the
+     automation pillar sets it: systemMap and phases are both ink, and stacked
+     they read as one long dark run with a notch cut in it. Defaults to 0, so
+     slice(0, 0) is empty and slice(0) is everything — the order every other
+     page already had. */
+  const cut = p.sectionsSplit || 0;
   const main = [
     hero(p),
     /* The explainer answers "what is this" and the diagram shows the shape of
@@ -983,9 +1059,10 @@ function page(p) {
     /* "What you actually get" belongs above the prose, not after it — a bespoke
        service that never lists its deliverables reads as vague. Only the
        automation pillar sets phases and workshopFigure. */
+    ...secs.slice(0, cut).map(renderSection),
     phases(p.phases),
     figure(p.workshopFigure),
-    ...(p.sections || []).map(prose),
+    ...secs.slice(cut).map(renderSection),
     accordion(p.accordion),
     ...(p.tables || []).map(dataTable),
     gantt(p.gantt),
