@@ -149,16 +149,30 @@ async function sendEmail(lead) {
 function confirmationFor(lead, canReply) {
   const call = lead.source === 'pricing-call';
   const reply = canReply
-    ? '\n\nIf you want to add anything first — what you spend a month, what you sell, what is not working — just reply to this email.'
+    ? '\n\nIf there is anything you would like him to know first — what you spend a month, ' +
+      'what you sell, what is working and what is not — just hit reply. The more context he ' +
+      'has in front of him, the more useful that first answer will be.'
     : '';
 
-  const subject = call ? 'Your pricing call — Sevenam' : 'We have your application — Sevenam';
+  const subject = call
+    ? 'Your pricing call — Sevenam'
+    : 'Thanks for your application — Sevenam';
+
   const body = call
-    ? 'Thanks — we have your email.\n\n' +
-      'Josh will reply within a business day with a time, and the numbers ready.' + reply
-    : 'Thanks — we have your application.\n\n' +
-      'Josh reads each one himself and will reply within a business day with a straight read ' +
-      'on which product fits your account.' + reply;
+    ? 'Thanks for getting in touch — we have your details.\n\n' +
+      'Here is what happens next. Josh will come back within a business day with a time that ' +
+      'suits you, and the numbers already worked out against what you are running, so the call ' +
+      'starts at the useful part rather than at the beginning.\n\n' +
+      'Fifteen minutes is usually enough to size the published prices to your account and tell ' +
+      'you whether any of it is worth buying yet. If the honest answer is not yet, he will say ' +
+      'so and tell you what would change that.' + reply
+    : 'Thanks for getting in touch — your application has come through.\n\n' +
+      'Here is what happens next. Josh reads every one of these himself, so it goes straight to ' +
+      'him rather than into a queue.\n\n' +
+      'Within a business day you will get a straight read on your account: what it actually ' +
+      'needs, which of the three products fits, and what that would look like in practice. If ' +
+      'the honest answer is that none of them are right for you yet, he will say so and tell you ' +
+      'what would change that.' + reply;
 
   return { subject, body: body + '\n\n— Sevenam' };
 }
