@@ -161,18 +161,19 @@ function confirmationFor(lead, canReply) {
   const body = call
     ? 'Thanks for getting in touch — we have your details.\n\n' +
       'Here is what happens next. Josh will come back within a business day with a time that ' +
-      'suits you, and the numbers already worked out against what you are running, so the call ' +
-      'starts at the useful part rather than at the beginning.\n\n' +
-      'Fifteen minutes is usually enough to size the published prices to your account and tell ' +
-      'you whether any of it is worth buying yet. If the honest answer is not yet, he will say ' +
-      'so and tell you what would change that.' + reply
+      'suits you.\n\n' +
+      'Fifteen minutes is usually enough to walk through what you are running and size the ' +
+      'published prices against it. Anything more precise than that needs a look inside the ' +
+      'account, and he will say so if that is what it takes. If the honest answer is that none ' +
+      'of it is worth buying yet, he will say that too.' + reply
     : 'Thanks for getting in touch — your application has come through.\n\n' +
       'Here is what happens next. Josh reads every one of these himself, so it goes straight to ' +
       'him rather than into a queue.\n\n' +
-      'Within a business day you will get a straight read on your account: what it actually ' +
-      'needs, which of the three products fits, and what that would look like in practice. If ' +
-      'the honest answer is that none of them are right for you yet, he will say so and tell you ' +
-      'what would change that.' + reply;
+      'Within a business day he will come back to set up a short call. Anything useful to say ' +
+      'about an account needs a proper look inside it first, so the call is where we work out ' +
+      'what you are trying to fix, whether there is something worth doing, and what it would ' +
+      'take. If the honest answer is that none of what we do is right for you yet, he will say ' +
+      'so and tell you what would change that.' + reply;
 
   return { subject, body: body + '\n\n— Sevenam' };
 }

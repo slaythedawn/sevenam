@@ -1159,7 +1159,16 @@
       "Custom, end to end", "Marketing automation, quoted",
       "The free systems audit — see if I qualify"];
 
-    var S = { email: "", website: "", spend: "", want: "", hp: "",
+    /* The one decision that changes what we are actually selling: hand it over,
+       or be built the thing and taught to run it. It opens the form as two
+       cards rather than hiding in a fifth dropdown, because it is the part a
+       visitor has usually already made their mind up about. */
+    var WHO = [
+      ["We run it for you", "You hand over the account and we operate it every day."],
+      ["We set you up to run it", "We build it on your account and train your team to run it in-house."],
+    ];
+
+    var S = { email: "", website: "", spend: "", want: "", who: "", hp: "",
       tried: false, sending: false, sent: false, failed: false };
 
     /* Two columns of four fields is comfortable on a laptop and cramped on a
@@ -1184,6 +1193,34 @@
         }).join("") + '</select>';
     }
 
+    /* Buttons, not inputs. A <button> does not inherit color, so each one sets
+       its own — and the outline is the only thing marking an unselected card,
+       so it carries the same #6B6B63 the inputs use rather than a hairline. */
+    function choice() {
+      return '<div style="margin-bottom:22px;">' +
+        '<span style="font-size:12px; font-weight:600; letter-spacing:0.08em;' +
+        'text-transform:uppercase; color:#D8FF00; display:block; margin-bottom:10px;">Who runs the ads</span>' +
+        '<div style="display:grid; grid-template-columns:repeat(' + (ONE_COL.matches ? 1 : 2) +
+        ',minmax(0,1fr)); gap:12px;">' +
+        WHO.map(function (o) {
+          var on = S.who === o[0];
+          return '<button type="button" data-call-who="' + esc(o[0]) + '" aria-pressed="' +
+            (on ? "true" : "false") + '" style="display:flex; align-items:flex-start; gap:12px;' +
+            'text-align:left; cursor:pointer; font-family:inherit; background:#161613; color:#F7F7F5;' +
+            'border:1px solid ' + (on ? "#D8FF00" : "#6B6B63") + '; border-radius:4px;' +
+            'padding:16px 18px; min-width:0;">' +
+            '<span aria-hidden="true" style="flex-shrink:0; margin-top:3px; width:14px; height:14px;' +
+            'border-radius:3px; border:1px solid ' + (on ? "#D8FF00" : "#6B6B63") + ';' +
+            'background:' + (on ? "#D8FF00" : "transparent") + ';"></span>' +
+            '<span style="min-width:0;">' +
+            '<span style="display:block; font-size:17px; font-weight:600; letter-spacing:-0.02em;' +
+            'color:#F7F7F5;">' + esc(o[0]) + '</span>' +
+            '<span style="display:block; margin-top:4px; font-size:14px; line-height:1.5;' +
+            'color:#B5B5AD;">' + esc(o[1]) + '</span></span></button>';
+        }).join("") +
+        '</div></div>';
+    }
+
     function render() {
       if (S.sent) {
         root.innerHTML = '<p style="margin:0; max-width:52ch; font-size:19px; line-height:1.6; color:#F7F7F5;">' +
@@ -1193,6 +1230,7 @@
       }
       var ok = /.+@.+\..+/.test(S.email);
       root.innerHTML =
+        choice() +
         '<div style="display:grid; grid-template-columns:repeat(' + (ONE_COL.matches ? 1 : 2) + ',minmax(0,1fr)); gap:18px;">' +
         field("Work email", '<input type="email" data-call-field="email" value="' + esc(S.email) +
           '" placeholder="you@yourbusiness.com.au" autocomplete="email" style="' + INPUT + '">') +
@@ -1208,7 +1246,7 @@
         ' style="background:' + VOLT + '; color:#0A0A0A; border:none; font-family:inherit;' +
         'font-size:17px; font-weight:600; padding:16px 28px; border-radius:4px; cursor:' +
         (S.sending ? "default" : "pointer") + ';">' +
-        (S.sending ? "Sending…" : S.failed ? "Try again" : "Send") + '</button>' +
+        (S.sending ? "Sending…" : S.failed ? "Try again" : "Send it through") + '</button>' +
         '<span style="font-size:14px; line-height:1.6; color:#B5B5AD;">Takes about twenty seconds.</span>' +
         '</div>' +
         '<p style="margin:16px 0 0; max-width:56ch; font-size:14px; line-height:1.6; color:' +
@@ -1223,6 +1261,12 @@
     }
 
     function wire() {
+      qa("[data-call-who]", root).forEach(function (el) {
+        el.addEventListener("click", function () {
+          S.who = S.who === el.dataset.callWho ? "" : el.dataset.callWho;
+          render();
+        });
+      });
       qa("[data-call-field]", root).forEach(function (el) {
         if (el.value && !S[el.dataset.callField]) S[el.dataset.callField] = el.value;
         el.addEventListener("input", function () { S[el.dataset.callField] = el.value; });
@@ -1235,7 +1279,7 @@
         if (!/.+@.+\..+/.test(S.email)) return render();
         S.sending = true; S.failed = false; render();
         var body = new URLSearchParams({
-          email: S.email, website: S.website, spend: S.spend, want: S.want,
+          email: S.email, website: S.website, spend: S.spend, want: S.want, who: S.who,
           source: source, partial: "no",
           page: location.href,
           landing: firstTouch().landing || "",
