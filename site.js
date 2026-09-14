@@ -1187,7 +1187,8 @@
     function render() {
       if (S.sent) {
         root.innerHTML = '<p style="margin:0; max-width:52ch; font-size:19px; line-height:1.6; color:#F7F7F5;">' +
-          'Got it. Josh replies within a business day with a time.</p>';
+          'Thanks — that’s with us. Josh reads these himself and will come back to you ' +
+          'within a business day with a time.</p>';
         return;
       }
       var ok = /.+@.+\..+/.test(S.email);
@@ -1198,7 +1199,7 @@
         field("Website", '<input type="text" data-call-field="website" value="' + esc(S.website) +
           '" placeholder="yourbusiness.com.au" autocomplete="url" style="' + INPUT + '">') +
         field("Monthly ad spend", select("spend", "Choose a range", SPENDS)) +
-        field("What you're after", select("want", "Choose one", WANTS)) +
+        field("What you'd like help with", select("want", "Choose one", WANTS)) +
         '</div>' +
         '<div aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;">' +
         '<input type="text" tabindex="-1" autocomplete="off" data-call-field="hp" name="hp-no-autofill"></div>' +
@@ -1207,16 +1208,16 @@
         ' style="background:' + VOLT + '; color:#0A0A0A; border:none; font-family:inherit;' +
         'font-size:17px; font-weight:600; padding:16px 28px; border-radius:4px; cursor:' +
         (S.sending ? "default" : "pointer") + ';">' +
-        (S.sending ? "Sending…" : S.failed ? "Try again" : "Apply") + '</button>' +
+        (S.sending ? "Sending…" : S.failed ? "Try again" : "Send") + '</button>' +
         '<span style="font-size:14px; line-height:1.6; color:#B5B5AD;">Takes about twenty seconds.</span>' +
         '</div>' +
         '<p style="margin:16px 0 0; max-width:56ch; font-size:14px; line-height:1.6; color:' +
         (S.tried && !ok ? "#D8FF00" : S.failed ? "#FF6B5A" : "#B5B5AD") + ';">' +
         (S.tried && !ok
-          ? "That email address does not look right — it is the only way we can reply."
+          ? "That email doesn’t look quite right — it’s the only way we can get back to you."
           : S.failed
-            ? "That did not go through. Try again in a moment."
-            : "One reply from a person. No sequence, no newsletter, no calendar to wrestle with.") +
+            ? "That didn’t send. Give it another go in a moment."
+            : "One reply, from a person — Josh, usually within a business day.") +
         '</p>';
       wire();
     }
