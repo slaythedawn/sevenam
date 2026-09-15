@@ -369,7 +369,7 @@ const PAGES = [
       { q: 'What about organic Instagram?', a: "We do not run organic social. It matters for brand and it is a different discipline, and we would rather say so than sell you something we are not built to do well." },
       { q: 'Is influencer content worth running as ads?', a: "Often, yes — creator-style footage tends to outperform polished brand film in feed. The mechanics of permissions and partnership tags need to be set up properly, which the setup covers." },
     ],
-    closing: { h2: 'Find out what your account is leaving on the table.', p: "Fifteen minutes with Josh, no pitch deck. You will leave knowing whether your Instagram numbers are a buying problem or a creative one." },
+    closing: { h2: 'Find out what your account is leaving on the table.', p: "Fifteen minutes with Josh, no pitch deck. Enough to talk through whether your Instagram numbers look like a buying problem or a creative one." },
     related: [
       { href: '/meta-ads-agency', title: 'Meta ads agency', note: 'One auction, one system.' },
       { href: '/facebook-ad-creative-testing', title: 'Creative testing', note: 'Volume is the constraint.' },
@@ -415,7 +415,7 @@ const PAGES = [
       { q: 'What about content for our feed?', a: "The creative we produce is built for advertising — hooks, formats and lengths that work in a paid auction. Some of it works organically, but that is a by-product rather than the brief." },
       { q: 'How do we compare your fee to our current retainer?', a: "Ask your current provider what portion of the retainer covers paid media management, then compare that figure alone. The fee calculator will show you the annual number if you are on a percentage." },
     ],
-    closing: { h2: 'Find out what your account is leaving on the table.', p: "Fifteen minutes with Josh, no pitch deck. You will leave knowing which half of your social budget is actually producing revenue." },
+    closing: { h2: 'Find out what your account is leaving on the table.', p: "Fifteen minutes with Josh, no pitch deck. Enough to work out how you would tell which half of your social budget is producing revenue." },
     related: [
       { href: '/social-media-management-cost', title: 'Social media management cost', note: 'What the market charges.' },
       { href: '/facebook-marketing-agency', title: 'Facebook marketing agency', note: 'The same question, differently framed.' },
@@ -461,7 +461,7 @@ const PAGES = [
       { q: 'Is this cheaper than an agency?', a: "Sometimes substantially, sometimes not, depending on what you pay now. What it always is, is fixed — the fee does not move when your budget does." },
       { q: 'Can we try it without committing to everything?', a: "Start with the account check. Five days, a written read on what the account is doing and what would change, and no obligation to buy anything after it." },
     ],
-    closing: { h2: 'Find out what your account is leaving on the table.', p: "Fifteen minutes with Josh, no pitch deck. You will leave knowing the two or three things costing you the most right now." },
+    closing: { h2: 'Find out what your account is leaving on the table.', p: "Fifteen minutes with Josh, no pitch deck. Usually enough to work out which two or three things are worth looking at first." },
     related: [
       { href: '/facebook-ads-agency', title: 'Facebook ads agency', note: 'The full comparison.' },
       { href: '/system', title: 'How it works', note: 'Overnight, then 7am.' },
@@ -514,7 +514,7 @@ const PAGES = [
       { q: 'Do you do SEO or Google Ads?', a: "No. We do Meta advertising and the creative that feeds it, and nothing else." },
       { q: 'How do we compare the cost fairly?', a: "Ask your agency what share of the retainer is Meta management, and compare that number rather than the whole invoice." },
     ],
-    closing: { h2: 'Find out what your account is leaving on the table.', p: "Fifteen minutes with Josh, no pitch deck. You will leave knowing whether your Meta spend has outgrown the bundle it sits in." },
+    closing: { h2: 'Find out what your account is leaving on the table.', p: "Fifteen minutes with Josh, no pitch deck. Enough to talk through whether your Meta spend has outgrown the bundle it sits in." },
     related: [
       { href: '/facebook-ads-agency', title: 'Facebook ads agency', note: 'Why you might not need one.' },
       { href: '/google-ads-vs-facebook-ads', title: 'Google vs Facebook ads', note: 'Which does what.' },
@@ -688,7 +688,7 @@ const PAGES = [
       { q: 'How does the creative work?', a: "Concepts, hooks, cuts and statics produced end to end on our own AI line, ordered when you need them and delivered in days rather than weeks. Each one ships with its performance numbers attached, and there is no batch to commit to." },
       { q: 'Do you charge a percentage of ad spend?', a: "Our fees are priced to the work \u2014 installing the system, running the decisions, producing the creative. None of that gets harder because you spent more, so none of it costs more." },
     ],
-    closing: { h2: 'Get the figures in writing.', p: "Fifteen minutes with Josh, no pitch deck. You will leave with every number written down, whether or not you buy anything." },
+    closing: { h2: 'Get the figures in writing.', p: "Fifteen minutes with Josh, no pitch deck. The published figures, what sits behind them, and what it would take to size them to your account — whether or not you buy anything." },
     related: [
       { href: '/pricing', title: 'How it works to buy', note: 'The three ways in.' },
       { href: '/what-facebook-ads-agencies-charge', title: 'What agencies charge', note: 'Market rates, in dollars.' },
@@ -850,7 +850,7 @@ const PAGES = [
       { q: 'How much of a retainer should be creative?', a: "More than most are. Creative volume drives paid performance more than any other variable, so a retainer that is mostly scheduling and reporting is weighted toward the wrong work." },
       { q: 'What is the cheapest sensible option?', a: "Under about three thousand a month in media, running it yourself off good guides and spending the money on creative instead. We will say that plainly rather than sell you a system." },
     ],
-    closing: { h2: 'Find out which half is working.', p: "Fifteen minutes with Josh, no pitch deck. You will leave knowing what your paid line is actually returning." },
+    closing: { h2: 'Find out which half is working.', p: "Fifteen minutes with Josh, no pitch deck. Enough to work out how you would tell what your paid line is actually returning." },
     related: [
       { href: '/social-media-advertising-agency', title: 'Social media advertising', note: 'Paid and organic are different jobs.' },
       { href: '/what-facebook-ads-agencies-charge', title: 'What agencies charge', note: 'The going rates.' },
@@ -914,7 +914,7 @@ const PAGES = [
       { q: 'Is there a minimum budget worth starting with?', a: "Enough for the platform to gather signal, which in practice means a few thousand a month at minimum. Below that you are paying to learn very slowly." },
       { q: 'Does the fee model change what media costs?', a: "Not the media itself, but it changes your total cost per result. A percentage fee adds a fixed proportional cost to every dollar of spend, and that shows up in cost per acquisition just as surely as CPM does." },
     ],
-    closing: { h2: 'Find out what your results actually cost.', p: "Fifteen minutes with Josh, no pitch deck. You will leave knowing what is inflating your cost per result and what would bring it down." },
+    closing: { h2: 'Find out what your results actually cost.', p: "Fifteen minutes with Josh, no pitch deck. Enough to talk through what usually inflates a cost per result and what tends to bring it down." },
     related: [
       { href: '/what-facebook-ads-agencies-charge', title: 'What agencies charge', note: 'Fees, not media.' },
       { href: '/what-are-meta-ads', title: 'What are Meta ads?', note: 'How the auction works.' },
@@ -1455,7 +1455,7 @@ const PAGES = [
       { q: 'Should we be advertising into Australia as well?', a: "Often, yes, and usually earlier than brands expect. When a domestic audience saturates, buying a larger auction next door is frequently cheaper than paying rising frequency at home. It is one of the first things we look at." },
       { q: 'Do you understand the New Zealand market?', a: "We understand the auction, which behaves the same way everywhere, and we understand what a small addressable audience does to frequency. Local cultural nuance in the creative is yours — you know your customer better than we will." },
     ],
-    closing: { h2: 'Find out what your frequency is actually costing you.', p: "Fifteen minutes with Josh, no pitch deck. Bring the account and we will tell you whether the ceiling is the audience or the creative." },
+    closing: { h2: 'Find out what your frequency is actually costing you.', p: "Fifteen minutes with Josh, no pitch deck. Enough to talk through whether a ceiling like yours is usually the audience or the creative." },
     related: [
       { href: '/meta-ads-agency', title: 'Meta ads agency', note: 'The full service.' },
       { href: '/marketing-automation-new-zealand', title: 'Automation in NZ', note: 'The systems side.' },
@@ -1806,7 +1806,7 @@ const PAGES = [
       { q: 'What does it cost?', a: "The Meta setup is $19,500 once and the daily decisions are $2,500 a month, both excluding GST, and creative packages start at $5,000. Marketing automation is quoted bespoke after we map what you run, because there is no standard shape to it." },
       { q: 'Can you take over an account an agency already built?', a: "Usually, and the first question is whose Business Manager it lives in. If the assets are in an agency-owned account, getting them moved is the first piece of work and it is worth doing whoever you end up using." },
     ],
-    closing: { h2: 'Find out what the coordination is costing you.', p: "Fifteen minutes with Josh, no pitch deck. Bring the retainer and the account, and we will tell you which half of the invoice is actually buying performance." },
+    closing: { h2: 'Find out what the coordination is costing you.', p: "Fifteen minutes with Josh, no pitch deck. Bring the retainer and he can talk through which half of the invoice is likely buying performance." },
     related: [
       { href: '/digital-marketing-agency', title: 'Digital marketing agency', note: 'The full argument.' },
       { href: '/facebook-ads-sydney', title: 'Facebook ads Sydney', note: 'The paid social side.' },

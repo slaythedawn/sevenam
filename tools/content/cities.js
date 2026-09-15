@@ -45,7 +45,7 @@ const CITIES = [
       { q: 'Do we need someone in-house to run this?', a: "Someone needs about a minute each morning to approve the day's decisions — usually a founder, a marketing coordinator or an ecommerce manager. If nobody can, we quote the end-to-end option instead and do the execution ourselves." },
       { q: 'How quickly would we see anything change?', a: "The account check takes five days and tells you what is actually wrong. The setup runs four weeks. Daily decisions start from the moment the system is reading a clean account, which is usually inside the first fortnight." },
     ],
-    closing: { h2: 'Have your Melbourne account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave knowing the two or three things costing you the most right now — and what it would take to fix them." },
+    closing: { h2: 'Start with a conversation about your Melbourne account.', p: "Fifteen minutes with Josh, no pitch. Usually enough to work out which two or three things are worth looking at first, and what a proper look would involve." },
   },
   {
     slug: 'facebook-ads-brisbane', city: 'Brisbane', region: 'Queensland', short: 'QLD',
@@ -90,7 +90,7 @@ const CITIES = [
       { q: 'Do you work with trades and home services?', a: "Yes. Lead quality matters more than lead volume there, so the decisions are built around booked jobs and cost per qualified enquiry rather than cost per form fill." },
       { q: 'What happens to the work if we stop?', a: "It stays. Everything is in your Business Manager from the first hour — you keep the account, the pixel, the audiences and every creative file we produced." },
     ],
-    closing: { h2: 'Have your Brisbane account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave knowing what is actually costing you money in the account, whether or not you do anything about it with us." },
+    closing: { h2: 'Start with a conversation about your Brisbane account.', p: "Fifteen minutes with Josh, no pitch. Enough to work out what is worth digging into, whether or not you do anything about it with us." },
   },
   {
     slug: 'facebook-ads-perth', city: 'Perth', region: 'Western Australia', short: 'WA',
@@ -135,7 +135,7 @@ const CITIES = [
       { q: 'Who approves the decisions?', a: "Whoever you nominate — usually the founder or a marketing coordinator. It takes about a minute on a phone. If nobody in the business can, we quote the end-to-end option and do the execution ourselves." },
       { q: 'Can we keep our current agency for creative?', a: "Yes, and some accounts do exactly that. We will tell you plainly if we think the creative supply is the constraint, but the system does not require you to move anything you are happy with." },
     ],
-    closing: { h2: 'Have your Perth account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave knowing the two or three things costing you the most right now — and what it would take to fix them." },
+    closing: { h2: 'Start with a conversation about your Perth account.', p: "Fifteen minutes with Josh, no pitch. Usually enough to work out which two or three things are worth looking at first, and what a proper look would involve." },
   },
   {
     slug: 'facebook-ads-adelaide', city: 'Adelaide', region: 'South Australia', short: 'SA',
@@ -180,7 +180,7 @@ const CITIES = [
       { q: 'Do you understand the South Australian market?', a: "We understand the account. The auction, the creative constraint and the decision lag behave the same way in Adelaide as everywhere else, and your customers are usually national anyway." },
       { q: 'What is the first step?', a: "The account check: five days, a straight read on what the account is actually doing, and a written list of what would change. Plenty of them end with us saying you do not need us." },
     ],
-    closing: { h2: 'Have your Adelaide account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave with a clear read on what the account is costing you and what is worth fixing first." },
+    closing: { h2: 'Start with a conversation about your Adelaide account.', p: "Fifteen minutes with Josh, no pitch. Enough to work out what is worth fixing first, and what it would take to know for certain." },
   },
   {
     slug: 'facebook-ads-canberra', city: 'Canberra', region: 'Australian Capital Territory', short: 'ACT',
@@ -225,7 +225,7 @@ const CITIES = [
       { q: 'Can we own the account for procurement reasons?', a: "You already do — everything is built in your own Business Manager from the first hour. That is the default, not an option we charge for." },
       { q: 'What does the reporting look like?', a: "Plain English, with the numbers behind each decision attached. It is written so somebody who has never opened Ads Manager can follow why a change was made." },
     ],
-    closing: { h2: 'Have your Canberra account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave knowing whether Meta is the right channel for what you are selling, and what would have to change for it to work." },
+    closing: { h2: 'Start with a conversation about your Canberra account.', p: "Fifteen minutes with Josh, no pitch. Enough to talk through whether Meta is the right channel for what you are selling, and what would have to change for it to work." },
   },
   {
     slug: 'facebook-ads-gold-coast', city: 'Gold Coast', region: 'Queensland', short: 'QLD',
@@ -270,7 +270,7 @@ const CITIES = [
       { q: 'What spend does this need?', a: "About ten thousand a month in media before daily decisions start earning their keep. Under three thousand, none of it is the right purchase yet and we will tell you that plainly." },
       { q: 'How long is the commitment?', a: "The setup is a four-week project with a fixed start and finish. Everything monthly is month to month, with no notice period." },
     ],
-    closing: { h2: 'Have your Gold Coast account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave knowing what is actually capping the account and what it would take to lift it." },
+    closing: { h2: 'Start with a conversation about your Gold Coast account.', p: "Fifteen minutes with Josh, no pitch. Enough to talk through what is likely capping the account and what it would take to lift it." },
   },
   {
     slug: 'facebook-ads-sunshine-coast', city: 'Sunshine Coast', region: 'Queensland', short: 'QLD',
@@ -315,7 +315,7 @@ const CITIES = [
       { q: 'Can we do this without hiring anyone?', a: "Yes, provided somebody can spend about a minute a morning approving decisions. If nobody can, the end-to-end option exists and we quote it as a fixed monthly." },
       { q: 'What do we get if we stop?', a: "Everything. The account, the pixel, the audiences and every creative file are yours and were never anywhere else." },
     ],
-    closing: { h2: 'Have your Sunshine Coast account read properly.', p: "Fifteen minutes with Josh, no pitch. You will get a straight read on whether this is worth buying at your spend — including if the answer is no." },
+    closing: { h2: 'Start with a conversation about your Sunshine Coast account.', p: "Fifteen minutes with Josh, no pitch. Enough to work out whether this is worth buying at your spend — including if the answer is no." },
   },
 ];
 

@@ -305,7 +305,7 @@ const PAGES = [
       { q: 'Do you run Google Ads?', a: "No. We do Meta advertising and the creative that feeds it, and we would rather point you to someone good than do it adequately." },
       { q: 'How do we measure both fairly?', a: "Blended: total revenue against total marketing spend, watched over time. It is a blunter number and it is much harder to fool yourself with." },
     ],
-    closing: { h2: 'Find out where your growth is actually coming from.', p: "Fifteen minutes with Josh, no pitch deck. You will leave with a clearer read on which channel is doing the work." },
+    closing: { h2: 'Find out where your growth is actually coming from.', p: "Fifteen minutes with Josh, no pitch deck. Enough to talk through which channel is likely doing the work, and how you would prove it." },
     related: [
       { href: '/check', title: 'The account check', note: 'A straight read, five days.' },
       { href: '/what-are-meta-ads', title: 'What are Meta ads?', note: 'Placements and objectives.' },
@@ -1052,7 +1052,7 @@ const PAGES = [
       { q: 'What breaks first?', a: "Trust in the numbers. An assistant reading a broken conversion setup will report confidently on the wrong events, and it has no way to know. Fix the measurement before you automate anything on top of it." },
       { q: 'Does the account stay ours?', a: "Yes, and it should. Everything runs on your own Business Manager, the access is granted by you, and it is revocable in a couple of clicks. If a provider needs the account moved to theirs, that is a commercial arrangement, not a technical requirement." },
     ],
-    closing: { h2: 'See what a day of this looks like on your account.', p: "Fifteen minutes with Josh, no pitch deck. You will get a straight read on what is worth automating and what is not." },
+    closing: { h2: 'See what a day of this looks like on your account.', p: "Fifteen minutes with Josh, no pitch deck. Enough to talk through what is worth automating and what is not." },
     related: [
       { href: '/meta-ads-mcp', title: 'Meta Ads MCP', note: 'The connector, explained.' },
       { href: '/meta-ads-manager', title: 'Ads Manager', note: 'What each level controls.' },
@@ -1103,7 +1103,7 @@ const PAGES = [
       { q: 'Can it run without me watching?', a: "The reading can, and should — that is the tedious part. Letting it act unattended is a different decision, and we do not recommend it for anything that moves budget." },
       { q: 'Do you use one?', a: "Yes. The system reads accounts overnight through a connector and writes the day's decisions with the numbers behind each one. Nothing is actioned until someone agrees to it." },
     ],
-    closing: { h2: 'Have your account read the way ours reads them.', p: "Fifteen minutes with Josh, no pitch deck. Bring the account and we will tell you what a daily read would actually surface." },
+    closing: { h2: 'See how a daily read actually works.', p: "Fifteen minutes with Josh, no pitch deck. Tell him what you are running and he will talk through what a daily read looks for." },
     related: [
       { href: '/ai-in-meta-ads-manager', title: 'AI in Ads Manager', note: 'The three ways in.' },
       { href: '/automate-meta-ads', title: 'Automating Meta ads', note: 'What survives daily use.' },

@@ -55,7 +55,7 @@ const INDUSTRIES = [
       { q: 'Can you track whether enquiries actually became appointments?', a: "Where your practice management system can export it, yes, and that is the number worth optimising against. Where it cannot, we work from qualified enquiry and tell you plainly that it is a proxy." },
       { q: 'What if our account gets restricted?', a: "It stays your account, so the appeal is yours to make and nothing is trapped with a third party. Prevention is the real answer: keeping claims conservative and the creative reviewable is cheaper than any appeal process." },
     ],
-    closing: { h2: 'Have your health account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave knowing where the compliance risk actually sits and what is capping enquiry volume." },
+    closing: { h2: 'Start with a conversation about your health account.', p: "Fifteen minutes with Josh, no pitch. Enough to talk through where the compliance risk usually sits and what tends to cap enquiry volume." },
     related: [
       { href: '/ndis-facebook-ads', title: 'NDIS Facebook ads', note: 'Participant enquiry, within the rules.' },
       { href: '/facebook-ads-for-schools', title: 'Facebook ads for schools', note: 'Enrolment, not impressions.' },
@@ -114,7 +114,7 @@ const INDUSTRIES = [
       { q: 'Do you produce the creative?', a: "Yes. Accommodation is a category where property imagery goes stale fast and the same six photos get run for a year — production volume is usually the constraint rather than targeting." },
       { q: 'We are one property, not a group. Does this still work?', a: "If you are consistently past about ten thousand a month in media, yes. Below that we will tell you it is too early rather than sell you a system." },
     ],
-    closing: { h2: 'Have your property account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave knowing what a direct booking is really costing you and where the account is leaking." },
+    closing: { h2: 'Start with a conversation about your property account.', p: "Fifteen minutes with Josh, no pitch. Enough to talk through what a direct booking is likely costing you and where accounts like yours tend to leak." },
     related: [
       { href: '/ecommerce-facebook-ads-agency', title: 'Ecommerce Meta ads', note: 'The commercial case, in full.' },
       { href: '/facebook-ads-for-tradies', title: 'Facebook ads for tradies', note: 'Leads, not likes.' },
@@ -173,7 +173,7 @@ const INDUSTRIES = [
       { q: 'Our suburb audience is very small. Is that workable?', a: "It works, but frequency becomes the binding constraint quickly, so creative has to be replaced more often than a national advertiser would need. That is a production question more than a targeting one." },
       { q: 'Do you take a percentage of our advertising budget?', a: "A fixed setup fee and a fixed monthly, priced to the work." },
     ],
-    closing: { h2: 'Have your agency account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave knowing what your appraisal pipeline actually costs and where the spend is going to waste." },
+    closing: { h2: 'Start with a conversation about your agency account.', p: "Fifteen minutes with Josh, no pitch. Enough to talk through what an appraisal pipeline like yours tends to cost and where the spend usually goes to waste." },
     related: [
       { href: '/facebook-ads-for-tradies', title: 'Facebook ads for tradies', note: 'Leads, not likes.' },
       { href: '/facebook-ads-agency', title: 'Facebook ads agency', note: 'Why you might not need one.' },
@@ -232,7 +232,7 @@ const INDUSTRIES = [
       { q: 'Can we advertise if we are a small independent school?', a: "If your media spend is consistently past about ten thousand a month, the system is worth buying. Below that we will say so and point you at the guides — a smaller school is usually better served by fixing creative and the enquiry process first." },
       { q: 'Who signs off on the creative?', a: "You do, every time. Schools have community sensitivities and governance requirements that no external provider should be making calls on." },
     ],
-    closing: { h2: 'Have your enrolment account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave knowing what enquiry is costing you and how much of the budget is working outside the cycle." },
+    closing: { h2: 'Start with a conversation about your enrolment account.', p: "Fifteen minutes with Josh, no pitch. Enough to talk through what enquiry is likely costing you and how much budget tends to work outside the cycle." },
     related: [
       { href: '/facebook-ads-for-healthcare', title: 'Facebook ads for healthcare', note: 'Compliant creative that still works.' },
       { href: '/what-are-meta-ads', title: 'What are Meta ads?', note: 'The plain-English explanation.' },
@@ -291,7 +291,7 @@ const INDUSTRIES = [
       { q: 'Who is responsible for compliance?', a: "You are, and you approve everything before it runs. We will raise anything that looks like a risk, but we are not your compliance function and would not pretend to be." },
       { q: 'What spend does this need to make sense?', a: "About ten thousand a month in media before daily decisions earn their keep. Under about three thousand, we will tell you plainly that none of this is the right purchase yet." },
     ],
-    closing: { h2: 'Have your NDIS account read properly.', p: "Fifteen minutes with Josh, no pitch. You will leave knowing what a well-matched enquiry actually costs you and where the compliance risk sits." },
+    closing: { h2: 'Start with a conversation about your NDIS account.', p: "Fifteen minutes with Josh, no pitch. Enough to talk through what a well-matched enquiry tends to cost and where the compliance risk sits." },
     related: [
       { href: '/facebook-ads-for-healthcare', title: 'Facebook ads for healthcare', note: 'The same compliance problem.' },
       { href: '/facebook-ads-for-tradies', title: 'Facebook ads for tradies', note: 'Leads, not likes.' },
