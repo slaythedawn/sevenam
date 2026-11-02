@@ -26,14 +26,14 @@ const PAGES = [
   {
     slug: 'pricing-call',
     title: 'Book a 15-Minute Pricing Call | Sevenam',
-    description: 'The setup is $19,500, the daily decisions $2,500 a month, creative packages from $5,000. Fifteen minutes to size those to your account.',
+    description: 'Three ways to buy and what each one depends on. Fifteen minutes to size them to your account.',
     eyebrow: 'PRICING CALL', h1: 'Fifteen minutes, straight numbers.',
     lead: 'The prices are published. The call is where they get sized to your account.',
     skipOwnership: true,
     s1: {
       h2: 'What the fifteen minutes covers.',
       paras: [
-        "The numbers are already on the site: $19,500 for the setup, $2,500 a month for the daily decisions, creative packages from $5,000. What the call adds is which of them your account actually needs, how much creative it would consume, and whether the end-to-end option beats hiring for it.",
+        "What the call does is work out which of the three your account actually needs, how much creative it would consume, and whether the end-to-end option beats hiring for it. You get every figure in writing afterwards.",
         "You get that in fifteen minutes. If nothing here is worth buying yet, you get that instead.",
       ],
       items: [
@@ -46,13 +46,13 @@ const PAGES = [
     s2: {
       h2: 'How the pricing works.',
       paras: [
-        "The setup is $19,500 \u2014 four weeks of fixed scope, the same number whatever you spend. The daily decisions are $2,500 a month once it is live. Creative packages start at $5,000, and how far past that you go depends on what the account consumes. Every figure excludes GST.",
+        "The setup is four weeks of fixed scope \u2014 one number, the same whatever you spend. The daily decisions are a flat monthly once it is live. Creative is ordered by the package, and how far you go depends on what the account consumes. You get all three quoted after we read the account.",
         "There are no tiers. Four things you can buy, any of them on their own, and the end-to-end option is the only one quoted after we read the account.",
       ],
       items: [
-        'The setup is $19,500 plus GST, agreed before anything starts.',
-        'The daily decisions are $2,500 a month plus GST, whatever you spend.',
-        'Creative packages start at $5,000, ordered when the account needs it.',
+        'The setup is one fixed fee, agreed before anything starts.',
+        'The daily decisions are a flat monthly, whatever you spend.',
+        'Creative is priced by package, ordered when the account needs it.',
         'No tiers, no packages, no minimum term.',
       ],
     },
@@ -682,7 +682,7 @@ const PAGES = [
       },
     ],
     faqs: [
-      { q: 'What does it cost?', a: "The setup is $19,500 once. The daily decisions are $2,500 a month after it is live. Creative packages start at $5,000. Every figure excludes GST. The end-to-end option is the only one quoted after we read the account, because that figure genuinely depends on how many accounts and markets you run." },
+      { q: 'What does it cost?', a: "The setup is one fixed fee. The daily decisions are a flat monthly after it is live. Creative is priced by package. We quote all of it after we read the account, because what the work costs genuinely depends on how many accounts and markets you run." },
       { q: 'Is there a minimum commitment?', a: "The setup is a four-week project with a fixed start and finish. Everything monthly is month to month with no notice period." },
       { q: 'Can we buy the setup and stop there?', a: "Yes, and some do. You own it — the account, the tracking, the structure and the documentation stay with you whether or not you buy anything else." },
       { q: 'How does the creative work?', a: "Concepts, hooks, cuts and statics produced end to end on our own AI line, ordered when you need them and delivered in days rather than weeks. Each one ships with its performance numbers attached, and there is no batch to commit to." },
@@ -1803,7 +1803,7 @@ const PAGES = [
       { q: 'Are you a full-service digital agency?', a: "Not in the traditional sense. We cover paid social, creative and marketing automation properly rather than covering everything shallowly. Where a project genuinely needs SEO or PR we will say so and stay out of it, because subcontracting a discipline you cannot audit is how retainers quietly get worse." },
       { q: 'Why are Sydney CPMs so high?', a: "Because the advertisers with the highest margins in the country are concentrated here — finance, property, insurance, professional services — and they can afford to pay more for the same impression than a consumer brand can. You are not bidding against your competitors alone; you are bidding against everyone targeting the same person." },
       { q: 'Do you work with Sydney businesses only?', a: "No. We are based in Sydney and work wherever the auction runs, including New Zealand and Southeast Asia. The local pages exist because that is how people search, not because the work is geographically limited." },
-      { q: 'What does it cost?', a: "The Meta setup is $19,500 once and the daily decisions are $2,500 a month, both excluding GST, and creative packages start at $5,000. Marketing automation is quoted bespoke after we map what you run, because there is no standard shape to it." },
+      { q: 'What does it cost?', a: "The Meta setup is one fixed fee and the daily decisions are a flat monthly, with creative priced by package. Marketing automation is quoted bespoke after we map what you run, because there is no standard shape to it." },
       { q: 'Can you take over an account an agency already built?', a: "Usually, and the first question is whose Business Manager it lives in. If the assets are in an agency-owned account, getting them moved is the first piece of work and it is worth doing whoever you end up using." },
     ],
     closing: { h2: 'Find out what the coordination is costing you.', p: "Fifteen minutes with Josh, no pitch deck. Bring the retainer and he can talk through which half of the invoice is likely buying performance." },
@@ -1855,7 +1855,7 @@ const PAGES = [
       { q: 'Why does creative fatigue faster in Melbourne?', a: "Because the addressable audience is being worked by an unusually dense set of advertisers on the same seasonal calendar. Frequency against any given segment climbs faster, and cost per result follows it. The fix is supply — genuinely distinct concepts entering the auction continuously, not variations of one image." },
       { q: 'Can you replace our full-service agency?', a: "For paid social, creative and the systems underneath, yes. For SEO, PR and organic social, no — and we would rather you kept a specialist for those than let us pretend. Most of the businesses we work with end up with two suppliers instead of one, and spend less in total." },
       { q: 'How much creative do we actually need?', a: "More than most accounts produce, and the honest answer depends on spend and audience size. The creative calculator on the site gives an indicative figure from your own numbers, and the call turns that into a real one." },
-      { q: 'What does it cost?', a: "The Meta setup is $19,500 once and the daily decisions are $2,500 a month, both excluding GST. Creative packages start at $5,000. Marketing automation is quoted bespoke after we map what you already run." },
+      { q: 'What does it cost?', a: "The Meta setup is one fixed fee and the daily decisions are a flat monthly. Creative is priced by package. Marketing automation is quoted bespoke after we map what you already run." },
     ],
     closing: { h2: 'Find out whether your ceiling is the market or the creative.', p: "Fifteen minutes with Josh, no pitch deck. In this market it is almost always the creative, and the account will show it." },
     related: [
@@ -1906,7 +1906,7 @@ const PAGES = [
       { q: 'Do you work with franchise groups?', a: "Yes, and it is one of the clearer cases for the automation side — the same reporting, list-building and lead follow-up is usually being done by hand in every location. Building it once and running it everywhere is a larger return than tuning any single ad account." },
       { q: 'Do you have a Brisbane office?', a: "No. We are based in Sydney and work remotely with businesses across Australia and the region. We will not claim a local presence we do not have." },
       { q: 'Is Brisbane media really cheaper?', a: "Generally yes, for the same audience definition, because fewer advertisers are competing for it. It is not a licence to spend less attention on the account — a cheap auction still punishes a thin creative library, it just takes slightly longer to do it." },
-      { q: 'What does it cost?', a: "The Meta setup is $19,500 once and the daily decisions are $2,500 a month, both excluding GST, with creative packages from $5,000. Automation is quoted bespoke after the mapping session." },
+      { q: 'What does it cost?', a: "The Meta setup is one fixed fee and the daily decisions are a flat monthly, with creative priced by package. Automation is quoted bespoke after the mapping session." },
     ],
     closing: { h2: 'Find out what share of your marketing budget is fee.', p: "Fifteen minutes with Josh, no pitch deck. Bring what you spend and what you pay, and the ratio will tell you most of it." },
     related: [
@@ -1957,7 +1957,7 @@ const PAGES = [
       { q: 'Do you have a Perth office?', a: "No. We are based in Sydney and work remotely across Australia and the region. If a local presence is a requirement, say so early and we will not waste your time." },
       { q: 'Do you work with B2B and resources-adjacent businesses?', a: "Yes, and the shape of the work is different: fewer decisions in the ad account, far more in what happens between the lead arriving and the deal closing. That is usually an automation and CRM project with paid social attached, rather than the other way round." },
       { q: 'Can you handle Western Australian compliance requirements?', a: "We build to whatever claims and evidentiary standards your industry requires, and where an industry has specific advertising rules the approval gate is where they get enforced. We are not lawyers and will not act as your compliance sign-off." },
-      { q: 'What does it cost?', a: "The Meta setup is $19,500 once and the daily decisions are $2,500 a month, both excluding GST, with creative packages from $5,000. Automation is bespoke, quoted after we map what you run." },
+      { q: 'What does it cost?', a: "The Meta setup is one fixed fee and the daily decisions are a flat monthly, with creative priced by package. Automation is bespoke, quoted after we map what you run." },
     ],
     closing: { h2: 'Find out what the time difference is costing you.', p: "Fifteen minutes with Josh, no pitch deck. Look at what happened in the account over the last three weekends — that is usually the answer." },
     related: [
@@ -2008,7 +2008,7 @@ const PAGES = [
       { q: 'How do you measure anything with an eighteen-month cycle?', a: "By agreeing an early signal that genuinely correlates with revenue, and being honest that it is a proxy. Then the job is keeping the relationship alive from that signal to the decision, which is a CRM and automation problem rather than an advertising one." },
       { q: 'Can you meet accessibility requirements?', a: "The site work and the assets we produce are built to WCAG AA as a matter of course rather than on request. Where a specific standard applies to your organisation, tell us at the start and it shapes the build instead of being retrofitted." },
       { q: 'Is Meta advertising even right for this market?', a: "Sometimes not, and we will say so. Where the audience is a few hundred named organisations, paid social is a poor fit and the money is better spent on the systems that handle the relationships you already have. That is a real answer we give on the call." },
-      { q: 'What does it cost?', a: "Marketing automation is quoted bespoke after we map what you run, because the work depends entirely on what already exists. Where Meta advertising is part of it, the setup is $19,500 once and the daily decisions $2,500 a month, both excluding GST." },
+      { q: 'What does it cost?', a: "Marketing automation is quoted bespoke after we map what you run, because the work depends entirely on what already exists. Where Meta advertising is part of it, the setup is one fixed fee and the daily decisions a flat monthly." },
     ],
     closing: { h2: 'Find out whether advertising is even your constraint.', p: "Fifteen minutes with Josh, no pitch deck. In a market like this it is usually the systems between the enquiry and the decision, and that is a cheaper problem to fix." },
     related: [

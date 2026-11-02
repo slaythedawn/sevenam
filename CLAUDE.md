@@ -67,6 +67,15 @@ design — but it also means **breaking that file breaks all 67**.
   content. `check.js` fails on a stale stamp. The tag is matched on the prefix
   `<script src="/site.js` with no closing quote (`SITE_JS_TAG`); adding the quote
   back breaks the shell lift in `layout.js` and with it all 67 generated pages.
+- **The analytics tag is stamped after the `site.js` tag, never before.**
+  `stampAnalytics()` in `tools/build-pages.js` puts
+  `<script defer src="/_vercel/insights/script.js">` on all 85 pages, because the site
+  has no build step and no `package.json`, so the script tag is the only way in.
+  `layout.js` lifts the footer as everything between `</main>` and `SITE_JS_TAG`, so a
+  tag inserted *above* that marker gets swept into the footer and duplicated onto all 67
+  generated pages. It is idempotent, so a rebuild does not stack copies.
+  **Vercel Web Analytics must also be enabled on the project** — the tag collects
+  nothing on its own, and the endpoint 404s until that switch is on.
 - **`"framework": null` in `vercel.json`.** The Vercel project's preset is Next.js.
   Without this override, every deploy runs `next build`, finds no `package.json`, and
   fails. Do not remove it.
@@ -152,23 +161,30 @@ design — but it also means **breaking that file breaks all 67**.
 
 - Copy on the money pages is written against search terms. **Do not rewrite it for tone.**
 - Never state a precise time for the overnight run — "Before you're up", never "02:00".
-- **Three published prices, and they must agree everywhere.** The setup is
-  **$19,500** one-off, the daily decisions are **$2,500 a month** once it is live, and
-  creative **packages start at $5,000**. The end-to-end option is the only one still
-  quoted after we read the account. These were removed site-wide and then deliberately
-  put back — if you change one, change all of: `/pricing` (four cards plus the section
-  copy and the FAQ answer, which also lives in the page's `FAQPage` JSON-LD),
-  `/install` (the display figure and its `offers` block), `/system` (the sentence and
-  its `offers` block), `/pricing-call` (in `tools/content/services.js`, not the HTML),
-  and `/agency-fee`. `check.js` catches a JSON-LD answer that no longer matches the
-  visible one; it cannot catch a stale number, so grep.
-- **`/agency-fee` carries a derived total.** `$49,500` is the Install once ($19,500)
-  plus twelve months of daily decisions ($30,000). The calculator in `site.js` computes
-  only the *other* agency's side, so this figure is baked into the HTML — change the
-  monthly and you must redo the arithmetic there by hand.
-- No price belongs on the homepage, or in any CTA button label. "Get the numbers" was
-  the CTA while nothing was published; it is now **"Book the call"**, because the
-  numbers are on the page above it.
+- **No price of ours is published anywhere, on purpose.** The setup is one fixed fee,
+  the daily decisions a flat monthly, creative priced by package, and marketing
+  automation bespoke — all of it **quoted after we read the account**, none of it as a
+  figure on the site. The three numbers were published, then removed again in favour of
+  taking the lead first and costing it in the reply. This has now oscillated twice, so
+  treat it as a decision rather than an oversight: **do not reintroduce a figure because
+  a page feels like it is missing one.**
+  If they are ever published again, they have to go back in all of these at once, which
+  is the list they were stripped from: `/pricing` (hero line, three card figures and
+  sub-labels, the section copy, and the FAQ answer — which also lives in the page's
+  `FAQPage` JSON-LD, so both copies must match or `check.js` fails), `/install` (the
+  display figure and an `offers` block), `/system` (the sentence and an `offers` block),
+  `/pricing-call` (in `tools/content/services.js`, not the HTML), `/agency-fee`, the
+  five `digital-marketing-agency-<city>` FAQs and the "What does it cost?" FAQ in
+  `services.js`, and the `WANTS` options in `site.js`. `check.js` catches a JSON-LD
+  answer that no longer matches the visible one; it cannot catch a stale number, so grep
+  for `19,500`, `2,500`, `5,000` and `49,500` before you believe the site is clean.
+- **`/agency-fee` shows no total of ours.** It used to carry `$49,500`, the Install plus
+  twelve months of decisions, baked into the HTML. The calculator in `site.js` computes
+  only the *other* agency's side, which is the whole point of the page: it prices what a
+  percentage costs them, and ours is a fixed fee quoted after we read the account.
+- No price belongs on the homepage, or in any CTA button label. With nothing published,
+  the CTA is the default **"Get started"** from `tools/layout.js` and every card and
+  closing button routes to `/apply`.
 - Market rates on the cost pages are other agencies' typical ranges, attributed to the
   business that published them, and are **not** covered by the rule above — those stay.
   So do client spend ranges like "$30k–$500k a month".
@@ -206,10 +222,10 @@ design — but it also means **breaking that file breaks all 67**.
   assessed rather than an offer to supply, the same discretion the audit table on
   `/marketing-automation` is written to preserve. Do not soften it to "get your
   free audit". All 85 pages carry it; grep before assuming a new one does.
-- **The three published prices exclude GST, and say so.** `/pricing` (the section
-  copy, three card sub-labels and the FAQ answer, which means the JSON-LD copy of
-  it too), `/install`, `/system`, `/agency-fee` and `/pricing-call`. A new price
-  mention needs the treatment stated or the page contradicts the others.
+- **GST notes went with the prices.** With no figure on the page there is nothing to
+  qualify, so `/pricing`, `/install`, `/system`, `/agency-fee` and `/pricing-call` no
+  longer mention GST. Publish a figure again and it needs the treatment stated, or the
+  pages contradict each other.
 - **`/apply` is the short form, and it is the only form.** Four fields on one
   screen — work email, website, monthly spend, which product — built by
   `setupShortForm()` in `site.js` and mounted on `#book-root`. `/pricing-call`

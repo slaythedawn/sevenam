@@ -121,9 +121,15 @@ for (const file of htmlFiles) {
     }
   }
   /* Query strings are cache-busting stamps, not part of the path — strip one
-     before resolving, or a stamped src silently stops being checked at all. */
+     before resolving, or a stamped src silently stops being checked at all.
+
+     `/_vercel/` is served by the platform at runtime and is not in the repo, so
+     it cannot be resolved on disk. Web Analytics lives there. It is exempt from
+     the existence check rather than excluded from the scan, so a typo anywhere
+     else under that prefix still has to be caught by eye. */
   for (const [, src] of html.matchAll(/src="(\/[^"]*)"/g)) {
     const rel = src.split('?')[0];
+    if (rel.startsWith('/_vercel/')) continue;
     if (!fs.existsSync(path.join(ROOT, rel.slice(1)))) fail(file, `missing asset ${rel}`);
   }
 

@@ -126,9 +126,34 @@ function pruneRedirects(paths) {
   return before - cfg.redirects.length;
 }
 
+/* Vercel Web Analytics. The site has no build step and no package.json, so the
+   script tag is the only route in — stamped onto every page here rather than
+   pasted into 85 files by hand.
+
+   It goes AFTER the site.js tag, never before: layout.js lifts the footer as
+   everything between </main> and SITE_JS_TAG, so a tag inserted above that
+   marker would be swept into the footer and duplicated onto all 67 generated
+   pages. Idempotent, so re-running the build does not stack copies. */
+const ANALYTICS_SRC = '/_vercel/insights/script.js';
+
+function stampAnalytics() {
+  let changed = 0;
+  for (const f of fs.readdirSync(ROOT).filter(f => f.endsWith('.html'))) {
+    const file = path.join(ROOT, f);
+    const html = fs.readFileSync(file, 'utf8');
+    if (html.includes(ANALYTICS_SRC)) continue;
+    const next = html.replace(
+      /(<script src="\/site\.js(?:\?v=[a-f0-9]+)?" defer><\/script>)/,
+      `$1\n<script defer src="${ANALYTICS_SRC}"></script>`);
+    if (next !== html) { fs.writeFileSync(file, next); changed++; }
+  }
+  return changed;
+}
+
 const written = write();
 const themed = stampTheme();
 const stamped = stampSiteJs();
+const analytics = stampAnalytics();
 const paths = allPages();
 writeSitemap(paths);
 const pruned = pruneRedirects(paths);
@@ -138,3 +163,4 @@ console.log(`site now has ${paths.length} pages`);
 console.log(`removed ${pruned} placeholder redirects`);
 console.log(`site.js stamped ${stamped.src} — ${stamped.changed} page(s) updated`);
 console.log(`theme injected into ${themed} page(s)`);
+console.log(`analytics stamped onto ${analytics} page(s)`);

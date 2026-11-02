@@ -1154,8 +1154,8 @@
 
     var SPENDS = ["Under $3,000", "$3,000 – $10,000", "$10,000 – $30,000",
       "$30,000 – $100,000", "Over $100,000"];
-    var WANTS = ["Not sure yet — talk it through", "The setup, $19,500",
-      "The daily decisions, $2,500 a month", "Creative packages, from $5,000",
+    var WANTS = ["Not sure yet — talk it through", "The setup",
+      "The daily decisions", "Creative packages",
       "Custom, end to end", "Marketing automation, quoted",
       "The free systems audit — see if I qualify"];
 

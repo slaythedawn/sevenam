@@ -15,7 +15,14 @@
 
 const fs = require('fs');
 const path = require('path');
-const { chromium } = require('/tmp/node_modules/playwright-core');
+/* Resolved rather than hardcoded: this pointed at /tmp/node_modules once, which
+   is ephemeral, so the script broke as soon as the container was rebuilt. */
+const { chromium } = (() => {
+  for (const m of ['playwright', 'playwright-core']) {
+    try { return require(m); } catch (e) { /* try the next one */ }
+  }
+  throw new Error('Playwright not found. Install it, or run this where `require("playwright")` resolves.');
+})();
 
 const ROOT = path.join(__dirname, '..');
 /* Deliberately not under img/, which vercel.json serves immutable for a year.
@@ -93,10 +100,25 @@ function card({ headline, support }) {
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
-  const files = fs.readdirSync(ROOT).filter((f) => f.endsWith('.html')).sort();
+  /* Named pages rebuild just those cards; no arguments rebuilds all of them.
+     A card is baked from its page's h1 and meta description, so after editing
+     either you only need that page — regenerating all 85 churns ~4MB of jpeg
+     for nothing. Accepts "pricing" or "pricing.html". */
+  const only = process.argv.slice(2).map((a) => a.replace(/\.html$/, '') + '.html');
+  const files = fs.readdirSync(ROOT)
+    .filter((f) => f.endsWith('.html'))
+    .filter((f) => !only.length || only.includes(f))
+    .sort();
+  if (only.length && files.length !== only.length) {
+    console.error(`no such page: ${only.filter((f) => !files.includes(f)).join(', ')}`);
+    process.exit(1);
+  }
 
   const browser = await chromium.launch({
-    executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
+    /* Let Playwright find its own browser; only override when a pinned build is
+       actually on disk, so this works on a machine that has neither path. */
+    ...(fs.existsSync('/opt/pw-browsers/chromium-1194/chrome-linux/chrome')
+      ? { executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' } : {}),
     args: ['--no-sandbox'],
   });
   const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
