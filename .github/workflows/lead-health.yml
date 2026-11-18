@@ -1,0 +1,33 @@
+# Weekly check that the lead form still delivers.
+#
+# The form is the only way anyone reaches Sevenam, and it fails silently:
+# api/lead.js returns 502, the page says "Try again", and nobody is told. It
+# had been doing that with an invalid RESEND_API_KEY and, at current traffic,
+# could have stayed broken for months without anyone noticing.
+#
+# A failing scheduled workflow emails the repository owner, so a non-zero exit
+# from the probe is the alarm. No secrets are needed: the probe only posts to
+# the public endpoint and reads the status code.
+#
+# Schedule, not push: on push this would send a test enquiry on every single
+# deploy. Mondays 22:23 UTC is 09:23 Tuesday in Sydney through AEDT — near
+# enough for a weekly check, and off the hour because GitHub delays scheduled
+# runs that pile up on the hour.
+
+name: lead-health
+
+on:
+  schedule:
+    - cron: '23 22 * * 0'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # No dependencies to install — tools/probe-lead.js is plain Node.
+      - run: node tools/probe-lead.js

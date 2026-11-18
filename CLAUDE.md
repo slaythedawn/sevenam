@@ -551,3 +551,36 @@ The function knows where a lead goes; the browser does not, and must not. A fail
 POST shows "Try again" and leaves the answers on screen — there is no `mailto:`
 fallback, because handing the applicant back to their own mail client is the drop-off
 this whole thing was built to remove.
+
+### Checking that it actually delivers
+
+```bash
+node tools/probe-lead.js
+```
+
+Posts a real submission to the live endpoint and exits 0 only if it was delivered.
+`.github/workflows/lead-health.yml` runs it every Monday night UTC; a failing
+scheduled workflow emails the repository owner, and that is the alarm. It needs no
+secrets — the probe only posts to the public endpoint and reads the status code.
+
+It is **not** on `push`, deliberately: it sends a real test enquiry every time it
+runs, so on push it would put one in the inbox on every deploy. The probe address is
+`health-probe@sevenam.com.au`, and the `@sevenam.com.au` part is load-bearing — that
+domain has no MX record, so the acknowledgement the function sends to the applicant
+bounces and no third party ever receives anything. Do not point it at a real mailbox.
+
+**This is here because the form was dead and nothing said so.** On 17 November 2026
+`/api/lead` was returning 502 to anyone who submitted: `RESEND_API_KEY` was set but
+rejected by Resend with "API key is invalid". The page showed "Try again", the failure
+was logged only server-side, and Vercel's Hobby plan keeps runtime logs for an hour,
+so there was no record to find later. At ~27 impressions a day it could have sat like
+that indefinitely. The status code is the thing to trust: the function returns 200
+only once a lead has genuinely been handed to Resend or to the webhook.
+
+Two causes worth knowing before diagnosing a 502, because both have happened:
+an invalid `RESEND_API_KEY` (regenerate, set in Vercel, **redeploy** — a variable only
+reaches deployments built after it was set), and Resend refusing the recipient, since
+the shared `onboarding@resend.dev` sender used when `LEAD_FROM` is unset only delivers
+to the Resend account owner's own address. The real message is never in the response
+body — the client is the public — so read it with `get_runtime_errors` for route
+`/api/lead`, or in the function logs.
